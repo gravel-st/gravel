@@ -1,0 +1,5 @@
+{
+	"sharedVariables": {"Transcript": "(TextCollector new)"},
+	"privateImports": [],
+	"publicImports": ["org.gravel.lang.collections.interface"]
+}

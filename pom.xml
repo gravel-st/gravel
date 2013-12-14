@@ -1,0 +1,77 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>st.gravel</groupId>
+  <artifactId>gravel.core</artifactId>
+  <version>0.1</version>
+  <build>
+<resources>
+        <resource>
+            <directory>src/main/st</directory>
+        </resource>
+    <resource>
+            <directory>src/main/html</directory>
+        </resource>
+
+    </resources>
+    <plugins>
+	 <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/st</source>
+		<source>src/main/html</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+	<artifactId>asm</artifactId>
+	<version>4.0</version>
+    </dependency>
+   <dependency>
+      <groupId>org.ow2.asm</groupId>
+        <artifactId>asm-util</artifactId>
+        <version>4.0</version>
+    </dependency>
+
+<dependency>
+	<groupId>org.eclipse.jetty</groupId>
+	<artifactId>jetty-servlet</artifactId>
+	<version>8.1.14.v20131031</version>
+</dependency>
+  <dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.9.13</version>
+</dependency>
+<dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.11</version>
+	<scope>test</scope>
+</dependency>
+            
+          </dependencies>
+</project>
