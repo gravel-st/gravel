@@ -19,8 +19,7 @@ public class StartJetty {
 		File fn;
 		int port = 8080;
 		if (args.length == 0) {
-			URL resource = ImageBootstrapper.class.getClassLoader().getResource("");
-			fn = new File(resource.getFile());
+			fn = ImageBootstrapper.defaultSourceFolder();
 		} else {
 			fn = new File(args[0]);
 			if (args.length != 1) {
@@ -36,7 +35,7 @@ public class StartJetty {
 		
 		ResourceHandler staticFilesHandler = new ResourceHandler();
 
-	    staticFilesHandler.setResourceBase("src/main/html");
+	    staticFilesHandler.setResourceBase(System.getProperty("user.dir")+ "src/main/html");
 
 	    HandlerList handlers = new HandlerList();
 	    handlers.setHandlers(new Handler[] {servletContext, staticFilesHandler, new DefaultHandler() });

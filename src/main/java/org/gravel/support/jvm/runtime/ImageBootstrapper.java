@@ -26,9 +26,12 @@ public class ImageBootstrapper {
 					new JavaSystemMappingCompilerTools());
 
 	public static void bootstrap() {
-		URL resource = ImageBootstrapper.class.getClassLoader().getResource("");
-		File fn = new File(resource.getFile());
+		File fn = defaultSourceFolder();
 		bootstrap(fn);
+	}
+
+	public static File defaultSourceFolder() {
+		return new File(System.getProperty("user.dir")+ "/src/main/st");
 	}
 
 	public static void bootstrap(File fn) {

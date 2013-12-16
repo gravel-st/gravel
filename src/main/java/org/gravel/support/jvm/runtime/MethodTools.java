@@ -195,6 +195,12 @@ public class MethodTools {
 		return handle.invoke(receiver, arg1);
 	}
 
+	public static Object perform(Object receiver, String selector, Object arg1, Object arg2)
+			throws Throwable {
+		MethodHandle handle = getHandle(receiver, selector);
+		return handle.invoke(receiver, arg1, arg2);
+	}
+
 	public static Object safePerform(Object receiver, String selector) {
 		try {
 			return perform(receiver, selector);
