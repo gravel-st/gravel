@@ -912,7 +912,7 @@ parseMethod: aString {Str} sourceFile: sourceFile {SourceFile | Nil} {^MethodNod
 (reader addClassMethod: 'As yet unclassified')
 !
 parseSequence: aString {Str} {^SequenceNode | Nil}
-	| parser {Parser} res {Expression | Nil} |
+	| parser {Parser} res {SequenceNode | Nil} |
 	parser := self source: aString.
 	res := parser parseSequenceNode: [:pragmas {Arr[PragmaNode]} | ].
 	self assert: parser atEnd.

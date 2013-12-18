@@ -437,11 +437,20 @@ traitsInCurrentPackage
 (reader addMethod: 'gravel')
 !
 update
-	| method objectMirror |
+	| method objectMirror sc |
 	objectMirror := (Reflection reflect: Object new) classMirror.
 	rootClasses := Array with: objectMirror.
-	packageNames := (Reflection packages collect: [:each | each name]) asSortedCollection
-				asArray copyWithFirst: nil.
+	Transcript
+		cr;
+		show: Reflection packages printString.
+	sc := (Reflection packages collect: [:each | each name]) asSortedCollection.
+	Transcript
+		cr;
+		show: sc printString.
+	packageNames := sc asArray copyWithFirst: nil.
+	Transcript
+		cr;
+		show: packageNames printString.
 	method := self methodAt: selectedSelector ifAbsent: [nil].
 	sourceHolder value: (method isNil
 				ifTrue: 

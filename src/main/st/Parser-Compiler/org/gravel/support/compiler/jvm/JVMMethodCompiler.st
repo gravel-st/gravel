@@ -351,7 +351,7 @@ pushChar: anObject {Object} {^JVMMethodCompiler}
 pushFixedPoint: aFixedPoint {FixedPoint} {^Self}
 	self emit: (NewInstance type: JVMDefinedObjectType bigDecimal).
 	self emit: Dup new.
-	self pushString: aFixedPoint printString.
+	self pushString: aFixedPoint printStringWithoutS.
 	self emit: (InvokeSpecial init: JVMDefinedObjectType bigDecimal
 				voidArguments: (Array with: JVMDefinedObjectType string))
 !

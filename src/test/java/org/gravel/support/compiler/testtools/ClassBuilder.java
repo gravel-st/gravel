@@ -1,5 +1,9 @@
 package org.gravel.support.compiler.testtools;
 
+import static org.junit.Assert.assertEquals;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +20,7 @@ import org.gravel.support.jvm.runtime.ImageBootstrapper;
 
 public class ClassBuilder {
 
+	private static int evaluateCounter = 0;
 	private final String name;
 	private String superclassName = "org.gravel.lang.Object";
 	private final ArrayList<MethodNode> methods = new ArrayList<>();
@@ -54,7 +59,7 @@ public class ClassBuilder {
 		MethodNode[] _methods = methods.toArray(new MethodNode[methods.size()]);
 		MethodNode[] _classMethods = classMethods
 				.toArray(new MethodNode[classMethods.size()]);
-		Symbol[] _namespace = new Symbol[] {Symbol.value("ClassBuilder")};
+		Symbol[] _namespace = new Symbol[] { Symbol.value("ClassBuilder") };
 		ClassNode classNode = ClassNode.factory
 				.name_superclassPath_properties_instVars_classInstVars_sharedVariables_methods_classMethods_namespace_isExtension_isTrait_traitUsage_classTraitUsage_(
 						Symbol.value(name), superclassName, _properties,
@@ -69,6 +74,22 @@ public class ClassBuilder {
 				.withPackageNamed_classNode_(Symbol.value(name), classNode));
 		return ImageBootstrapper.systemMapping.classMappingAtReference_(
 				classNode.reference()).identityClass();
+	}
+
+	public static Object evaluate(String string) {
+
+		Class stClass = new ClassBuilder("Evaluate" + evaluateCounter++)
+				.method("foo ^" + string).build();
+
+		try {
+			Object fooObject = stClass.newInstance();
+			Method method = fooObject.getClass().getMethod("foo");
+			return method.invoke(fooObject);
+		} catch (InstantiationException | IllegalAccessException
+				| NoSuchMethodException | SecurityException
+				| IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

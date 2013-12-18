@@ -5,8 +5,7 @@
 (reader addMethod: 'gravel')
 !
 < anObject
-	<primitive: #('org.gravel.support.jvm.SymbolExtensions' 'sortsLowerThan_')>
-	
+	^self asString < anObject asString
 !
 (reader addMethod: 'gravel')
 !

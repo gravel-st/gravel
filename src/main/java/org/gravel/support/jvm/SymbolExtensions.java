@@ -23,10 +23,6 @@ public class SymbolExtensions {
 		return StringExtensions.size(receiver.asString());
 	}
 
-	public static boolean sortsLowerThan_(Symbol receiver, Object other) {
-		return (receiver.toString().compareTo(other.toString())) < 0;
-	}
-
 	public static HashSet<String> allStrings(Object receiver) {
 		return Symbol.allStrings();
 	}
