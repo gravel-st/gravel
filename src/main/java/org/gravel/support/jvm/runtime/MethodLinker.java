@@ -3,15 +3,13 @@ package org.gravel.support.jvm.runtime;
 import java.lang.invoke.CallSite;
 import java.lang.invoke.ConstantCallSite;
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
-import java.lang.invoke.SwitchPoint;
 
 import org.gravel.core.Symbol;
-import org.gravel.support.parser.AbsoluteReference;
-import org.gravel.support.parser.Reference;
-import org.gravel.support.parser.SingletonHolder;
+import org.gravel.support.compiler.ast.AbsoluteReference;
+import org.gravel.support.compiler.ast.Reference;
+
 
 public class MethodLinker {
 
@@ -19,14 +17,6 @@ public class MethodLinker {
 			MethodType type) throws Throwable {
 		BaseCallSite site = SmalltalkCallSite.newInstance(lookup, type,
 				selector);
-		return site;
-	}
-
-	public static CallSite blockBootstrap(Lookup lookup, String selector,
-			MethodType type, String paramSources, String lbiPrec)
-			throws Throwable {
-		LiteralBlockCallSite site = LiteralBlockCallSite.newInstance(lookup,
-				type, selector, paramSources, lbiPrec);
 		return site;
 	}
 

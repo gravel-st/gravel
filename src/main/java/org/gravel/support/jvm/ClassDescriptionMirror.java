@@ -3,23 +3,22 @@ package org.gravel.support.jvm;
 import java.util.HashSet;
 
 import org.gravel.core.Symbol;
+import org.gravel.support.compiler.ast.ClassDescriptionNode;
+import org.gravel.support.compiler.ast.ClassMapping;
+import org.gravel.support.compiler.ast.ClassNode;
+import org.gravel.support.compiler.ast.MethodNode;
+import org.gravel.support.compiler.ast.PackageNode;
+import org.gravel.support.compiler.ast.Parser;
+import org.gravel.support.compiler.ast.Reference;
+import org.gravel.support.compiler.ast.SystemDefinitionNode;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassDescriptionNode;
-import org.gravel.support.parser.ClassMapping;
-import org.gravel.support.parser.ClassNode;
-import org.gravel.support.parser.MethodNode;
-import org.gravel.support.parser.PackageNode;
-import org.gravel.support.parser.Parser;
-import org.gravel.support.parser.Reference;
-import org.gravel.support.parser.SystemDefinitionNode;
-import org.gravel.support.parser.SystemNode;
 
 public abstract class ClassDescriptionMirror {
-	public static ClassDescriptionMirror forReference(
-			Reference reference) {
-		return reference.isMeta() ? new MetaclassMirror(reference) : new ClassMirror(reference);
+	public static ClassDescriptionMirror forReference(Reference reference) {
+		return reference.isMeta() ? new MetaclassMirror(reference)
+				: new ClassMirror(reference);
 	}
-	
+
 	protected final Reference reference;
 
 	protected ClassDescriptionMirror(Reference reference) {
@@ -34,8 +33,8 @@ public abstract class ClassDescriptionMirror {
 		ClassDescriptionNode currentClassNode = definitionClassNode();
 		final MethodNode current = currentClassNode.methodOrNilAt_(method
 				.selector());
-		Symbol targetPackageName = current == null ? definitionClassNode().packageName()
-				: current.packageName();
+		Symbol targetPackageName = current == null ? definitionClassNode()
+				.packageName() : current.packageName();
 		SystemDefinitionNode newSystem = ImageBootstrapper.systemMapping
 				.systemDefinitionNode().copyUpdatePackage_do_(
 						targetPackageName,
@@ -65,6 +64,11 @@ public abstract class ClassDescriptionMirror {
 
 	public abstract ClassDescriptionNode definitionClassNode();
 
+	public ClassDescriptionNode runtimeClassNode() {
+		return ImageBootstrapper.systemMapping.classMappingAtReference_(
+				reference).classNode();
+	}
+
 	public HashSet<Symbol> definitionSelectors() {
 		final HashSet<Symbol> set = new HashSet<Symbol>();
 		definitionClassNode().selectorsDo_(new Block1<Object, String>() {
@@ -77,7 +81,20 @@ public abstract class ClassDescriptionMirror {
 		});
 		return set;
 	}
-	
+
+	public HashSet<Symbol> flattenedSelectors() {
+		final HashSet<Symbol> set = new HashSet<Symbol>();
+		runtimeClassNode().selectorsDo_(new Block1<Object, String>() {
+
+			@Override
+			public Object value_(String selectorString) {
+				set.add(Symbol.value(selectorString));
+				return null;
+			}
+		});
+		return set;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -99,7 +116,8 @@ public abstract class ClassDescriptionMirror {
 		if (!(selObject instanceof Symbol))
 			return null;
 		Symbol selector = (Symbol) selObject;
-		MethodNode method = definitionClassNode().methodOrNilAt_(selector.asString());
+		MethodNode method = runtimeClassNode().methodOrNilAt_(
+				selector.asString());
 		if (method == null) {
 			return null;
 		}
@@ -139,22 +157,27 @@ public abstract class ClassDescriptionMirror {
 	public Reference reference() {
 		return reference;
 	}
-	
+
 	public HashSet<ClassDescriptionMirror> subclasses() {
 		final HashSet<ClassDescriptionMirror> set = new HashSet<>();
-		ImageBootstrapper.systemMapping.subclassMappingsFor_do_(reference, new Block1<Object, ClassMapping>() {
-	
-			@Override
-			public Object value_(ClassMapping arg1) {
-				set.add(ClassDescriptionMirror.forReference(arg1.reference()));
-				return null;
-			}});
+		ImageBootstrapper.systemMapping.subclassMappingsFor_do_(reference,
+				new Block1<Object, ClassMapping>() {
+
+					@Override
+					public Object value_(ClassMapping arg1) {
+						set.add(ClassDescriptionMirror.forReference(arg1
+								.reference()));
+						return null;
+					}
+				});
 		return set;
 	}
 
 	public ClassDescriptionMirror superclass() {
-		Reference superclassReference = ImageBootstrapper.systemMapping.classMappingAtReference_(reference).superclassReference();
-		if (superclassReference == null) return null;
+		Reference superclassReference = ImageBootstrapper.systemMapping
+				.classMappingAtReference_(reference).superclassReference();
+		if (superclassReference == null)
+			return null;
 		return ClassDescriptionMirror.forReference(superclassReference);
 	}
 

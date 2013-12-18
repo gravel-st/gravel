@@ -1,7 +1,5 @@
 (reader defineClass: 'Integer' superclass: 'org.gravel.lang.Number')
 !
-(reader propertyAt: 'javaClass' put: 'java.lang.Number')
-!
 (reader addMethod: 'gravel')
 !
 > aMagnitude

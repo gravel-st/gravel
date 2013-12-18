@@ -1,11 +1,9 @@
 package org.gravel.support.jvm;
 
-import java.util.HashSet;
-
 import org.gravel.core.Symbol;
+import org.gravel.support.compiler.ast.ClassNode;
+import org.gravel.support.compiler.ast.PackageNode;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassNode;
-import org.gravel.support.parser.PackageNode;
 
 public class PackageMirror {
 

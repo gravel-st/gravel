@@ -5,15 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gravel.core.Symbol;
+import org.gravel.support.compiler.ast.ClassNode;
+import org.gravel.support.compiler.ast.EmptyTraitUsageNode;
+import org.gravel.support.compiler.ast.MethodNode;
+import org.gravel.support.compiler.ast.Parser;
+import org.gravel.support.compiler.ast.SharedDeclarationNode;
+import org.gravel.support.compiler.ast.SystemDefinitionNode;
+import org.gravel.support.compiler.ast.VariableDeclarationNode;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassNode;
-import org.gravel.support.parser.EmptyTraitUsageNode;
-import org.gravel.support.parser.MethodNode;
-import org.gravel.support.parser.Parser;
-import org.gravel.support.parser.SharedDeclarationNode;
-import org.gravel.support.parser.SystemDefinitionNode;
-import org.gravel.support.parser.SystemNode;
-import org.gravel.support.parser.VariableDeclarationNode;
 
 public class ClassBuilder {
 
@@ -55,12 +54,13 @@ public class ClassBuilder {
 		MethodNode[] _methods = methods.toArray(new MethodNode[methods.size()]);
 		MethodNode[] _classMethods = classMethods
 				.toArray(new MethodNode[classMethods.size()]);
+		Symbol[] _namespace = new Symbol[] {Symbol.value("ClassBuilder")};
 		ClassNode classNode = ClassNode.factory
 				.name_superclassPath_properties_instVars_classInstVars_sharedVariables_methods_classMethods_namespace_isExtension_isTrait_traitUsage_classTraitUsage_(
 						Symbol.value(name), superclassName, _properties,
 						_instVars, _classInstVars,
 						new SharedDeclarationNode[0], _methods, _classMethods,
-						new Symbol[0], false, false,
+						_namespace, false, false,
 						EmptyTraitUsageNode.factory.basicNew(),
 						EmptyTraitUsageNode.factory.basicNew());
 		SystemDefinitionNode systemDefinitionNode = ImageBootstrapper.systemMapping

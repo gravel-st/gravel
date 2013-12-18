@@ -5,110 +5,39 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Map;
 
 import org.gravel.core.Symbol;
-import org.gravel.support.compiler.BytecodeBlockGenerator.JavaType;
-import org.gravel.support.compiler.BytecodeBlockGenerator.JavaVarDecl;
-import org.gravel.support.compiler.BytecodeClassGenerator;
-import org.gravel.support.compiler.BytecodeFunctionGenerator;
-import org.gravel.support.compiler.LiteralBlockInlinePrecondition;
-import org.gravel.support.compiler.SourceIndex;
+import org.gravel.support.compiler.ASMClassWriter;
+import org.gravel.support.compiler.ast.AbsoluteReference;
+import org.gravel.support.compiler.ast.ClassMapping;
+import org.gravel.support.compiler.ast.Reference;
+import org.gravel.support.compiler.ast.SystemMapping;
+import org.gravel.support.compiler.ast.SystemMappingCompilerTools;
+import org.gravel.support.compiler.jvm.Invoke;
+import org.gravel.support.compiler.jvm.InvokeInterface;
+import org.gravel.support.compiler.jvm.InvokeStatic;
+import org.gravel.support.compiler.jvm.InvokeVirtual;
+import org.gravel.support.compiler.jvm.JVMArrayType;
+import org.gravel.support.compiler.jvm.JVMBooleanType;
+import org.gravel.support.compiler.jvm.JVMByteType;
+import org.gravel.support.compiler.jvm.JVMCharType;
+import org.gravel.support.compiler.jvm.JVMClass;
+import org.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import org.gravel.support.compiler.jvm.JVMIntType;
+import org.gravel.support.compiler.jvm.JVMLongType;
+import org.gravel.support.compiler.jvm.JVMMethodType;
+import org.gravel.support.compiler.jvm.JVMType;
+import org.gravel.support.compiler.jvm.JVMVoidType;
 import org.gravel.support.jvm.ArrayExtensions;
 import org.gravel.support.jvm.Block0;
 import org.gravel.support.jvm.Block1;
 import org.gravel.support.jvm.ObjectClass;
-import org.gravel.support.parser.AbsoluteReference;
-import org.gravel.support.parser.BoundVariableDeclarationNode;
-import org.gravel.support.parser.ClassMapping;
-import org.gravel.support.parser.Expression;
-import org.gravel.support.parser.MethodNode;
-import org.gravel.support.parser.NilLiteralNode;
-import org.gravel.support.parser.Node;
-import org.gravel.support.parser.PragmaNode;
-import org.gravel.support.parser.Reference;
-import org.gravel.support.parser.ReturnNode;
-import org.gravel.support.parser.SequenceNode;
-import org.gravel.support.parser.SourceFile;
-import org.gravel.support.parser.SystemMapping;
-import org.gravel.support.parser.SystemMappingCompilerTools;
-import org.gravel.support.parser.UnaryMethodNode;
-import org.gravel.support.parser.VariableAccessToFieldAccessConverter;
 
-final class JavaSystemMappingCompilerTools extends SystemMappingCompilerTools {
+public final class JavaSystemMappingCompilerTools extends
+		SystemMappingCompilerTools {
 
 	private int classCounter = 1;
 	private int nlrMarkers = 1;
-
-	@Override
-	public Class compileExtensionJavaClass_prefix_methods_identityClass_instVars_allInstVars_instVarOwners_sourceFile_(
-			Reference _reference, String _namePrefix, MethodNode[] _methods,
-			Class _identityClass, BoundVariableDeclarationNode[] _instVars,
-			BoundVariableDeclarationNode[] _allInstVars,
-			Map<Reference, Class> _instVarOwners, SourceFile _sourceFile) {
-
-		final String dottedName = _namePrefix + "$ExtensionClass"
-				+ (classCounter++);
-		JavaType identityType = _identityClass == null ? JavaType
-				.fromDotted(dottedName) : JavaType.getType(_identityClass);
-		JavaVarDecl[] instVars = nodesToDecls(_instVars, _instVarOwners,
-				identityType);
-		JavaVarDecl[] allInstVars = nodesToDecls(_allInstVars, _instVarOwners,
-				identityType);
-		Class javaClass = new BytecodeClassGenerator(_reference, dottedName,
-				identityType, _methods, true, instVars, Object.class,
-				getSourceIndex(_sourceFile)).createInstanceClass();
-		return javaClass;
-	}
-
-	@Override
-	public Class compileJavaClass_name_superclass_methods_instVars_allInstVars_instVarOwners_sourceFile_(
-			Reference _reference, String _aName, Class _aJavaClass,
-			MethodNode[] _methods, BoundVariableDeclarationNode[] _instVars,
-			BoundVariableDeclarationNode[] _allInstVars,
-			Map<Reference, Class> _instVarOwners, SourceFile _sourceFile) {
-
-		final JavaType identityType = JavaType.fromDotted(_aName);
-		JavaVarDecl[] instVars = nodesToDecls(_instVars, _instVarOwners,
-				identityType);
-		JavaVarDecl[] allInstVars = nodesToDecls(_allInstVars, _instVarOwners,
-				identityType);
-		return new BytecodeClassGenerator(_reference, _aName, identityType,
-				_methods, false, instVars, _aJavaClass,
-				getSourceIndex(_sourceFile)).createInstanceClass();
-	}
-
-	public JavaVarDecl[] nodesToDecls(BoundVariableDeclarationNode[] _instVars,
-			final Map<Reference, Class> _instVarOwners,
-			final JavaType identityType) {
-		if (identityType == null) {
-			throw new RuntimeException();
-		}
-		return ArrayExtensions.collect_(_instVars,
-				new Block1<JavaVarDecl, BoundVariableDeclarationNode>() {
-
-					@Override
-					public JavaVarDecl value_(BoundVariableDeclarationNode node) {
-						Class ownerClass = _instVarOwners.get(node.ownerType());
-						JavaType ownerType;
-						if (ownerClass == null) {
-							ownerType = identityType;
-						} else {
-							ownerType = identityType;
-
-							// JavaType.getType(ownerClass);
-						}
-						return new JavaVarDecl(node.name(), JavaType
-								.getType(Object.class), ownerType);
-					}
-				});
-	}
-
-	private SourceIndex getSourceIndex(SourceFile sourceFile) {
-		if (sourceFile == null)
-			return null;
-		return new SourceIndex(sourceFile);
-	}
 
 	@Override
 	public Class findJavaClass_(Symbol[] path) {
@@ -231,7 +160,9 @@ final class JavaSystemMappingCompilerTools extends SystemMappingCompilerTools {
 			Method method = identityClass.getDeclaredMethod("initialize");
 			Object instance = aSystemMapping
 					.singletonAtReference_(_aClassMapping.reference().nonmeta());
-			MethodHandles.lookup().unreflect(method).invoke(instance);
+			final MethodHandle unreflect = MethodHandles.lookup().unreflect(
+					method);
+			unreflect.invoke(instance);
 			System.out.println("Initializing " + identityClass);
 			return this;
 		} catch (NoSuchMethodException e) {
@@ -244,7 +175,6 @@ final class JavaSystemMappingCompilerTools extends SystemMappingCompilerTools {
 		}
 	}
 
-	@Override
 	public MethodHandle bindMethodHandle_to_(MethodHandle _methodHandle,
 			Object _object) {
 		return _methodHandle.bindTo(_object);
@@ -262,25 +192,10 @@ final class JavaSystemMappingCompilerTools extends SystemMappingCompilerTools {
 	}
 
 	@Override
-	public Object evaluateExpression_reference_(Expression _expression, AbsoluteReference reference) {
-		if (_expression == null) return null;
-		PragmaNode[] _anArray = new PragmaNode[0];
-		String[] _instVarNames = new String[0];
-		Expression owner = NilLiteralNode.factory.basicNew();
-		UnaryMethodNode method = UnaryMethodNode.factory.returnExpression_(_expression);
-		UnaryMethodNode linked = (UnaryMethodNode) VariableAccessToFieldAccessConverter.factory
-				.instVarNames_owner_ownerReference_(_instVarNames, owner,
-						reference).visit_(method);
-		BytecodeFunctionGenerator bytecodeFunctionGenerator = new BytecodeFunctionGenerator(
-				linked, LiteralBlockInlinePrecondition
-						.deny(), reference);
-		Class<?> createInstanceClass = bytecodeFunctionGenerator
-				.createInstanceClass();
+	public Object evaluateBlock0Class_(Class _aClass) {
 		try {
-			Object function = createInstanceClass.getConstructor()
-					.newInstance();
-			Object value = createInstanceClass.getMethod("value").invoke(
-					function);
+			Object function = _aClass.getConstructor().newInstance();
+			Object value = _aClass.getMethod("value").invoke(function);
 			return value;
 		} catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
@@ -303,6 +218,97 @@ final class JavaSystemMappingCompilerTools extends SystemMappingCompilerTools {
 			return _holder.createGetter().invokeExact();
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public String nextExtensionPostfix() {
+		return "Extension" + classCounter++;
+	}
+
+	@Override
+	public Class writeClass_(JVMClass jvmClass) {
+		return new ASMClassWriter(jvmClass).createClass();
+	}
+
+	@Override
+	public JVMType jvmTypeForClass_(Class _aClass) {
+		if (_aClass.isPrimitive()) {
+			if (_aClass == void.class)
+				return JVMVoidType.factory.basicNew();
+			if (_aClass == char.class)
+				return JVMCharType.factory.basicNew();
+			if (_aClass == byte.class)
+				return JVMByteType.factory.basicNew();
+			if (_aClass == int.class)
+				return JVMIntType.factory.basicNew();
+			if (_aClass == long.class)
+				return JVMLongType.factory.basicNew();
+			if (_aClass == boolean.class)
+				return JVMBooleanType.factory.basicNew();
+			throw new RuntimeException("niy: " + _aClass);
+		}
+		if (_aClass.isArray()) {
+			return JVMArrayType.factory.elementType_(this
+					.jvmTypeForClass_(_aClass.getComponentType()));
+		}
+		return JVMDefinedObjectType.factory.dottedClassName_(_aClass
+				.getCanonicalName());
+	}
+
+	@Override
+	public Invoke createInvokeInstruction_name_numArgs_(
+			JVMDefinedObjectType _type, String _name, int _numArgs) {
+		Class<?> receiverClass;
+		try {
+			receiverClass = Class.forName(_type.dottedClassName());
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+		Method method = MethodTools.searchForMethod(receiverClass, _name,
+				_numArgs + 1, true);
+		if (method == null) {
+			method = MethodTools.searchForMethod(receiverClass, _name,
+					_numArgs, false);
+
+			if (method == null) {
+				return null;
+			}
+			JVMType[] arguments = ArrayExtensions.collect_(
+					method.getParameterTypes(),
+					new Block1<JVMType, Class<?>>() {
+
+						@Override
+						public JVMType value_(Class<?> arg1) {
+							return jvmTypeForClass_(arg1);
+						}
+					});
+			JVMMethodType _aJVMMethodType = JVMMethodType.factory
+					.returnType_arguments_(
+							jvmTypeForClass_(method.getReturnType()), arguments);
+			if (receiverClass.isInterface()) {
+				return InvokeInterface.factory.ownerType_name_signature_(_type,
+						_name, _aJVMMethodType);
+			} else {
+				return InvokeVirtual.factory.ownerType_name_signature_(_type,
+						_name, _aJVMMethodType);
+			}
+
+		} else {
+			JVMType[] arguments = ArrayExtensions.collect_(
+					method.getParameterTypes(),
+					new Block1<JVMType, Class<?>>() {
+
+						@Override
+						public JVMType value_(Class<?> arg1) {
+							return jvmTypeForClass_(arg1);
+						}
+					});
+			JVMMethodType _aJVMMethodType = JVMMethodType.factory
+					.returnType_arguments_(
+							jvmTypeForClass_(method.getReturnType()), arguments);
+			return InvokeStatic.factory.ownerType_name_signature_(_type, _name,
+					_aJVMMethodType);
 		}
 	}
 }

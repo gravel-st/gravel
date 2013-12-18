@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.gravel.core.Symbol;
-import org.gravel.support.parser.SelectorConverter;
+import org.gravel.support.compiler.ast.SelectorConverter;
 
 public abstract class BaseCallSite extends MutableCallSite {
 
@@ -46,13 +46,13 @@ public abstract class BaseCallSite extends MutableCallSite {
 	private static final Set<BaseCallSite> callsites = Collections
 			.newSetFromMap(new WeakHashMap<BaseCallSite, Boolean>());
 
-	public static void register(BaseCallSite callsite) {
+	public synchronized static void register(BaseCallSite callsite) {
 		callsites.add(callsite);
 	}
 
 	protected final MethodHandle fallback;
 
-	public static void resetAll() {
+	public synchronized static void resetAll() {
 		for (BaseCallSite callsite : callsites) {
 			callsite.reset();
 		}

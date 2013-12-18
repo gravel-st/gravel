@@ -26,7 +26,7 @@ public class DeltaBlueTest {
 		}
 	}
 
-	@Test @Ignore
+	@Test
 	public void testRunJavaDeltaBlue() {
 		for (int i = 0; i < ITERATIONS; i++) {
 			Date start = new Date();
@@ -37,7 +37,7 @@ public class DeltaBlueTest {
 		}
 	}
 
-	@Test @Ignore
+	@Test
 	public void testRunGravelDeltaBlueLong() {
 		Object appClass = ImageBootstrapper.systemMapping
 				.singletonAtReferenceString_("org.gravel.test.deltablue.Planner");
@@ -49,15 +49,16 @@ public class DeltaBlueTest {
 					+ (stop.getTime() - start.getTime()) + " ms");
 		}
 	}
-	@Test @Ignore
+
+	@Test
 	public void testRunJavaDeltaBlueLong() {
-//		for (int i = 0; i < ITERATIONS; i++) {
+		for (int i = 0; i < ITERATIONS; i++) {
 			Date start = new Date();
 			DeltaBlue.longBenchmark();
 			Date stop = new Date();
 			System.out.println("Duration: "
 					+ (stop.getTime() - start.getTime()) + " ms");
-//		}
+		}
 	}
 
 }

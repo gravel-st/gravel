@@ -12,9 +12,14 @@ import org.gravel.support.jvm.runtime.MethodTools;
 
 public class JettyToStHttpServletConverter extends HttpServlet
 {
+	private MethodHandle doGet_response_;
+	private MethodHandle doPost_response_;
+
 	public JettyToStHttpServletConverter(Object stServlet) {
 		super();
 		this.stServlet = stServlet;
+		this.doGet_response_ = MethodTools.getHandle(stServlet, "doGet:response:");
+		this.doPost_response_ = MethodTools.getHandle(stServlet, "doPost:response:");
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +29,7 @@ public class JettyToStHttpServletConverter extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	try {
-    		MethodTools.perform(stServlet, "doGet:response:", request, response);
+			doGet_response_.invoke(stServlet, request, response);
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
@@ -33,7 +38,7 @@ public class JettyToStHttpServletConverter extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	try {
-    		MethodTools.perform(stServlet, "doPost:response:", request, response);
+    		doPost_response_.invoke(stServlet, request, response);
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}

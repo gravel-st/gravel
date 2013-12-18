@@ -11,7 +11,7 @@ add: anObject
 (reader addMethod: 'gravel')
 !
 java_add: anObject
-	<primitive: #('java.util.HashSet' 'add')>
+	<primitive: 'add'>
 	
 !
 (reader addMethod: 'gravel')

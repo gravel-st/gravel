@@ -1,9 +1,8 @@
 package org.gravel.support.jvm;
 
+import org.gravel.support.compiler.ast.MetaclassNode;
+import org.gravel.support.compiler.ast.Reference;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassNode;
-import org.gravel.support.parser.MetaclassNode;
-import org.gravel.support.parser.Reference;
 
 public class MetaclassMirror extends ClassDescriptionMirror {
 
@@ -26,7 +25,7 @@ public class MetaclassMirror extends ClassDescriptionMirror {
 	@Override
 	public MetaclassNode definitionClassNode() {
 		return (MetaclassNode) ImageBootstrapper.systemMapping
-				.definitionClassNodeAt_(reference);
+				.definitionOrObsoleteClassNodeAt_(reference);
 
 	}
 

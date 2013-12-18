@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.gravel.support.parser.ClassDescriptionNode;
-import org.gravel.support.parser.Reference;
-
 public class DictionaryExtensions {
 	public static final Factory factory = new Factory();
 

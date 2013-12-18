@@ -1,10 +1,6 @@
 (reader defineClass: 'SmallInteger' superclass: 'org.gravel.lang.Integer')
 !
-(reader propertyAt: 'extensionsClass' put: 'org.gravel.support.jvm.IntegerExtensions')
-!
 (reader propertyAt: 'javaClass' put: 'java.lang.Integer')
-!
-(reader propertyAt: 'factoryClass' put: 'org.gravel.support.jvm.IntegerExtensions$Factory')
 !
 (reader addMethod: 'gravel')
 !

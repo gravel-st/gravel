@@ -1,0 +1,10 @@
+(reader defineClass: 'WhileBooleanLoop' superclass: 'org.gravel.support.compiler.jvm.WhileLoop')
+!
+(reader addMethod: 'As yet unclassified')
+!
+effectStack: aJVMStack {JVMStack} {^JVMInstruction}
+	super effectStack: aJVMStack.
+	self assert: testFrame endStack size = 1.
+	self assert: testFrame endStack peek isBooleanType.
+	^self
+!

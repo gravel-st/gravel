@@ -4,9 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.gravel.core.Symbol;
+import org.gravel.support.compiler.ast.ClassMapping;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
 import org.gravel.support.jvm.runtime.MethodTools;
-import org.gravel.support.parser.ClassMapping;
 
 public class ObjectExtensions {
 	public static Method getCloneMethod(Class clazz) {
@@ -61,6 +61,8 @@ public class ObjectExtensions {
 	}
 
 	public static <X> X halt(X receiver) {
+//		receiver.toString();
+//		return receiver;
 		throw new RuntimeException("Halt encountered on: "
 				+ receiver.toString());
 	}

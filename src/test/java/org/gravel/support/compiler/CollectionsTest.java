@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.gravel.support.compiler.testtools.ClassBuilder;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
+import org.gravel.support.jvm.runtime.MethodTools;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,36 @@ public class CollectionsTest {
 	@Before
 	public void setUp() {
 		ImageBootstrapper.bootstrap();
+	}
+
+	@Test
+	public void test_asOrderedCollection() throws Throwable {
+
+		Class stClass = new ClassBuilder("FooObject_test_asOrderedCollection")
+				.method("array" +
+				"	^#(1 2 3)")
+				.method("foo" +
+						"	^#(1 2 3) asOrderedCollection")
+				.build();
+
+		Object fooObject = stClass.newInstance();
+		Object coll = MethodTools.perform(fooObject, "foo");
+		Object size = MethodTools.perform(coll, "size");
+		assertEquals(3, ((int)size));
+	}
+
+	@Test
+	public void test_Array_size() throws Throwable {
+
+		Class stClass = new ClassBuilder("FooObject_test_Array_size")
+				.method("array" +
+				"	^#(1 2 3)")
+				.build();
+
+		Object fooObject = stClass.newInstance();
+		Object coll = MethodTools.perform(fooObject, "array");
+		Object size = MethodTools.perform(coll, "size");
+		assertEquals(3, ((int)size));
 	}
 
 	@Test

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.gravel.support.parser.PackageNode;
-
 public class ArrayExtensions {
 
 	public static Object[] replaceFrom_to_with_startingAt_(Object[] receiver,
@@ -177,7 +175,14 @@ public class ArrayExtensions {
 	}
 
 	public static String joinWith_(String[] receiver, String separator) {
-		throw new UnsupportedOperationException("Not Implemented Yet");
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < receiver.length; i++) {
+			if (i != 0) {
+				str.append(separator);
+			}
+			str.append(receiver[i]);
+		}
+		return str.toString();
 	}
 
 	public static <E> E[] select_(E[] receiver, Predicate1<E> predicate) {
@@ -287,12 +292,17 @@ public class ArrayExtensions {
 		return receiver;
 	}
 
-	public static <E> E[] copyAt_put_(E[] receiver,
-			int index, E value) {
+	public static <E> E[] copyAt_put_(E[] receiver, int index, E value) {
 		E[] arr = Arrays.copyOf(receiver, receiver.length);
 		arr[index - 1] = value;
 		return arr;
 
+	}
+
+	public static <E> E[] asSortedArray(E[] receiver) {
+		E[] arr = receiver.clone();
+		Arrays.sort(arr);
+		return arr;
 	}
 
 }

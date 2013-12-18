@@ -4,6 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gravel.support.compiler.ast.ClassDiff;
+import org.gravel.support.compiler.jvm.BlockInnerClass;
+
 public class OrderedCollectionExtensions {
 	public static final Factory factory = new Factory();
 
@@ -92,5 +95,38 @@ public class OrderedCollectionExtensions {
 				return true;
 		}
 		return false;
+	}
+
+	public static <E> List<E> addAll_(List<E> receiver, E[] elements) {
+		for (E elem : elements) {
+			receiver.add(elem);
+		}
+		return receiver;
+	}
+
+	public static <E> E detect_ifNone_(List<E> receiver,
+			Predicate1<E> predicate1, Block0<E> ifNoneBlock) {
+		for (E elem : receiver) {
+			if (predicate1.value_(elem))
+				return elem;
+		}
+		return ifNoneBlock.value();
+	}
+
+	public static int[] toIntArray(List<Integer> receiver) {
+		int[] result = new int[receiver.size()];
+		for (int i = 0; i < receiver.size(); i++) {
+			result[i] = receiver.get(i);
+		}
+		return result;
+	}
+
+	public static <E> List<E> select_(List<E> receiver, Predicate1<E> predicate1) {
+		ArrayList<E> result = new ArrayList<E>();
+		for (E element : receiver) {
+			if (predicate1.value_(element))
+				result.add(element);
+		}
+		return result;
 	}
 }

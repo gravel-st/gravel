@@ -144,4 +144,8 @@ public class StringExtensions {
 	public static Float parseFloat(String _valueString) {
 		return Float.valueOf(_valueString);
 	}
+
+	public static Character lineEndConvention() {
+		return '\n';
+	}
 }

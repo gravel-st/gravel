@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.gravel.core.Symbol;
-import org.gravel.support.parser.SelectorConverter;
+import org.gravel.support.compiler.ast.SelectorConverter;
 
 public class MethodTools {
 	private static final SelectorConverter selectorConverter = (SelectorConverter) SelectorConverter.factory
@@ -69,7 +69,13 @@ public class MethodTools {
 					best = methods[i];
 
 				} else {
-					throw new RuntimeException("TODO: Multiple matches");
+					if (methods[i].getDeclaringClass() != best
+							.getDeclaringClass()) {
+						best = methods[i].getDeclaringClass().isAssignableFrom(
+								best.getDeclaringClass()) ? best : methods[i];
+					} else {
+						throw new RuntimeException("TODO: Multiple matches");
+					}
 				}
 		}
 		return best;
@@ -133,17 +139,19 @@ public class MethodTools {
 	}
 
 	public static MethodHandle getHandle(Object receiver, Symbol selector) {
-		MethodHandle methodHandle ;
+		MethodHandle methodHandle;
 		String methodName = selectorConverter.selectorAsFunctionName_(selector);
-		
+
 		if (receiver == null) {
-			 methodHandle = ImageBootstrapper.systemMapping.methodHandleForNil_(methodName);
-			
+			methodHandle = ImageBootstrapper.systemMapping
+					.methodHandleForNil_(methodName);
+
 		} else {
 			Class receiverClass = receiver.getClass();
-			methodHandle = ImageBootstrapper.systemMapping.methodHandleFor_methodName_(receiverClass, methodName);
+			methodHandle = ImageBootstrapper.systemMapping
+					.methodHandleFor_methodName_(receiverClass, methodName);
 		}
-		
+
 		return methodHandle;
 	}
 
@@ -195,12 +203,6 @@ public class MethodTools {
 		return handle.invoke(receiver, arg1);
 	}
 
-	public static Object perform(Object receiver, String selector, Object arg1, Object arg2)
-			throws Throwable {
-		MethodHandle handle = getHandle(receiver, selector);
-		return handle.invoke(receiver, arg1, arg2);
-	}
-
 	public static Object safePerform(Object receiver, String selector) {
 		try {
 			return perform(receiver, selector);
@@ -209,7 +211,8 @@ public class MethodTools {
 		}
 	}
 
-	public static Object safePerform(Object receiver, String selector, Object arg1) {
+	public static Object safePerform(Object receiver, String selector,
+			Object arg1) {
 		try {
 			return perform(receiver, selector, arg1);
 		} catch (Throwable e) {

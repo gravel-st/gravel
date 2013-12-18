@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.gravel.support.compiler.ast.ClassMapping;
+import org.gravel.support.compiler.ast.Reference;
+import org.gravel.support.compiler.ast.SystemMapping;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassMapping;
-import org.gravel.support.parser.Reference;
-import org.gravel.support.parser.SystemMapping;
 import org.junit.Before;
 import org.junit.Test;
 

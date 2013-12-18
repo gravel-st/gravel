@@ -1,8 +1,8 @@
 package org.gravel.support.jvm;
 
+import org.gravel.support.compiler.ast.ClassMapping;
+import org.gravel.support.compiler.ast.PackageNode;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassMapping;
-import org.gravel.support.parser.PackageNode;
 
 public class ReflectionExtensions {
 

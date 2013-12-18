@@ -1,4 +1,4 @@
-(reader defineClass: 'Interpreter' superclass: 'org.gravel.parser.NodeVisitor')
+(reader defineClass: 'Interpreter' superclass: 'org.gravel.support.compiler.ast.NodeVisitor')
 !
 (reader addInstVar: 'parent')
 !

@@ -1,8 +1,8 @@
 package org.gravel.support.jvm;
 
 import org.gravel.core.Symbol;
-import org.gravel.support.parser.MethodNode;
-import org.gravel.support.parser.SourcePosition;
+import org.gravel.support.compiler.ast.MethodNode;
+import org.gravel.support.compiler.ast.SourcePosition;
 
 public class MethodMirror {
 

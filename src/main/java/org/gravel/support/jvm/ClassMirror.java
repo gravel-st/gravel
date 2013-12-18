@@ -2,9 +2,9 @@ package org.gravel.support.jvm;
 
 
 import org.gravel.core.Symbol;
+import org.gravel.support.compiler.ast.ClassNode;
+import org.gravel.support.compiler.ast.Reference;
 import org.gravel.support.jvm.runtime.ImageBootstrapper;
-import org.gravel.support.parser.ClassNode;
-import org.gravel.support.parser.Reference;
 
 public class ClassMirror extends ClassDescriptionMirror {
 
@@ -17,7 +17,7 @@ public class ClassMirror extends ClassDescriptionMirror {
 	}
 	
 	public ClassNode definitionClassNode() {
-		return (ClassNode) ImageBootstrapper.systemMapping.definitionClassNodeAt_(reference);
+		return (ClassNode) ImageBootstrapper.systemMapping.definitionOrObsoleteClassNodeAt_(reference);
 	}
 	
 	public boolean isMeta() {
