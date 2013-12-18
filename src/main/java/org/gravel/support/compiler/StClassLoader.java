@@ -8,6 +8,7 @@ public class StClassLoader extends ClassLoader {
 	private static class ClassRecord {
 
 		private final String name;
+
 		public String getName() {
 			return name;
 		}
@@ -28,10 +29,11 @@ public class StClassLoader extends ClassLoader {
 			this.stClass = stClass;
 			this.checksum = checksum;
 		}
-		
+
 	}
+
 	private final HashMap<String, StClassLoader.ClassRecord> stClasses = new HashMap<>();
-	
+
 	public Class<?> defineClass(final String name, final byte[] b) {
 		final StClassLoader.ClassRecord current = stClasses.get(name);
 		if (current == null) {
@@ -47,9 +49,8 @@ public class StClassLoader extends ClassLoader {
 			return current.getStClass();
 		}
 	}
-	
-	public static String sha256Hash(final byte[] b)
-			 {
+
+	public static String sha256Hash(final byte[] b) {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
@@ -59,8 +60,8 @@ public class StClassLoader extends ClassLoader {
 		md.update(b);
 		byte[] mdbytes = md.digest();
 		StringBuffer hexString = new StringBuffer();
-		for (int i=0;i<mdbytes.length;i++) {
-		  hexString.append(Integer.toHexString(0xFF & mdbytes[i]));
+		for (int i = 0; i < mdbytes.length; i++) {
+			hexString.append(Integer.toHexString(0xFF & mdbytes[i]));
 		}
 		String checksum = hexString.toString();
 		return checksum;

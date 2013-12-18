@@ -11,38 +11,40 @@ import org.objectweb.asm.Type;
 
 public class BootstrapHandles {
 
-	public static final Handle bootstrap = new Handle(Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),	"bootstrap", MethodType.methodType(CallSite.class,
-			MethodHandles.Lookup.class, String.class, MethodType.class)
-			.toMethodDescriptorString());
+	public static final Handle bootstrap = new Handle(Opcodes.H_INVOKESTATIC,
+			Type.getInternalName(MethodLinker.class), "bootstrap", MethodType
+					.methodType(CallSite.class, MethodHandles.Lookup.class,
+							String.class, MethodType.class)
+					.toMethodDescriptorString());
 	public static final Handle superBootstrap = new Handle(
-	Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class), "superBootstrap", MethodType
-			.methodType(CallSite.class, MethodHandles.Lookup.class,
-					String.class, MethodType.class, String.class)
-			.toMethodDescriptorString());
-	public static final Handle blockBootstrap = new Handle(
-	Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class), "blockBootstrap", MethodType
-			.methodType(CallSite.class, MethodHandles.Lookup.class,
-					String.class, MethodType.class, String.class,
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"superBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class,
 					String.class).toMethodDescriptorString());
+	public static final Handle blockBootstrap = new Handle(
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"blockBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class,
+					String.class, String.class).toMethodDescriptorString());
 	public static final Handle fieldReadBootstrap = new Handle(
-	Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class), "fieldReadBootstrap", MethodType
-			.methodType(CallSite.class, MethodHandles.Lookup.class,
-					String.class, MethodType.class)
-			.toMethodDescriptorString());
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"fieldReadBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class)
+					.toMethodDescriptorString());
 	public static final Handle fieldWriteBootstrap = new Handle(
-	Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class), "fieldWriteBootstrap", MethodType
-			.methodType(CallSite.class, MethodHandles.Lookup.class,
-					String.class, MethodType.class)
-			.toMethodDescriptorString());
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"fieldWriteBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class)
+					.toMethodDescriptorString());
 	public static final Handle globalReadBootstrap = new Handle(
-	Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class), "globalReadBootstrap", MethodType
-			.methodType(CallSite.class, MethodHandles.Lookup.class,
-					String.class, MethodType.class, String.class)
-			.toMethodDescriptorString());
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"globalReadBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class,
+					String.class).toMethodDescriptorString());
 	public static final Handle globalWriteBootstrap = new Handle(
-	Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class), "globalWriteBootstrap", MethodType
-			.methodType(CallSite.class, MethodHandles.Lookup.class,
-					String.class, MethodType.class, String.class)
-			.toMethodDescriptorString());
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"globalWriteBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class,
+					String.class).toMethodDescriptorString());
 
 }

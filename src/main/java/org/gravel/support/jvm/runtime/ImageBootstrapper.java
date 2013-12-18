@@ -4,15 +4,11 @@ import java.io.File;
 
 import org.gravel.support.compiler.ast.ClassProducer;
 import org.gravel.support.compiler.ast.DiskClassReader;
-import org.gravel.support.compiler.ast.SelectorConverter;
 import org.gravel.support.compiler.ast.SystemDefinitionNode;
 import org.gravel.support.compiler.ast.SystemMapping;
 import org.gravel.support.compiler.ast.SystemNode;
 
 public class ImageBootstrapper {
-	private static final SelectorConverter selectorConverter = SelectorConverter.factory
-			.basicNew();
-
 
 	public static final SystemMapping systemMapping = SystemMapping.factory
 			.systemNode_compilerTools_(SystemNode.factory.empty(),
