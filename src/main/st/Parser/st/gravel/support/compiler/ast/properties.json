@@ -1,0 +1,5 @@
+{
+	"sharedVariables": {},
+	"privateImports": ["st.gravel.support.compiler.jvm"],
+	"publicImports": []
+}

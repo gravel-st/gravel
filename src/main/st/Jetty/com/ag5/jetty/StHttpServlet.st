@@ -1,4 +1,4 @@
-(reader defineClass: 'StHttpServlet' superclass: 'org.gravel.lang.Object')
+(reader defineClass: 'StHttpServlet' superclass: 'st.gravel.lang.Object')
 !
 (reader addMethod: 'gravel')
 !

@@ -1,26 +1,26 @@
-(reader defineClass: 'HttpServletResponse' superclass: 'org.gravel.lang.Object')
+(reader defineClass: 'HttpServletResponse' superclass: 'st.gravel.lang.Object')
 !
 (reader propertyAt: 'javaClass' put: 'javax.servlet.http.HttpServletResponse')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 contentType: aString
 	<primitive: 'setContentType'>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 sendRedirect: url
 	<primitive: 'sendRedirect'>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 status: statusCode
 	<primitive: 'setStatus'>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 writer
 	<primitive: 'getWriter'>

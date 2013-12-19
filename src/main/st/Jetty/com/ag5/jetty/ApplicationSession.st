@@ -1,4 +1,4 @@
-(reader defineClass: 'ApplicationSession' superclass: 'org.gravel.lang.Object')
+(reader defineClass: 'ApplicationSession' superclass: 'st.gravel.lang.Object')
 !
 (reader addInstVar: 'application')
 !

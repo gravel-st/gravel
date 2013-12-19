@@ -1,5 +1,5 @@
 {
 	"sharedVariables": {},
-	"privateImports": ["org.gravel.lang","org.gravel.ui"],
+	"privateImports": ["st.gravel.lang","st.gravel.ui"],
 	"publicImports": []
 }

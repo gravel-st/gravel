@@ -1,0 +1,5 @@
+{
+	"sharedVariables": {},
+	"privateImports": ["st.gravel.lang","com.ag5.os"],
+	"publicImports": ["st.gravel.support.compiler.ast"]
+}

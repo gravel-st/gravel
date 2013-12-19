@@ -1,14 +1,14 @@
-(reader defineClass: 'HttpServletRequest' superclass: 'org.gravel.lang.Object')
+(reader defineClass: 'HttpServletRequest' superclass: 'st.gravel.lang.Object')
 !
 (reader propertyAt: 'javaClass' put: 'javax.servlet.http.HttpServletRequest')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 parameterAt: aKey
 	<primitive: 'getParameter'>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 parameterNames
 	<primitive: 'getParameterNames'>

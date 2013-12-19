@@ -1,5 +1,0 @@
-{
-	"sharedVariables": {},
-	"privateImports": ["org.gravel.sunit","org.gravel.interpreter","org.gravel.lang","org.gravel.test.deltablue"],
-	"publicImports": []
-}

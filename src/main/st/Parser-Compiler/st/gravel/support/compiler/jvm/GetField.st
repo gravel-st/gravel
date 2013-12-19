@@ -1,0 +1,56 @@
+(reader defineClass: 'GetField' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
+!
+(reader addInstVar: 'ownerType')
+!
+(reader addInstVar: 'name')
+!
+(reader addInstVar: 'type')
+!
+(reader addMethod: 'visitor')
+!
+accept: visitor {JVMInstructionVisitor[X def]} {^X}
+	^visitor visitGetField: self
+!
+(reader addMethod: 'As yet unclassified')
+!
+effectStack: aJVMStack {JVMStack} {^JVMInstruction}
+	self assert: aJVMStack pop = ownerType.
+	aJVMStack push: self type.
+	^self
+!
+(reader addMethod: 'initialize-release')
+!
+initializeOwnerType: aJVMDefinedObjectType {JVMDefinedObjectType} name: aString {Str} type: aJVMDefinedObjectType2 {JVMType} {^Self}
+	ownerType := aJVMDefinedObjectType.
+	name := aString.
+	type := aJVMDefinedObjectType2.
+	self initialize
+!
+(reader addMethod: 'accessing')
+!
+name {^Str}
+	^name
+!
+(reader addMethod: 'accessing')
+!
+ownerType {^JVMDefinedObjectType}
+	^ownerType
+!
+(reader addMethod: 'accessing')
+!
+type {^JVMType}
+	^type
+!
+(reader addClassMethod: 'pegon')
+!
+instVarTypes {^[JVMDefinedObjectType, Str, JVMType]}
+	^#('ownerType' 'name' 'type')
+!
+(reader addClassMethod: 'instance creation')
+!
+ownerType: aJVMDefinedObjectType {JVMDefinedObjectType} name: aString {Str} type: aJVMDefinedObjectType2 {JVMType} {^GetField}
+	^self new
+		initializeOwnerType: aJVMDefinedObjectType
+		name: aString
+		type: aJVMDefinedObjectType2
+!

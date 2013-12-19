@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>st.gravel</groupId>
 	<artifactId>gravel.core</artifactId>
-	<version>0.1</version>
+	<version>0.2</version>
 	<build>
 		<resources>
 			<resource>
@@ -19,6 +19,17 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>st.gravel.tools.StartJetty</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>

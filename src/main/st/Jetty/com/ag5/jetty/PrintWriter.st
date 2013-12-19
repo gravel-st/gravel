@@ -1,14 +1,14 @@
-(reader defineClass: 'PrintWriter' superclass: 'org.gravel.lang.WriteStream')
+(reader defineClass: 'PrintWriter' superclass: 'st.gravel.lang.WriteStream')
 !
 (reader propertyAt: 'javaClass' put: 'java.io.PrintWriter')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 java_print: aString
 	<primitive: 'print'>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 nextPut: aCharacter
 	<primitive: 'print'>
