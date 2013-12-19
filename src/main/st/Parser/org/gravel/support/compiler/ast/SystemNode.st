@@ -85,11 +85,7 @@ diffTo: aSystemNode {SystemNode} {^SystemDiff}
 (reader addMethod: 'As yet unclassified')
 !
 flattenTraits {^SystemNode}
-	| nonTraits {Dict[Reference, ClassDescriptionNode]} |
-	nonTraits := classDescriptionNodes reject: [:each {ClassDescriptionNode} | each isTrait].
-	^SystemNode classDescriptionNodes: (nonTraits
-				collect: [:each {ClassDescriptionNode} | each flattenTraitsIn: self])
-		namespaceNodes: namespaceNodes
+	^(TraitFlattener start: self) flattenTraits
 !
 (reader addMethod: 'As yet unclassified')
 !

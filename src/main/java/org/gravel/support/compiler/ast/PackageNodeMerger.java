@@ -67,11 +67,14 @@ public class PackageNodeMerger extends Object implements Cloneable {
 	}
 
 	public SystemNode load() {
-		final Map<Reference, ClassNode> _classNodes;
-		final Map<Reference, ClassDescriptionNode> _classDescriptionNodes;
-		final Map<Reference, NamespaceNode> _namespaceNodes;
-		_classNodes = new java.util.HashMap<Reference, ClassNode>();
-		_namespaceNodes = new java.util.HashMap<Reference, NamespaceNode>();
+		final Map<Reference, ClassNode>[] _classNodes;
+		final Map<Reference, ClassDescriptionNode>[] _classDescriptionNodes;
+		final Map<Reference, NamespaceNode>[] _namespaceNodes;
+		_classDescriptionNodes = new Map[1];
+		_classNodes = new Map[1];
+		_namespaceNodes = new Map[1];
+		_classNodes[0] = new java.util.HashMap<Reference, ClassNode>();
+		_namespaceNodes[0] = new java.util.HashMap<Reference, NamespaceNode>();
 		this.packageClassNodesDo_(new org.gravel.support.jvm.Block1<Object, ClassNode>() {
 
 			@Override
@@ -79,10 +82,10 @@ public class PackageNodeMerger extends Object implements Cloneable {
 				if (!_classNode.isExtension()) {
 					final Reference _reference;
 					_reference = _classNode.reference();
-					if (_classNodes.containsKey(_reference)) {
+					if (_classNodes[0].containsKey(_reference)) {
 						throw new RuntimeException("Class " + _reference.toString() + " defined twice");
 					}
-					return _classNodes.put(_reference, _classNode);
+					return _classNodes[0].put(_reference, _classNode);
 				}
 				return PackageNodeMerger.this;
 			}
@@ -94,18 +97,18 @@ public class PackageNodeMerger extends Object implements Cloneable {
 				if (_classNode.isExtension()) {
 					final Reference _reference;
 					_reference = _classNode.reference();
-					if (!_classNodes.containsKey(_reference)) {
+					if (!_classNodes[0].containsKey(_reference)) {
 						throw new RuntimeException("Can\'t extend Class " + _reference.toString() + "; not defined yet");
 					}
-					return _classNodes.put(_reference, _classNodes.get(_reference).mergedWithExtension_(_classNode));
+					return _classNodes[0].put(_reference, _classNodes[0].get(_reference).mergedWithExtension_(_classNode));
 				}
 				return PackageNodeMerger.this;
 			}
 		});
-		_classDescriptionNodes = new java.util.HashMap<Reference, ClassDescriptionNode>();
-		for (final ClassNode _classNode : _classNodes.values()) {
-			_classDescriptionNodes.put(_classNode.reference(), _classNode);
-			_classDescriptionNodes.put(_classNode.metaclassNode().reference(), _classNode.metaclassNode());
+		_classDescriptionNodes[0] = new java.util.HashMap<Reference, ClassDescriptionNode>();
+		for (final ClassNode _classNode : _classNodes[0].values()) {
+			_classDescriptionNodes[0].put(_classNode.reference(), _classNode);
+			_classDescriptionNodes[0].put(_classNode.metaclassNode().reference(), _classNode.metaclassNode());
 		}
 		this.packageNamespaceNodesDo_(new org.gravel.support.jvm.Block1<Object, NamespaceNode>() {
 
@@ -113,24 +116,24 @@ public class PackageNodeMerger extends Object implements Cloneable {
 			public Object value_(final NamespaceNode _namespaceNode) {
 				final Reference _reference;
 				_reference = _namespaceNode.reference();
-				if (_namespaceNodes.containsKey(_reference)) {
-					return _namespaceNodes.put(_reference, _namespaceNode.mergeWith_(_namespaceNodes.get(_reference)));
+				if (_namespaceNodes[0].containsKey(_reference)) {
+					return _namespaceNodes[0].put(_reference, _namespaceNode.mergeWith_(_namespaceNodes[0].get(_reference)));
 				} else {
-					return _namespaceNodes.put(_reference, _namespaceNode);
+					return _namespaceNodes[0].put(_reference, _namespaceNode);
 				}
 			}
 		});
-		for (final Reference _ref : _classNodes.keySet()) {
+		for (final Reference _ref : _classNodes[0].keySet()) {
 			final AbsoluteReference _namespace;
 			_namespace = _ref.namespace();
-			NamespaceNode _temp1 = _namespaceNodes.get(_namespace);
+			NamespaceNode _temp1 = _namespaceNodes[0].get(_namespace);
 			if (_temp1 == null) {
 				NamespaceNode _temp2 = NamespaceNode.factory.for_(_namespace);
-				_namespaceNodes.put(_namespace, _temp2);
+				_namespaceNodes[0].put(_namespace, _temp2);
 				_temp1 = _temp2;
 			}
 		}
-		return SystemNode.factory.classDescriptionNodes_namespaceNodes_(_classDescriptionNodes, _namespaceNodes).flattenTraits();
+		return SystemNode.factory.classDescriptionNodes_namespaceNodes_(_classDescriptionNodes[0], _namespaceNodes[0]).flattenTraits();
 	}
 
 	public PackageNodeMerger packageClassNodesDo_(final org.gravel.support.jvm.Block1<Object, ClassNode> _aBlock) {

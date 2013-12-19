@@ -194,12 +194,13 @@ public class ClassMapping extends AbstractMapping implements Cloneable {
 	}
 
 	public java.util.Set<org.gravel.core.Symbol> selectors() {
-		final java.util.Set<org.gravel.core.Symbol> _set;
-		_set = new java.util.HashSet();
+		final java.util.Set<org.gravel.core.Symbol>[] _set;
+		_set = new java.util.Set[1];
+		_set[0] = new java.util.HashSet();
 		for (final MethodNode _each : _classNode.methods()) {
-			_set.add(org.gravel.core.Symbol.value(_each.selector()));
+			_set[0].add(org.gravel.core.Symbol.value(_each.selector()));
 		}
-		return _set;
+		return _set[0];
 	}
 
 	public ClassMapping superclassMappingIn_(final SystemMapping _aSystemMapping) {

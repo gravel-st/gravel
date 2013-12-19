@@ -15,12 +15,22 @@ public class SortedCollectionTest {
 	}
 
 	@Test
-	public void testSortArray() {
+	public void testSortArray1() {
+		Object result = ClassBuilder
+				.evaluate(" #(#E #D #C #B #A) asSortedCollection asArray");
+		String str = (String) MethodTools.safePerform(result, "printString");
+		assertEquals(
+				"#(#A #B #C #D #E)",
+				str);
+	}
+
+	@Test
+	public void testSortArray2() {
 		Object result = ClassBuilder
 				.evaluate(" #(#'Core-Magniture' #'IDE-Browser' #'Core-Visitor' #'Core-Collections-Kernel' #'Core-Kernel' #'Core-Reflection') asSortedCollection asArray");
 		String str = (String) MethodTools.safePerform(result, "printString");
 		assertEquals(
-				" #(#'Core-Collections-Kernel' #'Core-Kernel' #'Core-Magniture' #'Core-Reflection' #'Core-Visitor' #'IDE-Browser')",
+				"#(#'Core-Collections-Kernel' #'Core-Kernel' #'Core-Magniture' #'Core-Reflection' #'Core-Visitor' #'IDE-Browser')",
 				str);
 	}
 

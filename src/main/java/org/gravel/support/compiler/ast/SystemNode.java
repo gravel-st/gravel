@@ -26,6 +26,7 @@ import org.gravel.support.compiler.ast.AddClassDiff;
 import org.gravel.support.compiler.ast.WrapJavaclassDiff;
 import org.gravel.support.compiler.ast.RemoveClassDiff;
 import org.gravel.support.compiler.ast.NewClassDiff;
+import org.gravel.support.compiler.ast.TraitFlattener;
 import org.gravel.support.compiler.ast.AbsoluteReference;
 import org.gravel.support.compiler.ast.SourcePrinter;
 import org.gravel.support.compiler.ast.SourcePosition;
@@ -104,16 +105,17 @@ public class SystemNode extends Node implements Cloneable {
 	}
 
 	public Map<Reference, ClassNode> classNodes() {
-		final Map<Reference, ClassNode> _dict;
-		_dict = new java.util.HashMap<Reference, ClassNode>();
+		final Map<Reference, ClassNode>[] _dict;
+		_dict = new Map[1];
+		_dict[0] = new java.util.HashMap<Reference, ClassNode>();
 		for (final ClassDescriptionNode _each : _classDescriptionNodes.values()) {
 			if (_each.isClassNode()) {
 				final ClassNode _cn;
 				_cn = ((ClassNode) _each);
-				_dict.put(_each.reference(), _cn);
+				_dict[0].put(_each.reference(), _cn);
 			}
 		}
-		return _dict;
+		return _dict[0];
 	}
 
 	public SystemNode copy() {
@@ -127,11 +129,13 @@ public class SystemNode extends Node implements Cloneable {
 	}
 
 	public SystemDiff diffTo_(final SystemNode _aSystemNode) {
-		final List<ClassDiff> _unordered;
+		final List<ClassDiff>[] _unordered;
 		final SystemNode[] _start;
-		final List<ClassDiff> _classDiffs;
+		final List<ClassDiff>[] _classDiffs;
+		_unordered = new List[1];
 		_start = new SystemNode[1];
-		_unordered = new java.util.ArrayList();
+		_classDiffs = new List[1];
+		_unordered[0] = new java.util.ArrayList();
 		org.gravel.support.jvm.DictionaryExtensions.syncWith(this.classNodes(), _aSystemNode.classNodes(), new org.gravel.support.jvm.Block2<Object, ClassNode, ClassNode>() {
 
 			@Override
@@ -139,7 +143,7 @@ public class SystemNode extends Node implements Cloneable {
 				final UpdateClassDiff _diff;
 				_diff = _old.diffTo_(_new);
 				if (!_diff.isEmpty()) {
-					return _unordered.add(_diff);
+					return _unordered[0].add(_diff);
 				}
 				return SystemNode.this;
 			}
@@ -147,23 +151,23 @@ public class SystemNode extends Node implements Cloneable {
 
 			@Override
 			public Object value_(final ClassNode _classNode) {
-				return _unordered.add(_classNode.javaClassPath() == null ? AddClassDiff.factory.classNode_(_classNode) : WrapJavaclassDiff.factory.classNode_(_classNode));
+				return _unordered[0].add(_classNode.javaClassPath() == null ? AddClassDiff.factory.classNode_(_classNode) : WrapJavaclassDiff.factory.classNode_(_classNode));
 			}
 		}, new org.gravel.support.jvm.Block1<Object, ClassNode>() {
 
 			@Override
 			public Object value_(final ClassNode _classNode) {
-				return _unordered.add(RemoveClassDiff.factory.classNode_(_classNode));
+				return _unordered[0].add(RemoveClassDiff.factory.classNode_(_classNode));
 			}
 		});
 		_start[0] = this;
-		_classDiffs = new java.util.ArrayList();
+		_classDiffs[0] = new java.util.ArrayList();
 		boolean _temp1 = false;
 		while (!_temp1) {
-			_temp1 = _unordered.size() == 0;
+			_temp1 = _unordered[0].size() == 0;
 			if (!_temp1) {
 				final List<ClassDiff> _todo;
-				_todo = org.gravel.support.jvm.OrderedCollectionExtensions.select_(_unordered, new org.gravel.support.jvm.Predicate1<ClassDiff>() {
+				_todo = org.gravel.support.jvm.OrderedCollectionExtensions.select_(_unordered[0], new org.gravel.support.jvm.Predicate1<ClassDiff>() {
 
 					@Override
 					public boolean value_(final ClassDiff _elem) {
@@ -175,7 +179,7 @@ public class SystemNode extends Node implements Cloneable {
 				if (_todo.size() == 0) {
 					throw new RuntimeException("Prerequisite error; trying to load classes with unknown superclass");
 				}
-				_unordered.removeAll(_todo);
+				_unordered[0].removeAll(_todo);
 				for (final ClassDiff _each : _todo) {
 					if (_each.isNewClassDiff()) {
 						_start[0] = _start[0].withClassDescriptionNode_(((NewClassDiff) _each).classNode());
@@ -189,7 +193,7 @@ public class SystemNode extends Node implements Cloneable {
 									final ClassDiff _superNode;
 									final Reference _ref;
 									_ref = _nextRef;
-									_superNode = ((ClassDiff) org.gravel.support.jvm.OrderedCollectionExtensions.detect_ifNone_(_classDiffs, new org.gravel.support.jvm.Predicate1<ClassDiff>() {
+									_superNode = ((ClassDiff) org.gravel.support.jvm.OrderedCollectionExtensions.detect_ifNone_(_classDiffs[0], new org.gravel.support.jvm.Predicate1<ClassDiff>() {
 
 										@Override
 										public boolean value_(final ClassDiff _cd) {
@@ -208,11 +212,11 @@ public class SystemNode extends Node implements Cloneable {
 							}
 						}
 					}
-					_classDiffs.add(_each);
+					_classDiffs[0].add(_each);
 				}
 			}
 		}
-		return SystemDiff.factory.classDiffs_namespaces_(_classDiffs.toArray(new ClassDiff[_classDiffs.size()]), _aSystemNode.namespaceNodes());
+		return SystemDiff.factory.classDiffs_namespaces_(_classDiffs[0].toArray(new ClassDiff[_classDiffs[0].size()]), _aSystemNode.namespaceNodes());
 	}
 
 	public SystemNode_Factory factory() {
@@ -220,21 +224,7 @@ public class SystemNode extends Node implements Cloneable {
 	}
 
 	public SystemNode flattenTraits() {
-		final Map<Reference, ClassDescriptionNode> _nonTraits;
-		_nonTraits = org.gravel.support.jvm.DictionaryExtensions.reject_(_classDescriptionNodes, new org.gravel.support.jvm.Predicate1<ClassDescriptionNode>() {
-
-			@Override
-			public boolean value_(final ClassDescriptionNode _each) {
-				return _each.isTrait();
-			}
-		});
-		return SystemNode.factory.classDescriptionNodes_namespaceNodes_(org.gravel.support.jvm.DictionaryExtensions.collect_(_nonTraits, ((org.gravel.support.jvm.Block1<ClassDescriptionNode, ClassDescriptionNode>) (new org.gravel.support.jvm.Block1<ClassDescriptionNode, ClassDescriptionNode>() {
-
-			@Override
-			public ClassDescriptionNode value_(final ClassDescriptionNode _each) {
-				return (ClassDescriptionNode) _each.flattenTraitsIn_(SystemNode.this);
-			}
-		}))), _namespaceNodes);
+		return TraitFlattener.factory.start_(this).flattenTraits();
 	}
 
 	public boolean includesReference_(final Reference _aReference) {
@@ -331,13 +321,14 @@ public class SystemNode extends Node implements Cloneable {
 	}
 
 	public SystemNode withClassDescriptionNode_(final ClassDescriptionNode _aClassDescriptionNode) {
-		final AbsoluteReference _namespace;
-		_namespace = _aClassDescriptionNode.reference().namespace();
-		return this.factory().classDescriptionNodes_namespaceNodes_(org.gravel.support.jvm.DictionaryExtensions.copyAt_put_(_classDescriptionNodes, _aClassDescriptionNode.reference(), _aClassDescriptionNode), org.gravel.support.jvm.DictionaryExtensions.copyAt_ifAbsentPut_(_namespaceNodes, _namespace, ((org.gravel.support.jvm.Block0<NamespaceNode>) (new org.gravel.support.jvm.Block0<NamespaceNode>() {
+		final AbsoluteReference[] _namespace;
+		_namespace = new AbsoluteReference[1];
+		_namespace[0] = _aClassDescriptionNode.reference().namespace();
+		return this.factory().classDescriptionNodes_namespaceNodes_(org.gravel.support.jvm.DictionaryExtensions.copyAt_put_(_classDescriptionNodes, _aClassDescriptionNode.reference(), _aClassDescriptionNode), org.gravel.support.jvm.DictionaryExtensions.copyAt_ifAbsentPut_(_namespaceNodes, _namespace[0], ((org.gravel.support.jvm.Block0<NamespaceNode>) (new org.gravel.support.jvm.Block0<NamespaceNode>() {
 
 			@Override
 			public NamespaceNode value() {
-				return (NamespaceNode) NamespaceNode.factory.for_(_namespace);
+				return (NamespaceNode) NamespaceNode.factory.for_(_namespace[0]);
 			}
 		}))));
 	}

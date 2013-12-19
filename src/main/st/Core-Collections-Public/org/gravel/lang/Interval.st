@@ -1,4 +1,4 @@
-(reader defineClass: 'Interval' superclass: 'org.gravel.lang.SequenceableCollectionImpl')
+(reader defineClass: 'Interval' superclass: 'org.gravel.lang.CollectionImpl')
 !
 (reader addInstVar: 'start')
 !

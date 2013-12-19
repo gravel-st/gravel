@@ -2,6 +2,11 @@
 !
 (reader addMethod: 'As yet unclassified')
 !
+isBlockReadAfterWritten {^Bool}
+	^true
+!
+(reader addMethod: 'As yet unclassified')
+!
 withBlockRead {^VariableScopeAnalyzerState}
 	^self
 !

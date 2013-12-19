@@ -2,6 +2,11 @@
 !
 (reader addMethod: 'As yet unclassified')
 !
+isBlockReadAfterWritten {^Bool}
+	^false
+!
+(reader addMethod: 'As yet unclassified')
+!
 isUndecided {^Bool}
 	^false
 !

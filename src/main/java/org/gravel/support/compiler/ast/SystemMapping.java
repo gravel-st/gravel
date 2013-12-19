@@ -104,13 +104,14 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	}
 
 	public SystemMapping applyDiff_(final SystemDiff _aSystemDiff) {
-		final SystemMappingUpdater _updater;
-		_updater = this.newSystemMappingUpdater();
+		final SystemMappingUpdater[] _updater;
+		_updater = new SystemMappingUpdater[1];
+		_updater[0] = this.newSystemMappingUpdater();
 		for (final ClassDiff _each : _aSystemDiff.classDiffs()) {
-			_updater.visit_(_each);
+			_updater[0].visit_(_each);
 		}
-		_updater.setNamespaceNodes_(_aSystemDiff.namespaces());
-		_updater.link();
+		_updater[0].setNamespaceNodes_(_aSystemDiff.namespaces());
+		_updater[0].link();
 		return this;
 	}
 
@@ -493,13 +494,15 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	}
 
 	public ClassMapping newClassMappingForJavaClass_(final Class _receiverClass) {
-		final Map<org.gravel.core.Symbol, AbstractMethodMapping> _methodMappings;
+		final Map<org.gravel.core.Symbol, AbstractMethodMapping>[] _methodMappings;
 		final ClassNode _classNode;
 		final ClassMapping _superMapping;
-		final java.util.Set<org.gravel.core.Symbol> _allSelectors;
+		final java.util.Set<org.gravel.core.Symbol>[] _allSelectors;
+		_allSelectors = new java.util.Set[1];
+		_methodMappings = new Map[1];
 		_superMapping = this.bestClassMappingFor_(_receiverClass);
-		_allSelectors = _superMapping.allSelectorsIn_(this);
-		_methodMappings = new java.util.HashMap<org.gravel.core.Symbol, AbstractMethodMapping>();
+		_allSelectors[0] = _superMapping.allSelectorsIn_(this);
+		_methodMappings[0] = new java.util.HashMap<org.gravel.core.Symbol, AbstractMethodMapping>();
 		_compilerTools.methodNamesIn_do_(_receiverClass, new org.gravel.support.jvm.Block1<Object, String>() {
 
 			@Override
@@ -507,15 +510,15 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 				final org.gravel.core.Symbol _sel;
 				java.lang.invoke.MethodHandle _methodHandle;
 				_sel = _selectorConverter.functionNameAsSelector_(_methodName);
-				if (_allSelectors.contains(_sel)) {
+				if (_allSelectors[0].contains(_sel)) {
 					_methodHandle = _compilerTools.methodHandleAt_numArgs_in_identityClass_isStatic_(_methodName, _sel.numArgs(), _receiverClass, _receiverClass, false);
-					return _methodMappings.put(_sel, AnonymousMethodMapping.factory.methodHandle_definingClass_(_methodHandle, _receiverClass));
+					return _methodMappings[0].put(_sel, AnonymousMethodMapping.factory.methodHandle_definingClass_(_methodHandle, _receiverClass));
 				}
 				return SystemMapping.this;
 			}
 		});
 		_classNode = ClassNode.factory.name_superclassPath_properties_instVars_classInstVars_sharedVariables_methods_classMethods_namespace_isExtension_isTrait_traitUsage_classTraitUsage_(_superMapping.classNode().name(), _superMapping.reference().toString(), new java.util.HashMap<String, String>(), new VariableDeclarationNode[] {}, new VariableDeclarationNode[] {}, new SharedDeclarationNode[] {}, new MethodNode[] {}, new MethodNode[] {}, _superMapping.classNode().namespace(), false, false, EmptyTraitUsageNode.factory.basicNew(), EmptyTraitUsageNode.factory.basicNew());
-		return ClassMapping.factory.identityMapping_extensions_instVarMappings_classNode_(IdentityClassPartMapping.factory.javaClass_isGenerated_(_receiverClass, false).withMethodMappings_(_methodMappings), new ExtensionClassPartMapping[] {}, new java.util.HashMap<String, InstVarMapping>(), _classNode);
+		return ClassMapping.factory.identityMapping_extensions_instVarMappings_classNode_(IdentityClassPartMapping.factory.javaClass_isGenerated_(_receiverClass, false).withMethodMappings_(_methodMappings[0]), new ExtensionClassPartMapping[] {}, new java.util.HashMap<String, InstVarMapping>(), _classNode);
 	}
 
 	public SystemMappingUpdater newSystemMappingUpdater() {
@@ -570,28 +573,29 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	}
 
 	public SystemMapping setNamespaceNodes_(final Map<Reference, NamespaceNode> _aDictionary) {
-		final Map<Reference, NamespaceNode> _dict;
-		_dict = new java.util.HashMap<Reference, NamespaceNode>();
+		final Map<Reference, NamespaceNode>[] _dict;
+		_dict = new Map[1];
+		_dict[0] = new java.util.HashMap<Reference, NamespaceNode>();
 		org.gravel.support.jvm.DictionaryExtensions.syncWith(_systemNode.namespaceNodes(), _aDictionary, new org.gravel.support.jvm.Block2<Object, NamespaceNode, NamespaceNode>() {
 
 			@Override
 			public Object value_value_(final NamespaceNode _old, final NamespaceNode _new) {
-				return _dict.put(_new.reference(), _old.mergeWith_(_new));
+				return _dict[0].put(_new.reference(), _old.mergeWith_(_new));
 			}
 		}, new org.gravel.support.jvm.Block1<Object, NamespaceNode>() {
 
 			@Override
 			public Object value_(final NamespaceNode _nsNode) {
-				return _dict.put(_nsNode.reference(), _nsNode);
+				return _dict[0].put(_nsNode.reference(), _nsNode);
 			}
 		}, new org.gravel.support.jvm.Block1<Object, NamespaceNode>() {
 
 			@Override
 			public Object value_(final NamespaceNode _nsNode) {
-				return _dict.put(_nsNode.reference(), _nsNode);
+				return _dict[0].put(_nsNode.reference(), _nsNode);
 			}
 		});
-		_systemNode = _systemNode.withNamespaceNodes_(_dict);
+		_systemNode = _systemNode.withNamespaceNodes_(_dict[0]);
 		return this;
 	}
 
@@ -664,14 +668,15 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	public SystemMapping updateTo_(final SystemDefinitionNode _newSystemDefinitionNode) {
 		final SystemDiff[] _diff;
-		final SystemNode _newSystemNode;
+		final SystemNode[] _newSystemNode;
+		_newSystemNode = new SystemNode[1];
 		_diff = new SystemDiff[1];
-		_newSystemNode = PackageNodeMerger.factory.systemDefinitionNode_(_newSystemDefinitionNode).load();
+		_newSystemNode[0] = PackageNodeMerger.factory.systemDefinitionNode_(_newSystemDefinitionNode).load();
 		this.log_while_("Calculating diff", new org.gravel.support.jvm.Block0<Object>() {
 
 			@Override
 			public Object value() {
-				return _diff[0] = _systemNode.diffTo_(_newSystemNode);
+				return _diff[0] = _systemNode.diffTo_(_newSystemNode[0]);
 			}
 		});
 		this.log_while_("Applying diff", new org.gravel.support.jvm.Block0<Object>() {

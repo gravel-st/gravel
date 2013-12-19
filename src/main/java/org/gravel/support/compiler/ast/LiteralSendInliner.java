@@ -292,12 +292,13 @@ public class LiteralSendInliner extends MessageSendRewriter implements Cloneable
 	@Override
 	public SequenceNode visitSequenceNode_(final SequenceNode _anObject) {
 		final List<VariableDeclarationNode>[] _temporaries;
-		final List<Statement> _statements;
+		final List<Statement>[] _statements;
 		final List<VariableDeclarationNode>[] _oldExtraTemps;
+		_statements = new List[1];
 		_temporaries = new List[1];
 		_oldExtraTemps = new List[1];
 		_temporaries[0] = new java.util.ArrayList();
-		_statements = new java.util.ArrayList();
+		_statements[0] = new java.util.ArrayList();
 		for (final VariableDeclarationNode _each : _anObject.temporaries()) {
 			final VariableDeclarationNode _newTemp;
 			_newTemp = ((VariableDeclarationNode) LiteralSendInliner.this.visit_(_each));
@@ -311,12 +312,12 @@ public class LiteralSendInliner extends MessageSendRewriter implements Cloneable
 			_extraEmits = new java.util.ArrayList();
 			_extraTemps = new java.util.ArrayList();
 			_res = ((Statement) LiteralSendInliner.this.visit_(_each));
-			_statements.addAll(_extraEmits);
+			_statements[0].addAll(_extraEmits);
 			_temporaries[0] = org.gravel.support.jvm.OrderedCollectionExtensions.copyWithAll_(_temporaries[0], _extraTemps);
 			_extraEmits = _oldExtraEmits;
 			_extraTemps = _oldExtraTemps[0];
-			_statements.add(_res);
+			_statements[0].add(_res);
 		}
-		return SequenceNode.factory.temporaries_statements_(_temporaries[0].toArray(new VariableDeclarationNode[_temporaries[0].size()]), _statements.toArray(new Statement[_statements.size()]));
+		return SequenceNode.factory.temporaries_statements_(_temporaries[0].toArray(new VariableDeclarationNode[_temporaries[0].size()]), _statements[0].toArray(new Statement[_statements[0].size()]));
 	}
 }

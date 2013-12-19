@@ -400,7 +400,8 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		final JVMDefinedObjectType _ownerType;
 		final String _name;
 		final Invoke _invoke;
-		final JVMMethodType _staticSignature;
+		final JVMMethodType[] _staticSignature;
+		_staticSignature = new JVMMethodType[1];
 		_ownerType = JVMDefinedObjectType.factory.dottedClassName_(_prim[0]);
 		_name = _prim[1];
 		_invoke = _parent.createInvokeInstruction_name_numArgs_(_ownerType, _name, _aMethodNode.arguments().length);
@@ -413,16 +414,16 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 			return JVMMethodCompiler.this;
 		}
 		this.produceVarRead_("self");
-		_staticSignature = _invoke.staticSignature();
-		this.ensureCast_(_staticSignature.arguments()[0]);
+		_staticSignature[0] = _invoke.staticSignature();
+		this.ensureCast_(_staticSignature[0].arguments()[0]);
 		for (int _temp1 = 0; _temp1 < _aMethodNode.arguments().length; _temp1++) {
 			final int _i = _temp1 + 1;
 			final VariableDeclarationNode _each = _aMethodNode.arguments()[_temp1];
 			JVMMethodCompiler.this.produceVarRead_(_each.name());
-			JVMMethodCompiler.this.ensureCast_(_staticSignature.arguments()[(_i + 1) - 1]);
+			JVMMethodCompiler.this.ensureCast_(_staticSignature[0].arguments()[(_i + 1) - 1]);
 		}
 		this.emit_(_invoke);
-		if (_staticSignature.returnType().isVoidType()) {
+		if (_staticSignature[0].returnType().isVoidType()) {
 			JVMMethodCompiler.this.produceVarRead_("self");
 		} else {
 			JVMMethodCompiler.this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
@@ -675,7 +676,8 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	@Override
 	public JVMMethodCompiler visitBlockNode_(final BlockNode _blockNode) {
 		final JVMVariable[] _nCopiedVariables;
-		final BlockInnerClass _innerClassDefinition;
+		final BlockInnerClass[] _innerClassDefinition;
+		_innerClassDefinition = new BlockInnerClass[1];
 		_nCopiedVariables = org.gravel.support.jvm.ArrayExtensions.collect_(org.gravel.support.jvm.ArrayExtensions.asSortedArray(NonLocalVariableFinder.factory.analyze_(_blockNode)), ((org.gravel.support.jvm.Block1<JVMVariable, String>) (new org.gravel.support.jvm.Block1<JVMVariable, String>() {
 
 			@Override
@@ -683,25 +685,25 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 				return (JVMVariable) JVMMethodCompiler.this.localOrCopiedAt_(_each);
 			}
 		})));
-		_innerClassDefinition = this.createBlockInnerClass_copiedVariables_(_blockNode, _nCopiedVariables);
+		_innerClassDefinition[0] = this.createBlockInnerClass_copiedVariables_(_blockNode, _nCopiedVariables);
 		if (_nCopiedVariables.length == 0) {
 			JVMMethodCompiler.this.produceConstant_ifAbsentPut_(_blockNode, new org.gravel.support.jvm.Block0<Object>() {
 
 				@Override
 				public Object value() {
-					JVMMethodCompiler.this.emit_(NewInstance.factory.type_(_innerClassDefinition.ownerType()));
+					JVMMethodCompiler.this.emit_(NewInstance.factory.type_(_innerClassDefinition[0].ownerType()));
 					JVMMethodCompiler.this.emit_(Dup.factory.basicNew());
-					return JVMMethodCompiler.this.emit_(InvokeSpecial.factory.init_voidArguments_(_innerClassDefinition.ownerType(), new JVMType[] {}));
+					return JVMMethodCompiler.this.emit_(InvokeSpecial.factory.init_voidArguments_(_innerClassDefinition[0].ownerType(), new JVMType[] {}));
 				}
 			});
 		} else {
-			JVMMethodCompiler.this.emit_(NewInstance.factory.type_(_innerClassDefinition.ownerType()));
+			JVMMethodCompiler.this.emit_(NewInstance.factory.type_(_innerClassDefinition[0].ownerType()));
 			JVMMethodCompiler.this.emit_(Dup.factory.basicNew());
 			for (final JVMVariable _each : _nCopiedVariables) {
 				JVMMethodCompiler.this.produceVarRead_(_each.varName());
 				JVMMethodCompiler.this.ensureCast_(_each.type());
 			}
-			JVMMethodCompiler.this.emit_(InvokeSpecial.factory.init_voidArguments_(_innerClassDefinition.ownerType(), org.gravel.support.jvm.ArrayExtensions.collect_(_nCopiedVariables, ((org.gravel.support.jvm.Block1<JVMType, JVMVariable>) (new org.gravel.support.jvm.Block1<JVMType, JVMVariable>() {
+			JVMMethodCompiler.this.emit_(InvokeSpecial.factory.init_voidArguments_(_innerClassDefinition[0].ownerType(), org.gravel.support.jvm.ArrayExtensions.collect_(_nCopiedVariables, ((org.gravel.support.jvm.Block1<JVMType, JVMVariable>) (new org.gravel.support.jvm.Block1<JVMType, JVMVariable>() {
 
 				@Override
 				public JVMType value_(final JVMVariable _each) {
@@ -888,17 +890,18 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 
 	@Override
 	public JVMMethodCompiler visitIntegerLiteralNode_(final IntegerLiteralNode _anObject) {
-		final Object _value;
-		_value = _anObject.value();
-		if (_value instanceof Integer) {
-			return JVMMethodCompiler.this.pushInt_(((int) _value));
+		final Object[] _value;
+		_value = new Object[1];
+		_value[0] = _anObject.value();
+		if (_value[0] instanceof Integer) {
+			return JVMMethodCompiler.this.pushInt_(((int) (_value[0])));
 		}
-		org.gravel.support.jvm.ObjectExtensions.assert_(this, _value instanceof java.math.BigInteger);
+		org.gravel.support.jvm.ObjectExtensions.assert_(this, _value[0] instanceof java.math.BigInteger);
 		this.produceConstant_ifAbsentPut_(_anObject, new org.gravel.support.jvm.Block0<Object>() {
 
 			@Override
 			public Object value() {
-				return JVMMethodCompiler.this.pushLargeInteger_(((java.math.BigInteger) _value));
+				return JVMMethodCompiler.this.pushLargeInteger_(((java.math.BigInteger) (_value[0])));
 			}
 		});
 		return this;

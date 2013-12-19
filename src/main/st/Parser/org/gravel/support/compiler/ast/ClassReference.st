@@ -32,6 +32,11 @@ isMeta {^Bool}
 meta {^Reference}
 	^self error: 'niy'
 !
+(reader addMethod: 'As yet unclassified')
+!
+name
+	^reference name , '_Class'
+!
 (reader addMethod: 'comparing')
 !
 namespace {^AbsoluteReference}

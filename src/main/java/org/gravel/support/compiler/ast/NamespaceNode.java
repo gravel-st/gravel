@@ -223,39 +223,42 @@ public class NamespaceNode extends Node implements Cloneable {
 	}
 
 	public NamespaceNode mergeWith_(final NamespaceNode _aNamespaceNode) {
-		final List<AbsoluteReference> _nPublic;
-		final List<AbsoluteReference> _nPrivate;
-		final Map<String, SharedDeclarationNode> _nSharedVariables;
-		_nPublic = new java.util.ArrayList();
-		_nPrivate = new java.util.ArrayList();
-		_nSharedVariables = new java.util.HashMap<String, SharedDeclarationNode>();
+		final List<AbsoluteReference>[] _nPublic;
+		final List<AbsoluteReference>[] _nPrivate;
+		final Map<String, SharedDeclarationNode>[] _nSharedVariables;
+		_nSharedVariables = new Map[1];
+		_nPrivate = new List[1];
+		_nPublic = new List[1];
+		_nPublic[0] = new java.util.ArrayList();
+		_nPrivate[0] = new java.util.ArrayList();
+		_nSharedVariables[0] = new java.util.HashMap<String, SharedDeclarationNode>();
 		for (final AbsoluteReference _each : _aNamespaceNode.publicImports()) {
-			if (!_nPublic.contains(_each)) {
-				_nPublic.add(_each);
+			if (!_nPublic[0].contains(_each)) {
+				_nPublic[0].add(_each);
 			}
 		}
 		for (final AbsoluteReference _each : _publicImports) {
-			if (!_nPublic.contains(_each)) {
-				_nPublic.add(_each);
+			if (!_nPublic[0].contains(_each)) {
+				_nPublic[0].add(_each);
 			}
 		}
 		for (final AbsoluteReference _each : _aNamespaceNode.privateImports()) {
-			if (!(_nPublic.contains(_each) || _nPrivate.contains(_each))) {
-				_nPrivate.add(_each);
+			if (!(_nPublic[0].contains(_each) || _nPrivate[0].contains(_each))) {
+				_nPrivate[0].add(_each);
 			}
 		}
 		for (final AbsoluteReference _each : _privateImports) {
-			if (!(_nPublic.contains(_each) || _nPrivate.contains(_each))) {
-				_nPrivate.add(_each);
+			if (!(_nPublic[0].contains(_each) || _nPrivate[0].contains(_each))) {
+				_nPrivate[0].add(_each);
 			}
 		}
 		for (final SharedDeclarationNode _each : _sharedVariables) {
-			_nSharedVariables.put(_each.name(), _each);
+			_nSharedVariables[0].put(_each.name(), _each);
 		}
 		for (final SharedDeclarationNode _each : _aNamespaceNode.sharedVariables()) {
-			_nSharedVariables.put(_each.name(), _each);
+			_nSharedVariables[0].put(_each.name(), _each);
 		}
-		return this.withPrivateImports_publicImports_sharedVariables_(_nPrivate.toArray(new AbsoluteReference[_nPrivate.size()]), _nPublic.toArray(new AbsoluteReference[_nPublic.size()]), _nSharedVariables.values().toArray(new SharedDeclarationNode[_nSharedVariables.size()]));
+		return this.withPrivateImports_publicImports_sharedVariables_(_nPrivate[0].toArray(new AbsoluteReference[_nPrivate[0].size()]), _nPublic[0].toArray(new AbsoluteReference[_nPublic[0].size()]), _nSharedVariables[0].values().toArray(new SharedDeclarationNode[_nSharedVariables[0].size()]));
 	}
 
 	@Override

@@ -41,6 +41,10 @@ public class VariableScopeAnalyzerState extends Object implements Cloneable {
 		return this;
 	}
 
+	public boolean isBlockReadAfterWritten() {
+		return false;
+	}
+
 	public boolean isUndecided() {
 		return false;
 	}

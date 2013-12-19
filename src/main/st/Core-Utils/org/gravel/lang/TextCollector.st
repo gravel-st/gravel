@@ -1,6 +1,8 @@
 (reader defineClass: 'TextCollector' superclass: 'org.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'org.gravel.lang.CharacterWriteable')
+(reader addSimpleTrait: 'org.gravel.lang.collections.interface.CharacterWriteable')
+!
+(reader addSimpleClassTrait: 'org.gravel.lang.collections.interface.CharacterWriteable class')
 !
 (reader addInstVar: 'outputs')
 !

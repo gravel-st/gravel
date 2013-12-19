@@ -1,5 +1,5 @@
 {
-	"sharedVariables": {"OrderedCollection": "OrderedCollectionImpl"},
+	"sharedVariables": {},
 	"privateImports": ["org.gravel.lang","org.gravel.lang.collections.impl"],
 	"publicImports": []
 }

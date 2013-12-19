@@ -92,21 +92,23 @@ public class JVMBlockCompiler extends Object implements Cloneable {
 	}
 
 	public JVMMethod createInit() {
-		final List<JVMInstruction> _instructions;
-		final Load _read0;
-		_instructions = new java.util.ArrayList();
-		_read0 = Load.factory.index_type_(0, _block.ownerType());
+		final List<JVMInstruction>[] _instructions;
+		final Load[] _read0;
+		_read0 = new Load[1];
+		_instructions = new List[1];
+		_instructions[0] = new java.util.ArrayList();
+		_read0[0] = Load.factory.index_type_(0, _block.ownerType());
 		for (int _temp1 = 0; _temp1 < _block.copiedVariables().length; _temp1++) {
 			final int _i = _temp1 + 1;
 			final JVMVariable _elem = _block.copiedVariables()[_temp1];
-			_instructions.add(_read0);
-			_instructions.add(Load.factory.index_type_(_i, _elem.type()));
-			_instructions.add(PutField.factory.ownerType_name_type_(_block.ownerType(), _elem.varName(), _elem.type()));
+			_instructions[0].add(_read0[0]);
+			_instructions[0].add(Load.factory.index_type_(_i, _elem.type()));
+			_instructions[0].add(PutField.factory.ownerType_name_type_(_block.ownerType(), _elem.varName(), _elem.type()));
 		}
-		_instructions.add(_read0);
-		_instructions.add(InvokeSpecial.factory.init_voidArguments_(this.superType(), new JVMType[] {}));
-		_instructions.add(Return.factory.basicNew());
-		return JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", new JVMLocalDeclaration[] {}, _instructions.toArray(new JVMInstruction[_instructions.size()]), false, _block.initSignature());
+		_instructions[0].add(_read0[0]);
+		_instructions[0].add(InvokeSpecial.factory.init_voidArguments_(this.superType(), new JVMType[] {}));
+		_instructions[0].add(Return.factory.basicNew());
+		return JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", new JVMLocalDeclaration[] {}, _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), false, _block.initSignature());
 	}
 
 	public JVMBlockCompiler_Factory factory() {

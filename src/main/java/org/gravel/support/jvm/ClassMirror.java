@@ -1,6 +1,5 @@
 package org.gravel.support.jvm;
 
-
 import org.gravel.core.Symbol;
 import org.gravel.support.compiler.ast.ClassNode;
 import org.gravel.support.compiler.ast.Reference;
@@ -13,20 +12,20 @@ public class ClassMirror extends ClassDescriptionMirror {
 	}
 
 	public Symbol name() {
-		return (definitionClassNode()).name();
+		return reference.nonmeta().name();
 	}
-	
+
 	public ClassNode definitionClassNode() {
-		return (ClassNode) ImageBootstrapper.systemMapping.definitionOrObsoleteClassNodeAt_(reference);
+		return (ClassNode) ImageBootstrapper.systemMapping
+				.definitionOrObsoleteClassNodeAt_(reference);
 	}
-	
+
 	public boolean isMeta() {
 		return false;
 	}
 
 	public ClassDescriptionMirror meta() {
-		Reference metaReference = definitionClassNode()
-				.reference().meta();
+		Reference metaReference = definitionClassNode().reference().meta();
 		return ClassDescriptionMirror.forReference(metaReference);
 	}
 

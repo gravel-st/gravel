@@ -81,6 +81,8 @@ writeClass: aClassNode {ClassNode} in: aFilename {Filename} {^Self}
 						on: str]].
 	(TraitUsageToDirectiveConverter visit: aClassNode traitUsage)
 		do: [:each {Node} | self writeDirective: each on: str].
+	(ClassTraitUsageToDirectiveConverter visit: aClassNode metaclassNode traitUsage)
+		do: [:each {Node} | self writeDirective: each on: str].
 	aClassNode instVars do: 
 			[:each {VariableDeclarationNode} |
 			self writeDirective: (reader send: 'addInstVar:' with: (self asLiteralNode: each name))

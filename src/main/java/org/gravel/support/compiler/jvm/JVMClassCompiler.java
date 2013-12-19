@@ -140,9 +140,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 	}
 
 	public JVMClassCompiler compileBlocks() {
-		final java.util.Set<JVMDefinedObjectType> _done;
+		final java.util.Set<JVMDefinedObjectType>[] _done;
 		BlockInnerClass _cl;
-		_done = new java.util.HashSet();
+		_done = new java.util.Set[1];
+		_done[0] = new java.util.HashSet();
 		_cl = null;
 		boolean _temp1 = false;
 		while (!_temp1) {
@@ -150,7 +151,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 
 				@Override
 				public boolean value_(final BlockInnerClass _e) {
-					return !_done.contains(_e.ownerType());
+					return !_done[0].contains(_e.ownerType());
 				}
 			}, ((org.gravel.support.jvm.Block0<BlockInnerClass>) (new org.gravel.support.jvm.Block0<BlockInnerClass>() {
 
@@ -162,7 +163,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			_temp1 = _cl == null;
 			if (!_temp1) {
 				JVMClassCompiler.this.compileBlock_(_cl);
-				_done.add(_cl.ownerType());
+				_done[0].add(_cl.ownerType());
 			}
 		}
 		return this;
@@ -217,14 +218,15 @@ public class JVMClassCompiler extends Object implements Cloneable {
 	}
 
 	public JVMClassCompiler compileClinit() {
-		final List<JVMInstruction> _instructions;
-		_instructions = new java.util.ArrayList();
+		final List<JVMInstruction>[] _instructions;
+		_instructions = new List[1];
+		_instructions[0] = new java.util.ArrayList();
 		for (final JVMMethodConstant _each : _constants) {
-			org.gravel.support.jvm.OrderedCollectionExtensions.addAll_(_instructions, _each.clinitInstructions());
+			org.gravel.support.jvm.OrderedCollectionExtensions.addAll_(_instructions[0], _each.clinitInstructions());
 			_fields.add(_each.fieldDefinition());
 		}
-		_instructions.add(Return.factory.basicNew());
-		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("<clinit>", new JVMLocalDeclaration[] {}, _instructions.toArray(new JVMInstruction[_instructions.size()]), true, JVMMethodType.factory.r_void()));
+		_instructions[0].add(Return.factory.basicNew());
+		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("<clinit>", new JVMLocalDeclaration[] {}, _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), true, JVMMethodType.factory.r_void()));
 		return this;
 	}
 

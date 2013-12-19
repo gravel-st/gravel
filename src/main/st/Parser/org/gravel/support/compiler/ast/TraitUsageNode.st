@@ -37,6 +37,11 @@ isEmpty {^Bool}
 !
 (reader addMethod: 'As yet unclassified')
 !
+prerequisiteReferences {^Arr[Reference]}
+	^self subclassResponsibility
+!
+(reader addMethod: 'As yet unclassified')
+!
 withTrait: aTraitUsageNode {TraitUsageNode} {^TraitUsageNode}
 	^self subclassResponsibility
 !

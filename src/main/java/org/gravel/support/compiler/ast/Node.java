@@ -35,8 +35,9 @@ abstract public class Node extends Object implements Cloneable {
 	}
 
 	public java.util.Set<String> allLocalVarNames() {
-		final java.util.Set<String> _s;
-		_s = new java.util.HashSet();
+		final java.util.Set<String>[] _s;
+		_s = new java.util.Set[1];
+		_s[0] = new java.util.HashSet();
 		this.withAllNodesDo_(new org.gravel.support.jvm.Block1<Object, Node>() {
 
 			@Override
@@ -45,12 +46,12 @@ abstract public class Node extends Object implements Cloneable {
 
 					@Override
 					public Object value_(final String _nm) {
-						return _s.add(_nm);
+						return _s[0].add(_nm);
 					}
 				});
 			}
 		});
-		return _s;
+		return _s[0];
 	}
 
 	public boolean allNodesContains_(final org.gravel.support.jvm.Block1<Boolean, Node> _aBlock) {

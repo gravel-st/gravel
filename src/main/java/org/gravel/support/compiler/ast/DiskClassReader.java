@@ -83,6 +83,10 @@ public class DiskClassReader extends Object implements Cloneable {
 		return _aClassNode.withMethodNode_(_aParser.parseMethod().withProtocol_(_aString));
 	}
 
+	public ClassNode addSimpleClassTrait_for_(final String _referenceString, final ClassNode _aClassNode) {
+		return _aClassNode.withClassTrait_(SimpleTraitUsageNode.factory.reference_(Reference.factory.value_(_referenceString)));
+	}
+
 	public ClassNode addSimpleTrait_for_(final String _referenceString, final ClassNode _aClassNode) {
 		return _aClassNode.withTrait_(SimpleTraitUsageNode.factory.reference_(Reference.factory.value_(_referenceString)));
 	}
@@ -172,6 +176,13 @@ public class DiskClassReader extends Object implements Cloneable {
 				return (ClassNode) DiskClassReader.this.addSimpleTrait_for_(DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[0]))), _classNode);
 			}
 		});
+		_directives.put("addSimpleClassTrait:", new org.gravel.support.jvm.Block3<ClassNode, ClassNode, MessageNode, Parser>() {
+
+			@Override
+			public ClassNode value_value_value_(final ClassNode _classNode, final MessageNode _expr, final Parser _parser) {
+				return (ClassNode) DiskClassReader.this.addSimpleClassTrait_for_(DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[0]))), _classNode);
+			}
+		});
 		_directives.put("addInstVar:", new org.gravel.support.jvm.Block3<ClassNode, ClassNode, MessageNode, Parser>() {
 
 			@Override
@@ -255,12 +266,13 @@ public class DiskClassReader extends Object implements Cloneable {
 	}
 
 	public SystemDefinitionNode read() {
-		final List<PackageNode> _coll;
-		_coll = new java.util.ArrayList();
+		final List<PackageNode>[] _coll;
+		_coll = new List[1];
+		_coll[0] = new java.util.ArrayList();
 		for (final String _packageName : _root.list()) {
-			_coll.add(DiskClassReader.this.readPackage_(_packageName));
+			_coll[0].add(DiskClassReader.this.readPackage_(_packageName));
 		}
-		return SystemDefinitionNode.factory.packageNodes_(_coll.toArray(new PackageNode[_coll.size()]));
+		return SystemDefinitionNode.factory.packageNodes_(_coll[0].toArray(new PackageNode[_coll[0].size()]));
 	}
 
 	public PackageNode readClassesIn_packageName_namespace_(final java.io.File _fn, final org.gravel.core.Symbol _packageName, final String[] _anArray) {
@@ -322,7 +334,8 @@ public class DiskClassReader extends Object implements Cloneable {
 		final Object[] _publicImportStrings;
 		final Object[] _privateImportStrings;
 		final Map<String, String> _sharedVariableStrings;
-		final List<SharedDeclarationNode> _sharedVariables;
+		final List<SharedDeclarationNode>[] _sharedVariables;
+		_sharedVariables = new List[1];
 		_dict = this.readPropertiesFile_(_aFilename);
 		Object _temp1 = _dict.get("publicImports");
 		if (_temp1 == null) {
@@ -357,11 +370,11 @@ public class DiskClassReader extends Object implements Cloneable {
 				return (AbsoluteReference) Reference.factory.value_(_str);
 			}
 		})));
-		_sharedVariables = new java.util.ArrayList();
+		_sharedVariables[0] = new java.util.ArrayList();
 		for (final Map.Entry<String, String> _temp4 : _sharedVariableStrings.entrySet()) {
 			String _name = _temp4.getKey();
 			String _initializerString = _temp4.getValue();
-			_sharedVariables.add(SharedDeclarationNode.factory.name_initializer_(_name, DiskClassReader.this.parseInitializerSource_(_initializerString)));
+			_sharedVariables[0].add(SharedDeclarationNode.factory.name_initializer_(_name, DiskClassReader.this.parseInitializerSource_(_initializerString)));
 		}
 		return NamespaceNode.factory.reference_publicImports_privateImports_sharedVariables_(AbsoluteReference.factory.path_(org.gravel.support.jvm.ArrayExtensions.collect_(_namespaceStrings, ((org.gravel.support.jvm.Block1<org.gravel.core.Symbol, String>) (new org.gravel.support.jvm.Block1<org.gravel.core.Symbol, String>() {
 
@@ -369,7 +382,7 @@ public class DiskClassReader extends Object implements Cloneable {
 			public org.gravel.core.Symbol value_(final String _each) {
 				return (org.gravel.core.Symbol) org.gravel.core.Symbol.value(_each);
 			}
-		})))), _publicImports, _privateImports, _sharedVariables.toArray(new SharedDeclarationNode[_sharedVariables.size()]));
+		})))), _publicImports, _privateImports, _sharedVariables[0].toArray(new SharedDeclarationNode[_sharedVariables[0].size()]));
 	}
 
 	public PackageNode readPackage_(final String _aString) {

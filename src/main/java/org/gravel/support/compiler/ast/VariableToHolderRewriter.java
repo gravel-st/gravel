@@ -81,10 +81,11 @@ public class VariableToHolderRewriter extends NodeCopier implements Cloneable {
 
 	@Override
 	public SequenceNode visitSequenceNode_(final SequenceNode _anObject) {
-		final List<VariableDeclarationNode> _found;
+		final List<VariableDeclarationNode>[] _found;
 		Statement[] _stmts;
 		final VariableDeclarationNode[] _temporaries;
-		_found = new java.util.ArrayList();
+		_found = new List[1];
+		_found[0] = new java.util.ArrayList();
 		_stmts = org.gravel.support.jvm.ArrayExtensions.collect_(_anObject.statements(), ((org.gravel.support.jvm.Block1<Statement, Statement>) (new org.gravel.support.jvm.Block1<Statement, Statement>() {
 
 			@Override
@@ -98,7 +99,7 @@ public class VariableToHolderRewriter extends NodeCopier implements Cloneable {
 			public VariableDeclarationNode value_(final VariableDeclarationNode _each) {
 				VariableDeclarationNode _newDecl;
 				if (org.gravel.support.jvm.StringExtensions.equals_(_each.name(), _varName)) {
-					_found.add(_each);
+					_found[0].add(_each);
 					_newDecl = HolderDeclarationNode.factory.name_type_(_each.name(), ((TypeNode) VariableToHolderRewriter.this.visit_(_each.type())));
 				} else {
 					_newDecl = ((VariableDeclarationNode) VariableToHolderRewriter.this.visit_(_each));
@@ -106,7 +107,7 @@ public class VariableToHolderRewriter extends NodeCopier implements Cloneable {
 				return (VariableDeclarationNode) _newDecl;
 			}
 		})));
-		if (_found.size() != 0) {
+		if (_found[0].size() != 0) {
 			_stmts = org.gravel.support.jvm.ArrayExtensions.copyWithFirst_(_stmts, AssignmentNode.factory.variable_value_(VariableNode.factory.name_(_varName), CreateHolderNode.factory.basicNew()));
 		}
 		return SequenceNode.factory.temporaries_statements_(_temporaries, _stmts);

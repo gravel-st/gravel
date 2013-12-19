@@ -384,13 +384,14 @@ public class ClassNode extends ClassDescriptionNode implements Cloneable {
 	}
 
 	public MethodNode[] mergeMethods_with_(final MethodNode[] _originalMethods, final MethodNode[] _extensionMethods) {
-		final java.util.Set<String> _s;
-		_s = new java.util.HashSet();
+		final java.util.Set<String>[] _s;
+		_s = new java.util.Set[1];
+		_s[0] = new java.util.HashSet();
 		for (final MethodNode _m : _originalMethods) {
-			_s.add(_m.selector());
+			_s[0].add(_m.selector());
 		}
 		for (final MethodNode _m : _extensionMethods) {
-			if (_s.contains(_m.selector())) {
+			if (_s[0].contains(_m.selector())) {
 				throw new RuntimeException("Override: " + _m.selector());
 			}
 		}
@@ -539,11 +540,6 @@ public class ClassNode extends ClassDescriptionNode implements Cloneable {
 		return this;
 	}
 
-	public ClassNode shouldBeStatic() {
-		org.gravel.support.jvm.ObjectExtensions.halt(this);
-		return this;
-	}
-
 	@Override
 	public ClassNode sourceOn_(final StringBuilder _aStream) {
 		_aStream.append(_name);
@@ -599,6 +595,10 @@ public class ClassNode extends ClassDescriptionNode implements Cloneable {
 
 	public ClassNode withClassMethodNode_(final MethodNode _aMethodNode) {
 		return this.copy().pvtSetMetaclassNode_(_metaclassNode.withMethodNode_(_aMethodNode));
+	}
+
+	public ClassNode withClassTrait_(final TraitUsageNode _aTraitUsageNode) {
+		return this.copy().pvtSetMetaclassNode_(_metaclassNode.withTrait_(_aTraitUsageNode));
 	}
 
 	@Override

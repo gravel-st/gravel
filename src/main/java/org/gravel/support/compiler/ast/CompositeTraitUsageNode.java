@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import org.gravel.support.compiler.ast.SequenceNode;
 import org.gravel.support.compiler.ast.SelfNode;
 import org.gravel.support.compiler.ast.Node;
+import org.gravel.support.compiler.ast.Reference;
 import org.gravel.support.compiler.ast.SourcePrinter;
 import org.gravel.support.compiler.ast.SourcePosition;
 
@@ -110,12 +111,14 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 	@Override
 	public ClassDescriptionNode flattenClassDescriptionNode_in_(final ClassDescriptionNode _aClassDescriptionNode, final SystemNode _aSystemNode) {
 		final ClassDescriptionNode[] _n;
-		final java.util.Set<String> _definedInOtherTraits;
-		final List<MethodNode> _requirements;
+		final java.util.Set<String>[] _definedInOtherTraits;
+		final List<MethodNode>[] _requirements;
 		_n = new ClassDescriptionNode[1];
+		_definedInOtherTraits = new java.util.Set[1];
+		_requirements = new List[1];
 		_n[0] = _aClassDescriptionNode;
-		_definedInOtherTraits = new java.util.HashSet();
-		_requirements = new java.util.ArrayList();
+		_definedInOtherTraits[0] = new java.util.HashSet();
+		_requirements[0] = new java.util.ArrayList();
 		for (final SimpleTraitUsageNode _component : _components) {
 			_component.allMethodsIn_do_(_aSystemNode, new org.gravel.support.jvm.Block1<Object, MethodNode>() {
 
@@ -125,24 +128,24 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 					_canUnderstand = _aClassDescriptionNode.canUnderstand_in_(_method.selector(), _aSystemNode);
 					if (_method.isTraitRequirement()) {
 						if (!_canUnderstand) {
-							return _requirements.add(_method.ofTrait_(_component.reference()));
+							return _requirements[0].add(_method.ofTrait_(_component.reference()));
 						}
 					} else {
 						if (!_canUnderstand) {
-							if (_definedInOtherTraits.contains(_method.selector())) {
+							if (_definedInOtherTraits[0].contains(_method.selector())) {
 								_n[0] = _n[0].withMethodNode_ofTrait_(_method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_("traitConflict"))), _component.reference());
 							} else {
 								_n[0] = _n[0].withMethodNode_ofTrait_(_method, _component.reference());
 							}
 						}
-						return _definedInOtherTraits.add(_method.selector());
+						return _definedInOtherTraits[0].add(_method.selector());
 					}
 					return CompositeTraitUsageNode.this;
 				}
 			});
 		}
-		for (final MethodNode _method : _requirements) {
-			if (!_definedInOtherTraits.contains(_method.selector())) {
+		for (final MethodNode _method : _requirements[0]) {
+			if (!_definedInOtherTraits[0].contains(_method.selector())) {
 				_n[0] = _n[0].withMethodNode_(_method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_("traitRequirementNotDefined"))));
 			}
 		}
@@ -166,6 +169,17 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 			_aBlock.value_(_temp1);
 		}
 		return this;
+	}
+
+	@Override
+	public Reference[] prerequisiteReferences() {
+		return org.gravel.support.jvm.ArrayExtensions.collect_(_components, ((org.gravel.support.jvm.Block1<Reference, SimpleTraitUsageNode>) (new org.gravel.support.jvm.Block1<Reference, SimpleTraitUsageNode>() {
+
+			@Override
+			public Reference value_(final SimpleTraitUsageNode _each) {
+				return (Reference) _each.reference();
+			}
+		})));
 	}
 
 	@Override

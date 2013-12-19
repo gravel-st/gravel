@@ -13,7 +13,7 @@ public class SetExtensions {
 		}
 
 	}
-	
+
 	public static Object r_class(Object receiver) {
 		return factory;
 	}
@@ -22,4 +22,12 @@ public class SetExtensions {
 		return new HashSet<X>(values);
 	}
 
+	public static <E> Set<E> select_(Set<E> receiver, Predicate1<E> predicate1) {
+		HashSet<E> result = new HashSet<E>();
+		for (E element : receiver) {
+			if (predicate1.value_(element))
+				result.add(element);
+		}
+		return result;
+	}
 }

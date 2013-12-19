@@ -8,19 +8,17 @@ package org.gravel.support.compiler.ast;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import org.gravel.support.jvm.NonLocalReturn;
-import org.gravel.support.compiler.ast.NodeVisitor;
-import org.gravel.support.compiler.ast.Node;
-import org.gravel.support.compiler.ast.NodeVisitor.NodeVisitor_Factory;
-import org.gravel.support.compiler.ast.VariableNode;
-import org.gravel.support.compiler.ast.EmptyTraitUsageNode;
+import org.gravel.support.compiler.ast.AbstractTraitUsageToDirectiveConverter;
+import org.gravel.support.compiler.ast.AbstractTraitUsageToDirectiveConverter.AbstractTraitUsageToDirectiveConverter_Factory;
 import org.gravel.support.compiler.ast.SimpleTraitUsageNode;
+import org.gravel.support.compiler.ast.Node;
 import org.gravel.support.compiler.ast.StringLiteralNode;
 
-public class TraitUsageToDirectiveConverter extends NodeVisitor<Node[]> implements Cloneable {
+public class TraitUsageToDirectiveConverter extends AbstractTraitUsageToDirectiveConverter implements Cloneable {
 
 	public static TraitUsageToDirectiveConverter_Factory factory = new TraitUsageToDirectiveConverter_Factory();
 
-	public static class TraitUsageToDirectiveConverter_Factory extends NodeVisitor_Factory<Node[]> {
+	public static class TraitUsageToDirectiveConverter_Factory extends AbstractTraitUsageToDirectiveConverter_Factory {
 
 		public TraitUsageToDirectiveConverter basicNew() {
 			TraitUsageToDirectiveConverter newInstance = new TraitUsageToDirectiveConverter();
@@ -43,20 +41,8 @@ public class TraitUsageToDirectiveConverter extends NodeVisitor<Node[]> implemen
 		return factory;
 	}
 
-	public VariableNode reader() {
-		return VariableNode.factory.name_("reader");
-	}
-
 	@Override
-	public Node[] visitEmptyTraitUsageNode_(final EmptyTraitUsageNode _anEmptyTraitUsageNode) {
-		return new Node[] {};
-	}
-
-	@Override
-	public Node[] visitSimpleTraitUsageNode_(final SimpleTraitUsageNode _aSimpleTraitUsageNode) {
-		if (_aSimpleTraitUsageNode.methodOperations().length == 0) {
-			return org.gravel.support.jvm.ArrayFactory.with_(TraitUsageToDirectiveConverter.this.reader().send_with_("addSimpleTrait:", StringLiteralNode.factory.value_(_aSimpleTraitUsageNode.reference().toString())));
-		}
-		throw new RuntimeException("Not implemented yet");
+	public Node[] produceSimpleNoMethod_(final SimpleTraitUsageNode _aSimpleTraitUsageNode) {
+		return org.gravel.support.jvm.ArrayFactory.with_(this.reader().send_with_("addSimpleTrait:", StringLiteralNode.factory.value_(_aSimpleTraitUsageNode.reference().toString())));
 	}
 }

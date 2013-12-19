@@ -1,4 +1,4 @@
-(reader defineClass: 'JavaArrayList' superclass: 'org.gravel.lang.SequenceableCollectionImpl')
+(reader defineClass: 'JavaArrayList' superclass: 'org.gravel.lang.Object')
 !
 (reader propertyAt: 'javaClass' put: 'java.util.ArrayList')
 !

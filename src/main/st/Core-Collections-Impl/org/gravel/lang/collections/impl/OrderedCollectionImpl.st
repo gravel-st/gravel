@@ -1,4 +1,8 @@
-(reader defineClass: 'OrderedCollectionImpl' superclass: 'org.gravel.lang.SequenceableCollectionImpl')
+(reader defineClass: 'OrderedCollectionImpl' superclass: 'org.gravel.lang.Object')
+!
+(reader addSimpleTrait: 'org.gravel.lang.collections.interface.OrderedCollection')
+!
+(reader addSimpleClassTrait: 'org.gravel.lang.collections.interface.OrderedCollection class')
 !
 (reader addInstVar: 'contents')
 !

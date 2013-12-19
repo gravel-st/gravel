@@ -251,11 +251,6 @@ pvtSetTrait: aBoolean {Bool} {^Self}
 reference {^AbsoluteReference}
 	^AbsoluteReference path: (namespace copyWith: name)
 !
-(reader addMethod: 'As yet unclassified')
-!
-shouldBeStatic
-	self halt
-!
 (reader addMethod: 'printing')
 !
 sourceOn: aStream {WStream[Char]} {^Self}
@@ -286,6 +281,11 @@ withClassInstVar: aVariableDeclarationNode {VariableDeclarationNode} {^Self}
 !
 withClassMethodNode: aMethodNode {MethodNode} {^Self}
 	^self copy pvtSetMetaclassNode: (metaclassNode withMethodNode: aMethodNode)
+!
+(reader addMethod: 'accessing')
+!
+withClassTrait: aTraitUsageNode {TraitUsageNode} {^Self}
+	^self copy pvtSetMetaclassNode: (metaclassNode withTrait: aTraitUsageNode)
 !
 (reader addMethod: 'As yet unclassified')
 !

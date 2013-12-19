@@ -16,6 +16,7 @@ import org.gravel.support.compiler.ast.MethodNode;
 import org.gravel.support.compiler.ast.SimpleTraitUsageNode;
 import org.gravel.support.compiler.ast.ClassDescriptionNode;
 import org.gravel.support.compiler.ast.Node;
+import org.gravel.support.compiler.ast.Reference;
 import org.gravel.support.compiler.ast.SourcePrinter;
 import org.gravel.support.compiler.ast.SourcePosition;
 
@@ -106,6 +107,11 @@ public class EmptyTraitUsageNode extends TraitUsageNode implements Cloneable {
 	@Override
 	public EmptyTraitUsageNode nodesDo_(final org.gravel.support.jvm.Block1<Object, Node> _aBlock) {
 		return this;
+	}
+
+	@Override
+	public Reference[] prerequisiteReferences() {
+		return new Reference[] {};
 	}
 
 	@Override

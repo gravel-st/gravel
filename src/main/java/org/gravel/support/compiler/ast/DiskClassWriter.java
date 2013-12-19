@@ -20,6 +20,7 @@ import org.gravel.support.compiler.ast.VariableNode;
 import org.gravel.support.compiler.ast.SharedDeclarationNode;
 import org.gravel.support.compiler.ast.Node;
 import org.gravel.support.compiler.ast.TraitUsageToDirectiveConverter;
+import org.gravel.support.compiler.ast.ClassTraitUsageToDirectiveConverter;
 import org.gravel.support.compiler.ast.VariableDeclarationNode;
 import java.util.Map;
 import java.util.Map.*;
@@ -113,8 +114,10 @@ public class DiskClassWriter extends Object implements Cloneable {
 	public DiskClassWriter writeClass_in_(final ClassNode _aClassNode, final java.io.File _aFilename) {
 		final java.io.File _nsFn;
 		final java.io.File _clFn;
-		final StringBuilder _str;
-		final VariableNode _reader;
+		final StringBuilder[] _str;
+		final VariableNode[] _reader;
+		_reader = new VariableNode[1];
+		_str = new StringBuilder[1];
 		_nsFn = ((java.io.File) org.gravel.support.jvm.ArrayExtensions.inject_into_(_aClassNode.reference().namespace().path(), _aFilename, ((org.gravel.support.jvm.Block2<java.io.File, java.io.File, org.gravel.core.Symbol>) (new org.gravel.support.jvm.Block2<java.io.File, java.io.File, org.gravel.core.Symbol>() {
 
 			@Override
@@ -124,39 +127,42 @@ public class DiskClassWriter extends Object implements Cloneable {
 		}))));
 		_nsFn.mkdirs();
 		_clFn = new java.io.File(_nsFn, _aClassNode.reference().name().asString() + ".st");
-		_str = org.gravel.support.jvm.WriteStreamFactory.on_(new String());
-		_reader = VariableNode.factory.name_("reader");
+		_str[0] = org.gravel.support.jvm.WriteStreamFactory.on_(new String());
+		_reader[0] = VariableNode.factory.name_("reader");
 		if (_aClassNode.isExtension()) {
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_(_aClassNode.isTrait() ? "extendTrait:" : "extendClass:", DiskClassWriter.this.asLiteralNode_(_aClassNode.name().asString())), _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_(_aClassNode.isTrait() ? "extendTrait:" : "extendClass:", DiskClassWriter.this.asLiteralNode_(_aClassNode.name().asString())), _str[0]);
 		} else {
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_with_(_aClassNode.isTrait() ? "defineTrait:superclass:" : "defineClass:superclass:", DiskClassWriter.this.asLiteralNode_(_aClassNode.name().asString()), DiskClassWriter.this.referenceAsLiteralNode_(_aClassNode.superclassReference())), _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_with_(_aClassNode.isTrait() ? "defineTrait:superclass:" : "defineClass:superclass:", DiskClassWriter.this.asLiteralNode_(_aClassNode.name().asString()), DiskClassWriter.this.referenceAsLiteralNode_(_aClassNode.superclassReference())), _str[0]);
 			for (final SharedDeclarationNode _sv : _aClassNode.metaclassNode().sharedVariables()) {
-				DiskClassWriter.this.writeDirective_on_(_reader.send_with_with_("defineSharedVariable:init:", DiskClassWriter.this.asLiteralNode_(_sv.name()), DiskClassWriter.this.initializerSource_(_sv.initializer())), _str);
+				DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_with_("defineSharedVariable:init:", DiskClassWriter.this.asLiteralNode_(_sv.name()), DiskClassWriter.this.initializerSource_(_sv.initializer())), _str[0]);
 			}
 		}
 		for (final Node _each : TraitUsageToDirectiveConverter.factory.visit_(_aClassNode.traitUsage())) {
-			DiskClassWriter.this.writeDirective_on_(_each, _str);
+			DiskClassWriter.this.writeDirective_on_(_each, _str[0]);
+		}
+		for (final Node _each : ClassTraitUsageToDirectiveConverter.factory.visit_(_aClassNode.metaclassNode().traitUsage())) {
+			DiskClassWriter.this.writeDirective_on_(_each, _str[0]);
 		}
 		for (final VariableDeclarationNode _each : _aClassNode.instVars()) {
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_("addInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str[0]);
 		}
 		for (final VariableDeclarationNode _each : _aClassNode.metaclassNode().instVars()) {
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_("addClassInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addClassInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str[0]);
 		}
 		for (final Map.Entry<String, String> _temp1 : _aClassNode.properties().entrySet()) {
 			String _k = _temp1.getKey();
 			String _v = _temp1.getValue();
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_with_("propertyAt:put:", DiskClassWriter.this.asLiteralNode_(_k), DiskClassWriter.this.asLiteralNode_(_v)), _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_with_("propertyAt:put:", DiskClassWriter.this.asLiteralNode_(_k), DiskClassWriter.this.asLiteralNode_(_v)), _str[0]);
 		}
 		for (final MethodNode _each : _aClassNode.methods()) {
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_("addMethod:", DiskClassWriter.this.asLiteralNode_(_each.protocol())), _str);
-			DiskClassWriter.this.writeMethod_on_(_each, _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addMethod:", DiskClassWriter.this.asLiteralNode_(_each.protocol())), _str[0]);
+			DiskClassWriter.this.writeMethod_on_(_each, _str[0]);
 		}
 		for (final MethodNode _each : _aClassNode.metaclassNode().methods()) {
-			DiskClassWriter.this.writeDirective_on_(_reader.send_with_("addClassMethod:", DiskClassWriter.this.asLiteralNode_(_each.protocol())), _str);
-			DiskClassWriter.this.writeMethod_on_(_each, _str);
+			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addClassMethod:", DiskClassWriter.this.asLiteralNode_(_each.protocol())), _str[0]);
+			DiskClassWriter.this.writeMethod_on_(_each, _str[0]);
 		}
-		org.gravel.support.jvm.StringExtensions.writeToFile_(_str.toString(), _clFn);
+		org.gravel.support.jvm.StringExtensions.writeToFile_(_str[0].toString(), _clFn);
 		return this;
 	}
 
@@ -182,7 +188,8 @@ public class DiskClassWriter extends Object implements Cloneable {
 		final Map<String, Object> _dict;
 		final String[] _privateImports;
 		final String[] _publicImports;
-		final Map<String, String> _sharedVariables;
+		final Map<String, String>[] _sharedVariables;
+		_sharedVariables = new Map[1];
 		_nsFn = ((java.io.File) org.gravel.support.jvm.ArrayExtensions.inject_into_(_aNamespaceNode.reference().path(), _aFilename, ((org.gravel.support.jvm.Block2<java.io.File, java.io.File, org.gravel.core.Symbol>) (new org.gravel.support.jvm.Block2<java.io.File, java.io.File, org.gravel.core.Symbol>() {
 
 			@Override
@@ -208,25 +215,26 @@ public class DiskClassWriter extends Object implements Cloneable {
 			}
 		})));
 		_dict.put("publicImports", _publicImports);
-		_sharedVariables = new java.util.HashMap<String, String>();
+		_sharedVariables[0] = new java.util.HashMap<String, String>();
 		for (final SharedDeclarationNode _each : _aNamespaceNode.sharedVariables()) {
-			_sharedVariables.put(_each.name(), _each.initializer() == null ? null : _each.initializer().sourceString());
+			_sharedVariables[0].put(_each.name(), _each.initializer() == null ? null : _each.initializer().sourceString());
 		}
-		_dict.put("sharedVariables", _sharedVariables);
+		_dict.put("sharedVariables", _sharedVariables[0]);
 		_json = org.gravel.support.jvm.DictionaryExtensions.asJSON(_dict);
 		org.gravel.support.jvm.StringExtensions.writeToFile_(_json, new java.io.File(_nsFn, "properties.json"));
 		return this;
 	}
 
 	public DiskClassWriter write_(final PackageNode _aPackageNode) {
-		final java.io.File _pkgRoot;
-		_pkgRoot = new java.io.File(_root, _aPackageNode.name().asString());
-		_pkgRoot.mkdirs();
+		final java.io.File[] _pkgRoot;
+		_pkgRoot = new java.io.File[1];
+		_pkgRoot[0] = new java.io.File(_root, _aPackageNode.name().asString());
+		_pkgRoot[0].mkdirs();
 		for (final ClassNode _cl : _aPackageNode.classes()) {
-			DiskClassWriter.this.writeClass_in_(_cl, _pkgRoot);
+			DiskClassWriter.this.writeClass_in_(_cl, _pkgRoot[0]);
 		}
 		for (final NamespaceNode _ns : _aPackageNode.namespaces()) {
-			DiskClassWriter.this.writeNamespace_in_(_ns, _pkgRoot);
+			DiskClassWriter.this.writeNamespace_in_(_ns, _pkgRoot[0]);
 		}
 		return this;
 	}

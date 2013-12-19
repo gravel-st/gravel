@@ -1,8 +1,8 @@
 (reader defineClass: 'CollectionImpl' superclass: 'org.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'org.gravel.lang.Emptyness')
+(reader addSimpleTrait: 'org.gravel.lang.collections.interface.Collection')
 !
-(reader addSimpleTrait: 'org.gravel.lang.Collection')
+(reader addSimpleClassTrait: 'org.gravel.lang.collections.interface.Collection class')
 !
 (reader addMethod: 'gravel')
 !
@@ -99,11 +99,6 @@ size
 !
 species
 	^self class
-!
-(reader addClassMethod: 'gravel')
-!
-new: initialSize
-	^self new
 !
 (reader addClassMethod: 'gravel')
 !

@@ -40,6 +40,12 @@ addMethod: aParser {Parser} protocol: aString {Str} for: aClassNode {ClassNode} 
 !
 (reader addMethod: 'directives')
 !
+addSimpleClassTrait: referenceString {Str} for: aClassNode {ClassNode} {^ClassNode}
+	^aClassNode
+		withClassTrait: (SimpleTraitUsageNode reference: (Reference value: referenceString))
+!
+(reader addMethod: 'directives')
+!
 addSimpleTrait: referenceString {Str} for: aClassNode {ClassNode} {^ClassNode}
 	^aClassNode
 		withTrait: (SimpleTraitUsageNode reference: (Reference value: referenceString))
@@ -106,6 +112,8 @@ initialize {^Self}
 		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self extendTrait: (self evaluate: expr arguments first) for: classNode].
 	directives at: 'addSimpleTrait:'
 		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self addSimpleTrait: (self evaluate: expr arguments first) for: classNode].
+	directives at: 'addSimpleClassTrait:'
+		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self addSimpleClassTrait: (self evaluate: expr arguments first) for: classNode].
 	directives at: 'addInstVar:'
 		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self addInstVar: (self evaluate: expr arguments first) for: classNode].
 	directives at: 'addClassInstVar:'

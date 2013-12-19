@@ -62,6 +62,11 @@ initializeComponents: anArray {Arr[SimpleTraitUsageNode]} {^Self}
 nodesDo: aBlock {[Node, ^Object]} {^Self}
 	components do: aBlock
 !
+(reader addMethod: 'As yet unclassified')
+!
+prerequisiteReferences {^Arr[Reference]}
+	^components collect: [:each {SimpleTraitUsageNode} | each reference]
+!
 (reader addMethod: 'printing')
 !
 sourceOn: aStream {WStream[Char]} {^Self}

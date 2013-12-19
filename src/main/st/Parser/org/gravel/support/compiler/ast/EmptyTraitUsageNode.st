@@ -30,6 +30,11 @@ isEmpty {^Bool}
 nodesDo: aBlock {[Node, ^Object]} {^Self}
 	
 !
+(reader addMethod: 'As yet unclassified')
+!
+prerequisiteReferences {^Arr[Reference]}
+	^#()
+!
 (reader addMethod: 'printing')
 !
 sourceOn: aStream {WStream[Char]} {^Self}

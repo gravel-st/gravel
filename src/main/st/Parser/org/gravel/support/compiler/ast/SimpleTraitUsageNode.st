@@ -58,6 +58,11 @@ methodOperations {^Arr[TraitMethodOperation]}
 nodesDo: aBlock {[Node, ^Object]} {^Self}
 	methodOperations do: aBlock
 !
+(reader addMethod: 'As yet unclassified')
+!
+prerequisiteReferences {^Arr[Reference]}
+	^Array with: reference
+!
 (reader addMethod: 'accessing')
 !
 reference {^Reference}

@@ -180,24 +180,26 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 	}
 
 	public SystemMappingUpdater compiledMethodNodesIn_do_(final Reference _superclassReference, final org.gravel.support.jvm.Block1<Object, MethodNode> _aBlock) {
-		final ClassMapping _superMapping;
+		final ClassMapping[] _superMapping;
 		final Class _sc;
-		final java.util.Set<org.gravel.core.Symbol> _allSelectors;
+		final java.util.Set<org.gravel.core.Symbol>[] _allSelectors;
+		_allSelectors = new java.util.Set[1];
+		_superMapping = new ClassMapping[1];
 		if (_superclassReference == null) {
 			return SystemMappingUpdater.this;
 		}
-		_superMapping = _systemMapping.classMappingAtReference_(_superclassReference);
-		_allSelectors = _superMapping.allSelectorsIn_(_systemMapping);
-		_sc = _superMapping.identityClass();
+		_superMapping[0] = _systemMapping.classMappingAtReference_(_superclassReference);
+		_allSelectors[0] = _superMapping[0].allSelectorsIn_(_systemMapping);
+		_sc = _superMapping[0].identityClass();
 		_compilerTools.methodNamesIn_do_(_sc, new org.gravel.support.jvm.Block1<Object, String>() {
 
 			@Override
 			public Object value_(final String _methodName) {
 				final org.gravel.core.Symbol _sel;
 				_sel = _selectorConverter.functionNameAsSelector_(_methodName);
-				if (_allSelectors.contains(_sel)) {
+				if (_allSelectors[0].contains(_sel)) {
 					final AbstractMethodMapping _methodMapping;
-					_methodMapping = _systemMapping.methodMappingFrom_selector_(_superMapping, _sel);
+					_methodMapping = _systemMapping.methodMappingFrom_selector_(_superMapping[0], _sel);
 					if ((_methodMapping != null) && (_methodMapping.methodNode() != null)) {
 						return _aBlock.value_(_methodMapping.methodNode());
 					}
@@ -368,14 +370,15 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 	}
 
 	public MethodNode[] localLinkMethods_instVars_ownerReference_(final MethodNode[] _methods, final BoundVariableDeclarationNode[] _instVars, final Reference _ownerReference) {
-		final SelfNode _owner;
-		_owner = SelfNode.factory.basicNew();
+		final SelfNode[] _owner;
+		_owner = new SelfNode[1];
+		_owner[0] = SelfNode.factory.basicNew();
 		return org.gravel.support.jvm.ArrayExtensions.collect_(_methods, ((org.gravel.support.jvm.Block1<MethodNode, MethodNode>) (new org.gravel.support.jvm.Block1<MethodNode, MethodNode>() {
 
 			@Override
 			public MethodNode value_(final MethodNode _m) {
 				final MethodNode _fieldAccessed;
-				_fieldAccessed = ((MethodNode) SystemMappingUpdater.this.localLink_instVars_ownerReference_owner_(_m, _instVars, _ownerReference, _owner));
+				_fieldAccessed = ((MethodNode) SystemMappingUpdater.this.localLink_instVars_ownerReference_owner_(_m, _instVars, _ownerReference, _owner[0]));
 				return (MethodNode) _fieldAccessed;
 			}
 		})));
@@ -402,46 +405,50 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 	}
 
 	public MethodNode[] methodsToRecompile_in_(final MethodNode[] _allMethods, final Reference _superclassReference) {
-		final List<MethodNode> _methodsToRecompile;
-		final java.util.Set<String> _selectors;
-		_selectors = new java.util.HashSet();
-		_methodsToRecompile = new java.util.ArrayList();
+		final List<MethodNode>[] _methodsToRecompile;
+		final java.util.Set<String>[] _selectors;
+		_selectors = new java.util.Set[1];
+		_methodsToRecompile = new List[1];
+		_selectors[0] = new java.util.HashSet();
+		_methodsToRecompile[0] = new java.util.ArrayList();
 		for (final MethodNode _each : _allMethods) {
-			_selectors.add(_each.selector());
+			_selectors[0].add(_each.selector());
 		}
 		this.compiledMethodNodesIn_do_(_superclassReference, new org.gravel.support.jvm.Block1<Object, MethodNode>() {
 
 			@Override
 			public Object value_(final MethodNode _methodNode) {
 				MethodNode _clean;
-				if (!_selectors.contains(_methodNode.selector())) {
+				if (!_selectors[0].contains(_methodNode.selector())) {
 					_clean = ((MethodNode) _methodNode.withoutSourcePointers());
-					return _methodsToRecompile.add(_clean);
+					return _methodsToRecompile[0].add(_clean);
 				}
 				return SystemMappingUpdater.this;
 			}
 		});
-		return _methodsToRecompile.toArray(new MethodNode[_methodsToRecompile.size()]);
+		return _methodsToRecompile[0].toArray(new MethodNode[_methodsToRecompile[0].size()]);
 	}
 
 	public MethodNode[] methods_withExtraMethods_(final MethodNode[] _methods, final MethodNode[] _extraMethods) {
-		final java.util.Set<String> _selectors;
-		final List<MethodNode> _n;
-		_selectors = new java.util.HashSet();
-		_n = new java.util.ArrayList();
+		final java.util.Set<String>[] _selectors;
+		final List<MethodNode>[] _n;
+		_n = new List[1];
+		_selectors = new java.util.Set[1];
+		_selectors[0] = new java.util.HashSet();
+		_n[0] = new java.util.ArrayList();
 		for (final MethodNode _each : _methods) {
-			if (!_selectors.contains(_each.selector())) {
-				_selectors.add(_each.selector());
-				_n.add(_each);
+			if (!_selectors[0].contains(_each.selector())) {
+				_selectors[0].add(_each.selector());
+				_n[0].add(_each);
 			}
 		}
 		for (final MethodNode _each : _extraMethods) {
-			if (!_selectors.contains(_each.selector())) {
-				_selectors.add(_each.selector());
-				_n.add(_each);
+			if (!_selectors[0].contains(_each.selector())) {
+				_selectors[0].add(_each.selector());
+				_n[0].add(_each);
 			}
 		}
-		return _n.toArray(new MethodNode[_n.size()]);
+		return _n[0].toArray(new MethodNode[_n[0].size()]);
 	}
 
 	public SystemMappingUpdater setNamespaceNodes_(final Map<Reference, NamespaceNode> _aDictionary) {

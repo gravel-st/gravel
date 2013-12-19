@@ -8,33 +8,16 @@ package org.gravel.support.compiler.ast;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import org.gravel.support.jvm.NonLocalReturn;
-import org.gravel.support.compiler.ast.NodeCopier;
-import org.gravel.support.compiler.ast.NodeCopier.NodeCopier_Factory;
-import java.util.Map;
+import org.gravel.support.compiler.ast.NonLocalTempAccessToHolderConverter;
+import org.gravel.support.compiler.ast.NonLocalTempAccessToHolderConverter.NonLocalTempAccessToHolderConverter_Factory;
 import org.gravel.support.compiler.ast.VariableScopeAnalyzerState;
 import java.util.HashMap;
-import org.gravel.support.compiler.ast.AssignmentNode;
-import org.gravel.support.compiler.ast.Expression;
-import org.gravel.support.compiler.ast.VariableNode;
-import org.gravel.support.compiler.ast.BlockNode;
-import org.gravel.support.compiler.ast.VariableDeclarationNode;
-import org.gravel.support.compiler.ast.SequenceNode;
-import org.gravel.support.compiler.ast.TypeNode;
-import org.gravel.support.compiler.ast.VariableScopeAnalyzerStateDefined;
-import org.gravel.support.compiler.ast.Statement;
-import java.util.Map;
-import java.util.Map.*;
-import org.gravel.support.compiler.ast.VariableToHolderRewriter;
 
-public class NonLocalTempWritesToHolderConverter extends NodeCopier implements Cloneable {
+public class NonLocalTempWritesToHolderConverter extends NonLocalTempAccessToHolderConverter implements Cloneable {
 
 	public static NonLocalTempWritesToHolderConverter_Factory factory = new NonLocalTempWritesToHolderConverter_Factory();
 
-	NonLocalTempWritesToHolderConverter _parent;
-
-	Map<String, VariableScopeAnalyzerState> _temps;
-
-	public static class NonLocalTempWritesToHolderConverter_Factory extends NodeCopier_Factory {
+	public static class NonLocalTempWritesToHolderConverter_Factory extends NonLocalTempAccessToHolderConverter_Factory {
 
 		public NonLocalTempWritesToHolderConverter basicNew() {
 			NonLocalTempWritesToHolderConverter newInstance = new NonLocalTempWritesToHolderConverter();
@@ -42,15 +25,17 @@ public class NonLocalTempWritesToHolderConverter extends NodeCopier implements C
 			return newInstance;
 		}
 
-		public NonLocalTempWritesToHolderConverter parent_(final NonLocalTempWritesToHolderConverter _aVariableScopeAnalyzer) {
-			return this.basicNew().initializeParent_(_aVariableScopeAnalyzer);
+		@Override
+		public NonLocalTempWritesToHolderConverter parent_(final NonLocalTempAccessToHolderConverter _aVariableScopeAnalyzer) {
+			return ((NonLocalTempWritesToHolderConverter) this.basicNew().initializeParent_(_aVariableScopeAnalyzer));
 		}
 	}
 
-	static public NonLocalTempWritesToHolderConverter _parent_(Object receiver, final NonLocalTempWritesToHolderConverter _aVariableScopeAnalyzer) {
+	static public NonLocalTempWritesToHolderConverter _parent_(Object receiver, final NonLocalTempAccessToHolderConverter _aVariableScopeAnalyzer) {
 		return factory.parent_(_aVariableScopeAnalyzer);
 	}
 
+	@Override
 	public NonLocalTempWritesToHolderConverter addBlockVariableRead_(final String _aString) {
 		if (!_temps.containsKey(_aString)) {
 			if (_parent == null) {
@@ -63,6 +48,7 @@ public class NonLocalTempWritesToHolderConverter extends NodeCopier implements C
 		return this;
 	}
 
+	@Override
 	public NonLocalTempWritesToHolderConverter addBlockVariableWrite_(final String _aString) {
 		if (!_temps.containsKey(_aString)) {
 			if (_parent == null) {
@@ -75,6 +61,7 @@ public class NonLocalTempWritesToHolderConverter extends NodeCopier implements C
 		return this;
 	}
 
+	@Override
 	public NonLocalTempWritesToHolderConverter addVariableRead_(final String _aString) {
 		if (!_temps.containsKey(_aString)) {
 			if (_parent == null) {
@@ -87,6 +74,7 @@ public class NonLocalTempWritesToHolderConverter extends NodeCopier implements C
 		return this;
 	}
 
+	@Override
 	public NonLocalTempWritesToHolderConverter addVariableWrite_(final String _aString) {
 		if (!_temps.containsKey(_aString)) {
 			if (_parent == null) {
@@ -120,66 +108,15 @@ public class NonLocalTempWritesToHolderConverter extends NodeCopier implements C
 		return this;
 	}
 
-	public NonLocalTempWritesToHolderConverter initializeParent_(final NonLocalTempWritesToHolderConverter _aVariableScopeAnalyzer) {
+	@Override
+	public NonLocalTempWritesToHolderConverter initializeParent_(final NonLocalTempAccessToHolderConverter _aVariableScopeAnalyzer) {
 		_parent = _aVariableScopeAnalyzer;
 		this.initialize();
 		return this;
 	}
 
-	public NonLocalTempWritesToHolderConverter parent() {
-		return _parent;
-	}
-
 	@Override
-	public Expression visitAssignmentNode_(final AssignmentNode _anObject) {
-		this.addVariableWrite_(_anObject.variable().name());
-		return AssignmentNode.factory.variable_value_(VariableNode.factory.name_(_anObject.variable().name()), ((Expression) this.visit_(_anObject.value())));
-	}
-
-	@Override
-	public BlockNode visitBlockNode_(final BlockNode _anObject) {
-		final NonLocalTempWritesToHolderConverter _sub;
-		_sub = NonLocalTempWritesToHolderConverter.factory.parent_(this);
-		return BlockNode.factory.arguments_body_returnType_(org.gravel.support.jvm.ArrayExtensions.collect_(_anObject.arguments(), ((org.gravel.support.jvm.Block1<VariableDeclarationNode, VariableDeclarationNode>) (new org.gravel.support.jvm.Block1<VariableDeclarationNode, VariableDeclarationNode>() {
-
-			@Override
-			public VariableDeclarationNode value_(final VariableDeclarationNode _each) {
-				return (VariableDeclarationNode) _sub.visit_(_each);
-			}
-		}))), ((SequenceNode) _sub.visit_(_anObject.body())), ((TypeNode) _sub.visit_(_anObject.returnType())));
-	}
-
-	@Override
-	public SequenceNode visitSequenceNode_(final SequenceNode _anObject) {
-		final SequenceNode[] _node;
-		_node = new SequenceNode[1];
-		_node[0] = SequenceNode.factory.temporaries_statements_(org.gravel.support.jvm.ArrayExtensions.collect_(_anObject.temporaries(), ((org.gravel.support.jvm.Block1<VariableDeclarationNode, VariableDeclarationNode>) (new org.gravel.support.jvm.Block1<VariableDeclarationNode, VariableDeclarationNode>() {
-
-			@Override
-			public VariableDeclarationNode value_(final VariableDeclarationNode _each) {
-				_temps.put(_each.name(), VariableScopeAnalyzerStateDefined.factory.basicNew());
-				return (VariableDeclarationNode) NonLocalTempWritesToHolderConverter.this.visit_(_each);
-			}
-		}))), org.gravel.support.jvm.ArrayExtensions.collect_(_anObject.statements(), ((org.gravel.support.jvm.Block1<Statement, Statement>) (new org.gravel.support.jvm.Block1<Statement, Statement>() {
-
-			@Override
-			public Statement value_(final Statement _each) {
-				return (Statement) NonLocalTempWritesToHolderConverter.this.visit_(_each);
-			}
-		}))));
-		for (final Map.Entry<String, VariableScopeAnalyzerState> _temp1 : _temps.entrySet()) {
-			String _varName = _temp1.getKey();
-			VariableScopeAnalyzerState _state = _temp1.getValue();
-			if (_state.isUndecided()) {
-				_node[0] = ((SequenceNode) VariableToHolderRewriter.factory.varName_(_varName).visit_(_node[0]));
-			}
-		}
-		return _node[0];
-	}
-
-	@Override
-	public Expression visitVariableNode_(final VariableNode _anObject) {
-		this.addVariableRead_(_anObject.name());
-		return VariableNode.factory.name_(_anObject.name());
+	public boolean needsRewrite_(final VariableScopeAnalyzerState _state) {
+		return _state.isUndecided();
 	}
 }

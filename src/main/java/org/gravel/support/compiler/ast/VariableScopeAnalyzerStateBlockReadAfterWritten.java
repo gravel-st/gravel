@@ -40,6 +40,11 @@ public class VariableScopeAnalyzerStateBlockReadAfterWritten extends VariableSco
 	}
 
 	@Override
+	public boolean isBlockReadAfterWritten() {
+		return true;
+	}
+
+	@Override
 	public VariableScopeAnalyzerState withBlockRead() {
 		return this;
 	}

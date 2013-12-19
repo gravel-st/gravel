@@ -166,6 +166,11 @@ public class SimpleTraitUsageNode extends TraitUsageNode implements Cloneable {
 	}
 
 	@Override
+	public Reference[] prerequisiteReferences() {
+		return org.gravel.support.jvm.ArrayFactory.with_(_reference);
+	}
+
+	@Override
 	public SimpleTraitUsageNode prettySourceOn_(final StringBuilder _aStream) {
 		SourcePrinter.factory.on_(_aStream).visit_(this);
 		return this;
