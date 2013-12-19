@@ -8,7 +8,7 @@ Getting started
 ===============
 
 To open the IDE load everything in eclipse and start st.gravel.tools.StartJetty. Then point your
-browser to http://localhost:8080/browser 
+browser to [http://localhost:8080/browser](http://localhost:8080/browser)
 
 What is Gravel
 ==============
