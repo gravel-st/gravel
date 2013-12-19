@@ -81,6 +81,12 @@ public class Richards {
           throw new RuntimeException("bad scheduler hold-count");
       }
   }
+  
+	public static void startLongRun() {
+		for (int i = 0; i < 100; i++) {
+			new Richards().run();
+		}
+	}
 
   static final int DATA_SIZE = 4;
   static final int COUNT = 1000;

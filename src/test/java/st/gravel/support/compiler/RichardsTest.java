@@ -27,7 +27,7 @@ public class RichardsTest {
 		}
 	}
 
-	@Test  @Ignore
+	@Test
 	public void testRunGravelRichardsLong() {
 		Object appClass = ImageBootstrapper.systemMapping
 				.singletonAtReferenceString_("st.gravel.tests.richards.RichardsBenchmark");
@@ -36,12 +36,11 @@ public class RichardsTest {
 		}
 	}
 
-	@Test  @Ignore
-	public void testRunJavaRichards() {
+	@Test
+	public void testRunJavaRichardsLong() {
 		for (int i = 0; i < ITERATIONS; i++) {
 			Date start = new Date();
-			Richards richards = new Richards();
-			richards.run();
+			Richards.startLongRun();
 			Date stop = new Date();
 			System.out.println("Duration: "
 					+ (stop.getTime() - start.getTime()) + " ms");
