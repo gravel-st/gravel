@@ -1,5 +1,13 @@
 (reader defineClass: 'JavaArrayList' superclass: 'org.gravel.lang.Object')
 !
+(reader addSimpleTrait: 'org.gravel.lang.collections.interface.SequenceableCollection')
+!
+(reader addSimpleTrait: 'org.gravel.lang.collections.interface.AddableCollection')
+!
+(reader addSimpleClassTrait: 'org.gravel.lang.collections.interface.SequenceableCollection class')
+!
+(reader addSimpleClassTrait: 'org.gravel.lang.collections.interface.AddableCollection class')
+!
 (reader propertyAt: 'javaClass' put: 'java.util.ArrayList')
 !
 (reader addMethod: 'gravel')

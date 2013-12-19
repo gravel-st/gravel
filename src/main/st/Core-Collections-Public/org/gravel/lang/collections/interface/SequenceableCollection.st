@@ -4,6 +4,11 @@
 !
 (reader addSimpleClassTrait: 'org.gravel.lang.collections.interface.Collection class')
 !
+(reader addMethod: 'As yet unclassified')
+!
+, aCollection
+	^self copyWithAll: aCollection
+!
 (reader addMethod: 'gravel')
 !
 anElement

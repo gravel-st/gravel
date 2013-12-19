@@ -18,8 +18,8 @@ reSort
 defaultImplementation
 	^SortedCollectionImpl
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'As yet unclassified')
 !
 sortBlock: aBlock
-	^self traitRequirement
+	^self defaultImplementation sortBlock: aBlock
 !

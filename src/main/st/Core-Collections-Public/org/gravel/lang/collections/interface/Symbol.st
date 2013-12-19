@@ -17,6 +17,11 @@ storeOn: aStream
 		ifTrue: [aStream nextPutAll: self]
 		ifFalse: [self stringStoreOn: aStream]
 !
+(reader addClassMethod: 'instance creation')
+!
+allStrings
+	^self defaultImplementation allStrings
+!
 (reader addClassMethod: 'As yet unclassified')
 !
 defaultImplementation

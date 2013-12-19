@@ -11,7 +11,7 @@ public class MetaclassMirror extends ClassDescriptionMirror {
 	}
 
 	public String name() {
-		return reference.nonmeta().name() + " class";
+		return reference.nonmeta().name().asString() + " class";
 	}
 
 	public boolean isMeta() {
