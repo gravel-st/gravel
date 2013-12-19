@@ -7,7 +7,7 @@ Gravel is a Smalltalk implementation for the JVM
 Getting started
 ===============
 
-To open the IDE load everything in eclipse and start st.gravel.tools.StartJetty. Then point your
+To open the IDE; load everything in eclipse and start [st.gravel.tools.StartJetty](https://github.com/gravel-st/gravel/blob/master/src/main/java/st/gravel/tools/StartJetty.java). Then point your
 browser to [http://localhost:8080/browser](http://localhost:8080/browser)
 
 What is Gravel
