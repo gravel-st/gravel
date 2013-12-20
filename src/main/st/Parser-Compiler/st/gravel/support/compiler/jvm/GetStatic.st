@@ -47,9 +47,8 @@ instVarTypes {^[JVMDefinedObjectType, Str, JVMType]}
 !
 (reader addClassMethod: 'instance creation')
 !
-ownerType: aJVMDefinedObjectType {JVMDefinedObjectType} name: aString {Str} type: aJVMDefinedObjectType2 {JVMType} {^GetStatic}
-	^self new
-		initializeOwnerType: aJVMDefinedObjectType
-		name: aString
-		type: aJVMDefinedObjectType2
+ownerType: ownerType {JVMDefinedObjectType} name: aString {Str} type: type {JVMType} {^GetStatic}
+	self assert: ownerType notNil.
+	self assert: type notNil.
+	^self new initializeOwnerType: ownerType name: aString type: type
 !

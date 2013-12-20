@@ -56,7 +56,7 @@ public class JVMBlockCompiler extends Object implements Cloneable {
 	}
 
 	public JVMDefinedObjectType blockSuperType_(final int _anInteger) {
-		return JVMDefinedObjectType.factory.className_("st/gravel/support/jvm/Block" + "" + _anInteger);
+		return JVMDefinedObjectType.factory.block_(_anInteger);
 	}
 
 	public JVMClass compileBlock() {
@@ -108,7 +108,7 @@ public class JVMBlockCompiler extends Object implements Cloneable {
 		_instructions[0].add(_read0[0]);
 		_instructions[0].add(InvokeSpecial.factory.init_voidArguments_(this.superType(), new JVMType[] {}));
 		_instructions[0].add(Return.factory.basicNew());
-		return JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", new JVMLocalDeclaration[] {}, _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), false, _block.initSignature());
+		return JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", st.gravel.support.jvm.ArrayFactory.with_(JVMLocalDeclaration.factory.self()), _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), false, _block.initSignature());
 	}
 
 	public JVMBlockCompiler_Factory factory() {

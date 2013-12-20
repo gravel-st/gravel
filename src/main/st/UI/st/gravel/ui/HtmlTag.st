@@ -8,6 +8,10 @@
 !
 (reader addInstVar: 'classes')
 !
+(reader addInstVar: 'eventRegistry')
+!
+(reader addInstVar: 'attributes')
+!
 (reader addMethod: 'gravel')
 !
 addCallback: aBlock
@@ -20,6 +24,33 @@ addCallback: aBlock
 !
 addClass: aClass
 	classes := classes copyWith: aClass asString
+!
+(reader addMethod: 'gravel')
+!
+addClasses: anArray
+	classes := classes copyWithAll: (anArray collect: [:each | each asString])
+!
+(reader addMethod: 'gravel')
+!
+addEvent: anArray
+	eventRegistry add: anArray
+!
+(reader addMethod: 'gravel')
+!
+attributeAt: k put: v
+	attributes at: k put: v
+!
+(reader addMethod: 'gravel')
+!
+bind: aBlock on: anEvent to: anId
+	
+!
+(reader addMethod: 'gravel')
+!
+bindCallback: aBlock on: anEvent to: anId
+	| name |
+	name := self addCallback: aBlock.
+	self addEvent: (Array with: anId with: anEvent with: name)
 !
 (reader addMethod: 'gravel')
 !
@@ -45,6 +76,11 @@ callbackRegistry
 !
 div: aBlock
 	self tag: #div do: aBlock
+!
+(reader addMethod: 'gravel')
+!
+eventRegistry
+	^eventRegistry
 !
 (reader addMethod: 'gravel')
 !
@@ -78,7 +114,9 @@ if: aBoolean bold: aBlock
 initializeStream: aStream callbackRegistry: aDictionary
 	stream := aStream.
 	callbackRegistry := aDictionary.
-	classes := #()
+	eventRegistry := OrderedCollection new.
+	classes := #().
+	attributes := Dictionary new
 !
 (reader addMethod: 'gravel')
 !
@@ -170,6 +208,13 @@ nextPut: aCharacter
 !
 (reader addMethod: 'gravel')
 !
+onClick: aBlock
+	| id |
+	id := attributes at: 'id' ifAbsentPut: [Random nextUUIDString].
+	self bindCallback: aBlock on: 'click' to: id
+!
+(reader addMethod: 'gravel')
+!
 script: aString
 	stream crlf.
 	self
@@ -183,6 +228,11 @@ script: aString
 				nextPutAll: aString;
 				crlf].
 	stream crlf
+!
+(reader addMethod: 'gravel')
+!
+section: aBlock
+	self tag: #section do: aBlock
 !
 (reader addMethod: 'gravel')
 !
@@ -212,6 +262,12 @@ tag: aString attributes: aDictionary
 (reader addMethod: 'gravel')
 !
 tag: aString attributes: aDictionary do: aBlock
+	aDictionary keysAndValuesDo: [:k :v | self attributeAt: k put: v].
+	self tag: aString do: aBlock
+!
+(reader addMethod: 'gravel')
+!
+tag: aString do: aBlock
 	stream
 		nextPut: $<;
 		nextPutAll: aString;
@@ -222,13 +278,14 @@ tag: aString attributes: aDictionary do: aBlock
 			classes do: [:each | stream nextPutAll: each] separatedBy: [stream space].
 			stream nextPutAll: '" '.
 			classes := #()].
-	aDictionary keysAndValuesDo: 
+	attributes keysAndValuesDo: 
 			[:k :v |
 			stream
 				nextPutAll: k;
 				nextPutAll: '="';
 				nextPutAll: v asString;
 				nextPutAll: '" '].
+	attributes := Dictionary new.
 	aBlock isNil
 		ifTrue: [stream nextPutAll: '/>']
 		ifFalse: 
@@ -238,14 +295,6 @@ tag: aString attributes: aDictionary do: aBlock
 				nextPutAll: '</';
 				nextPutAll: aString;
 				nextPut: $>]
-!
-(reader addMethod: 'gravel')
-!
-tag: aString do: aBlock
-	^self
-		tag: aString
-		attributes: Dictionary new
-		do: aBlock
 !
 (reader addMethod: 'gravel')
 !

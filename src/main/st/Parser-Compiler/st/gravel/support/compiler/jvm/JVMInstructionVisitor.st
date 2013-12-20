@@ -2,6 +2,11 @@
 !
 (reader addMethod: 'visiting')
 !
+visit: anObject {JVMInstruction} {^X}
+	^anObject accept: self
+!
+(reader addMethod: 'visiting')
+!
 visitALoad: anObject {ALoad} {^X}
 	^self visitLoad: anObject
 !

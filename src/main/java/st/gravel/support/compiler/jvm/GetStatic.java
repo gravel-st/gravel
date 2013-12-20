@@ -33,13 +33,15 @@ public class GetStatic extends JVMInstruction implements Cloneable {
 			return newInstance;
 		}
 
-		public GetStatic ownerType_name_type_(final JVMDefinedObjectType _aJVMDefinedObjectType, final String _aString, final JVMType _aJVMDefinedObjectType2) {
-			return this.basicNew().initializeOwnerType_name_type_(_aJVMDefinedObjectType, _aString, _aJVMDefinedObjectType2);
+		public GetStatic ownerType_name_type_(final JVMDefinedObjectType _ownerType, final String _aString, final JVMType _type) {
+			st.gravel.support.jvm.ObjectExtensions.assert_(this, _ownerType != null);
+			st.gravel.support.jvm.ObjectExtensions.assert_(this, _type != null);
+			return this.basicNew().initializeOwnerType_name_type_(_ownerType, _aString, _type);
 		}
 	}
 
-	static public GetStatic _ownerType_name_type_(Object receiver, final JVMDefinedObjectType _aJVMDefinedObjectType, final String _aString, final JVMType _aJVMDefinedObjectType2) {
-		return factory.ownerType_name_type_(_aJVMDefinedObjectType, _aString, _aJVMDefinedObjectType2);
+	static public GetStatic _ownerType_name_type_(Object receiver, final JVMDefinedObjectType _ownerType, final String _aString, final JVMType _type) {
+		return factory.ownerType_name_type_(_ownerType, _aString, _type);
 	}
 
 	@Override

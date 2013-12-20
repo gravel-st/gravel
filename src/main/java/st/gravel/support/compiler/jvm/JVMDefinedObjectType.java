@@ -40,6 +40,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return this.className_("java/math/BigInteger");
 		}
 
+		public JVMDefinedObjectType block_(final int _anInteger) {
+			return JVMDefinedObjectType.factory.className_("st/gravel/support/jvm/Block" + "" + _anInteger);
+		}
+
 		public JVMDefinedObjectType className_(final String _aString) {
 			return this.path_(st.gravel.support.jvm.StringExtensions.tokensBasedOn_(_aString, '/'));
 		}
@@ -64,8 +68,8 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return this.className_("st/gravel/support/jvm/ObjectClass");
 		}
 
-		public JVMDefinedObjectType path_(final String[] _anOrderedCollection) {
-			return this.basicNew().initializePath_(_anOrderedCollection);
+		public JVMDefinedObjectType path_(final String[] _anArray) {
+			return this.basicNew().initializePath_(_anArray);
 		}
 
 		public JVMDefinedObjectType runtimeException() {
@@ -87,6 +91,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 
 	static public JVMDefinedObjectType _bigInteger(Object receiver) {
 		return factory.bigInteger();
+	}
+
+	static public JVMDefinedObjectType _block_(Object receiver, final int _anInteger) {
+		return factory.block_(_anInteger);
 	}
 
 	static public JVMDefinedObjectType _className_(Object receiver, final String _aString) {
@@ -113,8 +121,8 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 		return factory.objectClass();
 	}
 
-	static public JVMDefinedObjectType _path_(Object receiver, final String[] _anOrderedCollection) {
-		return factory.path_(_anOrderedCollection);
+	static public JVMDefinedObjectType _path_(Object receiver, final String[] _anArray) {
+		return factory.path_(_anArray);
 	}
 
 	static public JVMDefinedObjectType _runtimeException(Object receiver) {

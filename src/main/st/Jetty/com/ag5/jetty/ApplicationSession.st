@@ -70,12 +70,6 @@ writeResponseOn: aStream
 	html html: 
 			[html head: 
 					[| css |
-					html
-						script: 'function click(callbackID)
-{
-document.getElementById("callbackField").setAttribute("value", callbackID);
-document.getElementById("processForm").submit();
-}'.
 					css := application class css.
 					css isNil ifFalse: [html style: css].
 					application class cssLinks do: [:each | html linkCss: each].
@@ -88,7 +82,8 @@ document.getElementById("processForm").submit();
 						do: 
 							[html input: 'callbackID' type: 'hidden' id: 'callbackField'.
 							callbackRegistry := html callbackRegistry.
-							application renderOn: html]]]
+							application renderOn: html.
+							html script: 'Gravel = { Events: ' , html eventRegistry asArray asJSON , ' };']]]
 !
 (reader addMethod: 'gravel')
 !

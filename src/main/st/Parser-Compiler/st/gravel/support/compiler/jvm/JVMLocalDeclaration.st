@@ -32,6 +32,14 @@ instVarTypes {^[Int]}
 !
 (reader addClassMethod: 'instance creation')
 !
+self {^JVMLocalDeclaration}
+	^self
+		varName: 'self'
+		type: JVMDynamicObjectType new
+		index: 0
+!
+(reader addClassMethod: 'instance creation')
+!
 varName: aString {Str} type: aJVMObjectType {JVMType} index: anInteger {Int} {^JVMLocalDeclaration}
 	^self new initializeVarName: aString type: aJVMObjectType index: anInteger
 !

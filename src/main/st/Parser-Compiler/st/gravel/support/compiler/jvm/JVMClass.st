@@ -15,6 +15,11 @@
 accept: visitor {JVMNodeVisitor[X def]} {^X}
 	^visitor visitJVMClass: self
 !
+(reader addMethod: 'As yet unclassified')
+!
+fieldNamed: name {Str} ifAbsent: aBlock {[^JVMField]} {^JVMField}
+	^fields detect: [:each {JVMField} | each varName = name] ifNone: aBlock
+!
 (reader addMethod: 'accessing')
 !
 fields {^Arr[JVMField]}
@@ -28,6 +33,16 @@ initializeType: aJVMDefinedObjectType {JVMDefinedObjectType} superType: aJVMDefi
 	fields := anArray.
 	methods := anArray2.
 	self initialize
+!
+(reader addMethod: 'As yet unclassified')
+!
+isSimulatedPrimitives
+	^false
+!
+(reader addMethod: 'As yet unclassified')
+!
+methodNamed: name {Str} ifAbsent: aBlock {[^JVMMethod]} {^JVMMethod}
+	^methods detect: [:each {JVMMethod} | each name = name] ifNone: aBlock
 !
 (reader addMethod: 'accessing')
 !
@@ -44,6 +59,14 @@ source {^Str}
 source: anObject {Str} {^Self}
 	source := anObject
 !
+(reader addMethod: 'printing')
+!
+sourceOn: aStream {WStream[Char]} {^Self}
+	super sourceOn: aStream.
+	aStream nextPut: $[.
+	aStream nextPutAll: type printString.
+	aStream nextPut: $]
+!
 (reader addMethod: 'accessing')
 !
 superType {^JVMDefinedObjectType}
@@ -58,6 +81,24 @@ type {^JVMDefinedObjectType}
 !
 instVarTypes {^[JVMDefinedObjectType, Arr[JVMField], Arr[JVMMethod], JVMDefinedObjectType, Str]}
 	^#('type' 'fields' 'methods' 'superType' 'source')
+!
+(reader addClassMethod: 'instance creation')
+!
+type: aJVMDefinedObjectType {JVMDefinedObjectType} {^JVMClass}
+	^self
+		type: aJVMDefinedObjectType
+		superType: JVMDefinedObjectType object
+		fields: #()
+		methods: #()
+!
+(reader addClassMethod: 'instance creation')
+!
+type: aJVMDefinedObjectType {JVMDefinedObjectType} methods: methods {Arr[JVMMethod]} {^JVMClass}
+	^self
+		type: aJVMDefinedObjectType
+		superType: JVMDefinedObjectType object
+		fields: #()
+		methods: methods
 !
 (reader addClassMethod: 'instance creation')
 !

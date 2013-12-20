@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMVariable;
 import st.gravel.support.compiler.jvm.JVMVariable.JVMVariable_Factory;
+import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMNodeVisitor;
 
@@ -27,9 +28,17 @@ public class JVMLocalDeclaration extends JVMVariable implements Cloneable {
 			return newInstance;
 		}
 
+		public JVMLocalDeclaration self() {
+			return this.varName_type_index_("self", JVMDynamicObjectType.factory.basicNew(), 0);
+		}
+
 		public JVMLocalDeclaration varName_type_index_(final String _aString, final JVMType _aJVMObjectType, final int _anInteger) {
 			return this.basicNew().initializeVarName_type_index_(_aString, _aJVMObjectType, _anInteger);
 		}
+	}
+
+	static public JVMLocalDeclaration _self(Object receiver) {
+		return factory.self();
 	}
 
 	static public JVMLocalDeclaration _varName_type_index_(Object receiver, final String _aString, final JVMType _aJVMObjectType, final int _anInteger) {

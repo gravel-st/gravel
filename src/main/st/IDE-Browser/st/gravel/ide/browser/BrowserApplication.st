@@ -2,7 +2,7 @@
 !
 (reader addInstVar: 'naam')
 !
-(reader addInstVar: 'selectedClass')
+(reader addInstVar: 'selectedClassMirror')
 !
 (reader addInstVar: 'selectedSelector')
 !
@@ -21,6 +21,8 @@
 (reader addInstVar: 'transcript')
 !
 (reader addInstVar: 'evalHolder')
+!
+(reader addInstVar: 'toolsActive')
 !
 (reader addMethod: 'gravel')
 !
@@ -41,7 +43,7 @@ autocompleteTokens
 (reader addMethod: 'gravel')
 !
 browseClass: aClassMirror
-	selectedClass := aClassMirror.
+	selectedClassMirror := aClassMirror.
 	(self currentProtocols includes: selectedProtocol) ifFalse: [self browseProtocol: nil].
 	self update
 !
@@ -95,9 +97,14 @@ classString: aClass
 !
 (reader addMethod: 'gravel')
 !
+clearTranscript
+	^transcript := ''
+!
+(reader addMethod: 'gravel')
+!
 currentClass
-	selectedClass isNil ifTrue: [^nil].
-	^isMeta ifTrue: [selectedClass meta] ifFalse: [selectedClass]
+	selectedClassMirror isNil ifTrue: [^nil].
+	^isMeta ifTrue: [selectedClassMirror meta] ifFalse: [selectedClassMirror]
 !
 (reader addMethod: 'gravel')
 !
@@ -144,26 +151,37 @@ initialize
 	objectMirror := (Reflection reflect: Object new) classMirror.
 	rootClasses := Array with: objectMirror.
 	packageNames := #().
-	selectedClass := objectMirror.
+	selectedClassMirror := objectMirror.
 	isMeta := false.
 	sourceHolder := ValueHolder on: ''.
 	evalHolder := ValueHolder on: ''.
 	transcript := ''.
+	toolsActive := false.
 	Transcript addHandler: [:each | self log: each].
 	self update
 !
 (reader addMethod: 'gravel')
 !
 isInHierarchySelection: aClassMirror
-	selectedClass isNil ifTrue: [^true].
-	selectedClass = aClassMirror ifTrue: [^true].
-	^(selectedClass allSuperclasses includes: aClassMirror)
-		or: [aClassMirror allSuperclasses includes: selectedClass]
+	selectedClassMirror isNil ifTrue: [^true].
+	selectedClassMirror = aClassMirror ifTrue: [^true].
+	^(selectedClassMirror allSuperclasses includes: aClassMirror)
+		or: [aClassMirror allSuperclasses includes: selectedClassMirror]
 !
 (reader addMethod: 'gravel')
 !
 isInPackage: anObject
 	^selectedPackageName isNil or: [anObject packageName = selectedPackageName]
+!
+(reader addMethod: 'gravel')
+!
+isTestClassSelected
+	^selectedClassMirror notNil and: [selectedClassMirror includesBehavior: TestCase]
+!
+(reader addMethod: 'gravel')
+!
+isToolPanelActive
+	^toolsActive
 !
 (reader addMethod: 'gravel')
 !
@@ -191,7 +209,7 @@ methodIsInPackage: aSymbol
 (reader addMethod: 'gravel')
 !
 newTestSuite
-	^selectedClass instance suite
+	^selectedClassMirror instance suite
 !
 (reader addMethod: 'accessing')
 !
@@ -245,6 +263,7 @@ protocolOf: sel
 (reader addMethod: 'gravel')
 !
 renderClassListOn: html
+	html addClasses: #(#ui #segment).
 	self
 		renderList: rootClasses , self traitsInCurrentPackage
 		subElements: 
@@ -256,10 +275,48 @@ renderClassListOn: html
 			[:each |
 			html if: (self isInPackage: each)
 				bold: 
-					[each = selectedClass
+					[each = selectedClassMirror
 						ifTrue: [html text: (self classString: each)]
 						ifFalse: [html link: (self classString: each) do: [self browseClass: each]]]]
 		on: html
+!
+(reader addMethod: 'gravel')
+!
+renderEditorOn: html
+	html
+		addClass: #source;
+		section: 
+				[html
+					addClasses: #(#ui #menu);
+					div: 
+							[html
+								addClass: ' item';
+								div: [html text: 'Editor'].
+							html
+								addClasses: #(#menu #right);
+								div: 
+										[html
+											addClass: 'item';
+											div: 
+													[html
+														addClass: 'ui primary button';
+														onClick: [self accept];
+														div: [html text: 'Accept']].
+										html
+											addClass: 'item';
+											div: 
+													[html
+														addClass: 'ui button';
+														onClick: [self cancel];
+														div: [html text: 'Cancel']]]].
+				html
+					codearea: sourceHolder
+					autocompleteTokens: self autocompleteTokens
+					rows: 40
+					cols: 200
+					onAccept: [self accept].
+				html link: 'Accept' do: [self accept].
+				html link: 'Cancel' do: [self cancel]]
 !
 (reader addMethod: 'gravel')
 !
@@ -284,6 +341,7 @@ renderInnerList: elements subElements: seBlock do: aBlock indent: depth on: html
 (reader addMethod: 'gravel')
 !
 renderList: elements do: aBlock on: html
+	html addClasses: #(#ui #segment).
 	self
 		renderList: elements
 		subElements: [:each | #()]
@@ -304,6 +362,19 @@ renderList: elements subElements: seBlock do: aBlock on: html
 !
 (reader addMethod: 'gravel')
 !
+renderMainMenuOn: html
+	html
+		addClasses: #(#ui #fixed #transparent #inverted #main #menu);
+		div: 
+				[html
+					addClasses: #(#title #item);
+					div: 
+							[html
+								bold: [html text: 'Gravel'];
+								text: 'IDE']]
+!
+(reader addMethod: 'gravel')
+!
 renderMetaListOn: html
 	self
 		renderList: #(false true)
@@ -317,32 +388,34 @@ renderMetaListOn: html
 (reader addMethod: 'gravel')
 !
 renderOn: html
-	self renderPackageListOn: html.
-	self renderMetaListOn: html.
-	self renderClassListOn: html.
-	self renderProtocolListOn: html.
-	self renderSelectorListOn: html.
-	html break.
-	self renderTestRunnerOn: html.
-	html addClass: #source.
-	html div: 
-			[html link: 'Clear Transcript' do: [transcript := ''].
-			self printIndented: transcript on: html.
-			html
-				codearea: evalHolder
-				autocompleteTokens: self autocompleteTokens
-				rows: 10
-				cols: 200
-				onAccept: [self printIt].
-			html link: 'Print It' do: [self printIt].
-			html
-				codearea: sourceHolder
-				autocompleteTokens: self autocompleteTokens
-				rows: 40
-				cols: 200
-				onAccept: [self accept].
-			html link: 'Accept' do: [self accept].
-			html link: 'Cancel' do: [self cancel]]
+	self renderMainMenuOn: html.
+	html tag: 'header'
+		do: 
+			[html
+				tag: 'table'
+				attributes: ((Dictionary new)
+						at: 'width' put: '100%';
+						yourself)
+				do: 
+					[html tag: 'tr'
+						do: 
+							[html
+								addClass: #column;
+								tag: 'td' do: [self renderPackageListOn: html].
+							html
+								addClass: #column;
+								tag: 'td' do: [self renderMetaListOn: html].
+							html
+								addClass: #column;
+								tag: 'td' do: [self renderClassListOn: html].
+							html
+								addClass: #column;
+								tag: 'td' do: [self renderProtocolListOn: html].
+							html
+								addClass: #column;
+								tag: 'td' do: [self renderSelectorListOn: html]]]].
+	self renderEditorOn: html.
+	self renderToolsOn: html
 !
 (reader addMethod: 'gravel')
 !
@@ -371,6 +444,10 @@ renderProtocolListOn: html
 (reader addMethod: 'gravel')
 !
 renderSelectorListOn: html
+	| testSelectors |
+	testSelectors := self isTestClassSelected
+				ifTrue: [selectedClassMirror instance testSelectors]
+				ifFalse: [#()].
 	self
 		renderList: self currentSelectors
 		do: 
@@ -384,13 +461,18 @@ renderSelectorListOn: html
 				bold: 
 					[each = selectedSelector
 						ifTrue: [html text: label]
-						ifFalse: [html link: label do: [self browseSelector: each]]]]
+						ifFalse: [html link: label do: [self browseSelector: each]]].
+			(testSelectors includes: each)
+				ifTrue: 
+					[html
+						attributeAt: 'style' put: 'float: right;';
+						link: 'Run Test' do: [self runTestSelector: each]]]
 		on: html
 !
 (reader addMethod: 'gravel')
 !
 renderTestRunnerOn: html
-	(selectedClass notNil and: [selectedClass includesBehavior: TestCase]) ifFalse: [^self].
+	self isTestClassSelected ifFalse: [^self].
 	html div: 
 			[| suite |
 			html link: 'Run testcase' do: [self runTest].
@@ -406,6 +488,59 @@ renderTestRunnerOn: html
 					html link: 'Debug ' do: [self debugTest: each].
 					html text: ']']].
 	html break
+!
+(reader addMethod: 'gravel')
+!
+renderToolsOn: html
+	self isToolPanelActive ifTrue: [html addClass: 'active'].
+	html
+		addClasses: #(#tools #ui #bottom #sidebar);
+		section: 
+				[html
+					addClasses: #(#ui #black #launch #top #tiny #attached #button);
+					onClick: [self toggleToolPanel];
+					div: 
+							[html
+								addClasses: (#(#arrow #sign #icon)
+											copyWith: (self isToolPanelActive ifTrue: [#down] ifFalse: [#up]));
+								italic: [];
+								span: [html text: 'Tools']].
+				html
+					addClasses: #(#ui #grid);
+					div: 
+							[html
+								addClasses: #(#eight #wide #middle #column);
+								div: 
+										[html
+											addClasses: #(#ui #inverted #menu);
+											div: 
+													[html
+														addClasses: #(#ui #header #item);
+														div: [html text: 'Workspace'].
+													html
+														addClasses: #(#ui #item);
+														link: 'Print it' do: [self printIt]].
+										html
+											codearea: evalHolder
+											autocompleteTokens: self autocompleteTokens
+											rows: 10
+											cols: 200
+											onAccept: [self printIt]].
+							html
+								addClasses: #(#eight #wide #middle #column);
+								div: 
+										[html
+											addClasses: #(#ui #inverted #menu);
+											div: 
+													[html
+														addClasses: #(#ui #header #item);
+														div: [html text: 'Transcript'].
+													html
+														addClasses: #(#ui #item);
+														link: 'Clear Transcript' do: [self clearTranscript]].
+										html
+											addClass: #transcript;
+											div: [self printIndented: transcript on: html]]]]
 !
 (reader addMethod: 'gravel')
 !
@@ -426,8 +561,21 @@ runTest: test
 !
 (reader addMethod: 'gravel')
 !
+runTestSelector: aSymbol
+	| result |
+	toolsActive := true.
+	result := selectedClassMirror instance run: aSymbol.
+	self log: result printString
+!
+(reader addMethod: 'gravel')
+!
 selectedPackage
 	^Reflection packages detect: [:each | each name = selectedPackageName] ifNone: [nil]
+!
+(reader addMethod: 'gravel')
+!
+toggleToolPanel
+	toolsActive := toolsActive not
 !
 (reader addMethod: 'gravel')
 !
@@ -462,31 +610,38 @@ asServlet
 css
 	^super css
 		, '
+body {
+	font-family: ''Source Sans Pro'', sans-serif;
+	font-size: 12px;
+}
 b {
 	font-weight: bold;
 }
-.column {
+
+header .column {
 	padding: 0;
 	margin: 0;
-	float: left;
-	width: 20em;
-	height: 25em;
-	overflow-y: auto;
+	vertical-align: top;
 }
+
+header .column > ul {
+	overflow-y: auto;
+	list-style-type: none;
+	height: 25em;
+}
+
 .source {
-	position: absolute;
-	float: left;
-	top: 26em;
+	
 }
 '
 !
 (reader addClassMethod: 'As yet unclassified')
 !
 cssLinks
-	^#('../net/codemirror/addon/hint/show-hint.css' '../net/codemirror/lib/codemirror.css')
+	^#('http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' '../gravel/base.css' '../net/codemirror/addon/hint/show-hint.css' '../net/codemirror/lib/codemirror.css' '../semantic/packaged/css/semantic.css')
 !
 (reader addClassMethod: 'As yet unclassified')
 !
 scriptLinks
-	^#('../net/codemirror/lib/codemirror.js' '../net/codemirror/mode/smalltalk/smalltalk.js' '../net/codemirror/addon/edit/matchbrackets.js' '../net/codemirror/addon/hint/show-hint.js')
+	^#('http://code.jquery.com/jquery-2.0.3.min.js' '../gravel/js/gravel.js' '../net/codemirror/lib/codemirror.js' '../net/codemirror/mode/smalltalk/smalltalk.js' '../net/codemirror/addon/edit/matchbrackets.js' '../net/codemirror/addon/hint/show-hint.js')
 !

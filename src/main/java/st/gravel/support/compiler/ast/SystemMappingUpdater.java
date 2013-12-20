@@ -332,10 +332,21 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 
 			@Override
 			public Object value_(final ClassMapping _classMapping) {
+				final Class _identityClass;
 				if (_classMapping.classNode().isMeta()) {
 					SystemMappingUpdater.this.initializeClassShareds_(((MetaclassNode) _classMapping.classNode()));
 				}
-				return _compilerTools.linkInNamespace_systemMapping_(_classMapping, _systemMapping);
+				_identityClass = _classMapping.identityClass();
+				if (_classMapping.classNode().isMeta()) {
+					return _systemMapping.singletonAtReference_ifAbsentPut_(_classMapping.reference().nonmeta(), new st.gravel.support.jvm.Block0<Object>() {
+
+						@Override
+						public Object value() {
+							return _compilerTools.createSingletonForClass_(_identityClass);
+						}
+					});
+				}
+				return SystemMappingUpdater.this;
 			}
 		});
 		_compilerTools.resetCallsites();

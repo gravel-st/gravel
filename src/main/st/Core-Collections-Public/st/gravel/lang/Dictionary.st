@@ -15,6 +15,11 @@ at: aKey ifAbsent: aBlock
 !
 (reader addMethod: '')
 !
+at: aKey ifAbsentPut: valueBlock
+	^self at: aKey ifAbsent: [self at: aKey put: valueBlock value]
+!
+(reader addMethod: '')
+!
 at: aKey put: aValue
 	<primitive: #('st.gravel.support.jvm.DictionaryExtensions' 'at_put_')>
 	

@@ -1,4 +1,4 @@
-(reader defineClass: 'ExceptionSet' superclass: 'st.gravel.lang.Set')
+(reader defineClass: 'ExceptionSet' superclass: 'st.gravel.lang.Object')
 !
 (reader addMethod: 'gravel')
 !

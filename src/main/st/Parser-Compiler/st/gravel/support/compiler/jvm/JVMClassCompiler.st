@@ -73,9 +73,14 @@ classDescriptionNode {^ClassDescriptionNode}
 !
 compileBlock: aBlockInnerClass {BlockInnerClass} {^JVMClass}
 	| blockClass {JVMClass} |
-	blockClass := (JVMBlockCompiler parent: self block: aBlockInnerClass) compileBlock.
+	blockClass := self compileBlockNoAdd: aBlockInnerClass.
 	extraClasses add: blockClass.
 	^blockClass
+!
+(reader addMethod: 'As yet unclassified')
+!
+compileBlockNoAdd: aBlockInnerClass {BlockInnerClass} {^JVMClass}
+	^(JVMBlockCompiler parent: self block: aBlockInnerClass) compileBlock
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -94,7 +99,7 @@ compileBlocks {^Self}
 (reader addMethod: 'As yet unclassified')
 !
 compileClassNode {^JVMClass}
-	| allMethods {Arr[MethodNode]} superclassReference {Reference | Nil} allInstVars {Arr[BoundVariableDeclarationNode]} localLinkedMethods {Arr[MethodNode]} scn {ClassDescriptionNode} aClass {JVMClass} |
+	| allMethods {Arr[MethodNode]} superclassReference {Reference | Nil} allInstVars {Arr[BoundVariableDeclarationNode]} localLinkedMethods {Arr[MethodNode]} scn {ClassDescriptionNode} |
 	ownerType isNil ifTrue: [ownerType := selfType].
 	allMethods := classDescriptionNode methods.
 	superclassReference := classDescriptionNode superclassReference.
@@ -116,18 +121,7 @@ compileClassNode {^JVMClass}
 						type: JVMDynamicObjectType new
 						isStatic: false)].
 	self compileBlocks.
-	self compileClinit.
-	self compileInit.
-	self compileClone.
-	aClass := JVMClass
-				type: ownerType
-				superType: superType
-				fields: fields asArray
-				methods: jvmMethods asArray.
-	classDescriptionNode findSourceFile isNil
-		ifFalse: [aClass source: classDescriptionNode findSourceFile name].
-	jvmMethods := nil.
-	^aClass
+	^self createContainerClass
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -174,7 +168,7 @@ compileInit {^Self}
 	instructions add: Return new.
 	jvmMethods add: (JVMMethod
 				name: '<init>'
-				locals: #()
+				locals: (Array with: JVMLocalDeclaration self)
 				instructions: instructions asArray
 				isStatic: false
 				signature: JVMMethodType void)
@@ -210,6 +204,23 @@ createBlockInnerClass: aBlockNode {BlockNode} copiedVariables: anArray {Arr[JVMV
 !
 (reader addMethod: 'As yet unclassified')
 !
+createContainerClass {^JVMClass}
+	| aClass {JVMClass} |
+	self compileClinit.
+	self compileInit.
+	self compileClone.
+	aClass := JVMClass
+				type: ownerType
+				superType: superType
+				fields: fields asArray
+				methods: jvmMethods asArray.
+	(classDescriptionNode isNil or: [classDescriptionNode findSourceFile isNil])
+		ifFalse: [aClass source: classDescriptionNode findSourceFile name].
+	jvmMethods := nil.
+	^aClass
+!
+(reader addMethod: 'As yet unclassified')
+!
 createInvokeInstruction: type {JVMDefinedObjectType} name: name {Str} numArgs: numArgs {Int} {^Invoke}
 	^systemMappingUpdater compilerTools
 		createInvokeInstruction: type
@@ -225,8 +236,18 @@ extensionPostfix: extensionPostfix {Str} {^Self}
 !
 (reader addMethod: 'accessing')
 !
+extraClasses {^Arr[JVMClass]}
+	^extraClasses asArray
+!
+(reader addMethod: 'accessing')
+!
 extraClassesDo: aBlock {[JVMClass, ^Obj]} {^Self}
 	extraClasses do: aBlock
+!
+(reader addMethod: 'As yet unclassified')
+!
+hasConstantsOrFieldsOrExtraClasses {^Bool}
+	^constants isEmpty not or: [fields isEmpty not or: [extraClasses isEmpty not]]
 !
 (reader addMethod: 'initialize-release')
 !

@@ -7,6 +7,11 @@ createInvokeInstruction: type {JVMDefinedObjectType} name: name {Str} numArgs: n
 !
 (reader addMethod: 'As yet unclassified')
 !
+createSingletonForClass: aJavaClass {JavaClass} {^Obj}
+	^self subclassResponsibility
+!
+(reader addMethod: 'As yet unclassified')
+!
 evaluateBlock0Class: aClass {JavaClass} {^Object}
 	^self subclassResponsibility
 !
@@ -32,12 +37,12 @@ javaClassSuperclass {^JavaClass}
 !
 (reader addMethod: 'As yet unclassified')
 !
-jvmTypeForClass: aClass {JavaClass} {^JVMType}
+jvmClassForType: aJVMDefinedObjectType {JVMDefinedObjectType} ifAbsent: aBlock {[^JVMClass]} {^JVMClass}
 	^self subclassResponsibility
 !
 (reader addMethod: 'As yet unclassified')
 !
-linkInNamespace: aClassMapping {ClassMapping} systemMapping: aSystemMapping {SystemMapping} {^Self}
+jvmTypeForClass: aClass {JavaClass} {^JVMType}
 	^self subclassResponsibility
 !
 (reader addMethod: 'As yet unclassified')

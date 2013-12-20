@@ -19,6 +19,11 @@ initializeOwnerType: aJVMDefinedObjectType {JVMDefinedObjectType} name: aString 
 name {^Str}
 	^name
 !
+(reader addMethod: 'As yet unclassified')
+!
+numArgs {^Int}
+	^signature numArgs
+!
 (reader addMethod: 'accessing')
 !
 ownerType {^JVMDefinedObjectType}

@@ -12,7 +12,7 @@ block {^BlockInnerClass}
 (reader addMethod: 'As yet unclassified')
 !
 blockSuperType: anInteger {Int} {^JVMDefinedObjectType}
-	^JVMDefinedObjectType className: 'st/gravel/support/jvm/Block' , anInteger printString
+	^JVMDefinedObjectType block: anInteger
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -54,7 +54,7 @@ createInit {^JVMMethod}
 	instructions add: Return new.
 	^JVMMethod
 		name: '<init>'
-		locals: #()
+		locals: (Array with: JVMLocalDeclaration self)
 		instructions: instructions asArray
 		isStatic: false
 		signature: block initSignature
