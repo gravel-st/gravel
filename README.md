@@ -1,4 +1,4 @@
-![Logo](https://github.com/gravel-st/gravel/blob/master/gravel-logo.svg)
+![Logo](https://raw.github.com/gravel-st/gravel/master/gravel-logo.svg)
 Gravel
 ======
 
