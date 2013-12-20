@@ -1,4 +1,3 @@
-![Logo](http://s.gravatar.com/avatar/dbc05c7995c97276e46b7ec00ee58ee2?s=80)
 Gravel
 ======
 
