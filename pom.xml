@@ -16,6 +16,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -24,6 +25,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
 				<configuration>
 					<mainClass>st.gravel.tools.StartJetty</mainClass>
 				</configuration>
@@ -31,6 +33,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
 				<configuration>
 					<archive>
 						<manifest>
