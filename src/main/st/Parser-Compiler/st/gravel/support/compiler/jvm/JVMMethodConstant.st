@@ -79,12 +79,13 @@ expression: anExpression {Expression} name: aString {Str} frame: aFrame {Frame} 
 !
 (reader addClassMethod: 'instance creation')
 !
-expression: anExpression {Expression} name: aString {Str} frame: aFrame {Frame} ownerType: aJVMDefinedObjectType {JVMDefinedObjectType} type: type {JVMType} {^JVMMethodConstant}
+expression: anExpression {Expression} name: aString {Str} frame: aFrame {Frame} ownerType: ownerType {JVMDefinedObjectType} type: type {JVMType} {^JVMMethodConstant}
+	self assert: ownerType notNil.
 	^self new
 		initializeExpression: anExpression
 		name: aString
 		frame: aFrame
-		ownerType: aJVMDefinedObjectType
+		ownerType: ownerType
 		type: type
 !
 (reader addClassMethod: 'pegon')

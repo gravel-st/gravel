@@ -3,7 +3,6 @@ Gravel
 
 Gravel is a Smalltalk implementation for the JVM
 
-
 Getting started
 ===============
 
@@ -14,7 +13,7 @@ What is Gravel
 ==============
 
 Gravel is a modern Smalltalk implementation for the JVM. It's aim is to provide an interactive 
-development environment in the Smalltalk philosophy as well as a stable runtime platform. Gravel 
+development environment in the Smalltalk philosophy as well as a stable and fast runtime platform. Gravel 
 aims to be fully [ANSI Smalltalk](http://wiki.squeak.org/squeak/172) compatible.
 
 Implementation
@@ -35,7 +34,7 @@ Features
  - Namespaces
  - Mirror based reflection facilities
  
-Commonly Smalltalk features that we probably won't support
+Common Smalltalk features that we probably won't support
 --------
  - become:
  - thisContext

@@ -43,8 +43,9 @@ public class JVMMethodConstant extends Object implements Cloneable {
 			return this.expression_name_frame_ownerType_type_(_anExpression, _aString, _aFrame, _aJVMDefinedObjectType, _aFrame.endStack().peek());
 		}
 
-		public JVMMethodConstant expression_name_frame_ownerType_type_(final Expression _anExpression, final String _aString, final Frame _aFrame, final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMType _type) {
-			return this.basicNew().initializeExpression_name_frame_ownerType_type_(_anExpression, _aString, _aFrame, _aJVMDefinedObjectType, _type);
+		public JVMMethodConstant expression_name_frame_ownerType_type_(final Expression _anExpression, final String _aString, final Frame _aFrame, final JVMDefinedObjectType _ownerType, final JVMType _type) {
+			st.gravel.support.jvm.ObjectExtensions.assert_(this, _ownerType != null);
+			return this.basicNew().initializeExpression_name_frame_ownerType_type_(_anExpression, _aString, _aFrame, _ownerType, _type);
 		}
 	}
 
@@ -52,8 +53,8 @@ public class JVMMethodConstant extends Object implements Cloneable {
 		return factory.expression_name_frame_ownerType_(_anExpression, _aString, _aFrame, _aJVMDefinedObjectType);
 	}
 
-	static public JVMMethodConstant _expression_name_frame_ownerType_type_(Object receiver, final Expression _anExpression, final String _aString, final Frame _aFrame, final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMType _type) {
-		return factory.expression_name_frame_ownerType_type_(_anExpression, _aString, _aFrame, _aJVMDefinedObjectType, _type);
+	static public JVMMethodConstant _expression_name_frame_ownerType_type_(Object receiver, final Expression _anExpression, final String _aString, final Frame _aFrame, final JVMDefinedObjectType _ownerType, final JVMType _type) {
+		return factory.expression_name_frame_ownerType_type_(_anExpression, _aString, _aFrame, _ownerType, _type);
 	}
 
 	public GetStatic asReadInstruction() {

@@ -8,6 +8,10 @@
 !
 (reader addInstVar: 'classes')
 !
+(reader addInstVar: 'eventRegistry')
+!
+(reader addInstVar: 'attributes')
+!
 (reader addMethod: 'gravel')
 !
 codearea: aHolder autocompleteTokens: autocompleteTokens rows: rows cols: cols onAccept: aBlock

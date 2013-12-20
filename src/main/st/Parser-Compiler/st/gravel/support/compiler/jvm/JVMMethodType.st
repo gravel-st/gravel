@@ -44,6 +44,11 @@ initializeReturnType: aJVMDefinedObjectType {JVMType} arguments: anArray {Arr[JV
 !
 (reader addMethod: 'As yet unclassified')
 !
+numArgs {^Int}
+	^arguments size
+!
+(reader addMethod: 'As yet unclassified')
+!
 pvtSetArguments: anArray {Arr[JVMType]} {^Self}
 	arguments := anArray
 !

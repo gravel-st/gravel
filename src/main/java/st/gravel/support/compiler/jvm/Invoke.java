@@ -65,6 +65,10 @@ abstract public class Invoke extends JVMInstruction implements Cloneable {
 		return _name;
 	}
 
+	public int numArgs() {
+		return _signature.numArgs();
+	}
+
 	public JVMDefinedObjectType ownerType() {
 		return _ownerType;
 	}

@@ -110,6 +110,11 @@ bigInteger {^JVMDefinedObjectType}
 !
 (reader addClassMethod: 'instance creation')
 !
+block: anInteger {Int} {^JVMDefinedObjectType}
+	^JVMDefinedObjectType className: 'st/gravel/support/jvm/Block' , anInteger printString
+!
+(reader addClassMethod: 'instance creation')
+!
 className: aString {Str} {^JVMDefinedObjectType}
 	^self path: (aString tokensBasedOn: $/)
 !
@@ -145,8 +150,8 @@ objectClass {^JVMDefinedObjectType}
 !
 (reader addClassMethod: 'instance creation')
 !
-path: anOrderedCollection {Arr[Str]} {^JVMDefinedObjectType}
-	^self new initializePath: anOrderedCollection
+path: anArray {Arr[Str]} {^JVMDefinedObjectType}
+	^self new initializePath: anArray asArray
 !
 (reader addClassMethod: 'As yet unclassified')
 !

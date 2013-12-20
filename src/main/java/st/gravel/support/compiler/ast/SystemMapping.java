@@ -23,16 +23,17 @@ import st.gravel.support.compiler.ast.SystemMappingUpdater;
 import st.gravel.support.compiler.ast.ClassDiff;
 import st.gravel.support.compiler.ast.SharedDeclarationNode;
 import st.gravel.support.compiler.ast.Node;
+import st.gravel.support.compiler.jvm.JVMClass;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.ast.BlockNode;
 import st.gravel.support.compiler.jvm.BlockInnerClass;
-import st.gravel.support.compiler.jvm.JVMClass;
+import st.gravel.support.compiler.jvm.JVMClassCompiler;
 import st.gravel.support.compiler.ast.IntermediateNodeRewriter;
 import st.gravel.support.compiler.ast.NonLocalTempWritesToHolderConverter;
 import st.gravel.support.compiler.ast.VariableAccessToFieldAccessConverter;
 import st.gravel.support.compiler.ast.NilLiteralNode;
 import st.gravel.support.compiler.jvm.JVMVariable;
-import st.gravel.support.compiler.jvm.JVMClassCompiler;
+import st.gravel.support.compiler.ast.Parser;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.Expression;
@@ -241,20 +242,42 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		}
 	}
 
-	public Class compileExpression_reference_(final Node _anExpression, final Reference _aReference) {
+	public Class compileAndWriteExpression_reference_(final Node _anExpression, final Reference _aReference) {
+		final JVMClass[] _jvmClasses;
+		final Class[] _last;
+		_last = new Class[1];
+		_jvmClasses = this.compileExpression_reference_(_anExpression, _aReference);
+		_last[0] = null;
+		for (final JVMClass _jvmClass : _jvmClasses) {
+			_last[0] = _compilerTools.writeClass_(_jvmClass);
+		}
+		return _last[0];
+	}
+
+	public JVMClass[] compileExpressionSource_(final String _source) {
+		return this.compileExpression_reference_(Parser.factory.parseExpression_(_source), Reference.factory.value_("st.gravel.lang.UndefinedObject"));
+	}
+
+	public JVMClass[] compileExpression_reference_(final Node _anExpression, final Reference _aReference) {
 		final JVMDefinedObjectType _ownerType;
 		final BlockNode _fieldAccessed;
 		final BlockInnerClass _aBlockInnerClass;
 		final BlockNode _intermediate;
 		final BlockNode _holderized;
-		final JVMClass _jvmClass;
+		final JVMClassCompiler _jvmClassCompiler;
+		final JVMClass _blockClass;
 		_intermediate = ((BlockNode) IntermediateNodeRewriter.factory.visit_(BlockNode.factory.expression_(_anExpression)));
 		_holderized = ((BlockNode) NonLocalTempWritesToHolderConverter.factory.visit_(_intermediate));
 		_fieldAccessed = ((BlockNode) VariableAccessToFieldAccessConverter.factory.instVarNames_owner_ownerReference_(new String[] {}, NilLiteralNode.factory.basicNew(), _aReference).visit_(_holderized));
 		_ownerType = JVMDefinedObjectType.factory.dottedClassName_("Expression$" + _compilerTools.nextExtensionPostfix());
 		_aBlockInnerClass = BlockInnerClass.factory.ownerType_blockNode_copiedVariables_(_ownerType, _fieldAccessed, new JVMVariable[] {});
-		_jvmClass = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), false).compileBlock_(_aBlockInnerClass);
-		return _compilerTools.writeClass_(_jvmClass);
+		_jvmClassCompiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), false);
+		_jvmClassCompiler.ownerType_(JVMDefinedObjectType.factory.dottedClassName_("ExpressionContainer$" + _compilerTools.nextExtensionPostfix()));
+		_blockClass = _jvmClassCompiler.compileBlockNoAdd_(_aBlockInnerClass);
+		if (!_jvmClassCompiler.hasConstantsOrFieldsOrExtraClasses()) {
+			return st.gravel.support.jvm.ArrayFactory.with_(_blockClass);
+		}
+		return st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _blockClass));
 	}
 
 	public SystemMappingCompilerTools compilerTools() {
@@ -337,7 +360,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	public Object evaluateExpression_reference_(final Expression _anExpression, final AbsoluteReference _aReference) {
 		final Class _cl;
-		_cl = this.compileExpression_reference_(_anExpression, _aReference);
+		_cl = this.compileAndWriteExpression_reference_(_anExpression, _aReference);
 		return _compilerTools.evaluateBlock0Class_(_cl);
 	}
 

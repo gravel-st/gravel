@@ -116,8 +116,17 @@ classSharedSingletonHolderAtReference: reference {AbsoluteReference} ifAbsent: a
 !
 (reader addMethod: 'As yet unclassified')
 !
-compileExpression: anExpression {Node} reference: aReference {Reference} {^JavaClass}
-	| ownerType {JVMDefinedObjectType} fieldAccessed {BlockNode} aBlockInnerClass {BlockInnerClass} intermediate {BlockNode} holderized {BlockNode} jvmClass {JVMClass} |
+compileAndWriteExpression: anExpression {Node} reference: aReference {Reference} {^JavaClass}
+	| jvmClasses {Arr[JVMClass]} last {JavaClass | Nil} |
+	jvmClasses := self compileExpression: anExpression reference: aReference.
+	last := nil.
+	jvmClasses do: [:jvmClass {JVMClass} | last := compilerTools writeClass: jvmClass].
+	^last
+!
+(reader addMethod: 'As yet unclassified')
+!
+compileExpression: anExpression {Node} reference: aReference {Reference} {^Arr[JVMClass]}
+	| ownerType {JVMDefinedObjectType} fieldAccessed {BlockNode} aBlockInnerClass {BlockInnerClass} intermediate {BlockNode} holderized {BlockNode} jvmClassCompiler {JVMClassCompiler} blockClass {JVMClass} |
 	intermediate := IntermediateNodeRewriter visit: (BlockNode expression: anExpression).
 	holderized := NonLocalTempWritesToHolderConverter visit: intermediate.
 	fieldAccessed := (VariableAccessToFieldAccessConverter
@@ -130,12 +139,23 @@ compileExpression: anExpression {Node} reference: aReference {Reference} {^JavaC
 				ownerType: ownerType
 				blockNode: fieldAccessed
 				copiedVariables: #().
-	jvmClass := (JVMClassCompiler
+	jvmClassCompiler := JVMClassCompiler
 				classDescriptionNode: nil
 				systemNode: systemNode
 				systemMappingUpdater: self newSystemMappingUpdater
-				isStatic: false) compileBlock: aBlockInnerClass.
-	^compilerTools writeClass: jvmClass
+				isStatic: false.
+	jvmClassCompiler ownerType: (JVMDefinedObjectType
+				dottedClassName: 'ExpressionContainer$' , compilerTools nextExtensionPostfix).
+	blockClass := jvmClassCompiler compileBlockNoAdd: aBlockInnerClass.
+	jvmClassCompiler hasConstantsOrFieldsOrExtraClasses ifFalse: [^Array with: blockClass].
+	^jvmClassCompiler extraClasses
+		copyWithAll: (Array with: jvmClassCompiler createContainerClass with: blockClass)
+!
+(reader addMethod: 'As yet unclassified')
+!
+compileExpressionSource: source {Str} {^Arr[JVMClass]}
+	^self compileExpression: (Parser parseExpression: source)
+		reference: (Reference value: 'st.gravel.lang.UndefinedObject')
 !
 (reader addMethod: 'accessing')
 !
@@ -175,7 +195,7 @@ definitionOrObsoleteClassNodeAt: reference {Reference} ifAbsent: aBlock {[^Class
 !
 evaluateExpression: anExpression {Expression} reference: aReference {AbsoluteReference} {^Obj}
 	| cl {JavaClass} |
-	cl := self compileExpression: anExpression reference: aReference.
+	cl := self compileAndWriteExpression: anExpression reference: aReference.
 	^compilerTools evaluateBlock0Class: cl
 !
 (reader addMethod: 'initialize-release')

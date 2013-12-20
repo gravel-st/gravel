@@ -154,6 +154,10 @@ public class JVMMethodType extends JVMNode implements Cloneable {
 		return this;
 	}
 
+	public int numArgs() {
+		return _arguments.length;
+	}
+
 	@Override
 	public JVMMethodType printOn_(final StringBuilder _aStream) {
 		this.sourceOn_(_aStream);

@@ -243,9 +243,14 @@ isStaticOverride: aBoolean {Bool} while: aBlock {[^Self]} {^Self}
 link {^Self}
 	systemMapping classMappingsDo: 
 			[:classMapping {ClassMapping} |
+			| identityClass {JavaClass} |
 			classMapping classNode isMeta
 				ifTrue: [self initializeClassShareds: classMapping classNode].
-			compilerTools linkInNamespace: classMapping systemMapping: systemMapping].
+			identityClass := classMapping identityClass.
+			classMapping classNode isMeta
+				ifTrue: 
+					[systemMapping singletonAtReference: classMapping reference nonmeta
+						ifAbsentPut: [compilerTools createSingletonForClass: identityClass]]].
 	compilerTools resetCallsites.
 	systemMapping namespaceGlobalsAndInitializersDo: 
 			[:reference {AbsoluteReference} :sharedVariable {SharedDeclarationNode} |

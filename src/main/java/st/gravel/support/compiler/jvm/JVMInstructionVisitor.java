@@ -8,6 +8,7 @@ package st.gravel.support.compiler.jvm;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
+import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.ALoad;
 import st.gravel.support.compiler.jvm.AndThenElse;
 import st.gravel.support.compiler.jvm.AReturn;
@@ -61,7 +62,6 @@ import st.gravel.support.compiler.jvm.InvokeStatic;
 import st.gravel.support.compiler.jvm.InvokeVirtual;
 import st.gravel.support.compiler.jvm.IStore;
 import st.gravel.support.compiler.jvm.JVMControlFlowInstruction;
-import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.LabelLineNumber;
 import st.gravel.support.compiler.jvm.Load;
 import st.gravel.support.compiler.jvm.Loop;
@@ -452,5 +452,9 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 
 	public X visitWhileTrueLoop_(final WhileTrueLoop _anObject) {
 		return this.visitWhileLoop_(_anObject);
+	}
+
+	public X visit_(final JVMInstruction _anObject) {
+		return _anObject.accept_(this);
 	}
 }

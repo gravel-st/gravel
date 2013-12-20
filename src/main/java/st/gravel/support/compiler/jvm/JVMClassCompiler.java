@@ -139,6 +139,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		return _classDescriptionNode;
 	}
 
+	public JVMClass compileBlockNoAdd_(final BlockInnerClass _aBlockInnerClass) {
+		return JVMBlockCompiler.factory.parent_block_(this, _aBlockInnerClass).compileBlock();
+	}
+
 	public JVMClassCompiler compileBlocks() {
 		final java.util.Set<JVMDefinedObjectType>[] _done;
 		BlockInnerClass _cl;
@@ -171,7 +175,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 
 	public JVMClass compileBlock_(final BlockInnerClass _aBlockInnerClass) {
 		final JVMClass _blockClass;
-		_blockClass = JVMBlockCompiler.factory.parent_block_(this, _aBlockInnerClass).compileBlock();
+		_blockClass = this.compileBlockNoAdd_(_aBlockInnerClass);
 		_extraClasses.add(_blockClass);
 		return _blockClass;
 	}
@@ -182,7 +186,6 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		BoundVariableDeclarationNode[] _allInstVars;
 		final MethodNode[] _localLinkedMethods;
 		ClassDescriptionNode _scn;
-		final JVMClass _aClass;
 		if (_ownerType == null) {
 			_ownerType = ((JVMDefinedObjectType) _selfType);
 		}
@@ -206,15 +209,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			_fields.add(JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _each.name(), JVMDynamicObjectType.factory.basicNew(), false));
 		}
 		this.compileBlocks();
-		this.compileClinit();
-		this.compileInit();
-		this.compileClone();
-		_aClass = JVMClass.factory.type_superType_fields_methods_(_ownerType, _superType, _fields.toArray(new JVMField[_fields.size()]), _jvmMethods.toArray(new JVMMethod[_jvmMethods.size()]));
-		if (_classDescriptionNode.findSourceFile() != null) {
-			_aClass.source_(_classDescriptionNode.findSourceFile().name());
-		}
-		_jvmMethods = null;
-		return _aClass;
+		return this.createContainerClass();
 	}
 
 	public JVMClassCompiler compileClinit() {
@@ -246,7 +241,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		_instructions.add(Load.factory.index_type_(0, _ownerType));
 		_instructions.add(InvokeSpecial.factory.init_voidArguments_(_superType, new JVMType[] {}));
 		_instructions.add(Return.factory.basicNew());
-		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", new JVMLocalDeclaration[] {}, _instructions.toArray(new JVMInstruction[_instructions.size()]), false, JVMMethodType.factory.r_void()));
+		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", st.gravel.support.jvm.ArrayFactory.with_(JVMLocalDeclaration.factory.self()), _instructions.toArray(new JVMInstruction[_instructions.size()]), false, JVMMethodType.factory.r_void()));
 		return this;
 	}
 
@@ -293,6 +288,19 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		return _innerclass;
 	}
 
+	public JVMClass createContainerClass() {
+		final JVMClass _aClass;
+		this.compileClinit();
+		this.compileInit();
+		this.compileClone();
+		_aClass = JVMClass.factory.type_superType_fields_methods_(_ownerType, _superType, _fields.toArray(new JVMField[_fields.size()]), _jvmMethods.toArray(new JVMMethod[_jvmMethods.size()]));
+		if (!((_classDescriptionNode == null) || (_classDescriptionNode.findSourceFile() == null))) {
+			_aClass.source_(_classDescriptionNode.findSourceFile().name());
+		}
+		_jvmMethods = null;
+		return _aClass;
+	}
+
 	public Invoke createInvokeInstruction_name_numArgs_(final JVMDefinedObjectType _type, final String _name, final int _numArgs) {
 		return _systemMappingUpdater.compilerTools().createInvokeInstruction_name_numArgs_(_type, _name, _numArgs);
 	}
@@ -304,6 +312,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		return this;
 	}
 
+	public JVMClass[] extraClasses() {
+		return _extraClasses.toArray(new JVMClass[_extraClasses.size()]);
+	}
+
 	public JVMClassCompiler extraClassesDo_(final st.gravel.support.jvm.Block1<Object, JVMClass> _aBlock) {
 		for (final JVMClass _temp1 : _extraClasses) {
 			_aBlock.value_(_temp1);
@@ -313,6 +325,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 
 	public JVMClassCompiler_Factory factory() {
 		return factory;
+	}
+
+	public boolean hasConstantsOrFieldsOrExtraClasses() {
+		return (_constants.size() != 0) || ((_fields.size() != 0) || (_extraClasses.size() != 0));
 	}
 
 	public JVMClassCompiler initialize() {
