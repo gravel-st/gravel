@@ -1,0 +1,121 @@
+html, body
+{
+    height: 100%;
+}
+
+body {
+	font-family: ''Source Sans Pro'', sans-serif;
+	font-size: 12px;
+	margin: 0;
+	background-color: #f7f7f7;
+}
+
+body > form {
+	height: 100%;
+}
+
+b {
+	font-weight: bold;
+}
+
+header {
+	padding-top: 40px;
+}
+
+header .column {
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-bottom: 1em;
+	
+}
+
+header {
+	padding-right: 1em;
+}
+
+header .column {
+	vertical-align: top;
+}
+
+header .column > ul {
+	overflow-y: auto;
+	list-style-type: none;
+	height: 25em;
+}
+
+
+section.source {
+	position: absolute;
+	top: 368px;
+	bottom: 0;
+	width: 100%;
+}
+
+section.source .CodeMirror {
+	position: absolute;
+	top: 44px;
+	bottom: 0px;
+	width: 100%;
+	height: auto;
+}
+
+.tools {
+	background-color: #D7ECF5;
+}
+
+.tools.ui.bottom.sidebar {
+	height: 400px !important;
+	overflow-y: visible;
+}
+
+.tools.ui.active.bottom.sidebar {
+	margin-top: -400px !important;
+}
+
+.tools .column {
+	border: 2px solid #333333;
+}
+
+.tools .ui.menu {
+	border-radius: 0;
+	margin-bottom: 0;
+}
+
+.tools .ui.grid {
+	margin: 0;
+}
+
+.tools .ui.grid > .column {
+	margin: 0;
+	padding: 0;
+}
+
+.tools .CodeMirror {
+	height: 354px;
+
+	
+	background: #ededed;
+	background: linear-gradient(to bottom,  #ededed 1%,#f9fdff 32%);
+}
+
+.tools .transcript {
+	height: 354px;
+	background-color: white;
+	font-family: monospace;
+
+	font-size: 11px;
+	padding: 0 7px;
+	overflow-y: auto;
+
+
+	background: #ededed;
+	background: linear-gradient(to bottom,  #ededed 1%,#f9fdff 32%);
+}
+
+.ui.attached.launch.button {
+	position: absolute;
+	top: -24px;
+	width: 120px;
+	right: 1em;
+}
+
