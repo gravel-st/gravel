@@ -5,7 +5,10 @@ Gravel is a Smalltalk implementation for the JVM. For more information ask aroun
 
 Getting started
 ===============
-
+Gravel Smalltalk requires maven and an (Oracle|OpenJDK) Java 7 installation. Generate an eclipse project with the usual
+```
+mvn eclipse:eclipse
+```
 To open the IDE; load everything in eclipse and start [st.gravel.tools.StartJetty](https://github.com/gravel-st/gravel/blob/master/src/main/java/st/gravel/tools/StartJetty.java). Then point your
 browser to [http://localhost:8080/browser](http://localhost:8080/browser)
 
