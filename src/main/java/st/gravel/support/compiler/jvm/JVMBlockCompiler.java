@@ -19,12 +19,12 @@ import st.gravel.support.compiler.jvm.JVMVariable;
 import java.util.List;
 import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.Load;
+import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
 import java.util.ArrayList;
 import st.gravel.support.compiler.jvm.PutField;
 import st.gravel.support.compiler.jvm.InvokeSpecial;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.Return;
-import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
 
 public class JVMBlockCompiler extends Object implements Cloneable {
 
@@ -94,8 +94,9 @@ public class JVMBlockCompiler extends Object implements Cloneable {
 	public JVMMethod createInit() {
 		final List<JVMInstruction>[] _instructions;
 		final Load[] _read0;
-		_read0 = new Load[1];
+		final JVMLocalDeclaration[] _locals;
 		_instructions = new List[1];
+		_read0 = new Load[1];
 		_instructions[0] = new java.util.ArrayList();
 		_read0[0] = Load.factory.index_type_(0, _block.ownerType());
 		for (int _temp1 = 0; _temp1 < _block.copiedVariables().length; _temp1++) {
@@ -108,7 +109,14 @@ public class JVMBlockCompiler extends Object implements Cloneable {
 		_instructions[0].add(_read0[0]);
 		_instructions[0].add(InvokeSpecial.factory.init_voidArguments_(this.superType(), new JVMType[] {}));
 		_instructions[0].add(Return.factory.basicNew());
-		return JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", st.gravel.support.jvm.ArrayFactory.with_(JVMLocalDeclaration.factory.self()), _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), false, _block.initSignature());
+		_locals = st.gravel.support.jvm.ArrayExtensions.copyWithFirst_(st.gravel.support.jvm.ArrayExtensions.keysAndValuesCollect_(_block.copiedVariables(), new st.gravel.support.jvm.Block2<JVMLocalDeclaration, Integer, JVMVariable>() {
+
+			@Override
+			public JVMLocalDeclaration value_value_(final Integer _i, final JVMVariable _var) {
+				return (JVMLocalDeclaration) _var.asLocalDeclaration_(_i);
+			}
+		}), JVMLocalDeclaration.factory.blockSelf());
+		return JVMMethod.factory.name_locals_instructions_isStatic_signature_("<init>", _locals, _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), false, _block.initSignature());
 	}
 
 	public JVMBlockCompiler_Factory factory() {

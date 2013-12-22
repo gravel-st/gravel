@@ -44,7 +44,7 @@ addInvokeSuper: name {Str} functionName: functionName {Str} numArgs: numArgs {In
 	instructions add: AReturn new.
 	jvmMethods add: (JVMMethod
 				name: name
-				locals: #()
+				locals: (JVMLocalDeclaration localsForSignature: superSig arguments)
 				instructions: instructions asArray
 				isStatic: true
 				signature: superSig)
@@ -153,7 +153,7 @@ compileClone {^Self}
 	instructions add: AReturn new.
 	jvmMethods add: (JVMMethod
 				name: 'clone'
-				locals: #()
+				locals: (Array with: JVMLocalDeclaration self)
 				instructions: instructions asArray
 				isStatic: false
 				signature: JVMMethodType object)

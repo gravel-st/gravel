@@ -38,7 +38,7 @@ compileBlock {^JVMClass}
 (reader addMethod: 'As yet unclassified')
 !
 createInit {^JVMMethod}
-	| instructions {OrdColl[JVMInstruction]} read0 {Load} |
+	| instructions {OrdColl[JVMInstruction]} read0 {Load} locals {Arr[JVMLocalDeclaration]} |
 	instructions := OrderedCollection new.
 	read0 := Load index: 0 type: block ownerType.
 	block copiedVariables keysAndValuesDo: 
@@ -52,9 +52,12 @@ createInit {^JVMMethod}
 	instructions add: read0.
 	instructions add: (InvokeSpecial init: self superType voidArguments: #()).
 	instructions add: Return new.
+	locals := (block copiedVariables
+				keysAndValuesCollect: [:i {Int} :var {JVMVariable} | var asLocalDeclaration: i])
+					copyWithFirst: JVMLocalDeclaration blockSelf.
 	^JVMMethod
 		name: '<init>'
-		locals: (Array with: JVMLocalDeclaration self)
+		locals: locals
 		instructions: instructions asArray
 		isStatic: false
 		signature: block initSignature

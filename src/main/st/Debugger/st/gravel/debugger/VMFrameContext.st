@@ -12,13 +12,18 @@ accept: visitor
 (reader addMethod: 'As yet unclassified')
 !
 currentInstruction
-	frame instructions size < ip ifTrue: [^PopFrame new].
+	frame instructions size < ip ifTrue: [^self frameEndInstruction].
 	^frame instructions at: ip
 !
 (reader addMethod: 'accessing')
 !
 frame
 	^frame
+!
+(reader addMethod: 'As yet unclassified')
+!
+frameEndInstruction
+	^PopFrame new
 !
 (reader addMethod: 'initialize-release')
 !
@@ -37,6 +42,16 @@ initializeParent: aVMMethodContext frame: aFrame
 !
 isFrame
 	^true
+!
+(reader addMethod: 'As yet unclassified')
+!
+localAt: anInteger
+	^parent localAt: anInteger
+!
+(reader addMethod: 'As yet unclassified')
+!
+localAt: anInteger put: aPrimitiveValue
+	parent localAt: anInteger put: aPrimitiveValue
 !
 (reader addMethod: 'accessing')
 !

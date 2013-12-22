@@ -91,11 +91,9 @@ abstract public class Invoke extends JVMInstruction implements Cloneable {
 
 	@Override
 	public Invoke sourceOn_(final StringBuilder _aStream) {
-		_aStream.append("name: ");
+		_aStream.append(_ownerType.dottedClassName());
+		_aStream.append(".");
 		_aStream.append(_name);
-		_aStream.append("ownerType: ");
-		_aStream.append(_ownerType.toString());
-		_aStream.append("signature: ");
 		_aStream.append(_signature.toString());
 		return this;
 	}

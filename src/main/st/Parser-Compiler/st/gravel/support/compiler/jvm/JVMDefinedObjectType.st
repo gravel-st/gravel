@@ -113,6 +113,11 @@ bigInteger {^JVMDefinedObjectType}
 block: anInteger {Int} {^JVMDefinedObjectType}
 	^JVMDefinedObjectType className: 'st/gravel/support/jvm/Block' , anInteger printString
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+boolean {^JVMDefinedObjectType}
+	^self className: 'java/lang/Boolean'
+!
 (reader addClassMethod: 'instance creation')
 !
 className: aString {Str} {^JVMDefinedObjectType}

@@ -646,16 +646,12 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	@Override
 	public Void visitWhileGreaterThanLoop_(WhileGreaterThanLoop node) {
 		Label testLabel = new Label();
-		Label incLabel = new Label();
 		Label endLabel = new Label();
-		mv.visitJumpInsn(GOTO, testLabel);
-		mv.visitLabel(incLabel);
-		visit_(node.incFrame());
 		mv.visitLabel(testLabel);
 		visit_(node.testFrame());
 		mv.visitJumpInsn(IF_ICMPLT, endLabel);
 		visit_(node.doFrame());
-		mv.visitJumpInsn(GOTO, incLabel);
+		mv.visitJumpInsn(GOTO, testLabel);
 		mv.visitLabel(endLabel);
 		return null;
 	}
@@ -663,16 +659,12 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	@Override
 	public Void visitWhileLessThanLoop_(WhileLessThanLoop node) {
 		Label testLabel = new Label();
-		Label incLabel = new Label();
 		Label endLabel = new Label();
-		mv.visitJumpInsn(GOTO, testLabel);
-		mv.visitLabel(incLabel);
-		visit_(node.incFrame());
 		mv.visitLabel(testLabel);
 		visit_(node.testFrame());
 		mv.visitJumpInsn(IF_ICMPGT, endLabel);
 		visit_(node.doFrame());
-		mv.visitJumpInsn(GOTO, incLabel);
+		mv.visitJumpInsn(GOTO, testLabel);
 		mv.visitLabel(endLabel);
 		return null;
 	}

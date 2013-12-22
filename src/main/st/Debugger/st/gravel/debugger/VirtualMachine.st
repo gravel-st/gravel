@@ -64,6 +64,11 @@ createArrayInstance: primitiveValue
 !
 (reader addMethod: 'As yet unclassified')
 !
+createBoolean: primitiveValue
+	^(self createInstance: JVMDefinedObjectType boolean) primitiveValue: primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
 createInstance: aType
 	^VMInstance vm: self subjectClass: (self classForType: aType)
 !
@@ -106,6 +111,7 @@ initialize
 	classes := Dictionary new.
 	javaClassInstances := Dictionary new.
 	self addClassType: JVMDefinedObjectType integer.
+	self addClassType: JVMDefinedObjectType boolean.
 	self addClassType: JVMDefinedObjectType bigDecimal.
 	self addClassType: JVMDefinedObjectType bigInteger.
 	self addClassType: JVMDefinedObjectType nonLocalReturn.

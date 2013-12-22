@@ -76,6 +76,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return this.className_("java/lang/RuntimeException");
 		}
 
+		public JVMDefinedObjectType r_boolean() {
+			return this.className_("java/lang/Boolean");
+		}
+
 		public JVMDefinedObjectType string() {
 			return this.className_("java/lang/String");
 		}
@@ -127,6 +131,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 
 	static public JVMDefinedObjectType _runtimeException(Object receiver) {
 		return factory.runtimeException();
+	}
+
+	static public JVMDefinedObjectType _r_boolean(Object receiver) {
+		return factory.r_boolean();
 	}
 
 	static public JVMDefinedObjectType _string(Object receiver) {

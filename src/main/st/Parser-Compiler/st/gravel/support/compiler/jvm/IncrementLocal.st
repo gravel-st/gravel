@@ -19,6 +19,11 @@ effectStack: aJVMStack {JVMStack} {^JVMInstruction}
 increment {^Int}
 	^increment
 !
+(reader addMethod: 'accessing')
+!
+index {^Int}
+	^local index
+!
 (reader addMethod: 'initialize-release')
 !
 initializeLocal: aJVMLocalDeclaration {JVMLocalDeclaration} increment: anInteger {Int} {^Self}

@@ -68,6 +68,10 @@ public class IncrementLocal extends JVMInstruction implements Cloneable {
 		return _increment;
 	}
 
+	public int index() {
+		return _local.index();
+	}
+
 	public IncrementLocal initializeLocal_increment_(final JVMLocalDeclaration _aJVMLocalDeclaration, final int _anInteger) {
 		_local = _aJVMLocalDeclaration;
 		_increment = _anInteger;

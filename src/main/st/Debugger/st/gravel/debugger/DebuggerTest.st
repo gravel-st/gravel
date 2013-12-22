@@ -32,6 +32,13 @@ testArrayAsSortedCollection
 !
 (reader addMethod: 'As yet unclassified')
 !
+testLoop
+	| answer |
+	answer := self evaluate: '1 to: 10 do: [:i |] '.
+	self assert: answer isNil
+!
+(reader addMethod: 'As yet unclassified')
+!
 testPlus
 	| answer |
 	answer := self evaluate: '3 + 4'.

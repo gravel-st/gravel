@@ -15,6 +15,16 @@ accept: visitor
 !
 (reader addMethod: 'As yet unclassified')
 !
+answerArray: aValue
+	process answer: (process vm createArrayInstance: aValue)
+!
+(reader addMethod: 'As yet unclassified')
+!
+answerBoolean: aValue
+	process answer: (process vm createBoolean: aValue)
+!
+(reader addMethod: 'As yet unclassified')
+!
 answerInteger: anInteger
 	process answer: (process vm createInteger: anInteger)
 !
@@ -58,8 +68,18 @@ name
 !
 (reader addMethod: 'As yet unclassified')
 !
+prim_ArrayExtensions_newInstance_
+	^self answerArray: (Array new: arguments second primitiveValue)
+!
+(reader addMethod: 'As yet unclassified')
+!
 prim_ArrayExtensions_size
 	self answerInteger: arguments first primitiveValue size
+!
+(reader addMethod: 'As yet unclassified')
+!
+prim_IntegerExtensions_isSmallerThan_
+	self answerBoolean: arguments first primitiveValue < arguments second primitiveValue
 !
 (reader addMethod: 'As yet unclassified')
 !

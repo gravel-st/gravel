@@ -93,11 +93,9 @@ public class InvokeStatic extends Invoke implements Cloneable {
 
 	@Override
 	public InvokeStatic sourceOn_(final StringBuilder _aStream) {
-		_aStream.append("name: ");
+		_aStream.append(_ownerType.dottedClassName());
+		_aStream.append(".");
 		_aStream.append(_name);
-		_aStream.append("ownerType: ");
-		_aStream.append(_ownerType.toString());
-		_aStream.append("signature: ");
 		_aStream.append(_signature.toString());
 		return this;
 	}

@@ -2,6 +2,8 @@
 !
 (reader addInstVar: 'primitiveValue')
 !
+(reader addInstVar: 'instValues')
+!
 (reader addMethod: 'visitor')
 !
 accept: visitor
@@ -9,8 +11,39 @@ accept: visitor
 !
 (reader addMethod: 'As yet unclassified')
 !
+arrayAt: anInteger
+	^primitiveValue at: anInteger + 1
+!
+(reader addMethod: 'As yet unclassified')
+!
 arrayAt: anInteger put: aVMInstance
 	primitiveValue at: anInteger + 1 put: aVMInstance
+!
+(reader addMethod: 'As yet unclassified')
+!
+dynamicInstVarAt: aString
+	^instValues at: aString
+!
+(reader addMethod: 'As yet unclassified')
+!
+dynamicInstVarAt: aString put: aVMInstance
+	instValues at: aString put: aVMInstance
+!
+(reader addMethod: 'As yet unclassified')
+!
+fieldAt: aString
+	^instValues at: aString
+!
+(reader addMethod: 'As yet unclassified')
+!
+fieldAt: aString put: aVMInstance
+	instValues at: aString put: aVMInstance
+!
+(reader addMethod: 'initialize-release')
+!
+initialize
+	super initialize.
+	instValues := Dictionary new
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -32,6 +65,11 @@ primitiveValue: anInteger
 printOn: aStream
 	super printOn: aStream.
 	aStream nextPut: $[.
+	primitiveValue isNil
+		ifFalse: 
+			[aStream
+				nextPutAll: 'primitiveValue: ';
+				print: primitiveValue].
 	aStream nextPut: $]
 !
 (reader addClassMethod: 'instance creation')

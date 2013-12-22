@@ -12,6 +12,18 @@ accept: visitor
 currentContext
 	^process currentContext
 !
+(reader addMethod: 'As yet unclassified')
+!
+executeWhileLessThanTest: inst
+	| left right |
+	right := self pop value.
+	left := self pop value.
+	left > right ifTrue: [^self].
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: inst doFrame
+				test: [self visitWhileLessThanLoop: inst])
+!
 (reader addMethod: 'initialize-release')
 !
 initializeProcess: aVMProcess
@@ -22,6 +34,14 @@ initializeProcess: aVMProcess
 !
 pop
 	^self currentContext pop
+!
+(reader addMethod: 'As yet unclassified')
+!
+popArguments: anInteger
+	| arguments |
+	arguments := Array new: anInteger.
+	0 to: anInteger - 1 do: [:i | arguments at: anInteger - i put: self pop].
+	^arguments
 !
 (reader addMethod: 'accessing')
 !
@@ -49,6 +69,24 @@ push: anObject
 !
 (reader addMethod: 'visiting')
 !
+pushFrame: aFrame
+	process pushContext: (VMFrameContext parent: self currentContext frame: aFrame)
+!
+(reader addMethod: 'visiting')
+!
+pushInt: int
+	self push: (PrimitiveValue value: int)
+!
+(reader addMethod: 'visiting')
+!
+visit: anObject
+	Transcript
+		cr;
+		show: anObject class name.
+	super visit: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitALoad: anObject {ALoad} {^X}
 	self push: (self currentContext localAt: anObject index)
 !
@@ -56,6 +94,11 @@ visitALoad: anObject {ALoad} {^X}
 !
 visitAReturn: anObject {AReturn} {^X}
 	process answer: self pop
+!
+(reader addMethod: 'visiting')
+!
+visitArrayLength: anObject {ArrayLength} {^X}
+	self pushInt: self pop primitiveValue size
 !
 (reader addMethod: 'visiting')
 !
@@ -84,8 +127,20 @@ visitCastIntToObject: anObject {CastIntToObject} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitCastObjectToArray: anObject {CastObjectToArray} {^X}
+	
+!
+(reader addMethod: 'visiting')
+!
 visitCastObjectToDefined: anObject {CastObjectToDefined} {^X}
 	
+!
+(reader addMethod: 'visiting')
+!
+visitCastObjectToInt: anObject {CastObjectToInt} {^X}
+	| int |
+	int := self pop.
+	self pushInt: int primitiveValue
 !
 (reader addMethod: 'visiting')
 !
@@ -97,13 +152,28 @@ visitDup: anObject {Dup} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitDupX1: anObject {DupX1} {^X}
+	| top next |
+	top := self pop.
+	next := self pop.
+	self push: top.
+	self push: next.
+	self push: top
+!
+(reader addMethod: 'visiting')
+!
 visitDynamicFieldRead: anObject {DynamicFieldRead} {^X}
-	^self visitJVMInstruction: anObject
+	| receiver |
+	receiver := self pop.
+	self push: (receiver dynamicInstVarAt: anObject name)
 !
 (reader addMethod: 'visiting')
 !
 visitDynamicFieldWrite: anObject {DynamicFieldWrite} {^X}
-	^self visitJVMInstruction: anObject
+	| value receiver |
+	value := self pop.
+	receiver := self pop.
+	receiver dynamicInstVarAt: anObject name put: value
 !
 (reader addMethod: 'visiting')
 !
@@ -120,7 +190,7 @@ visitDynamicGlobalWrite: anObject {DynamicGlobalWrite} {^X}
 !
 visitDynamicMessageSend: anObject {DynamicMessageSend} {^X}
 	| arguments receiver methodContext |
-	arguments := (anObject numArgs to: 1 by: -1) collect: [:i | self pop].
+	arguments := self popArguments: anObject numArgs.
 	receiver := self pop.
 	methodContext := receiver invokeDynamic: anObject functionName.
 	methodContext loadArguments: (arguments copyWithFirst: receiver).
@@ -128,8 +198,32 @@ visitDynamicMessageSend: anObject {DynamicMessageSend} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitDynamicSuperSend: anObject {DynamicSuperSend} {^X}
+	| arguments receiver methodContext |
+	arguments := self popArguments: anObject numArgs.
+	receiver := self pop.
+	methodContext := receiver invokeDynamicSuper: anObject functionName
+				for: (Reference value: anObject superReference).
+	methodContext loadArguments: (arguments copyWithFirst: receiver).
+	process pushContext: methodContext
+!
+(reader addMethod: 'As yet unclassified')
+!
+visitExecuteTest: anExecuteTest
+	process popFrame.
+	anExecuteTest test value
+!
+(reader addMethod: 'visiting')
+!
 visitFrame: aFrame {Frame} {^X}
-	process pushContext: (VMFrameContext parent: self currentContext frame: aFrame)
+	self pushFrame: aFrame
+!
+(reader addMethod: 'visiting')
+!
+visitGetField: anObject {GetField} {^X}
+	| receiver |
+	receiver := self pop.
+	self push: (receiver fieldAt: anObject name)
 !
 (reader addMethod: 'visiting')
 !
@@ -141,8 +235,21 @@ visitGetStatic: anObject {GetStatic} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitIfBooleanObjectThenElse: anObject {IfBooleanObjectThenElse} {^X}
+	self pop primitiveValue
+		ifTrue: [self pushFrame: anObject trueFrame]
+		ifFalse: [self pushFrame: anObject falseFrame]
+!
+(reader addMethod: 'visiting')
+!
+visitILoad: anObject {ILoad} {^X}
+	self push: (self currentContext localAt: anObject index)
+!
+(reader addMethod: 'visiting')
+!
 visitIncrementLocal: anObject {IncrementLocal} {^X}
-	^self visitJVMInstruction: anObject
+	self currentContext localAt: anObject index
+		put: ((self currentContext localAt: anObject index) incrementWith: anObject increment)
 !
 (reader addMethod: 'visiting')
 !
@@ -153,10 +260,14 @@ visitInvokeInterface: anObject {InvokeInterface} {^X}
 !
 visitInvokeSpecial: anObject {InvokeSpecial} {^X}
 	| arguments receiver methodContext method |
-	arguments := (anObject numArgs to: 1 by: -1) collect: [:i | self pop].
+	arguments := self popArguments: anObject numArgs.
 	receiver := self pop.
 	method := (self vm classForType: anObject ownerType) methodNamed: anObject name
 				ifAbsent: [self halt].
+	method isPrimitive
+		ifTrue: 
+			[method name = '<init>' ifTrue: [^self].
+			^self halt].
 	methodContext := VMMethodContext method: method.
 	methodContext loadReceiver: receiver arguments: arguments.
 	process pushContext: methodContext
@@ -165,7 +276,7 @@ visitInvokeSpecial: anObject {InvokeSpecial} {^X}
 !
 visitInvokeStatic: anObject {InvokeStatic} {^X}
 	| arguments methodContext aJVMClass |
-	arguments := (anObject numArgs to: 1 by: -1) collect: [:i | self pop].
+	arguments := self popArguments: anObject numArgs.
 	aJVMClass := self vm classForType: anObject ownerType.
 	methodContext := aJVMClass isSimulatedPrimitives
 				ifTrue: [aJVMClass invokeStatic: anObject name]
@@ -177,11 +288,18 @@ visitInvokeStatic: anObject {InvokeStatic} {^X}
 !
 visitInvokeVirtual: anObject
 	| arguments receiver methodContext |
-	arguments := (anObject numArgs to: 1 by: -1) collect: [:i | self pop].
+	arguments := self popArguments: anObject numArgs.
 	receiver := self pop.
 	methodContext := receiver invokeVirtual: anObject name.
 	methodContext loadReceiver: receiver arguments: arguments.
 	process pushContext: methodContext
+!
+(reader addMethod: 'visiting')
+!
+visitIStore: anObject {IStore} {^X}
+	| value |
+	value := self pop.
+	self currentContext localAt: anObject index put: value
 !
 (reader addMethod: 'visiting')
 !
@@ -197,12 +315,25 @@ visitNewInstance: anObject {NewInstance} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitObjectArrayLoad: anObject {ObjectArrayLoad} {^X}
+	| index array |
+	index := self pop value.
+	array := self pop.
+	self push: (array arrayAt: index)
+!
+(reader addMethod: 'visiting')
+!
 visitObjectArrayStore: anObject {ObjectArrayStore} {^X}
 	| value index array |
 	value := self pop.
 	index := self pop value.
 	array := self pop.
 	array arrayAt: index put: value
+!
+(reader addMethod: 'visiting')
+!
+visitPop: anObject {Pop} {^X}
+	self pop
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -217,7 +348,7 @@ visitPrimitiveMethodContext: aPrimitiveMethodContext
 (reader addMethod: 'visiting')
 !
 visitPushInt: anObject {PushInt} {^X}
-	self push: (PrimitiveValue value: anObject value)
+	self pushInt: anObject value
 !
 (reader addMethod: 'visiting')
 !
@@ -228,6 +359,14 @@ visitPushNull: anObject {PushNull} {^X}
 !
 visitPushString: anObject {PushString} {^X}
 	self push: (self vm createString: anObject value)
+!
+(reader addMethod: 'visiting')
+!
+visitPutField: anObject {PutField} {^X}
+	| value receiver |
+	value := self pop.
+	receiver := self pop.
+	receiver fieldAt: anObject name put: value
 !
 (reader addMethod: 'visiting')
 !
@@ -242,6 +381,27 @@ visitPutStatic: anObject {PutStatic} {^X}
 !
 visitReturn: anObject {Return} {^X}
 	process popContext
+!
+(reader addMethod: 'visiting')
+!
+visitSubtract: anObject {Subtract} {^X}
+	| right left |
+	right := self pop value.
+	left := self pop value.
+	self pushInt: left - right
+!
+(reader addMethod: 'visiting')
+!
+visitWhileGreaterThanLoop: anObject {WhileGreaterThanLoop} {^X}
+	^self visitWhileLoop: anObject
+!
+(reader addMethod: 'visiting')
+!
+visitWhileLessThanLoop: anObject {WhileLessThanLoop} {^X}
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: anObject testFrame
+				test: [self executeWhileLessThanTest: anObject])
 !
 (reader addMethod: 'As yet unclassified')
 !

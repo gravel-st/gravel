@@ -38,11 +38,9 @@ signature {^JVMMethodType}
 !
 sourceOn: aStream {WStream[Char]} {^Self}
 	aStream
-		nextPutAll: 'name: ';
+		nextPutAll: ownerType dottedClassName;
+		nextPutAll: '.';
 		nextPutAll: name;
-		nextPutAll: 'ownerType: ';
-		nextPutAll: ownerType printString;
-		nextPutAll: 'signature: ';
 		nextPutAll: signature printString
 !
 (reader addMethod: 'As yet unclassified')

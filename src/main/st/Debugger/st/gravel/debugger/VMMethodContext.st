@@ -49,7 +49,18 @@ localAt: anInteger
 (reader addMethod: 'As yet unclassified')
 !
 localAt: anInteger put: anUndefinedObject
-	locals at: anInteger + 1 put: anUndefinedObject
+	| zIndex |
+	zIndex := anInteger + 1.
+	zIndex > locals size
+		ifTrue: [locals := locals copyWithAll: (Array new: zIndex - locals size)].
+	locals at: zIndex put: anUndefinedObject
+!
+(reader addMethod: 'As yet unclassified')
+!
+log: aBlock
+	Transcript
+		cr;
+		show: aBlock value
 !
 (reader addMethod: 'accessing')
 !
@@ -59,7 +70,10 @@ method
 (reader addMethod: 'As yet unclassified')
 !
 pop
-	^stack removeLast
+	| value |
+	value := stack removeLast.
+	self log: ['Popped: ' , value printString].
+	^value
 !
 (reader addMethod: 'accessing')
 !
@@ -71,6 +85,7 @@ printOn: aStream
 (reader addMethod: 'As yet unclassified')
 !
 push: anObject
+	self log: ['Pushing: ' , anObject printString].
 	stack add: anObject
 !
 (reader addClassMethod: 'instance creation')

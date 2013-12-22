@@ -10,8 +10,8 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.WhileIntCompLoop;
 import st.gravel.support.compiler.jvm.WhileIntCompLoop.WhileIntCompLoop_Factory;
-import st.gravel.support.compiler.jvm.Frame;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
+import st.gravel.support.compiler.jvm.Frame;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class WhileGreaterThanLoop extends WhileIntCompLoop implements Cloneable {
@@ -25,15 +25,6 @@ public class WhileGreaterThanLoop extends WhileIntCompLoop implements Cloneable 
 			newInstance.initialize();
 			return newInstance;
 		}
-
-		@Override
-		public WhileGreaterThanLoop incFrame_testFrame_doFrame_(final Frame _aFrame, final Frame _aFrame2, final Frame _aFrame3) {
-			return ((WhileGreaterThanLoop) this.basicNew().initializeIncFrame_testFrame_doFrame_(_aFrame, _aFrame2, _aFrame3));
-		}
-	}
-
-	static public WhileGreaterThanLoop _incFrame_testFrame_doFrame_(Object receiver, final Frame _aFrame, final Frame _aFrame2, final Frame _aFrame3) {
-		return factory.incFrame_testFrame_doFrame_(_aFrame, _aFrame2, _aFrame3);
 	}
 
 	@Override
@@ -53,15 +44,6 @@ public class WhileGreaterThanLoop extends WhileIntCompLoop implements Cloneable 
 
 	public WhileGreaterThanLoop_Factory factory() {
 		return factory;
-	}
-
-	@Override
-	public WhileGreaterThanLoop initializeIncFrame_testFrame_doFrame_(final Frame _aFrame, final Frame _aFrame2, final Frame _aFrame3) {
-		_incFrame = _aFrame;
-		_testFrame = _aFrame2;
-		_doFrame = _aFrame3;
-		this.initialize();
-		return this;
 	}
 
 	@Override

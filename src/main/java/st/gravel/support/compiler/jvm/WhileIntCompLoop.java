@@ -10,16 +10,14 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.WhileLoop;
 import st.gravel.support.compiler.jvm.WhileLoop.WhileLoop_Factory;
-import st.gravel.support.compiler.jvm.Frame;
 import st.gravel.support.compiler.jvm.JVMStack;
 import st.gravel.support.compiler.jvm.JVMInstruction;
+import st.gravel.support.compiler.jvm.Frame;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class WhileIntCompLoop extends WhileLoop implements Cloneable {
 
 	public static WhileIntCompLoop_Factory factory = new WhileIntCompLoop_Factory();
-
-	Frame _incFrame;
 
 	public static class WhileIntCompLoop_Factory extends WhileLoop_Factory {
 
@@ -28,14 +26,6 @@ public class WhileIntCompLoop extends WhileLoop implements Cloneable {
 			newInstance.initialize();
 			return newInstance;
 		}
-
-		public WhileIntCompLoop incFrame_testFrame_doFrame_(final Frame _aFrame, final Frame _aFrame2, final Frame _aFrame3) {
-			return ((WhileIntCompLoop) this.basicNew().initializeIncFrame_testFrame_doFrame_(_aFrame, _aFrame2, _aFrame3));
-		}
-	}
-
-	static public WhileIntCompLoop _incFrame_testFrame_doFrame_(Object receiver, final Frame _aFrame, final Frame _aFrame2, final Frame _aFrame3) {
-		return factory.incFrame_testFrame_doFrame_(_aFrame, _aFrame2, _aFrame3);
 	}
 
 	public WhileIntCompLoop copy() {
@@ -54,24 +44,11 @@ public class WhileIntCompLoop extends WhileLoop implements Cloneable {
 		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.IntegerExtensions.equals_(_testFrame.endStack().size(), 2));
 		st.gravel.support.jvm.ObjectExtensions.assert_(this, _testFrame.endStack().peek().isIntType());
 		st.gravel.support.jvm.ObjectExtensions.assert_(this, _testFrame.endStack().peek_(2).isIntType());
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, _incFrame.endStack().isEmpty());
 		return this;
 	}
 
 	public WhileIntCompLoop_Factory factory() {
 		return factory;
-	}
-
-	public Frame incFrame() {
-		return _incFrame;
-	}
-
-	public WhileIntCompLoop initializeIncFrame_testFrame_doFrame_(final Frame _aFrame, final Frame _aFrame2, final Frame _aFrame3) {
-		_incFrame = _aFrame;
-		_testFrame = _aFrame2;
-		_doFrame = _aFrame3;
-		this.initialize();
-		return this;
 	}
 
 	@Override

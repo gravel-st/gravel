@@ -7,6 +7,11 @@
 accept: visitor
 	^visitor visitPrimitiveValue: self
 !
+(reader addMethod: 'As yet unclassified')
+!
+incrementWith: anInteger
+	^self class value: value + anInteger
+!
 (reader addMethod: 'initialize-release')
 !
 initializeValue: anInteger

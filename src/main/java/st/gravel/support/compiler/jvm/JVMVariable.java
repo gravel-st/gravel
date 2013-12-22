@@ -13,6 +13,7 @@ import st.gravel.support.compiler.jvm.JVMNode.JVMNode_Factory;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.jvm.JVMField;
+import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
 
 public class JVMVariable extends JVMNode implements Cloneable {
 
@@ -33,6 +34,10 @@ public class JVMVariable extends JVMNode implements Cloneable {
 
 	public JVMField asField_isStatic_(final JVMDefinedObjectType _ownerType, final boolean _isStatic) {
 		return JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _varName, _type, _isStatic);
+	}
+
+	public JVMLocalDeclaration asLocalDeclaration_(final int _index) {
+		return JVMLocalDeclaration.factory.varName_type_index_(_varName, _type, _index);
 	}
 
 	public JVMVariable copy() {

@@ -288,7 +288,7 @@ produceSuperSend: messageNode {MessageNode} {^Self}
 produceToDoNodeConstantStep: toDoNode {ToDoNode} step: step {Int} {^Self}
 	self
 		emit: (self newFrame: 
-					[| stop {Str} incFrame {Frame} testFrame {Frame} doFrame {Frame} |
+					[| stop {Str} testFrame {Frame} doFrame {Frame} |
 					self pushLocal: toDoNode counterName type: JVMIntType new.
 					stop := self newTempName.
 					self pushLocal: stop type: JVMIntType new.
@@ -296,17 +296,16 @@ produceToDoNodeConstantStep: toDoNode {ToDoNode} step: step {Int} {^Self}
 					self localStore: toDoNode counterName.
 					self visit: toDoNode stop.
 					self localStore: stop.
-					incFrame := self newFrame: 
-									[self emit: (IncrementLocal local: (locals at: toDoNode counterName) increment: step)].
 					testFrame := self newFrame: 
 									[self produceVarRead: toDoNode counterName.
 									self produceVarRead: stop].
 					doFrame := self newFrame: 
 									[self visit: toDoNode doSequence.
-									self trashStack].
+									self trashStack.
+									self emit: (IncrementLocal local: (locals at: toDoNode counterName) increment: step)].
 					self emit: (step > 0
-								ifTrue: [WhileLessThanLoop incFrame: incFrame testFrame: testFrame doFrame: doFrame]
-								ifFalse: [WhileGreaterThanLoop incFrame: incFrame testFrame: testFrame doFrame: doFrame])]).
+								ifTrue: [WhileLessThanLoop testFrame: testFrame doFrame: doFrame]
+								ifFalse: [WhileGreaterThanLoop testFrame: testFrame doFrame: doFrame])]).
 	self pushNull
 !
 (reader addMethod: 'As yet unclassified')

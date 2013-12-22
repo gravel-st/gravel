@@ -79,6 +79,10 @@ public class JVMMethod extends JVMNode implements Cloneable {
 		return _instructions;
 	}
 
+	public boolean isPrimitive() {
+		return false;
+	}
+
 	public boolean isStatic() {
 		return _isStatic;
 	}

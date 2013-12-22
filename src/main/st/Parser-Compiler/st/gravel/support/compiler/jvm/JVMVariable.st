@@ -13,6 +13,11 @@ asField: ownerType {JVMDefinedObjectType} isStatic: isStatic {Bool} {^JVMField}
 		type: type
 		isStatic: isStatic
 !
+(reader addMethod: 'As yet unclassified')
+!
+asLocalDeclaration: index {Int} {^JVMLocalDeclaration}
+	^JVMLocalDeclaration varName: varName type: type index: index
+!
 (reader addMethod: 'accessing')
 !
 type {^JVMType}

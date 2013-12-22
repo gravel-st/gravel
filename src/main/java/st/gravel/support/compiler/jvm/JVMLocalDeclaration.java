@@ -28,6 +28,20 @@ public class JVMLocalDeclaration extends JVMVariable implements Cloneable {
 			return newInstance;
 		}
 
+		public JVMLocalDeclaration blockSelf() {
+			return this.varName_type_index_("__block", JVMDynamicObjectType.factory.basicNew(), 0);
+		}
+
+		public JVMLocalDeclaration[] localsForSignature_(final JVMType[] _anArray) {
+			return st.gravel.support.jvm.ArrayExtensions.keysAndValuesCollect_(_anArray, new st.gravel.support.jvm.Block2<JVMLocalDeclaration, Integer, JVMType>() {
+
+				@Override
+				public JVMLocalDeclaration value_value_(final Integer _i, final JVMType _type) {
+					return (JVMLocalDeclaration) JVMLocalDeclaration.factory.varName_type_index_("arg" + "" + _i, _type, (_i - 1));
+				}
+			});
+		}
+
 		public JVMLocalDeclaration self() {
 			return this.varName_type_index_("self", JVMDynamicObjectType.factory.basicNew(), 0);
 		}
@@ -35,6 +49,14 @@ public class JVMLocalDeclaration extends JVMVariable implements Cloneable {
 		public JVMLocalDeclaration varName_type_index_(final String _aString, final JVMType _aJVMObjectType, final int _anInteger) {
 			return this.basicNew().initializeVarName_type_index_(_aString, _aJVMObjectType, _anInteger);
 		}
+	}
+
+	static public JVMLocalDeclaration _blockSelf(Object receiver) {
+		return factory.blockSelf();
+	}
+
+	static public JVMLocalDeclaration[] _localsForSignature_(Object receiver, final JVMType[] _anArray) {
+		return factory.localsForSignature_(_anArray);
 	}
 
 	static public JVMLocalDeclaration _self(Object receiver) {

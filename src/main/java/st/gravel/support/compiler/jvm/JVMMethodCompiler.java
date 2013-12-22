@@ -463,7 +463,6 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 			@Override
 			public Object value() {
 				final String _stop;
-				final Frame _incFrame;
 				final Frame _testFrame;
 				final Frame _doFrame;
 				JVMMethodCompiler.this.pushLocal_type_(_toDoNode.counterName(), JVMIntType.factory.basicNew());
@@ -473,13 +472,6 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 				JVMMethodCompiler.this.localStore_(_toDoNode.counterName());
 				JVMMethodCompiler.this.visit_(_toDoNode.stop());
 				JVMMethodCompiler.this.localStore_(_stop);
-				_incFrame = JVMMethodCompiler.this.newFrame_(new st.gravel.support.jvm.Block0<Object>() {
-
-					@Override
-					public Object value() {
-						return JVMMethodCompiler.this.emit_(IncrementLocal.factory.local_increment_(_locals.get(_toDoNode.counterName()), _step));
-					}
-				});
 				_testFrame = JVMMethodCompiler.this.newFrame_(new st.gravel.support.jvm.Block0<Object>() {
 
 					@Override
@@ -493,10 +485,11 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 					@Override
 					public Object value() {
 						JVMMethodCompiler.this.visit_(_toDoNode.doSequence());
-						return JVMMethodCompiler.this.trashStack();
+						JVMMethodCompiler.this.trashStack();
+						return JVMMethodCompiler.this.emit_(IncrementLocal.factory.local_increment_(_locals.get(_toDoNode.counterName()), _step));
 					}
 				});
-				return JVMMethodCompiler.this.emit_((_step > 0) ? WhileLessThanLoop.factory.incFrame_testFrame_doFrame_(_incFrame, _testFrame, _doFrame) : WhileGreaterThanLoop.factory.incFrame_testFrame_doFrame_(_incFrame, _testFrame, _doFrame));
+				return JVMMethodCompiler.this.emit_((_step > 0) ? WhileLessThanLoop.factory.testFrame_doFrame_(_testFrame, _doFrame) : WhileGreaterThanLoop.factory.testFrame_doFrame_(_testFrame, _doFrame));
 			}
 		}));
 		this.pushNull();

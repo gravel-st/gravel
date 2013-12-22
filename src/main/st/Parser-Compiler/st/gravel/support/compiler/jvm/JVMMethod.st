@@ -30,6 +30,11 @@ initializeName: anObject {Str} locals: anArray {Arr[JVMLocalDeclaration]} instru
 instructions {^Arr[JVMInstruction]}
 	^instructions
 !
+(reader addMethod: 'As yet unclassified')
+!
+isPrimitive {^Bool}
+	^false
+!
 (reader addMethod: 'accessing')
 !
 isStatic {^Bool}

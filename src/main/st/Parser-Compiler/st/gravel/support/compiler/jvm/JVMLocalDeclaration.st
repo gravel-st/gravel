@@ -25,10 +25,28 @@ initializeVarName: aString {Str} type: aJVMObjectType {JVMType} index: anInteger
 sourceOn: aStream {WStream[Char]} {^Self}
 	aStream nextPutAll: varName
 !
+(reader addClassMethod: 'instance creation')
+!
+blockSelf {^JVMLocalDeclaration}
+	^self
+		varName: '__block'
+		type: JVMDynamicObjectType new
+		index: 0
+!
 (reader addClassMethod: 'pegon')
 !
 instVarTypes {^[Int]}
 	^#('index')
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+localsForSignature: anArray {Arr[JVMType]} {^Arr[JVMLocalDeclaration]}
+	^anArray keysAndValuesCollect: 
+			[:i {Int} :type {JVMType} |
+			JVMLocalDeclaration
+				varName: 'arg' , i printString
+				type: type
+				index: i - 1]
 !
 (reader addClassMethod: 'instance creation')
 !

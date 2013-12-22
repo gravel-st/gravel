@@ -22,6 +22,15 @@ invokeDynamic: methodName
 !
 (reader addMethod: 'As yet unclassified')
 !
+invokeDynamicSuper: methodName for: aReference
+	| mm jvmClass method |
+	mm := vm systemMapping superMethodMappingFor: aReference methodName: methodName.
+	jvmClass := vm classForType: mm definingClass jvmType.
+	method := jvmClass methodNamed: mm methodHandle name ifAbsent: [self halt].
+	^VMMethodContext method: method
+!
+(reader addMethod: 'As yet unclassified')
+!
 javaClass
 	| t arrayCount |
 	t := subjectClass type.

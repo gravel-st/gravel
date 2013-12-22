@@ -37,6 +37,11 @@ visitAThrow: anObject {AThrow} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitBreakpoint: anObject {Breakpoint} {^X}
+	^self visitJVMInstruction: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitByteArrayStore: anObject {ByteArrayStore} {^X}
 	^self visitJVMInstruction: anObject
 !

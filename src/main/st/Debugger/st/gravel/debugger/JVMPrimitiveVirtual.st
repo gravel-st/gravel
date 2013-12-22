@@ -18,6 +18,11 @@ initializeType: aJVMDefinedObjectType name: aString
 !
 (reader addMethod: 'As yet unclassified')
 !
+isPrimitive
+	^true
+!
+(reader addMethod: 'As yet unclassified')
+!
 isStatic
 	^false
 !

@@ -104,7 +104,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		}
 		_instructions.add(DynamicSuperSend.factory.functionName_numArgs_superReference_(_functionName, _numArgs, _superReference));
 		_instructions.add(AReturn.factory.basicNew());
-		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_(_name, new JVMLocalDeclaration[] {}, _instructions.toArray(new JVMInstruction[_instructions.size()]), true, _superSig));
+		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_(_name, JVMLocalDeclaration.factory.localsForSignature_(_superSig.arguments()), _instructions.toArray(new JVMInstruction[_instructions.size()]), true, _superSig));
 		return this;
 	}
 
@@ -231,7 +231,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		_instructions.add(Load.factory.index_type_(0, _ownerType));
 		_instructions.add(InvokeSpecial.factory.ownerType_name_signature_(JVMDefinedObjectType.factory.object(), "clone", JVMMethodType.factory.returnType_arguments_(JVMDefinedObjectType.factory.object(), new JVMType[] {})));
 		_instructions.add(AReturn.factory.basicNew());
-		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("clone", new JVMLocalDeclaration[] {}, _instructions.toArray(new JVMInstruction[_instructions.size()]), false, JVMMethodType.factory.object()));
+		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("clone", st.gravel.support.jvm.ArrayFactory.with_(JVMLocalDeclaration.factory.self()), _instructions.toArray(new JVMInstruction[_instructions.size()]), false, JVMMethodType.factory.object()));
 		return this;
 	}
 

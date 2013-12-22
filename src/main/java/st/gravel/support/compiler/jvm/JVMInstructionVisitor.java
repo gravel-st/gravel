@@ -16,6 +16,7 @@ import st.gravel.support.compiler.jvm.ArrayLength;
 import st.gravel.support.compiler.jvm.AStore;
 import st.gravel.support.compiler.jvm.Store;
 import st.gravel.support.compiler.jvm.AThrow;
+import st.gravel.support.compiler.jvm.Breakpoint;
 import st.gravel.support.compiler.jvm.ByteArrayStore;
 import st.gravel.support.compiler.jvm.CastArrayToObject;
 import st.gravel.support.compiler.jvm.CastBooleanToObject;
@@ -147,6 +148,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 	}
 
 	public X visitAThrow_(final AThrow _anObject) {
+		return this.visitJVMInstruction_(_anObject);
+	}
+
+	public X visitBreakpoint_(final Breakpoint _anObject) {
 		return this.visitJVMInstruction_(_anObject);
 	}
 
