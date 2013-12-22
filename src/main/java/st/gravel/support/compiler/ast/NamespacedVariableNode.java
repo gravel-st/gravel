@@ -12,6 +12,7 @@ import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.Expression.Expression_Factory;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.Node;
+import st.gravel.support.compiler.ast.AbsoluteReference;
 import st.gravel.support.compiler.ast.SourcePrinter;
 import st.gravel.support.compiler.ast.SourcePosition;
 
@@ -131,6 +132,10 @@ public class NamespacedVariableNode extends Expression implements Cloneable {
 		return this;
 	}
 
+	public String name() {
+		return _path[_path.length - 1];
+	}
+
 	@Override
 	public boolean needsBrackets() {
 		return false;
@@ -172,6 +177,16 @@ public class NamespacedVariableNode extends Expression implements Cloneable {
 	public NamespacedVariableNode pvtSetSourcePosition_(final SourcePosition _aSourcePosition) {
 		_sourcePosition = _aSourcePosition;
 		return this;
+	}
+
+	public AbsoluteReference reference() {
+		return AbsoluteReference.factory.path_(st.gravel.support.jvm.ArrayExtensions.collect_(_path, ((st.gravel.support.jvm.Block1<st.gravel.core.Symbol, String>) (new st.gravel.support.jvm.Block1<st.gravel.core.Symbol, String>() {
+
+			@Override
+			public st.gravel.core.Symbol value_(final String _each) {
+				return (st.gravel.core.Symbol) st.gravel.core.Symbol.value(_each);
+			}
+		}))));
 	}
 
 	@Override

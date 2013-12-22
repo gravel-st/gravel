@@ -14,16 +14,14 @@ import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMBooleanType;
 
-public class PushBoolean extends PushConstant implements Cloneable {
+abstract public class PushBoolean extends PushConstant implements Cloneable {
 
 	public static PushBoolean_Factory factory = new PushBoolean_Factory();
 
 	public static class PushBoolean_Factory extends PushConstant_Factory {
 
 		public PushBoolean basicNew() {
-			PushBoolean newInstance = new PushBoolean();
-			newInstance.initialize();
-			return newInstance;
+			throw new RuntimeException("PushBoolean is an abstract class");
 		}
 	}
 
@@ -67,6 +65,8 @@ public class PushBoolean extends PushConstant implements Cloneable {
 	public JVMType type() {
 		return JVMBooleanType.factory.basicNew();
 	}
+
+	public abstract boolean value();
 
 	@Override
 	public PushBoolean withReturnType_(final JVMType _aType) {

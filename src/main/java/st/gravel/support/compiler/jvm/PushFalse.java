@@ -63,6 +63,11 @@ public class PushFalse extends PushBoolean implements Cloneable {
 	}
 
 	@Override
+	public boolean value() {
+		return false;
+	}
+
+	@Override
 	public PushFalse withReturnType_(final JVMType _aType) {
 		if (st.gravel.support.jvm.ObjectExtensions.equals_(this.type(), _aType)) {
 			return PushFalse.this;

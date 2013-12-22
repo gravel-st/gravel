@@ -959,8 +959,8 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	}
 
 	@Override
-	public JVMMethodCompiler visitNamespacedVariableNode_(final NamespacedVariableNode _anObject) {
-		this.pushNull();
+	public JVMMethodCompiler visitNamespacedVariableNode_(final NamespacedVariableNode _aNode) {
+		this.emit_(DynamicGlobalRead.factory.namespace_name_(_aNode.reference().toString(), _aNode.name()));
 		return this;
 	}
 

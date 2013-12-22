@@ -104,6 +104,7 @@ public class DynamicSuperSend extends DynamicSend implements Cloneable {
 
 	@Override
 	public DynamicSuperSend sourceOn_(final StringBuilder _aStream) {
+		_aStream.append(_functionName);
 		return this;
 	}
 

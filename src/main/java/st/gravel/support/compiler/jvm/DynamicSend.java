@@ -107,6 +107,7 @@ public class DynamicSend extends JVMInstruction implements Cloneable {
 
 	@Override
 	public DynamicSend sourceOn_(final StringBuilder _aStream) {
+		_aStream.append(_functionName);
 		return this;
 	}
 

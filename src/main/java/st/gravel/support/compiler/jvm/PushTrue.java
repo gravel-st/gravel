@@ -63,6 +63,11 @@ public class PushTrue extends PushBoolean implements Cloneable {
 	}
 
 	@Override
+	public boolean value() {
+		return true;
+	}
+
+	@Override
 	public PushTrue withReturnType_(final JVMType _aType) {
 		if (st.gravel.support.jvm.ObjectExtensions.equals_(this.type(), _aType)) {
 			return PushTrue.this;
