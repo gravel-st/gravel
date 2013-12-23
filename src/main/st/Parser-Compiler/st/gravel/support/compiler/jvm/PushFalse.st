@@ -5,3 +5,8 @@
 accept: visitor {JVMInstructionVisitor[X def]} {^X}
 	^visitor visitPushFalse: self
 !
+(reader addMethod: 'accessing')
+!
+value {^Bool}
+	^false
+!

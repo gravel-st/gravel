@@ -64,7 +64,11 @@ abstract public class MessageSendRewriter extends NodeCopier implements Cloneabl
 		st.gravel.support.jvm.Block1<Statement, MessageNode> _temp1 = _specialSelectors.get(_selector);
 		_res = ((st.gravel.support.jvm.Block1<Statement, MessageNode>) _temp1);
 		if (_res != null) {
-			return _res.value_(_anObject);
+			final Statement _trans;
+			_trans = _res.value_(_anObject);
+			if (_trans != null) {
+				return _trans;
+			}
 		}
 		return super.visitBinaryMessageNode_(_anObject);
 	}
@@ -105,7 +109,11 @@ abstract public class MessageSendRewriter extends NodeCopier implements Cloneabl
 		st.gravel.support.jvm.Block1<Statement, MessageNode> _temp1 = _specialSelectors.get(_selector);
 		_res = ((st.gravel.support.jvm.Block1<Statement, MessageNode>) _temp1);
 		if (_res != null) {
-			return _res.value_(_anObject);
+			final Statement _trans;
+			_trans = _res.value_(_anObject);
+			if (_trans != null) {
+				return _trans;
+			}
 		}
 		return super.visitKeywordMessageNode_(_anObject);
 	}
@@ -118,7 +126,11 @@ abstract public class MessageSendRewriter extends NodeCopier implements Cloneabl
 		st.gravel.support.jvm.Block1<Statement, MessageNode> _temp1 = _specialSelectors.get(_selector);
 		_res = ((st.gravel.support.jvm.Block1<Statement, MessageNode>) _temp1);
 		if (_res != null) {
-			return _res.value_(_anObject);
+			final Statement _trans;
+			_trans = _res.value_(_anObject);
+			if (_trans != null) {
+				return _trans;
+			}
 		}
 		return super.visitUnaryMessageNode_(_anObject);
 	}

@@ -32,10 +32,19 @@ public class UnaryMessageNode extends MessageNode implements Cloneable {
 		public UnaryMessageNode receiver_selector_(final Expression _aNode, final String _aString) {
 			return ((UnaryMessageNode) this.basicNew().initializeReceiver_selector_(_aNode, _aString));
 		}
+
+		public UnaryMessageNode receiver_selector_arguments_(final Expression _aNode, final String _aString, final Expression[] _anArray) {
+			st.gravel.support.jvm.ObjectExtensions.assert_(this, _anArray.length == 0);
+			return ((UnaryMessageNode) this.receiver_selector_(_aNode, _aString));
+		}
 	}
 
 	static public UnaryMessageNode _receiver_selector_(Object receiver, final Expression _aNode, final String _aString) {
 		return factory.receiver_selector_(_aNode, _aString);
+	}
+
+	static public UnaryMessageNode _receiver_selector_arguments_(Object receiver, final Expression _aNode, final String _aString, final Expression[] _anArray) {
+		return factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
 	}
 
 	@Override

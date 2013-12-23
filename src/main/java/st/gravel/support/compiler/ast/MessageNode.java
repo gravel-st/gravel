@@ -10,6 +10,9 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.Expression.Expression_Factory;
+import st.gravel.support.compiler.ast.UnaryMessageNode;
+import st.gravel.support.compiler.ast.BinaryMessageNode;
+import st.gravel.support.compiler.ast.KeywordMessageNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.SourcePrinter;
@@ -32,10 +35,26 @@ abstract public class MessageNode extends Expression implements Cloneable {
 		public MessageNode receiver_selector_(final Expression _aNode, final String _aString) {
 			return ((MessageNode) this.basicNew().initializeReceiver_selector_(_aNode, _aString));
 		}
+
+		public MessageNode receiver_selector_arguments_(final Expression _aNode, final String _aString, final Expression[] _anArray) {
+			final st.gravel.core.Symbol _sym;
+			_sym = st.gravel.core.Symbol.value(_aString);
+			if (_sym.isUnary()) {
+				return UnaryMessageNode.factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
+			}
+			if (_sym.isBinary()) {
+				return BinaryMessageNode.factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
+			}
+			return KeywordMessageNode.factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
+		}
 	}
 
 	static public MessageNode _receiver_selector_(Object receiver, final Expression _aNode, final String _aString) {
 		return factory.receiver_selector_(_aNode, _aString);
+	}
+
+	static public MessageNode _receiver_selector_arguments_(Object receiver, final Expression _aNode, final String _aString, final Expression[] _anArray) {
+		return factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
 	}
 
 	@Override

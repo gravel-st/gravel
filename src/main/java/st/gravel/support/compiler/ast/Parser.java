@@ -12,7 +12,6 @@ import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.SourceFile;
 import st.gravel.support.compiler.ast.SequenceNode;
-import st.gravel.support.compiler.ast.PragmaNode;
 import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.ParseError;
 import st.gravel.support.compiler.ast.ArrayLiteralNode;
@@ -22,6 +21,7 @@ import st.gravel.support.compiler.ast.VariableNode;
 import st.gravel.support.compiler.ast.BinaryMessageNode;
 import st.gravel.support.compiler.ast.BinaryMethodNode;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
+import st.gravel.support.compiler.ast.PragmaNode;
 import st.gravel.support.compiler.ast.UnaryMessageNode;
 import st.gravel.support.compiler.ast.BlockNode;
 import st.gravel.support.compiler.ast.ByteArrayLiteralNode;
@@ -101,13 +101,7 @@ public class Parser extends Object implements Cloneable {
 			final Parser _parser;
 			final SequenceNode _res;
 			_parser = this.source_(_aString);
-			_res = _parser.parseSequenceNode_(new st.gravel.support.jvm.Block1<Object, PragmaNode[]>() {
-
-				@Override
-				public Object value_(final PragmaNode[] _pragmas) {
-					return Parser_Factory.this;
-				}
-			});
+			_res = _parser.parseSequence();
 			st.gravel.support.jvm.ObjectExtensions.assert_(this, _parser.atEnd());
 			return _res;
 		}
@@ -274,10 +268,14 @@ public class Parser extends Object implements Cloneable {
 							if (st.gravel.support.jvm.CharacterExtensions.equals_(_ch, '$')) {
 								_elements = st.gravel.support.jvm.ArrayExtensions.copyWith_(_elements, Parser.this.parseCharacter());
 							} else {
-								if (_ch >= '0' && _ch <= '9') {
-									_elements = st.gravel.support.jvm.ArrayExtensions.copyWith_(_elements, Parser.this.parseNumber());
+								if (st.gravel.support.jvm.CharacterExtensions.equals_(_ch, '-')) {
+									_elements = st.gravel.support.jvm.ArrayExtensions.copyWith_(_elements, Parser.this.parseNegativeNumber());
 								} else {
-									_elements = st.gravel.support.jvm.ArrayExtensions.copyWith_(_elements, Parser.this.parseSymbolNoHash());
+									if (_ch >= '0' && _ch <= '9') {
+										_elements = st.gravel.support.jvm.ArrayExtensions.copyWith_(_elements, Parser.this.parseNumber());
+									} else {
+										_elements = st.gravel.support.jvm.ArrayExtensions.copyWith_(_elements, Parser.this.parseSymbolNoHash());
+									}
 								}
 							}
 						}
@@ -697,7 +695,12 @@ public class Parser extends Object implements Cloneable {
 			return FloatLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, _exponent);
 		} else {
 			if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 's')) {
-				return FixedPointLiteralNode.factory.integer_fractionString_(_value, _fractionString);
+				final int _scale;
+				_scale = st.gravel.support.jvm.LargeIntegerExtensions.asSmallInteger(Parser.this.readInteger_(10));
+				if (_fractionString == null) {
+					_fractionString = "";
+				}
+				return FixedPointLiteralNode.factory.integer_fractionString_scale_(_value, _fractionString, _scale);
 			}
 		}
 		return _fractionString == null ? IntegerLiteralNode.factory.integer_(_value) : FloatLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, null);
@@ -753,6 +756,16 @@ public class Parser extends Object implements Cloneable {
 			return Parser.this.parseTypeExpressionAndClose();
 		}
 		return null;
+	}
+
+	public SequenceNode parseSequence() {
+		return this.parseSequenceNode_(new st.gravel.support.jvm.Block1<Object, PragmaNode[]>() {
+
+			@Override
+			public Object value_(final PragmaNode[] _pragmas) {
+				return Parser.this;
+			}
+		});
 	}
 
 	public SequenceNode parseSequenceNode_(final st.gravel.support.jvm.Block1<Object, PragmaNode[]> _extraPragmaBlock) {

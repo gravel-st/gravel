@@ -19,7 +19,7 @@ evaluate: source
 (reader addMethod: 'running')
 !
 setUp
-	systemMapping := SP.SystemMapping systemNode: SP.SystemNode empty
+	systemMapping := SystemMapping systemNode: SystemNode empty
 				compilerTools: StOnly.MockSystemMappingCompilerTools new.
 	systemMapping updateTo: StOnly.VWClassReader readVWSystemDefinitionNode
 !
@@ -27,8 +27,9 @@ setUp
 !
 testArrayAsSortedCollection
 	| answer |
-	answer := self evaluate: '#(z b g a) asSortedCollection'.
-	self assert: answer primitiveValue = 7
+	answer := self evaluate: '#(z b g a) asSortedCollection asArray'.
+	self
+		assert: (answer primitiveValue collect: [:each | each primitiveValue]) = #(#a #b #g #z)
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -43,6 +44,14 @@ testPlus
 	| answer |
 	answer := self evaluate: '3 + 4'.
 	self assert: answer primitiveValue = 7
+!
+(reader addMethod: 'As yet unclassified')
+!
+testRunSelf
+	| answer |
+	answer := self evaluate: '(st.gravel.debugger.DebuggerTest selector: #testLoop) run'.
+	self
+		assert: (answer primitiveValue collect: [:each | each primitiveValue]) = #(#a #b #g #z)
 !
 (reader addClassMethod: 'pegon')
 !

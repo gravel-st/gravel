@@ -10,3 +10,8 @@ accept: visitor {JVMInstructionVisitor[X def]} {^X}
 type {^JVMType}
 	^JVMBooleanType new
 !
+(reader addMethod: 'accessing')
+!
+value {^Bool}
+	^self subclassResponsibility
+!

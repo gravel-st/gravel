@@ -80,9 +80,12 @@ parseArray {^ArrayLiteralNode}
 									[ch = $$
 										ifTrue: [elements := elements copyWith: self parseCharacter]
 										ifFalse: 
-											[(ch between: $0 and: $9)
-												ifTrue: [elements := elements copyWith: self parseNumber]
-												ifFalse: [elements := elements copyWith: self parseSymbolNoHash]]]]].
+											[ch = $-
+												ifTrue: [elements := elements copyWith: self parseNegativeNumber]
+												ifFalse: 
+													[(ch between: $0 and: $9)
+														ifTrue: [elements := elements copyWith: self parseNumber]
+														ifFalse: [elements := elements copyWith: self parseSymbolNoHash]]]]]].
 			self eatWhitespace].
 	^ArrayLiteralNode elements: elements
 !
@@ -460,7 +463,13 @@ parseNumber {^NumberLiteralNode}
 			^FloatLiteralNode integer: value fractionString: fractionString exponent: exponent]
 		ifFalse: 
 			[(stream peekFor: $s)
-				ifTrue: [^FixedPointLiteralNode integer: value fractionString: fractionString]].
+				ifTrue: 
+					[| scale {LargeInteger} |
+					scale := self readInteger: 10.
+					^FixedPointLiteralNode
+						integer: value
+						fractionString: (fractionString ifNil: [''])
+						scale: scale]].
 	^fractionString isNil
 		ifTrue: [IntegerLiteralNode integer: value]
 		ifFalse: [FloatLiteralNode integer: value fractionString: fractionString exponent: nil]
@@ -500,6 +509,11 @@ parseReturnType {^TypeNode | Nil}
 			self assert: (stream peekFor: $^).
 			^self parseTypeExpressionAndClose].
 	^nil
+!
+(reader addMethod: 'As yet unclassified')
+!
+parseSequence {^SequenceNode}
+	^self parseSequenceNode: [:pragmas {Arr[PragmaNode]} | ]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -914,7 +928,7 @@ parseMethod: aString {Str} sourceFile: sourceFile {SourceFile | Nil} {^MethodNod
 parseSequence: aString {Str} {^SequenceNode | Nil}
 	| parser {Parser} res {SequenceNode | Nil} |
 	parser := self source: aString.
-	res := parser parseSequenceNode: [:pragmas {Arr[PragmaNode]} | ].
+	res := parser parseSequence.
 	self assert: parser atEnd.
 	^res
 !

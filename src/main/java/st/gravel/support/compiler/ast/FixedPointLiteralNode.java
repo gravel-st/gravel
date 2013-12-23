@@ -34,7 +34,11 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 		}
 
 		public FixedPointLiteralNode integer_fractionString_(final java.math.BigInteger _anInteger, final String _aString) {
-			return FixedPointLiteralNode.factory.fixedPoint_(st.gravel.support.jvm.FixedPointExtensions.fromString_(_anInteger.toString() + "." + _aString));
+			return this.integer_fractionString_scale_(_anInteger, _aString, 1);
+		}
+
+		public FixedPointLiteralNode integer_fractionString_scale_(final java.math.BigInteger _anInteger, final String _aString, final int _scale) {
+			return FixedPointLiteralNode.factory.fixedPoint_(st.gravel.support.jvm.FixedPointExtensions.fromString_scale_(_anInteger.toString() + "." + _aString, _scale));
 		}
 	}
 
@@ -44,6 +48,10 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 
 	static public FixedPointLiteralNode _integer_fractionString_(Object receiver, final java.math.BigInteger _anInteger, final String _aString) {
 		return factory.integer_fractionString_(_anInteger, _aString);
+	}
+
+	static public FixedPointLiteralNode _integer_fractionString_scale_(Object receiver, final java.math.BigInteger _anInteger, final String _aString, final int _scale) {
+		return factory.integer_fractionString_scale_(_anInteger, _aString, _scale);
 	}
 
 	@Override

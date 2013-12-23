@@ -136,6 +136,11 @@ mapForStaticLinking {^Self}
 selectorAsFunctionName: aSymbol {Sym} {^Str}
 	^map at: aSymbol ifAbsent: [self encodeSelector: aSymbol]
 !
+(reader addMethod: 'initialize-release')
+!
+specialCharacterAt: aChar
+	^specialCharacters at: aChar
+!
 (reader addClassMethod: 'instance creation')
 !
 forStaticLinking

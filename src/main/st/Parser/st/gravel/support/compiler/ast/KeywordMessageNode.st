@@ -111,6 +111,6 @@ receiver: aNode {Expression} selector: aSymbol {Str} argument: argNode1 {Express
 !
 (reader addClassMethod: 'instance creation')
 !
-receiver: anIntegerLiteralNode {Expression} selector: aString {String} arguments: anArray {Array[Expression]} {^Instance}
-	^self new initializeReceiver: anIntegerLiteralNode selector: aString arguments: anArray
+receiver: aNode {Expression} selector: aString {String} arguments: anArray {Arr[Expression]} {^Instance}
+	^self new initializeReceiver: aNode selector: aString arguments: anArray
 !

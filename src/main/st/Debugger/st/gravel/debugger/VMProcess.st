@@ -19,7 +19,7 @@ answer
 (reader addMethod: 'As yet unclassified')
 !
 answer: anInstance
-	self popContext.
+	self popMethodContext.
 	self atEnd ifTrue: [answer := anInstance] ifFalse: [self currentContext push: anInstance]
 !
 (reader addMethod: 'As yet unclassified')
@@ -46,12 +46,21 @@ initializeVm: aVirtualMachine
 (reader addMethod: 'As yet unclassified')
 !
 popContext
-	[contextStack removeLast isFrame] whileTrue
+	| ctx unwindContext |
+	ctx := contextStack removeLast.
+	unwindContext := ctx unwindContext.
+	unwindContext isNil ifFalse: [unwindContext halt].
+	^ctx
 !
 (reader addMethod: 'As yet unclassified')
 !
 popFrame
-	self assert: contextStack removeLast isFrame
+	self assert: self popContext isFrame
+!
+(reader addMethod: 'As yet unclassified')
+!
+popMethodContext
+	[self popContext isFrame] whileTrue
 !
 (reader addMethod: 'accessing')
 !

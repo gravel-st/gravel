@@ -28,6 +28,11 @@ initializePath: anArray {Array[String]} {^Self}
 innerSourceOn: aStream {WStream[Char]} {^Self}
 	path do: [:elem {Str} | aStream nextPutAll: elem] separatedBy: [aStream nextPut: $.]
 !
+(reader addMethod: 'accessing')
+!
+name {^Str}
+	^path last
+!
 (reader addMethod: 'As yet unclassified')
 !
 needsBrackets {^Bool}
@@ -47,6 +52,11 @@ path {^Array[String]}
 !
 precedence {^Int}
 	^0
+!
+(reader addMethod: 'accessing')
+!
+reference {^AbsoluteReference}
+	^AbsoluteReference path: (path collect: [:each {Str} | each asSymbol])
 !
 (reader addClassMethod: 'pegon')
 !

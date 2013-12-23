@@ -158,14 +158,6 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testParseFixedPoint() {
-		final FixedPointLiteralNode _node;
-		_node = ((FixedPointLiteralNode) Parser.factory.source_("12345.0067s").parseExpression());
-		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
-		assertEquals((java.math.BigDecimal) st.gravel.support.jvm.FixedPointExtensions.fromSmalltalkString_("12345.0067s"), (java.math.BigDecimal) _node.value());
-	}
-
-	@Test
 	public void testParseHexInteger() {
 		final IntegerLiteralNode _node;
 		_node = ((IntegerLiteralNode) Parser.factory.source_("16rFF").parseExpression());

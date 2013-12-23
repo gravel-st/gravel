@@ -14,6 +14,52 @@ currentContext
 !
 (reader addMethod: 'As yet unclassified')
 !
+executeIfTrueIfFalse: anObject
+	| value |
+	value := self pop value.
+	value
+		ifTrue: [self pushFrame: anObject trueFrame]
+		ifFalse: [self pushFrame: anObject falseFrame]
+!
+(reader addMethod: 'As yet unclassified')
+!
+executeOrRight: anObject
+	| value |
+	value := self pop value.
+	value
+		ifTrue: 
+			[self pushFrame: anObject trueFrame.
+			^self].
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: anObject right
+				test: [self executeIfTrueIfFalse: anObject])
+!
+(reader addMethod: 'As yet unclassified')
+!
+executeWhileFalseTest: inst
+	| value |
+	value := self pop value.
+	value ifTrue: [^self].
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: inst doFrame
+				test: [self visitWhileFalseLoop: inst])
+!
+(reader addMethod: 'As yet unclassified')
+!
+executeWhileGreaterThanTest: inst
+	| left right |
+	right := self pop value.
+	left := self pop value.
+	left < right ifTrue: [^self].
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: inst doFrame
+				test: [self visitWhileGreaterThanLoop: inst])
+!
+(reader addMethod: 'As yet unclassified')
+!
 executeWhileLessThanTest: inst
 	| left right |
 	right := self pop value.
@@ -23,6 +69,17 @@ executeWhileLessThanTest: inst
 				parent: self currentContext
 				frame: inst doFrame
 				test: [self visitWhileLessThanLoop: inst])
+!
+(reader addMethod: 'As yet unclassified')
+!
+executeWhileTrueTest: inst
+	| value |
+	value := self pop value.
+	value ifFalse: [^self].
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: inst doFrame
+				test: [self visitWhileTrueLoop: inst])
 !
 (reader addMethod: 'initialize-release')
 !
@@ -69,6 +126,11 @@ push: anObject
 !
 (reader addMethod: 'visiting')
 !
+pushBoolean: aValue
+	self push: (PrimitiveValue value: aValue)
+!
+(reader addMethod: 'visiting')
+!
 pushFrame: aFrame
 	process pushContext: (VMFrameContext parent: self currentContext frame: aFrame)
 !
@@ -80,9 +142,6 @@ pushInt: int
 (reader addMethod: 'visiting')
 !
 visit: anObject
-	Transcript
-		cr;
-		show: anObject class name.
 	super visit: anObject
 !
 (reader addMethod: 'visiting')
@@ -114,6 +173,14 @@ visitCastArrayToObject: anObject {CastArrayToObject} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitCastBooleanToObject: anObject {CastBooleanToObject} {^X}
+	| int primitiveValue |
+	int := self pop.
+	primitiveValue := int value.
+	self push: (self vm createBoolean: primitiveValue)
+!
+(reader addMethod: 'visiting')
+!
 visitCastDefinedToObject: anObject {CastDefinedToObject} {^X}
 	
 !
@@ -129,6 +196,13 @@ visitCastIntToObject: anObject {CastIntToObject} {^X}
 !
 visitCastObjectToArray: anObject {CastObjectToArray} {^X}
 	
+!
+(reader addMethod: 'visiting')
+!
+visitCastObjectToBoolean: anObject {CastObjectToBoolean} {^X}
+	| int |
+	int := self pop.
+	self pushBoolean: int primitiveValue
 !
 (reader addMethod: 'visiting')
 !
@@ -158,6 +232,18 @@ visitDupX1: anObject {DupX1} {^X}
 	next := self pop.
 	self push: top.
 	self push: next.
+	self push: top
+!
+(reader addMethod: 'visiting')
+!
+visitDupX2: anObject {DupX2} {^X}
+	| top next1 next2 |
+	top := self pop.
+	next1 := self pop.
+	next2 := self pop.
+	self push: top.
+	self push: next2.
+	self push: next1.
 	self push: top
 !
 (reader addMethod: 'visiting')
@@ -332,6 +418,14 @@ visitObjectArrayStore: anObject {ObjectArrayStore} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitOrThenElse: anObject {OrThenElse} {^X}
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: anObject left
+				test: [self executeOrRight: anObject])
+!
+(reader addMethod: 'visiting')
+!
 visitPop: anObject {Pop} {^X}
 	self pop
 !
@@ -344,6 +438,11 @@ visitPopFrame: aPopFrame
 !
 visitPrimitiveMethodContext: aPrimitiveMethodContext
 	aPrimitiveMethodContext executeFor: process
+!
+(reader addMethod: 'visiting')
+!
+visitPushBoolean: anObject {PushBoolean} {^X}
+	^self pushBoolean: anObject value
 !
 (reader addMethod: 'visiting')
 !
@@ -380,7 +479,7 @@ visitPutStatic: anObject {PutStatic} {^X}
 (reader addMethod: 'visiting')
 !
 visitReturn: anObject {Return} {^X}
-	process popContext
+	process popMethodContext
 !
 (reader addMethod: 'visiting')
 !
@@ -392,8 +491,19 @@ visitSubtract: anObject {Subtract} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitWhileFalseLoop: anObject {WhileFalseLoop} {^X}
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: anObject testFrame
+				test: [self executeWhileFalseTest: anObject])
+!
+(reader addMethod: 'visiting')
+!
 visitWhileGreaterThanLoop: anObject {WhileGreaterThanLoop} {^X}
-	^self visitWhileLoop: anObject
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: anObject testFrame
+				test: [self executeWhileGreaterThanTest: anObject])
 !
 (reader addMethod: 'visiting')
 !
@@ -402,6 +512,14 @@ visitWhileLessThanLoop: anObject {WhileLessThanLoop} {^X}
 				parent: self currentContext
 				frame: anObject testFrame
 				test: [self executeWhileLessThanTest: anObject])
+!
+(reader addMethod: 'visiting')
+!
+visitWhileTrueLoop: anObject {WhileTrueLoop} {^X}
+	process pushContext: (VMTestFrameContext
+				parent: self currentContext
+				frame: anObject testFrame
+				test: [self executeWhileTrueTest: anObject])
 !
 (reader addMethod: 'As yet unclassified')
 !

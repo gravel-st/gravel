@@ -51,6 +51,11 @@ instVarTypes {^[FixedPoint]}
 (reader addClassMethod: 'As yet unclassified')
 !
 integer: anInteger {LargeInteger} fractionString: aString {Str} {^FixedPointLiteralNode}
+	^self integer: anInteger fractionString: aString scale: 1
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+integer: anInteger {LargeInteger} fractionString: aString {Str} scale: scale {Int} {^FixedPointLiteralNode}
 	^FixedPointLiteralNode
-		fixedPoint: (FixedPoint fromString: anInteger printString , '.' , aString)
+		fixedPoint: (FixedPoint fromString: anInteger printString , '.' , aString scale: scale)
 !

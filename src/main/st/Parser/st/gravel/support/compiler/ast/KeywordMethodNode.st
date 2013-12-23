@@ -92,6 +92,18 @@ instVarTypes {^[Array[VariableDeclarationNode]]}
 !
 (reader addClassMethod: 'instance creation')
 !
+selector: aString {String} arguments: anArray {Array[VariableDeclarationNode]} body: aSequenceNode {^Instance}
+	^self
+		selector: aString
+		arguments: anArray
+		body: aSequenceNode
+		returnType: nil
+		pragmas: #()
+		protocol: nil
+		nlrMarker: nil
+!
+(reader addClassMethod: 'instance creation')
+!
 selector: aString {String} arguments: anArray {Array[VariableDeclarationNode]} body: aSequenceNode {SequenceNode} returnType: anUndefinedObject {TypeNode} pragmas: anArray2 {Array[PragmaNode]} protocol: protocol {Str} {^Instance}
 	^self
 		selector: aString

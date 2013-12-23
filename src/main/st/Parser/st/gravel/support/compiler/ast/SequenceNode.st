@@ -140,6 +140,11 @@ instVarTypes {^[Array[VariableDeclarationNode], Array[Statement]]}
 !
 (reader addClassMethod: 'instance creation')
 !
+return: aNode {Expression} {^SequenceNode}
+	^self statement: (ReturnNode value: aNode)
+!
+(reader addClassMethod: 'instance creation')
+!
 statement: aNode {Statement} {^SequenceNode}
 	^self temporaries: #() statements: (Array with: aNode)
 !

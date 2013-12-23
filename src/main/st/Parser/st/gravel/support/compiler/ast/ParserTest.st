@@ -148,7 +148,15 @@ testParseFixedPoint
 	| node {FixedPointLiteralNode | Nil} |
 	node := (Parser source: '12345.0067s') parseExpression.
 	self assert: FixedPointLiteralNode equals: node class.
-	self assert: 12345.0067s equals: node value
+	self assert: 12345s equals: node value
+!
+(reader addMethod: 'tests')
+!
+testParseFixedPointWithExponent
+	| node {FixedPointLiteralNode | Nil} |
+	node := (Parser source: '5.1s2') parseExpression.
+	self assert: FixedPointLiteralNode equals: node class.
+	self assert: 5.1s equals: node value
 !
 (reader addMethod: 'tests')
 !

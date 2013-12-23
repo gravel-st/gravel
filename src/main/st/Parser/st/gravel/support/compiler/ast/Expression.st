@@ -43,7 +43,7 @@ send: aSymbol {Str} with: argNode1 {Expression} with: argNode2 {Expression} with
 (reader addMethod: 'As yet unclassified')
 !
 send: aSymbol {Str} withAll: anArray {Arr[Expression]} {^Expression}
-	^KeywordMessageNode receiver: self selector: aSymbol arguments: anArray
+	^MessageNode receiver: self selector: aSymbol arguments: anArray
 !
 (reader addMethod: 'As yet unclassified')
 !

@@ -87,3 +87,14 @@ instVarTypes {^[Expression, String]}
 receiver: aNode {Expression} selector: aString {String} {^Instance}
 	^self new initializeReceiver: aNode selector: aString
 !
+(reader addClassMethod: 'instance creation')
+!
+receiver: aNode {Expression} selector: aString {String} arguments: anArray {Arr[Expression]} {^Instance}
+	| sym |
+	sym := aString asSymbol.
+	sym isUnary
+		ifTrue: [^UnaryMessageNode receiver: aNode selector: aString arguments: anArray].
+	sym isBinary
+		ifTrue: [^BinaryMessageNode receiver: aNode selector: aString arguments: anArray].
+	^KeywordMessageNode receiver: aNode selector: aString arguments: anArray
+!

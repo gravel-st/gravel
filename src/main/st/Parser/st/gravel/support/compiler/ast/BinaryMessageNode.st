@@ -94,3 +94,12 @@ receiver: anIntegerLiteralNode {Expression} selector: aString {String} argument:
 		selector: aString
 		argument: anIntegerLiteralNode2
 !
+(reader addClassMethod: 'instance creation')
+!
+receiver: aNode {Expression} selector: aString {String} arguments: anArray {Arr[Expression]} {^Instance}
+	self assert: anArray size = 1.
+	^self
+		receiver: aNode
+		selector: aString
+		argument: anArray first
+!

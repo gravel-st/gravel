@@ -35,6 +35,11 @@ public class BinaryMessageNode extends MessageNode implements Cloneable {
 			return ((BinaryMessageNode) this.basicNew().initializeReceiver_selector_(_aNode, _aString));
 		}
 
+		public BinaryMessageNode receiver_selector_arguments_(final Expression _aNode, final String _aString, final Expression[] _anArray) {
+			st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.IntegerExtensions.equals_(_anArray.length, 1));
+			return ((BinaryMessageNode) this.receiver_selector_argument_(_aNode, _aString, _anArray[0]));
+		}
+
 		public BinaryMessageNode receiver_selector_argument_(final Expression _anIntegerLiteralNode, final String _aString, final Expression _anIntegerLiteralNode2) {
 			return ((BinaryMessageNode) this.basicNew().initializeReceiver_selector_argument_(_anIntegerLiteralNode, _aString, _anIntegerLiteralNode2));
 		}
@@ -42,6 +47,10 @@ public class BinaryMessageNode extends MessageNode implements Cloneable {
 
 	static public BinaryMessageNode _receiver_selector_(Object receiver, final Expression _aNode, final String _aString) {
 		return factory.receiver_selector_(_aNode, _aString);
+	}
+
+	static public BinaryMessageNode _receiver_selector_arguments_(Object receiver, final Expression _aNode, final String _aString, final Expression[] _anArray) {
+		return factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
 	}
 
 	static public BinaryMessageNode _receiver_selector_argument_(Object receiver, final Expression _anIntegerLiteralNode, final String _aString, final Expression _anIntegerLiteralNode2) {

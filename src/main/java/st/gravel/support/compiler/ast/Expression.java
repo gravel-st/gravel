@@ -12,7 +12,7 @@ import st.gravel.support.compiler.ast.Statement;
 import st.gravel.support.compiler.ast.Statement.Statement_Factory;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.UnaryMessageNode;
-import st.gravel.support.compiler.ast.KeywordMessageNode;
+import st.gravel.support.compiler.ast.MessageNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.SourcePrinter;
 import st.gravel.support.compiler.ast.SourcePosition;
@@ -120,7 +120,7 @@ abstract public class Expression extends Statement implements Cloneable {
 	}
 
 	public Expression send_withAll_(final String _aSymbol, final Expression[] _anArray) {
-		return KeywordMessageNode.factory.receiver_selector_arguments_(this, _aSymbol, _anArray);
+		return MessageNode.factory.receiver_selector_arguments_(this, _aSymbol, _anArray);
 	}
 
 	public Expression send_with_(final String _aSymbol, final Expression _argNode1) {

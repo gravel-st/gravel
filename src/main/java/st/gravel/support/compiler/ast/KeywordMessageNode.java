@@ -35,8 +35,8 @@ public class KeywordMessageNode extends MessageNode implements Cloneable {
 			return ((KeywordMessageNode) this.basicNew().initializeReceiver_selector_(_aNode, _aString));
 		}
 
-		public KeywordMessageNode receiver_selector_arguments_(final Expression _anIntegerLiteralNode, final String _aString, final Expression[] _anArray) {
-			return ((KeywordMessageNode) this.basicNew().initializeReceiver_selector_arguments_(_anIntegerLiteralNode, _aString, _anArray));
+		public KeywordMessageNode receiver_selector_arguments_(final Expression _aNode, final String _aString, final Expression[] _anArray) {
+			return ((KeywordMessageNode) this.basicNew().initializeReceiver_selector_arguments_(_aNode, _aString, _anArray));
 		}
 
 		public KeywordMessageNode receiver_selector_argument_(final Expression _aNode, final String _aSymbol, final Expression _argNode1) {
@@ -48,8 +48,8 @@ public class KeywordMessageNode extends MessageNode implements Cloneable {
 		return factory.receiver_selector_(_aNode, _aString);
 	}
 
-	static public KeywordMessageNode _receiver_selector_arguments_(Object receiver, final Expression _anIntegerLiteralNode, final String _aString, final Expression[] _anArray) {
-		return factory.receiver_selector_arguments_(_anIntegerLiteralNode, _aString, _anArray);
+	static public KeywordMessageNode _receiver_selector_arguments_(Object receiver, final Expression _aNode, final String _aString, final Expression[] _anArray) {
+		return factory.receiver_selector_arguments_(_aNode, _aString, _anArray);
 	}
 
 	static public KeywordMessageNode _receiver_selector_argument_(Object receiver, final Expression _aNode, final String _aSymbol, final Expression _argNode1) {

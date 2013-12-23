@@ -23,7 +23,7 @@ addClassType: aType
 	^self
 		addClassType: aType
 		virtuals: #('<init>')
-		statics: #()
+		statics: #('equals')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -123,7 +123,7 @@ initialize
 	self
 		addClassType: JVMDefinedObjectType symbol
 		virtuals: #()
-		statics: #(#value).
+		statics: #(#value #asString).
 	self addClassType: (JVMArrayType elementType: JVMDefinedObjectType object)
 !
 (reader addMethod: 'initialize-release')

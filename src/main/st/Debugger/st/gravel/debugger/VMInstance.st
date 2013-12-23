@@ -47,6 +47,14 @@ initialize
 !
 (reader addMethod: 'As yet unclassified')
 !
+invokeValue
+	| methodContext |
+	methodContext := self invokeVirtual: 'value'.
+	methodContext loadReceiver: self arguments: #().
+	^methodContext
+!
+(reader addMethod: 'As yet unclassified')
+!
 invokeVirtual: methodName
 	^VMMethodContext method: (self methodAt: methodName)
 !

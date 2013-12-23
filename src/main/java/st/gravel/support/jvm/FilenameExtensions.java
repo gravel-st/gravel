@@ -19,4 +19,9 @@ public class FilenameExtensions {
 				.toString();
 	}
 
+	public static String contentsFrom_to_(File asFile, int start, int stop) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

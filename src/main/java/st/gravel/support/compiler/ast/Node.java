@@ -136,6 +136,13 @@ abstract public class Node extends Object implements Cloneable {
 		return factory;
 	}
 
+	public String getDiskSource() {
+		if (_sourcePosition == null) {
+			return null;
+		}
+		return st.gravel.support.jvm.FilenameExtensions.contentsFrom_to_(_sourcePosition.sourceFile().asFile(), _sourcePosition.start(), _sourcePosition.stop());
+	}
+
 	public AbsoluteReference globalNamespace() {
 		return null;
 	}

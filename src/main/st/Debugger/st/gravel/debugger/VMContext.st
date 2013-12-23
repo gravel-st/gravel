@@ -2,6 +2,8 @@
 !
 (reader addInstVar: 'ip')
 !
+(reader addInstVar: 'unwindContext')
+!
 (reader addMethod: 'As yet unclassified')
 !
 incrementIP
@@ -16,4 +18,14 @@ initialize
 !
 isFrame
 	^false
+!
+(reader addMethod: 'accessing')
+!
+unwindContext
+	^unwindContext
+!
+(reader addMethod: 'accessing')
+!
+unwindContext: anObject
+	unwindContext := anObject
 !

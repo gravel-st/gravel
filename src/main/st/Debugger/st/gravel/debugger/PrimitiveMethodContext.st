@@ -25,13 +25,18 @@ answerBoolean: aValue
 !
 (reader addMethod: 'As yet unclassified')
 !
-answerInteger: anInteger
-	process answer: (process vm createInteger: anInteger)
+answerInteger: aValue
+	process answer: (process vm createInteger: aValue)
 !
 (reader addMethod: 'As yet unclassified')
 !
-answerSymbol: anInteger
-	process answer: (process vm createSymbol: anInteger)
+answerString: aValue
+	process answer: (process vm createString: aValue)
+!
+(reader addMethod: 'As yet unclassified')
+!
+answerSymbol: aValue
+	process answer: (process vm createSymbol: aValue)
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -78,13 +83,54 @@ prim_ArrayExtensions_size
 !
 (reader addMethod: 'As yet unclassified')
 !
+prim_ExceptionExtensions_ensure_
+	| methodContext newUnwindContext |
+	methodContext := arguments first invokeValue.
+	newUnwindContext := arguments second invokeValue.
+	methodContext unwindContext: newUnwindContext.
+	process pushContext: methodContext
+!
+(reader addMethod: 'As yet unclassified')
+!
+prim_ExceptionExtensions_on_do_
+	| methodContext |
+	methodContext := arguments first invokeValue.
+	process pushContext: methodContext
+!
+(reader addMethod: 'As yet unclassified')
+!
+prim_IntegerExtensions_integerDivision_
+	self answerInteger: arguments first primitiveValue // arguments second primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
 prim_IntegerExtensions_isSmallerThan_
 	self answerBoolean: arguments first primitiveValue < arguments second primitiveValue
 !
 (reader addMethod: 'As yet unclassified')
 !
+prim_IntegerExtensions_minus_
+	self answerInteger: arguments first primitiveValue - arguments second primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
 prim_IntegerExtensions_plus_
 	self answerInteger: arguments first primitiveValue + arguments second primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
+prim_Integer_equals
+	self answerBoolean: arguments first primitiveValue = arguments second primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
+prim_StringExtensions_sortsLowerThan_
+	self answerBoolean: arguments first primitiveValue < arguments second primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
+prim_Symbol_asString
+	self answerString: arguments first primitiveValue asString
 !
 (reader addMethod: 'As yet unclassified')
 !

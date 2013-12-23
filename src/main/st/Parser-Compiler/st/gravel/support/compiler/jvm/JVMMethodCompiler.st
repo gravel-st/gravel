@@ -676,8 +676,8 @@ visitMethodNode: aMethodNode {MethodNode} {^Self}
 !
 (reader addMethod: 'visiting')
 !
-visitNamespacedVariableNode: anObject {NamespacedVariableNode} {^Self}
-	self pushNull
+visitNamespacedVariableNode: aNode {NamespacedVariableNode} {^Self}
+	self emit: (DynamicGlobalRead namespace: aNode reference printString name: aNode name)
 !
 (reader addMethod: 'visiting')
 !

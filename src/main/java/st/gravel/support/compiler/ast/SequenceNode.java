@@ -12,9 +12,10 @@ import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Node.Node_Factory;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
 import st.gravel.support.compiler.ast.Statement;
+import st.gravel.support.compiler.ast.Expression;
+import st.gravel.support.compiler.ast.ReturnNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.NilLiteralNode;
-import st.gravel.support.compiler.ast.ReturnNode;
 import st.gravel.support.compiler.ast.SourcePrinter;
 import st.gravel.support.compiler.ast.SourcePosition;
 
@@ -38,6 +39,10 @@ public class SequenceNode extends Node implements Cloneable {
 			return this.temporaries_statements_(new VariableDeclarationNode[] {}, new Statement[] {});
 		}
 
+		public SequenceNode return_(final Expression _aNode) {
+			return this.statement_(ReturnNode.factory.value_(_aNode));
+		}
+
 		public SequenceNode statement_(final Statement _aNode) {
 			return this.temporaries_statements_(new VariableDeclarationNode[] {}, st.gravel.support.jvm.ArrayFactory.with_(_aNode));
 		}
@@ -49,6 +54,10 @@ public class SequenceNode extends Node implements Cloneable {
 
 	static public SequenceNode _empty(Object receiver) {
 		return factory.empty();
+	}
+
+	static public SequenceNode _return_(Object receiver, final Expression _aNode) {
+		return factory.return_(_aNode);
 	}
 
 	static public SequenceNode _statement_(Object receiver, final Statement _aNode) {

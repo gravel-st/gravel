@@ -48,6 +48,11 @@ pvtSetArgumentTypes: anArray {Arr[JVMType]} {^Self}
 pvtSetReceiverType: aJVMObjectType {JVMType} {^Self}
 	receiverType := aJVMObjectType
 !
+(reader addMethod: 'printing')
+!
+sourceOn: aStream {WStream[Char]} {^Self}
+	aStream nextPutAll: functionName
+!
 (reader addMethod: 'As yet unclassified')
 !
 type {^JVMType}

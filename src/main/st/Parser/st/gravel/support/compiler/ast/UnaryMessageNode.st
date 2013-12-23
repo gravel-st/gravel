@@ -57,3 +57,9 @@ withArguments: anArray {Arr[Expression]} {^Self}
 instVarTypes {^[Expression, String]}
 	^#('receiver' 'selector')
 !
+(reader addClassMethod: 'pegon')
+!
+receiver: aNode {Expression} selector: aString {String} arguments: anArray {Arr[Expression]} {^Instance}
+	self assert: anArray isEmpty.
+	^self receiver: aNode selector: aString
+!

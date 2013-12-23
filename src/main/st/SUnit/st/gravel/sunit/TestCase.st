@@ -231,3 +231,8 @@ sunitVersion
 testSelectors
 	^self sunitSelectors select: [:each | 'test*' sunitMatch: each]
 !
+(reader addClassMethod: 'accessing')
+!
+toolListIcon
+	^Tools.ListIconLibrary visualFor: #applied
+!

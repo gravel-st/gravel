@@ -43,6 +43,13 @@ allNodesDo: aBlock {[Node, ^Object]} pruneWhere: pruneBlock {[Node, ^Bool]} {^Se
 comment {^Arr[Str] | Nil}
 	^#()
 !
+(reader addMethod: 'printing')
+!
+getDiskSource {^Str | Nil}
+	sourcePosition isNil ifTrue: [^nil].
+	^sourcePosition sourceFile asFile contentsFrom: sourcePosition start
+		to: sourcePosition stop
+!
 (reader addMethod: 'testing')
 !
 globalNamespace {^AbsoluteReference}
@@ -190,6 +197,11 @@ isSelfTypeNode {^Bool}
 !
 isSequenceNode {^Bool}
 	^false
+!
+(reader addMethod: 'testing')
+!
+isSPNode
+	^true
 !
 (reader addMethod: 'testing')
 !

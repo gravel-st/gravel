@@ -58,9 +58,7 @@ localAt: anInteger put: anUndefinedObject
 (reader addMethod: 'As yet unclassified')
 !
 log: aBlock
-	Transcript
-		cr;
-		show: aBlock value
+	
 !
 (reader addMethod: 'accessing')
 !
@@ -79,8 +77,10 @@ pop
 !
 printOn: aStream
 	super printOn: aStream.
-	aStream nextPut: $[.
-	aStream nextPut: $]
+	aStream
+		nextPut: $[;
+		nextPutAll: method printString;
+		nextPut: $]
 !
 (reader addMethod: 'As yet unclassified')
 !
