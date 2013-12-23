@@ -1,7 +1,7 @@
 Gravel
 ======
 
-Gravel is a Smalltalk implementation for the JVM. For more information ask around in the [gravel-st google group](https://groups.google.com/forum/#!forum/gravel-st).
+Gravel is a Smalltalk implementation for the JVM. For more information ask around in the [gravel-st google group](https://groups.google.com/forum/#!forum/gravel-st) or see the [wiki](https://github.com/gravel-st/gravel/wiki).
 
 Getting started
 ===============
