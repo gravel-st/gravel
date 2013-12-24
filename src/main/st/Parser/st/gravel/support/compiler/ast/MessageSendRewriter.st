@@ -19,7 +19,11 @@ visitBinaryMessageNode: anObject {BinaryMessageNode} {^Statement}
 	| selector {Sym} res {[MessageNode, ^Statement] | Nil} |
 	selector := anObject selector asSymbol.
 	res := specialSelectors at: selector ifAbsent: [].
-	res isNil ifFalse: [^res value: anObject].
+	res isNil
+		ifFalse: 
+			[| trans {Statement} |
+			trans := res value: anObject.
+			trans isNil ifFalse: [^trans]].
 	^super visitBinaryMessageNode: anObject
 !
 (reader addMethod: 'visiting')
@@ -37,7 +41,11 @@ visitKeywordMessageNode: anObject {KeywordMessageNode} {^Statement}
 	| selector {Sym} res {[MessageNode, ^Statement] | Nil} |
 	selector := anObject selector asSymbol.
 	res := specialSelectors at: selector ifAbsent: [].
-	res isNil ifFalse: [^res value: anObject].
+	res isNil
+		ifFalse: 
+			[| trans {Statement} |
+			trans := res value: anObject.
+			trans isNil ifFalse: [^trans]].
 	^super visitKeywordMessageNode: anObject
 !
 (reader addMethod: 'visiting')
@@ -46,7 +54,11 @@ visitUnaryMessageNode: anObject {UnaryMessageNode} {^Statement}
 	| selector {Sym} res {[MessageNode, ^Statement] | Nil} |
 	selector := anObject selector asSymbol.
 	res := specialSelectors at: selector ifAbsent: [].
-	res isNil ifFalse: [^res value: anObject].
+	res isNil
+		ifFalse: 
+			[| trans {Statement} |
+			trans := res value: anObject.
+			trans isNil ifFalse: [^trans]].
 	^super visitUnaryMessageNode: anObject
 !
 (reader addClassMethod: 'pegon')

@@ -1,6 +1,15 @@
-(reader defineClass: 'Dictionary' superclass: 'st.gravel.lang.CollectionImpl')
+(reader defineClass: 'JavaHashMap' superclass: 'st.gravel.lang.collections.impl.JavaCollection')
+!
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Dictionary')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Dictionary class')
 !
 (reader propertyAt: 'javaClass' put: 'java.util.HashMap')
+!
+(reader addMethod: 'converting')
+!
+asJavaMap
+	^self
 !
 (reader addMethod: 'gravel')
 !
@@ -53,4 +62,9 @@ keysAndValuesDo: aBlock
 size
 	<primitive: 'size'>
 	
+!
+(reader addClassMethod: 'instance creation')
+!
+new: anInteger
+	^self basicNew
 !

@@ -1,10 +1,21 @@
-(reader defineClass: 'Interval' superclass: 'st.gravel.lang.CollectionImpl')
+(reader defineClass: 'IntervalImpl' superclass: 'st.gravel.lang.Object')
+!
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Interval')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Interval class')
 !
 (reader addInstVar: 'start')
 !
 (reader addInstVar: 'stop')
 !
 (reader addInstVar: 'step')
+!
+(reader addMethod: 'accessing')
+!
+at: anInteger
+	(anInteger >= 1 and: [anInteger <= self size])
+		ifTrue: [^start + (step * (anInteger - 1))]
+		ifFalse: [self errorSubscriptBounds: anInteger]
 !
 (reader addMethod: 'gravel')
 !
@@ -37,7 +48,7 @@ size
 (reader addMethod: 'gravel')
 !
 species
-	^OrderedCollection
+	^Array
 !
 (reader addMethod: 'gravel')
 !
@@ -61,6 +72,6 @@ from: start to: stop
 !
 (reader addClassMethod: 'gravel')
 !
-from: anInteger to: anInteger2 by: anInteger3
-	^self new initializeFrom: anInteger to: anInteger2 by: anInteger3
+from: start to: stop by: step
+	^self new initializeFrom: start to: stop by: step
 !

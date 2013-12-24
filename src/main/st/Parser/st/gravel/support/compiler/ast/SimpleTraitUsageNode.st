@@ -18,6 +18,13 @@ allMethodsIn: aSystemNode {SystemNode} do: aBlock {[MethodNode, ^Object]} {^Self
 !
 (reader addMethod: 'As yet unclassified')
 !
+canUnderstand: selector {Str} in: aSystemNode {SystemNode} {^Bool}
+	| trait {ClassDescriptionNode} |
+	trait := aSystemNode classNodeAt: reference.
+	^trait canUnderstand: selector in: aSystemNode
+!
+(reader addMethod: 'As yet unclassified')
+!
 components {^Arr[SimpleTraitUsageNode]}
 	^Array with: self
 !

@@ -96,6 +96,12 @@ public class SimpleTraitUsageNode extends TraitUsageNode implements Cloneable {
 		return this;
 	}
 
+	public boolean canUnderstand_in_(final String _selector, final SystemNode _aSystemNode) {
+		final ClassDescriptionNode _trait;
+		_trait = _aSystemNode.classNodeAt_(_reference);
+		return _trait.canUnderstand_in_(_selector, _aSystemNode);
+	}
+
 	@Override
 	public SimpleTraitUsageNode[] components() {
 		return st.gravel.support.jvm.ArrayFactory.with_(this);

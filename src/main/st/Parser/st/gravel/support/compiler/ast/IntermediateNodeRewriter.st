@@ -71,8 +71,11 @@ nilReturningBlockNode {^BlockNode}
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: receiver {Node} and: blockNode {BlockNode} {^BooleanAndNode}
-	^BooleanAndNode left: (self visit: receiver) right: (self visit: blockNode body)
+produce: receiver {Node} and: testExpr {Expression} {^BooleanAndNode}
+	| testBlockNode {BlockNode} |
+	testExpr isBlockNode ifFalse: [^nil].
+	testBlockNode := testExpr.
+	^BooleanAndNode left: (self visit: receiver) right: (self visit: testBlockNode body)
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -94,7 +97,7 @@ produce: receiver {Node} identityEquals: anObject {Node} {^IdentityComparisonNod
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: receiver {Node} ifFalse: aBlockNode {BlockNode} {^IfTrueIfFalseNode}
+produce: receiver {Node} ifFalse: aBlockNode {Expression} {^IfTrueIfFalseNode}
 	^self
 		produce: receiver
 		ifTrue: self nilReturningBlockNode
@@ -102,7 +105,7 @@ produce: receiver {Node} ifFalse: aBlockNode {BlockNode} {^IfTrueIfFalseNode}
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: receiver {Node} ifTrue: aBlockNode {BlockNode} {^IfTrueIfFalseNode}
+produce: receiver {Node} ifTrue: aBlockNode {Expression} {^IfTrueIfFalseNode}
 	^self
 		produce: receiver
 		ifTrue: aBlockNode
@@ -110,7 +113,12 @@ produce: receiver {Node} ifTrue: aBlockNode {BlockNode} {^IfTrueIfFalseNode}
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: receiver {Node} ifTrue: trueBlockNode {BlockNode} ifFalse: falseBlockNode {BlockNode} {^IfTrueIfFalseNode}
+produce: receiver {Node} ifTrue: trueExpr {Expression} ifFalse: falseExpr {Expression} {^IfTrueIfFalseNode}
+	| trueBlockNode {BlockNode} falseBlockNode {BlockNode} |
+	trueExpr isBlockNode ifFalse: [^nil].
+	falseExpr isBlockNode ifFalse: [^nil].
+	trueBlockNode := trueExpr.
+	falseBlockNode := falseExpr.
 	^IfTrueIfFalseNode
 		test: (self visit: receiver)
 		trueSequence: (self visit: trueBlockNode body)
@@ -119,12 +127,18 @@ produce: receiver {Node} ifTrue: trueBlockNode {BlockNode} ifFalse: falseBlockNo
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: receiver {Node} or: blockNode {BlockNode} {^BooleanOrNode}
-	^BooleanOrNode left: (self visit: receiver) right: (self visit: blockNode body)
+produce: receiver {Node} or: testExpr {Expression} {^BooleanOrNode}
+	| testBlockNode {BlockNode} |
+	testExpr isBlockNode ifFalse: [^nil].
+	testBlockNode := testExpr.
+	^BooleanOrNode left: (self visit: receiver) right: (self visit: testBlockNode body)
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: start {Expression} to: stop {Expression} by: step {Expression} do: loopBlockNode {BlockNode} {^ToDoNode}
+produce: start {Expression} to: stop {Expression} by: step {Expression} do: loopExpr {Expression} {^ToDoNode}
+	| loopBlockNode {BlockNode} |
+	loopExpr isBlockNode ifFalse: [^nil].
+	loopBlockNode := loopExpr.
 	^ToDoNode
 		start: (self visit: start)
 		stop: (self visit: stop)
@@ -134,7 +148,10 @@ produce: start {Expression} to: stop {Expression} by: step {Expression} do: loop
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: start {Expression} to: stop {Expression} do: loopBlockNode {BlockNode} {^ToDoNode}
+produce: start {Expression} to: stop {Expression} do: loopExpr {Expression} {^ToDoNode}
+	| loopBlockNode {BlockNode} |
+	loopExpr isBlockNode ifFalse: [^nil].
+	loopBlockNode := loopExpr.
 	^ToDoNode
 		start: (self visit: start)
 		stop: (self visit: stop)
@@ -144,13 +161,23 @@ produce: start {Expression} to: stop {Expression} do: loopBlockNode {BlockNode} 
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: testBlockNode {BlockNode} whileFalse: loopBlockNode {BlockNode} {^WhileFalseNode}
+produce: testExpr {Expression} whileFalse: loopExpr {Expression} {^WhileFalseNode}
+	| testBlockNode {BlockNode} loopBlockNode {BlockNode} |
+	testExpr isBlockNode ifFalse: [^nil].
+	loopExpr isBlockNode ifFalse: [^nil].
+	testBlockNode := testExpr.
+	loopBlockNode := loopExpr.
 	^WhileFalseNode testSequence: (self visit: testBlockNode body)
 		doSequence: (self visit: loopBlockNode body)
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce: testBlockNode {BlockNode} whileTrue: loopBlockNode {BlockNode} {^WhileTrueNode}
+produce: testExpr {Expression} whileTrue: loopExpr {Expression} {^WhileTrueNode}
+	| testBlockNode {BlockNode} loopBlockNode {BlockNode} |
+	testExpr isBlockNode ifFalse: [^nil].
+	loopExpr isBlockNode ifFalse: [^nil].
+	testBlockNode := testExpr.
+	loopBlockNode := loopExpr.
 	^WhileTrueNode testSequence: (self visit: testBlockNode body)
 		doSequence: (self visit: loopBlockNode body)
 !
@@ -166,11 +193,17 @@ produce_isNil: expression {Expression} {^IsNilNode}
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce_whileFalse: testBlockNode {BlockNode} {^WhileFalseNode}
+produce_whileFalse: testExpr {Expression} {^WhileFalseNode}
+	| testBlockNode {BlockNode} |
+	testExpr isBlockNode ifFalse: [^nil].
+	testBlockNode := testExpr.
 	^WhileFalseNode testSequence: (self visit: testBlockNode body) doSequence: nil
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce_whileTrue: testBlockNode {BlockNode} {^WhileTrueNode}
+produce_whileTrue: testExpr {Expression} {^WhileTrueNode}
+	| testBlockNode {BlockNode} |
+	testExpr isBlockNode ifFalse: [^nil].
+	testBlockNode := testExpr.
 	^WhileTrueNode testSequence: (self visit: testBlockNode body) doSequence: nil
 !

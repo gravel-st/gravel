@@ -21,6 +21,11 @@ addLast: anObject
 	self java_add: anObject.
 	^anObject
 !
+(reader addMethod: 'converting')
+!
+asJavaArrayList
+	^self
+!
 (reader addMethod: '')
 !
 at: index

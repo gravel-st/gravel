@@ -1,4 +1,4 @@
-(reader defineClass: 'ExecuteTest' superclass: 'st.gravel.lang.Object')
+(reader defineClass: 'ExecuteTest' superclass: 'st.gravel.support.compiler.jvm.SimulatedInstruction')
 !
 (reader addInstVar: 'test')
 !

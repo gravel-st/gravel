@@ -383,6 +383,11 @@ resolveSingletonHolder: reference {AbsoluteReference} ifAbsent: aBlock {[^Almost
 	^self namespacedSingletonHolderAtReference: reference
 		ifAbsent: [self classSharedSingletonHolderAtReference: reference ifAbsent: aBlock]
 !
+(reader addMethod: 'accessing')
+!
+selectorConverter {^SelectorConverter}
+	^selectorConverter
+!
 (reader addMethod: 'As yet unclassified')
 !
 setNamespaceNodes: aDictionary {Dict[Reference, NamespaceNode]} {^Self}

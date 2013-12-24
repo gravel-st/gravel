@@ -1,4 +1,4 @@
-(reader defineClass: 'PrimitiveValue' superclass: 'st.gravel.lang.Object')
+(reader defineClass: 'PrimitiveValue' superclass: 'st.gravel.debugger.VMStackValue')
 !
 (reader addInstVar: 'value')
 !

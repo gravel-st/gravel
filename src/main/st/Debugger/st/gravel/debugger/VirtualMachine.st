@@ -39,9 +39,10 @@ classForType: aType
 		ifAbsent: 
 			[self jvmClassForType: aType
 				ifAbsent: 
-					[('Lst/gravel/support/jvm/*Extensions;' match: aType printString)
-						ifTrue: [SimulatedPrimitives type: aType]
-						ifFalse: [self halt]]]
+					[(('Lst/gravel/support/jvm/*;' match: aType printString)
+						and: [(aType printString tokensBasedOn: $/) size = 5])
+							ifTrue: [SimulatedPrimitives type: aType]
+							ifFalse: [self halt]]]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -69,8 +70,24 @@ createBoolean: primitiveValue
 !
 (reader addMethod: 'As yet unclassified')
 !
+createByteArrayInstance: primitiveValue
+	^(self createInstance: (JVMArrayType elementType: JVMByteType new))
+		primitiveValue: primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
+createCharacter: primitiveValue
+	^(self createInstance: JVMDefinedObjectType character) primitiveValue: primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
 createInstance: aType
 	^VMInstance vm: self subjectClass: (self classForType: aType)
+!
+(reader addMethod: 'As yet unclassified')
+!
+createInstance: type primitiveValue: aValue
+	^(self createInstance: type) primitiveValue: aValue
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -119,6 +136,13 @@ initialize
 	self addClassType: JVMDefinedObjectType objectClass.
 	self addClassType: JVMDefinedObjectType runtimeException.
 	self addClassType: JVMDefinedObjectType string.
+	self addClassType: JVMDefinedObjectType hashMap.
+	self addClassType: JVMDefinedObjectType charBuffer.
+	self addClassType: JVMDefinedObjectType character.
+	self
+		addClassType: JVMDefinedObjectType stringBuilder
+		virtuals: #('<init>')
+		statics: #('equals' 'toString').
 	0 to: 3 do: [:i | self addClassType: (JVMDefinedObjectType block: i)].
 	self
 		addClassType: JVMDefinedObjectType symbol
@@ -149,6 +173,11 @@ printOn: aStream
 	super printOn: aStream.
 	aStream nextPut: $[.
 	aStream nextPut: $]
+!
+(reader addMethod: 'As yet unclassified')
+!
+selectorConverter
+	^systemMapping selectorConverter
 !
 (reader addMethod: 'accessing')
 !

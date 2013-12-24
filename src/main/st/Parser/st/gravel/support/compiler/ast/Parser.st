@@ -464,12 +464,10 @@ parseNumber {^NumberLiteralNode}
 		ifFalse: 
 			[(stream peekFor: $s)
 				ifTrue: 
-					[| scale {LargeInteger} |
-					scale := self readInteger: 10.
-					^FixedPointLiteralNode
-						integer: value
-						fractionString: (fractionString ifNil: [''])
-						scale: scale]].
+					[| scale {Int} |
+					scale := (self readInteger: 10) asSmallInteger.
+					fractionString isNil ifTrue: [fractionString := ''].
+					^FixedPointLiteralNode integer: value fractionString: fractionString scale: scale]].
 	^fractionString isNil
 		ifTrue: [IntegerLiteralNode integer: value]
 		ifFalse: [FloatLiteralNode integer: value fractionString: fractionString exponent: nil]

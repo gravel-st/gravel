@@ -61,6 +61,11 @@ bitXor: anObject
 compressed
 	^self
 !
+(reader addMethod: 'comparing')
+!
+hash
+	^self
+!
 (reader addMethod: '')
 !
 printBase: base
@@ -95,4 +100,10 @@ timesRepeat: aBlock
 !
 toMinimumGenerality
 	^self
+!
+(reader addMethod: '')
+!
+\\ anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerRemainder_')>
+	
 !

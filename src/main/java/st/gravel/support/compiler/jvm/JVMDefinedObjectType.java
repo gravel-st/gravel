@@ -44,12 +44,24 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return JVMDefinedObjectType.factory.className_("st/gravel/support/jvm/Block" + "" + _anInteger);
 		}
 
+		public JVMDefinedObjectType character() {
+			return this.className_("java/lang/Character");
+		}
+
+		public JVMDefinedObjectType charBuffer() {
+			return this.className_("java/nio/CharBuffer");
+		}
+
 		public JVMDefinedObjectType className_(final String _aString) {
 			return this.path_(st.gravel.support.jvm.StringExtensions.tokensBasedOn_(_aString, '/'));
 		}
 
 		public JVMDefinedObjectType dottedClassName_(final String _aString) {
 			return this.path_(st.gravel.support.jvm.StringExtensions.tokensBasedOn_(_aString, '.'));
+		}
+
+		public JVMDefinedObjectType hashMap() {
+			return this.className_("java/util/HashMap");
 		}
 
 		public JVMDefinedObjectType integer() {
@@ -84,6 +96,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return this.className_("java/lang/String");
 		}
 
+		public JVMDefinedObjectType stringBuilder() {
+			return this.className_("java/lang/StringBuilder");
+		}
+
 		public JVMDefinedObjectType symbol() {
 			return this.className_("st/gravel/core/Symbol");
 		}
@@ -101,12 +117,24 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 		return factory.block_(_anInteger);
 	}
 
+	static public JVMDefinedObjectType _character(Object receiver) {
+		return factory.character();
+	}
+
+	static public JVMDefinedObjectType _charBuffer(Object receiver) {
+		return factory.charBuffer();
+	}
+
 	static public JVMDefinedObjectType _className_(Object receiver, final String _aString) {
 		return factory.className_(_aString);
 	}
 
 	static public JVMDefinedObjectType _dottedClassName_(Object receiver, final String _aString) {
 		return factory.dottedClassName_(_aString);
+	}
+
+	static public JVMDefinedObjectType _hashMap(Object receiver) {
+		return factory.hashMap();
 	}
 
 	static public JVMDefinedObjectType _integer(Object receiver) {
@@ -139,6 +167,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 
 	static public JVMDefinedObjectType _string(Object receiver) {
 		return factory.string();
+	}
+
+	static public JVMDefinedObjectType _stringBuilder(Object receiver) {
+		return factory.stringBuilder();
 	}
 
 	static public JVMDefinedObjectType _symbol(Object receiver) {

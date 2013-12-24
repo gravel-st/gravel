@@ -1,8 +1,18 @@
-(reader defineClass: 'VMAbstractInstance' superclass: 'st.gravel.lang.Object')
+(reader defineClass: 'VMAbstractInstance' superclass: 'st.gravel.debugger.VMStackValue')
 !
 (reader addInstVar: 'vm')
 !
 (reader addInstVar: 'subjectClass')
+!
+(reader addMethod: 'comparing')
+!
+= anObject
+	^self class = anObject class and: [self contentsEquals: anObject]
+!
+(reader addMethod: 'comparing')
+!
+hash
+	^self class hash + self contentsHash
 !
 (reader addMethod: 'initialize-release')
 !

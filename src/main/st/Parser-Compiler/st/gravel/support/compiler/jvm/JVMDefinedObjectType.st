@@ -118,6 +118,16 @@ block: anInteger {Int} {^JVMDefinedObjectType}
 boolean {^JVMDefinedObjectType}
 	^self className: 'java/lang/Boolean'
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+character {^JVMDefinedObjectType}
+	^self className: 'java/lang/Character'
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+charBuffer {^JVMDefinedObjectType}
+	^self className: 'java/nio/CharBuffer'
+!
 (reader addClassMethod: 'instance creation')
 !
 className: aString {Str} {^JVMDefinedObjectType}
@@ -127,6 +137,11 @@ className: aString {Str} {^JVMDefinedObjectType}
 !
 dottedClassName: aString {Str} {^JVMDefinedObjectType}
 	^self path: (aString tokensBasedOn: $.)
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+hashMap {^JVMDefinedObjectType}
+	^self className: 'java/util/HashMap'
 !
 (reader addClassMethod: 'pegon')
 !
@@ -167,6 +182,11 @@ runtimeException {^JVMDefinedObjectType}
 !
 string {^JVMDefinedObjectType}
 	^self className: 'java/lang/String'
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+stringBuilder {^JVMDefinedObjectType}
+	^self className: 'java/lang/StringBuilder'
 !
 (reader addClassMethod: 'As yet unclassified')
 !

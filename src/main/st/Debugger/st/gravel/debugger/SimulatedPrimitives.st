@@ -2,11 +2,6 @@
 !
 (reader addInstVar: 'type')
 !
-(reader addMethod: 'visitor')
-!
-accept: visitor
-	^visitor visitSimulatedPrimitives: self
-!
 (reader addMethod: 'initialize-release')
 !
 initializeType: aJVMDefinedObjectType
@@ -27,13 +22,6 @@ isSimulatedPrimitives
 !
 methodNamed: aString ifAbsent: aBlock
 	^aBlock value
-!
-(reader addMethod: 'accessing')
-!
-printOn: aStream
-	super printOn: aStream.
-	aStream nextPut: $[.
-	aStream nextPut: $]
 !
 (reader addMethod: 'As yet unclassified')
 !

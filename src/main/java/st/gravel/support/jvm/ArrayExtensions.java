@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import st.gravel.support.compiler.ast.SimpleTraitUsageNode;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class ArrayExtensions {
@@ -315,6 +316,18 @@ public class ArrayExtensions {
 
 	public static <E> E zeroAt_put_(E[] receiver, int index, E value) {
 		return receiver[index] = value;
+	}
+
+	public static <E> String join_with_(E[] receiver, Block1<String, E> block,
+			String sepString) {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < receiver.length; i++) {
+			if (i != 0)
+				str.append(sepString);
+			E element = receiver[i];
+			str.append(block.value_(element));
+		}
+		return str.toString();
 	}
 
 }

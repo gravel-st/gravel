@@ -79,7 +79,7 @@ public class CollectionsTest {
 						"	coll add: 1." +
 						"	coll add: 'Fromage'." +
 						"	coll add: 2." +
-						"	^JavaArrayList withAll: coll")
+						"	^coll asJavaList")
 				.build();
 
 		Object fooObject = stClass.newInstance();
@@ -100,7 +100,7 @@ public class CollectionsTest {
 						"	coll add: 'Fromage'." +
 						"	coll add: 2."
 						+ "	coll removeFirst." +
-						"	^JavaArrayList withAll: coll")
+						"	^coll asJavaList")
 				.build();
 
 		Object fooObject = stClass.newInstance();
@@ -120,7 +120,7 @@ public class CollectionsTest {
 						"	set add: 1." +
 						"	set add: 'Fromage'." +
 						"	set add: 2." +
-						"	^set")
+						"	^set asJavaSet")
 				.build();
 
 		Object fooObject = stClass.newInstance();
@@ -140,7 +140,7 @@ public class CollectionsTest {
 						"	set add: 1." +
 						"	set add: 2." +
 						"	set add: 3." +
-						"	^set collect: [:each | each * each]")
+						"	^(set collect: [:each | each * each]) asJavaSet")
 				.build();
 
 		Object fooObject = stClass.newInstance();

@@ -67,3 +67,9 @@ rem: aNumber
 toMinimumGenerality
 	^self compressed
 !
+(reader addMethod: '')
+!
+\\ anObject
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'integerRemainder_')>
+	
+!

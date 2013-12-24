@@ -22,7 +22,7 @@ public class TraitTest {
 			IllegalArgumentException, InvocationTargetException,
 			InstantiationException {
 		
-		Object setClass = ImageBootstrapper.systemMapping.singletonAtReferenceString_("st.gravel.lang.Set");
+		Object setClass = ImageBootstrapper.systemMapping.singletonAtReferenceString_("st.gravel.lang.collections.interface.Set");
 		Object set = MethodTools.safePerform(setClass, "with:", 1);
 		//#notEmpty is a method from a trait
 		Object bool = MethodTools.safePerform(set, "notEmpty");

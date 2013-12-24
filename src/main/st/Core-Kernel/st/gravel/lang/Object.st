@@ -2,9 +2,10 @@
 !
 (reader propertyAt: 'javaClass' put: 'java.lang.Object')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'comparing')
 !
 = anObject
+	<squeak>
 	^self == anObject
 !
 (reader addMethod: '')
@@ -13,7 +14,14 @@
 	<primitive: #('st.gravel.support.jvm.ObjectExtensions' 'identityEquals_')>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'class membership')
+!
+class
+	<primitive: #('org.gravel.support.jvm.ObjectExtensions' 'r_class')>
+	<squeak>
+	self primitiveFailed
+!
+(reader addMethod: 'copying')
 !
 copy
 	^self shallowCopy postCopy
@@ -29,10 +37,21 @@ doesNotUnderstand: aMessage
 doesNotUnderstand: aSelector arguments: arguments
 	^self doesNotUnderstand: (Message selector: aSelector arguments: arguments)
 !
+(reader addMethod: 'error handling')
+!
+error: aString
+	^Error new signal: aString
+!
 (reader addMethod: 'gravel')
 !
 halt
 	HaltInterrupt raiseSignal: 'Halt encountered.'
+!
+(reader addMethod: 'comparing')
+!
+hash
+	<primitive: 'hashCode'>
+	
 !
 (reader addMethod: 'gravel')
 !
@@ -70,6 +89,16 @@ ifNotNil: notNilBlock ifNil: nilBlock
 !
 initialize
 	
+!
+(reader addMethod: 'class membership')
+!
+isKindOf: aClass
+	^self class == aClass or: [self class inheritsFrom: aClass]
+!
+(reader addMethod: 'class membership')
+!
+isMemberOf: aClass
+	^self class == aClass
 !
 (reader addMethod: 'gravel')
 !
@@ -121,7 +150,7 @@ perform: selector withArguments: anArray
 	<primitive: #('st.gravel.support.jvm.ObjectExtensions' 'perform_withArguments_')>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'copying')
 !
 postCopy
 	
@@ -147,11 +176,16 @@ printString
 release
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'copying')
 !
 shallowCopy
 	<primitive: #('st.gravel.support.jvm.ObjectExtensions' 'shallowCopy')>
 	
+!
+(reader addMethod: 'error handling')
+!
+subclassResponsibility
+	^self error: 'My subclass should have overridden this message'
 !
 (reader addMethod: 'gravel')
 !

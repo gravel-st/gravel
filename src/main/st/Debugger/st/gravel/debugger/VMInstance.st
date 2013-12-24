@@ -21,8 +21,20 @@ arrayAt: anInteger put: aVMInstance
 !
 (reader addMethod: 'As yet unclassified')
 !
+contentsEquals: aVMInstance
+	primitiveValue isNil ifFalse: [^primitiveValue = aVMInstance primitiveValue].
+	self halt
+!
+(reader addMethod: 'As yet unclassified')
+!
+contentsHash
+	primitiveValue isNil ifFalse: [^primitiveValue hash].
+	self halt
+!
+(reader addMethod: 'As yet unclassified')
+!
 dynamicInstVarAt: aString
-	^instValues at: aString
+	^instValues at: aString ifAbsent: [nil]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -60,6 +72,12 @@ invokeVirtual: methodName
 !
 (reader addMethod: 'As yet unclassified')
 !
+primitiveDictionary
+	primitiveValue isNil ifTrue: [primitiveValue := Dictionary new].
+	^primitiveValue
+!
+(reader addMethod: 'As yet unclassified')
+!
 primitiveValue
 	^primitiveValue
 !
@@ -78,7 +96,17 @@ printOn: aStream
 			[aStream
 				nextPutAll: 'primitiveValue: ';
 				print: primitiveValue].
+	subjectClass isNil
+		ifFalse: 
+			[aStream
+				nextPutAll: ' ';
+				print: subjectClass].
 	aStream nextPut: $]
+!
+(reader addClassMethod: 'pegon')
+!
+instVarTypes {^[Obj, Unknown]}
+	^#('primitiveValue' 'instValues')
 !
 (reader addClassMethod: 'instance creation')
 !

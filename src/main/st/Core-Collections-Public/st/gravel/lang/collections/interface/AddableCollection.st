@@ -1,5 +1,9 @@
 (reader defineTrait: 'AddableCollection' superclass: nil)
 !
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
+!
 (reader addMethod: 'As yet unclassified')
 !
 add: anElement

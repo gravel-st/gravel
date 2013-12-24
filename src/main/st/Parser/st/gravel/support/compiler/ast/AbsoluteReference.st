@@ -73,6 +73,11 @@ printOn: aStream {WStream[Char]} {^Self}
 instVarTypes {^[Arr[Sym]]}
 	^#('path')
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+object {^AbsoluteReference}
+	^self path: #(#st #gravel #lang #Object)
+!
 (reader addClassMethod: 'instance creation')
 !
 path: anArray {Arr[Sym]} {^Instance}

@@ -8,17 +8,6 @@
 !
 (reader addMethod: 'gravel')
 !
-anySatisfy: aBlock
-	1 to: self size do: [:i | (aBlock value: (self at: i)) ifTrue: [^true]].
-	^false
-!
-(reader addMethod: 'gravel')
-!
-asArray
-	^self
-!
-(reader addMethod: 'gravel')
-!
 at: index
 	^self basicAt: index
 !
@@ -26,14 +15,6 @@ at: index
 !
 at: index put: anObject
 	^self basicAt: index put: anObject
-!
-(reader addMethod: 'gravel')
-!
-collect: aBlock
-	| newColl |
-	newColl := Array new: self size.
-	1 to: self size do: [:i | newColl at: i put: (aBlock value: (self at: i))].
-	^newColl
 !
 (reader addMethod: 'gravel')
 !
@@ -67,11 +48,6 @@ replaceFrom: start to: stop with: replacement startingAt: repStart
 size
 	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'size')>
 	
-!
-(reader addMethod: 'gravel')
-!
-species
-	^OrderedCollection
 !
 (reader addMethod: '')
 !

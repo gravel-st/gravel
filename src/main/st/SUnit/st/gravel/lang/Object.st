@@ -1,6 +1,6 @@
 (reader extendClass: 'Object')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'error handling')
 !
 assert: predicate {Boolean}
 	predicate ifFalse: [self error: 'Assertion failed']

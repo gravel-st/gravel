@@ -595,6 +595,10 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		})));
 	}
 
+	public SelectorConverter selectorConverter() {
+		return _selectorConverter;
+	}
+
 	public SystemMapping setNamespaceNodes_(final Map<Reference, NamespaceNode> _aDictionary) {
 		final Map<Reference, NamespaceNode>[] _dict;
 		_dict = new Map[1];

@@ -15,11 +15,14 @@ import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.SystemNode;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
-import java.util.Set;
+import java.util.Map;
 import java.util.List;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.ArrayList;
 import st.gravel.support.compiler.ast.SequenceNode;
+import st.gravel.support.compiler.ast.GlobalReadNode;
+import st.gravel.support.compiler.ast.AbsoluteReference;
+import st.gravel.support.compiler.ast.StringLiteralNode;
 import st.gravel.support.compiler.ast.SelfNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Reference;
@@ -94,6 +97,20 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 		return _components;
 	}
 
+	public SimpleTraitUsageNode[] componentsDefining_in_(final String _selector, final SystemNode _aSystemNode) {
+		return st.gravel.support.jvm.ArrayExtensions.select_(_components, new st.gravel.support.jvm.Predicate1<SimpleTraitUsageNode>() {
+
+			@Override
+			public boolean value_(final SimpleTraitUsageNode _each) {
+				return _each.canUnderstand_in_(_selector, _aSystemNode);
+			}
+		});
+	}
+
+	public boolean conflicts_with_(final MethodNode _other, final MethodNode _method) {
+		return !st.gravel.support.jvm.StringExtensions.equals_(_other.sourceString(), _method.sourceString());
+	}
+
 	public CompositeTraitUsageNode copy() {
 		try {
 			CompositeTraitUsageNode _temp1 = (CompositeTraitUsageNode) this.clone();
@@ -111,13 +128,13 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 	@Override
 	public ClassDescriptionNode flattenClassDescriptionNode_in_(final ClassDescriptionNode _aClassDescriptionNode, final SystemNode _aSystemNode) {
 		final ClassDescriptionNode[] _n;
-		final java.util.Set<String>[] _definedInOtherTraits;
+		final Map<String, MethodNode>[] _definitionInOtherTraits;
 		final List<MethodNode>[] _requirements;
 		_n = new ClassDescriptionNode[1];
-		_definedInOtherTraits = new java.util.Set[1];
+		_definitionInOtherTraits = new Map[1];
 		_requirements = new List[1];
 		_n[0] = _aClassDescriptionNode;
-		_definedInOtherTraits[0] = new java.util.HashSet();
+		_definitionInOtherTraits[0] = new java.util.HashMap<String, MethodNode>();
 		_requirements[0] = new java.util.ArrayList();
 		for (final SimpleTraitUsageNode _component : _components) {
 			_component.allMethodsIn_do_(_aSystemNode, new st.gravel.support.jvm.Block1<Object, MethodNode>() {
@@ -125,27 +142,34 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 				@Override
 				public Object value_(final MethodNode _method) {
 					final boolean _canUnderstand;
-					_canUnderstand = _aClassDescriptionNode.canUnderstand_in_(_method.selector(), _aSystemNode);
+					final String _selector;
+					_selector = _method.selector();
+					_canUnderstand = _aClassDescriptionNode.canUnderstand_in_(_selector, _aSystemNode);
 					if (_method.isTraitRequirement()) {
 						if (!_canUnderstand) {
 							return _requirements[0].add(_method.ofTrait_(_component.reference()));
 						}
 					} else {
 						if (!_canUnderstand) {
-							if (_definedInOtherTraits[0].contains(_method.selector())) {
-								_n[0] = _n[0].withMethodNode_ofTrait_(_method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_("traitConflict"))), _component.reference());
+							final MethodNode _other;
+							MethodNode _temp1 = _definitionInOtherTraits[0].get(_selector);
+							_other = ((MethodNode) _temp1);
+							if (_other != null) {
+								if (CompositeTraitUsageNode.this.conflicts_with_(_other, _method)) {
+									_n[0] = _n[0].copyReplaceMethodNode_(_method.withBody_(SequenceNode.factory.statement_(GlobalReadNode.factory.namespace_name_(AbsoluteReference.factory.object(), "TraitConflict").send_with_("raiseSignal:", StringLiteralNode.factory.value_(CompositeTraitUsageNode.this.traitConflictStringFor_in_(_selector, _aSystemNode))))));
+								}
 							} else {
 								_n[0] = _n[0].withMethodNode_ofTrait_(_method, _component.reference());
 							}
 						}
-						return _definedInOtherTraits[0].add(_method.selector());
+						return _definitionInOtherTraits[0].put(_method.selector(), _method);
 					}
 					return CompositeTraitUsageNode.this;
 				}
 			});
 		}
 		for (final MethodNode _method : _requirements[0]) {
-			if (!_definedInOtherTraits[0].contains(_method.selector())) {
+			if (!_definitionInOtherTraits[0].containsKey(_method.selector())) {
 				_n[0] = _n[0].withMethodNode_(_method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_("traitRequirementNotDefined"))));
 			}
 		}
@@ -218,6 +242,16 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 			_each.sourceOn_(_aStream);
 		}
 		return this;
+	}
+
+	public String traitConflictStringFor_in_(final String _selector, final SystemNode _aSystemNode) {
+		return "TraitConflict: #" + _selector.toString() + " defined in: " + st.gravel.support.jvm.ArrayExtensions.join_with_(this.componentsDefining_in_(_selector, _aSystemNode), ((st.gravel.support.jvm.Block1<String, SimpleTraitUsageNode>) (new st.gravel.support.jvm.Block1<String, SimpleTraitUsageNode>() {
+
+			@Override
+			public String value_(final SimpleTraitUsageNode _each) {
+				return (String) _each.reference().toString();
+			}
+		})), ", ");
 	}
 
 	@Override

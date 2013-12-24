@@ -1,4 +1,4 @@
-(reader defineClass: 'JavaConcurrentLinkedQueue' superclass: 'st.gravel.lang.CollectionImpl')
+(reader defineClass: 'JavaConcurrentLinkedQueue' superclass: 'st.gravel.lang.collections.impl.JavaCollection')
 !
 (reader propertyAt: 'javaClass' put: 'java.util.concurrent.ConcurrentLinkedQueue')
 !

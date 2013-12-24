@@ -19,33 +19,51 @@ components {^Arr[SimpleTraitUsageNode]}
 !
 (reader addMethod: 'As yet unclassified')
 !
+componentsDefining: selector {Str} in: aSystemNode {SystemNode} {^Arr[SimpleTraitUsageNode]}
+	^components
+		select: [:each {SimpleTraitUsageNode} | each canUnderstand: selector in: aSystemNode]
+!
+(reader addMethod: 'As yet unclassified')
+!
+conflicts: other {MethodNode} with: method {MethodNode} {^Bool}
+	^(other sourceString = method sourceString) not
+!
+(reader addMethod: 'As yet unclassified')
+!
 flattenClassDescriptionNode: aClassDescriptionNode {ClassDescriptionNode} in: aSystemNode {SystemNode} {^ClassDescriptionNode}
-	| n {ClassDescriptionNode} definedInOtherTraits {Set[Str]} requirements {OrdColl[MethodNode]} |
+	| n {ClassDescriptionNode} definitionInOtherTraits {Dictionary[Str, MethodNode]} requirements {OrdColl[MethodNode]} |
 	n := aClassDescriptionNode.
-	definedInOtherTraits := Set new.
+	definitionInOtherTraits := Dictionary new.
 	requirements := OrderedCollection new.
 	components do: 
 			[:component {SimpleTraitUsageNode} |
 			component allMethodsIn: aSystemNode
 				do: 
 					[:method {MethodNode} |
-					| canUnderstand {Bool} |
-					canUnderstand := aClassDescriptionNode canUnderstand: method selector in: aSystemNode.
+					| canUnderstand {Bool} selector {Str} |
+					selector := method selector.
+					canUnderstand := aClassDescriptionNode canUnderstand: selector in: aSystemNode.
 					method isTraitRequirement
 						ifTrue: [canUnderstand ifFalse: [requirements add: (method ofTrait: component reference)]]
 						ifFalse: 
 							[canUnderstand
 								ifFalse: 
-									[(definedInOtherTraits includes: method selector)
+									[| other {MethodNode | Nil} |
+									other := definitionInOtherTraits at: selector ifAbsent: [nil].
+									other notNil
 										ifTrue: 
-											[n := n withMethodNode: (method
-																withBody: (SequenceNode statement: (SelfNode new send: 'traitConflict')))
-														ofTrait: component reference]
+											[(self conflicts: other with: method)
+												ifTrue: 
+													[n := n
+																copyReplaceMethodNode: (method withBody: (SequenceNode
+																				statement: ((GlobalReadNode namespace: AbsoluteReference object name: 'TraitConflict')
+																						send: 'raiseSignal:'
+																						with: (StringLiteralNode value: (self traitConflictStringFor: selector in: aSystemNode)))))]]
 										ifFalse: [n := n withMethodNode: method ofTrait: component reference]].
-							definedInOtherTraits add: method selector]]].
+							definitionInOtherTraits at: method selector put: method]]].
 	requirements do: 
 			[:method {MethodNode} |
-			(definedInOtherTraits includes: method selector)
+			(definitionInOtherTraits includesKey: method selector)
 				ifFalse: 
 					[n := n withMethodNode: (method
 										withBody: (SequenceNode statement: (SelfNode new send: 'traitRequirementNotDefined')))]].
@@ -72,6 +90,14 @@ prerequisiteReferences {^Arr[Reference]}
 sourceOn: aStream {WStream[Char]} {^Self}
 	components do: [:each {SimpleTraitUsageNode} | each sourceOn: aStream]
 		separatedBy: [aStream nextPutAll: ' + ']
+!
+(reader addMethod: 'As yet unclassified')
+!
+traitConflictStringFor: selector {Str} in: aSystemNode {SystemNode} {^Str}
+	^'TraitConflict: #' , selector printString , ' defined in: '
+		, ((self componentsDefining: selector in: aSystemNode)
+				join: [:each {SimpleTraitUsageNode} | each reference printString]
+				with: ', ')
 !
 (reader addMethod: 'As yet unclassified')
 !

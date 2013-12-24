@@ -2,6 +2,11 @@
 !
 (reader propertyAt: 'isNilClass' put: 'true')
 !
+(reader addMethod: 'comparing')
+!
+hash
+	^0
+!
 (reader addMethod: 'gravel')
 !
 ifNil: aBlock

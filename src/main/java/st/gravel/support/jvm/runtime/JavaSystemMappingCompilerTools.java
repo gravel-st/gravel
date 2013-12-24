@@ -141,6 +141,7 @@ public final class JavaSystemMappingCompilerTools extends
 
 	@Override
 	public Class findJavaClass_(Symbol[] path) {
+		if ((path.length == 1) && (path[0].asString().equals("byte[]"))) return byte[].class; 
 		try {
 			return Class
 					.forName(referenceAsClassName_(AbsoluteReference.factory

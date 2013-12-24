@@ -10,7 +10,25 @@ allSatisfy: aBlock
 	self do: [:each | (aBlock value: each) ifFalse: [^false]].
 	^true
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
+!
+anElement
+	self do: [:elem | ^elem].
+	^self subscriptBoundsErrorFor: #anElement index: 1
+!
+(reader addMethod: 'accessing')
+!
+anElementOrNil
+	self isEmpty ifTrue: [^nil].
+	^self anElement
+!
+(reader addMethod: 'iterating')
+!
+anySatisfy: aBlock
+	self do: [:each | (aBlock value: each) ifTrue: [^true]].
+	^false
+!
+(reader addMethod: 'converting')
 !
 asArray
 	| newInstance idx |
@@ -19,7 +37,17 @@ asArray
 	self do: [:each | newInstance at: (idx := idx + 1) put: each].
 	^newInstance
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'converting')
+!
+asJavaList
+	^JavaArrayList withAll: self
+!
+(reader addMethod: 'converting')
+!
+asJavaSet
+	^JavaHashSet withAll: self
+!
+(reader addMethod: 'converting')
 !
 asOrderedCollection
 	| anOrderedCollection |
@@ -27,11 +55,20 @@ asOrderedCollection
 	self do: [:each | anOrderedCollection addLast: each].
 	^anOrderedCollection
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'converting')
 !
 asSortedCollection
 	| aSortedCollection |
 	aSortedCollection := SortedCollection new: self size.
+	aSortedCollection addAll: self.
+	^aSortedCollection
+!
+(reader addMethod: 'converting')
+!
+asSortedCollection: aBlock
+	| aSortedCollection |
+	aSortedCollection := SortedCollection new: self size.
+	aSortedCollection sortBlock: aBlock.
 	aSortedCollection addAll: self.
 	^aSortedCollection
 !
@@ -83,10 +120,20 @@ inject: thisValue into: binaryBlock
 	self do: [:each | nextValue := binaryBlock value: nextValue value: each].
 	^nextValue
 !
+(reader addMethod: 'testing')
+!
+isCollection
+	^true
+!
 (reader addMethod: 'requirements')
 !
 isEmpty
 	^self size = 0
+!
+(reader addMethod: 'testing')
+!
+isNilOrEmpty
+	^self isEmpty
 !
 (reader addMethod: 'iterating')
 !
@@ -144,12 +191,15 @@ select: aBlock
 (reader addMethod: 'requirements')
 !
 size
-	^self traitRequirement
+	| tally |
+	tally := 0.
+	self do: [:each | tally := tally + 1].
+	^tally
 !
 (reader addMethod: 'requirements')
 !
 species
-	^self traitRequirement
+	^self class
 !
 (reader addClassMethod: 'gravel')
 !

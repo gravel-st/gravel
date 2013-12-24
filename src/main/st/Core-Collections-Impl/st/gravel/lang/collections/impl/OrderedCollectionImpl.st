@@ -10,10 +10,10 @@
 !
 (reader addInstVar: 'lastIndex')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'adding')
 !
-add: anObject
-	^self addLast: anObject
+add: newObject
+	^self addLast: newObject
 !
 (reader addMethod: 'adding')
 !
@@ -39,8 +39,8 @@ add: anObject beforeIndex: spot
 !
 (reader addMethod: 'adding')
 !
-addAll: anOrderedCollection
-	^self addAllLast: anOrderedCollection
+addAll: aCollection
+	^self addAllLast: aCollection
 !
 (reader addMethod: 'adding')
 !
@@ -50,9 +50,9 @@ addAllFirst: anOrderedCollection
 !
 (reader addMethod: 'adding')
 !
-addAllLast: anOrderedCollection
-	anOrderedCollection do: [:each | self addLast: each].
-	^anOrderedCollection
+addAllLast: aCollection
+	aCollection do: [:each | self addLast: each].
+	^aCollection
 !
 (reader addMethod: 'adding')
 !
@@ -89,7 +89,9 @@ asArray
 (reader addMethod: 'initialize-release')
 !
 at: anInteger
-	^contents basicAt: anInteger + firstIndex - 1
+	(anInteger < 1 or: [anInteger + firstIndex - 1 > lastIndex])
+		ifTrue: [self errorNoSuchElement]
+		ifFalse: [^contents basicAt: anInteger + firstIndex - 1]
 !
 (reader addMethod: 'initialize-release')
 !
@@ -148,7 +150,8 @@ changeSizeTo: newSize
 collect: aBlock
 	| newCollection |
 	newCollection := self copyEmpty: self size.
-	self do: [:each | newCollection add: (aBlock value: each)].
+	firstIndex to: lastIndex
+		do: [:index | newCollection addLast: (aBlock value: (contents basicAt: index))].
 	^newCollection
 !
 (reader addMethod: 'enumerating')

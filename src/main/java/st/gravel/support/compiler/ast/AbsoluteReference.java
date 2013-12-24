@@ -26,9 +26,17 @@ public class AbsoluteReference extends Reference implements Cloneable {
 			return newInstance;
 		}
 
+		public AbsoluteReference object() {
+			return this.path_(new st.gravel.core.Symbol[] { st.gravel.core.Symbol.value("st"), st.gravel.core.Symbol.value("gravel"), st.gravel.core.Symbol.value("lang"), st.gravel.core.Symbol.value("Object") });
+		}
+
 		public AbsoluteReference path_(final st.gravel.core.Symbol[] _anArray) {
 			return ((AbsoluteReference) this.basicNew().initializePath_(_anArray));
 		}
+	}
+
+	static public AbsoluteReference _object(Object receiver) {
+		return factory.object();
 	}
 
 	static public AbsoluteReference _path_(Object receiver, final st.gravel.core.Symbol[] _anArray) {

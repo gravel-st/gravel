@@ -18,10 +18,18 @@ evaluate: source
 !
 (reader addMethod: 'running')
 !
+getSystemMapping
+ <primitive: #('st.gravel.support.jvm.SimulatorExtensions' 'getSystemMapping')>| sm |
+	sm := (SystemMapping systemNode: (SystemNode empty) compilerTools: (StOnly.MockSystemMappingCompilerTools new)).
+	sm updateTo: (StOnly.VWClassReader readVWSystemDefinitionNode).
+	^sm
+!
+(reader addMethod: 'running')
+!
 setUp
-	systemMapping := SystemMapping systemNode: SystemNode empty
-				compilerTools: StOnly.MockSystemMappingCompilerTools new.
-	systemMapping updateTo: StOnly.VWClassReader readVWSystemDefinitionNode
+	| sm |
+	sm := self getSystemMapping.
+	systemMapping := sm
 !
 (reader addMethod: 'As yet unclassified')
 !

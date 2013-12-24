@@ -166,8 +166,6 @@ public class IntegerExtensions {
 	public static Number integerDivision_(Object receiver, Object argument) {
 		if (receiver instanceof Integer)
 			return integerDivision_((int) receiver, argument);
-		if (receiver instanceof BigInteger)
-			return integerDivision_((BigInteger) receiver, argument);
 		throw new IllegalArgumentException();
 	}
 
@@ -176,6 +174,18 @@ public class IntegerExtensions {
 			return receiver / ((int) argument);
 		if (argument instanceof BigInteger)
 			return 0;
+		throw new IllegalArgumentException();
+	}
+
+	public static Number integerRemainder_(Object receiver, Object argument) {
+		if (receiver instanceof Integer)
+			return integerRemainder_((int) receiver, argument);
+		throw new IllegalArgumentException();
+	}
+
+	public static Integer integerRemainder_(int receiver, Object argument) {
+		if (argument instanceof Integer)
+			return receiver % ((int) argument);
 		throw new IllegalArgumentException();
 	}
 

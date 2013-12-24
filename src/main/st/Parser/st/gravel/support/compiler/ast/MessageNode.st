@@ -89,8 +89,8 @@ receiver: aNode {Expression} selector: aString {String} {^Instance}
 !
 (reader addClassMethod: 'instance creation')
 !
-receiver: aNode {Expression} selector: aString {String} arguments: anArray {Arr[Expression]} {^Instance}
-	| sym |
+receiver: aNode {Expression} selector: aString {String} arguments: anArray {Arr[Expression]} {^MessageNode}
+	| sym {Sym} |
 	sym := aString asSymbol.
 	sym isUnary
 		ifTrue: [^UnaryMessageNode receiver: aNode selector: aString arguments: anArray].

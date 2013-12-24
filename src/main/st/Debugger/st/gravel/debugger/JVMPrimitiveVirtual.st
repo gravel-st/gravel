@@ -1,4 +1,4 @@
-(reader defineClass: 'JVMPrimitiveVirtual' superclass: 'st.gravel.lang.Object')
+(reader defineClass: 'JVMPrimitiveVirtual' superclass: 'st.gravel.debugger.JVMPrimitiveMethod')
 !
 (reader addInstVar: 'type')
 !
