@@ -1,5 +1,32 @@
 (reader defineClass: 'SortedCollectionFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterFirstElement
+	^#a
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterFourthElement
+	^#d
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterNewElements
+	^#(#a #b #c)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSecondElement
+	^#b
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterThirdElement
+	^#c
+!
 (reader addMethod: 'tests')
 !
 test_new
@@ -60,9 +87,9 @@ test_with_with_with_
 			[:testValue |
 			| res |
 			res := testValue
-						with: self parameterThirdElement
+						with: self parameterFirstElement
 						with: self parameterSecondElement
-						with: self parameterFirstElement.
+						with: self parameterThirdElement.
 			self assert: (self valueIsKindOfSortedCollection: res)]
 !
 (reader addMethod: 'tests')
@@ -72,9 +99,14 @@ test_with_with_with_with_
 			[:testValue |
 			| res |
 			res := testValue
-						with: self parameterThirdElement
-						with: self parameterFourthElement
 						with: self parameterFirstElement
-						with: self parameterSecondElement.
+						with: self parameterSecondElement
+						with: self parameterThirdElement
+						with: self parameterFourthElement.
 			self assert: (self valueIsKindOfSortedCollection: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: SortedCollection
 !

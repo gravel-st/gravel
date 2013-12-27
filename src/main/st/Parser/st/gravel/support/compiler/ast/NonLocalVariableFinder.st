@@ -30,6 +30,12 @@ visitBoundVariableDeclarationNode: anObject {BoundVariableDeclarationNode} {^Bou
 !
 (reader addMethod: 'visiting')
 !
+visitHolderDeclarationNode: anObject {HolderDeclarationNode} {^HolderDeclarationNode}
+	locals add: anObject name.
+	^super visitHolderDeclarationNode: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitLocalReadNode: anObject {LocalReadNode} {^Expression}
 	self addVarAccess: anObject name.
 	^super visitLocalReadNode: anObject

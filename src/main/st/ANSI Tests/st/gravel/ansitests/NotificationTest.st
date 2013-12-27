@@ -1,5 +1,7 @@
 (reader defineClass: 'NotificationTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_defaultAction
@@ -17,4 +19,9 @@ test_isResumable
 			| res |
 			res := testValue isResumable.
 			self assert: (self valueIsKindOfBoolean: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Notification new
 !

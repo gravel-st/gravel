@@ -12,3 +12,8 @@ do: aBlock
 	<primitive: #('st.gravel.support.jvm.CollectionExtensions' 'enumerationDo_')>
 	
 !
+(reader addClassMethod: 'private - traits')
+!
+newImpl: anInteger
+	^self basicNew
+!

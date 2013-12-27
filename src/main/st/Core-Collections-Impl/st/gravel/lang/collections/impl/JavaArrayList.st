@@ -108,9 +108,20 @@ zeroIndexOf: anElement
 	<primitive: 'indexOf'>
 	
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+defaultImplementation
+	^self
+!
 (reader addClassMethod: '')
 !
 new: size
+	<primitive: #('st.gravel.support.jvm.OrderedCollectionExtensions' 'new_')>
+	
+!
+(reader addClassMethod: '')
+!
+newImpl: size
 	<primitive: #('st.gravel.support.jvm.OrderedCollectionExtensions' 'new_')>
 	
 !

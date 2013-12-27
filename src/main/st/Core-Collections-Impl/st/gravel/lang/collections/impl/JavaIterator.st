@@ -14,3 +14,8 @@ java_next
 	<primitive: 'next'>
 	
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+defaultImplementation
+	^self
+!

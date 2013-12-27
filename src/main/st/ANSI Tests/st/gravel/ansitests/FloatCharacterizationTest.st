@@ -1,5 +1,7 @@
 (reader defineClass: 'FloatCharacterizationTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_denormalized
@@ -107,4 +109,9 @@ test_radix
 			| res |
 			res := testValue radix.
 			self assert: (self valueIsKindOfInteger: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Float
 !

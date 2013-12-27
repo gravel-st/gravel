@@ -68,12 +68,12 @@ basicNew
 !
 (reader addClassMethod: 'gravel')
 !
-new
-	^self new: 0
+newImpl
+	^self newImpl: 0
 !
 (reader addClassMethod: '')
 !
-new: size
+newImpl: size
 	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'newInstance_')>
 	
 !

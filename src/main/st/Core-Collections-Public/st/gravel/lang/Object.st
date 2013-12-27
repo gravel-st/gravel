@@ -5,8 +5,23 @@
 -> anObject
 	^Association key: self value: anObject
 !
+(reader addMethod: 'testing')
+!
+isBag
+	^false
+!
 (reader addMethod: 'gravel')
 !
 isCollection
+	^false
+!
+(reader addMethod: 'testing')
+!
+isOrderedCollection
+	^false
+!
+(reader addMethod: 'testing')
+!
+isSet
 	^false
 !

@@ -1,20 +1,22 @@
 (reader defineClass: 'ExceptionSignalerTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSignalerText
+	^'fromage'
+!
 (reader addMethod: 'tests')
 !
 test_signal
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue signal.
-			self assert: (self valueIsKindOfObject: res)]
+	self
+		valuesDo: [:testValue | 
+			[testValue signal.
+			self assert: false] on: testValue do: [:ex | ]]
 !
-(reader addMethod: 'tests')
+(reader addMethod: 'As yet unclassified')
 !
-test_signal_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue signal: self parameterSignalerText.
-			self assert: (self valueIsKindOfObject: res)]
+valuesDo: aBlock
+	aBlock value: Exception
 !

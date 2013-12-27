@@ -1,5 +1,12 @@
 (reader defineClass: 'SequencedStreamTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterAmount
+	^3
+!
 (reader addMethod: 'tests')
 !
 test_close
@@ -58,4 +65,9 @@ test_setToEnd
 			[:testValue |
 			| res |
 			res := testValue setToEnd]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: (ReadStream on: 'fromage')
 !

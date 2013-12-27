@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.ArrayList;
 import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
+import st.gravel.support.compiler.ast.HolderDeclarationNode;
 import st.gravel.support.compiler.ast.LocalReadNode;
 import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.LocalWriteNode;
@@ -94,6 +95,12 @@ public class NonLocalVariableFinder extends NodeCopier implements Cloneable {
 	public BoundVariableDeclarationNode visitBoundVariableDeclarationNode_(final BoundVariableDeclarationNode _anObject) {
 		_locals.add(_anObject.name());
 		return super.visitBoundVariableDeclarationNode_(_anObject);
+	}
+
+	@Override
+	public HolderDeclarationNode visitHolderDeclarationNode_(final HolderDeclarationNode _anObject) {
+		_locals.add(_anObject.name());
+		return super.visitHolderDeclarationNode_(_anObject);
 	}
 
 	@Override

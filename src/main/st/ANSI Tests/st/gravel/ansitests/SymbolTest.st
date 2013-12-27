@@ -1,5 +1,7 @@
 (reader defineClass: 'SymbolTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_asString
@@ -17,4 +19,10 @@ test_asSymbol
 			| res |
 			res := testValue asSymbol.
 			self assert: (self valueIsKindOfSymbol: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: #foo.
+	aBlock value: #'Altijd is kortjakje ziek'
 !

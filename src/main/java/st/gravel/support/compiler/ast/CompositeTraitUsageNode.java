@@ -23,7 +23,6 @@ import st.gravel.support.compiler.ast.SequenceNode;
 import st.gravel.support.compiler.ast.GlobalReadNode;
 import st.gravel.support.compiler.ast.AbsoluteReference;
 import st.gravel.support.compiler.ast.StringLiteralNode;
-import st.gravel.support.compiler.ast.SelfNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.SourcePrinter;
@@ -150,7 +149,7 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 							return _requirements[0].add(_method.ofTrait_(_component.reference()));
 						}
 					} else {
-						if (!_canUnderstand) {
+						if (!_aClassDescriptionNode.includesSelector_(_selector)) {
 							final MethodNode _other;
 							MethodNode _temp1 = _definitionInOtherTraits[0].get(_selector);
 							_other = ((MethodNode) _temp1);
@@ -169,8 +168,8 @@ public class CompositeTraitUsageNode extends TraitUsageNode implements Cloneable
 			});
 		}
 		for (final MethodNode _method : _requirements[0]) {
-			if (!_definitionInOtherTraits[0].containsKey(_method.selector())) {
-				_n[0] = _n[0].withMethodNode_(_method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_("traitRequirementNotDefined"))));
+			if (!(_definitionInOtherTraits[0].containsKey(_method.selector()) || _n[0].includesSelector_(_method.selector()))) {
+				_n[0] = _n[0].withMethodNode_(CompositeTraitUsageNode.this.newTraitRequirementNotDefinedFor_(_method));
 			}
 		}
 		return _n[0];

@@ -2,25 +2,25 @@
 !
 (reader propertyAt: 'javaClass' put: 'java.lang.Integer')
 !
-(reader addMethod: '')
+(reader addMethod: 'arithmetic')
 !
 * anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'multiply_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'arithmetic')
 !
 + anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'plus_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'arithmetic')
 !
 - anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'minus_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'arithmetic')
 !
 // anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerDivision_')>
@@ -61,10 +61,30 @@ bitXor: anObject
 compressed
 	^self
 !
+(reader addMethod: 'arithmetic')
+!
+gcd: anInteger
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'gcd_')>
+	
+!
 (reader addMethod: 'comparing')
 !
 hash
 	^self
+!
+(reader addMethod: 'comparing')
+!
+hashMultiply
+ <primitive: #('st.gravel.support.jvm.IntegerExtensions' 'hashMultiply')>| low14Bits a b c d e f g |
+	low14Bits := (self bitAnd: 16383).
+	a := (self bitShift: -14).
+	b := (101 * low14Bits).
+	c := ((9741 * a) + b).
+	d := (c bitAnd: 16383).
+	e := (9741 * low14Bits).
+	f := (16384 * d).
+	g := (f + e).
+	^(g bitAnd: 268435455)
 !
 (reader addMethod: '')
 !
@@ -101,7 +121,7 @@ timesRepeat: aBlock
 toMinimumGenerality
 	^self
 !
-(reader addMethod: '')
+(reader addMethod: 'arithmetic')
 !
 \\ anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerRemainder_')>

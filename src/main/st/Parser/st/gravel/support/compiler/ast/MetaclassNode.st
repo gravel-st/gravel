@@ -51,6 +51,11 @@ isMeta {^Bool}
 isNilClass {^Bool}
 	^false
 !
+(reader addMethod: 'As yet unclassified')
+!
+isSystemTest {^Bool}
+	^false
+!
 (reader addMethod: 'testing')
 !
 isTrait {^Bool}

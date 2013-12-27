@@ -1,14 +1,71 @@
 (reader defineClass: 'ANSITest' superclass: 'st.gravel.sunit.TestCase')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterComparand
+	^Object new
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterCount
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterDiscriminator
+	^[:each | each isNumber]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement1
+	^Object new
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement2
+	^#Sjampo
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement3
+	^#fromage
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement4
+	^#andijvie
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterNewElement
+	^Object new
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterNewElements
+	^#(#foo 1 'fromage')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSortBlock
+	^[:a :b | a printString < b printString]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTransformer
+	^[:each | each printString]
+!
 (reader addMethod: 'tests')
 !
 valueIsKindOfAbstractDictionary: aValue
-	^aValue class = Dictionary
+	^aValue class = Dictionary or: [aValue class = IdentityDictionary]
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfANY: aValue
-	^aValue class = Object
+	^true
 !
 (reader addMethod: 'tests')
 !
@@ -23,7 +80,7 @@ valueIsKindOfArrayFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfBag: aValue
-	^aValue class = Bag
+	^aValue isBag
 !
 (reader addMethod: 'tests')
 !
@@ -33,7 +90,7 @@ valueIsKindOfBagFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfBoolean: aValue
-	^aValue class = Boolean
+	^aValue == true or: [aValue == false]
 !
 (reader addMethod: 'tests')
 !
@@ -58,12 +115,12 @@ valueIsKindOfCharacterFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfClassDescription: aValue
-	^aValue class = ClassDescription
+	^aValue isBehavior
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfCollection: aValue
-	^aValue class = Collection
+	^aValue isCollection
 !
 (reader addMethod: 'tests')
 !
@@ -78,7 +135,7 @@ valueIsKindOfCollectionStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfDateAndTime: aValue
-	^false
+	^aValue class = Timestamp
 !
 (reader addMethod: 'tests')
 !
@@ -108,7 +165,7 @@ valueIsKindOfDurationFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfDyadicValuable: aValue
-	^aValue class = BlockClosure
+	^aValue numArgs = 2
 !
 (reader addMethod: 'tests')
 !
@@ -123,12 +180,12 @@ valueIsKindOfErrorClass: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfException: aValue
-	^aValue class = Exception
+	^aValue isSignalledException
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfExceptionBuilder: aValue
-	^aValue class = Exception
+	^aValue isExceptionBuilder
 !
 (reader addMethod: 'tests')
 !
@@ -184,7 +241,7 @@ valueIsKindOfFileStreamFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfFloat: aValue
-	^aValue class = Float
+	^aValue class = Float or: [aValue class = Double]
 !
 (reader addMethod: 'tests')
 !
@@ -231,7 +288,7 @@ valueIsKindOfInstantiator: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfInteger: aValue
-	^aValue class = Integer
+	^aValue isInteger
 !
 (reader addMethod: 'tests')
 !
@@ -296,12 +353,12 @@ valueIsKindOfNotificationClass: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfNumber: aValue
-	^aValue class = Number
+	^aValue isNumber
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfObject: aValue
-	^aValue class = Object
+	^true
 !
 (reader addMethod: 'tests')
 !
@@ -326,12 +383,12 @@ valueIsKindOfPuttableStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfRational: aValue
-	^aValue class = Fraction or: [aValue class = Integer]
+	^aValue class = Fraction or: [self valueIsKindOfInteger: aValue]
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfReadableString: aValue
-	^aValue class = String
+	^aValue isString
 !
 (reader addMethod: 'tests')
 !
@@ -361,17 +418,17 @@ valueIsKindOfReadWriteStreamFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfScaledDecimal: aValue
-	^false
+	^aValue class = FixedPoint
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfSelector: aValue
-	^aValue class = Symbol
+	^aValue isSymbol
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfSequencedCollection: aValue
-	^aValue class = SequenceableCollection
+	^self valueIsKindOfSequencedReadableCollection: aValue
 !
 (reader addMethod: 'tests')
 !
@@ -381,7 +438,10 @@ valueIsKindOfSequencedContractibleCollection: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfSequencedReadableCollection: aValue
-	^aValue class = SequenceableCollection
+	^aValue class = SequenceableCollection or: 
+			[aValue class = OrderedCollection or: 
+					[(self valueIsKindOfString: aValue)
+						or: [(self valueIsKindOfArray: aValue) or: [self valueIsKindOfInterval: aValue]]]]
 !
 (reader addMethod: 'tests')
 !
@@ -391,7 +451,7 @@ valueIsKindOfSequencedStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfSet: aValue
-	^aValue class = Set
+	^aValue isSet
 !
 (reader addMethod: 'tests')
 !
@@ -416,7 +476,7 @@ valueIsKindOfSortedCollectionFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfString: aValue
-	^aValue class = String
+	^aValue isString
 !
 (reader addMethod: 'tests')
 !
@@ -426,7 +486,7 @@ valueIsKindOfStringFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfSymbol: aValue
-	^aValue class = Symbol
+	^aValue isSymbol
 !
 (reader addMethod: 'tests')
 !

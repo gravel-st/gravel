@@ -1,5 +1,7 @@
 (reader defineClass: 'MessageNotUnderstoodTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_isResumable
@@ -26,4 +28,11 @@ test_receiver
 			| res |
 			res := testValue receiver.
 			self assert: (self valueIsKindOfObject: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	
+	[3 zork.
+	self assert: false] on: MessageNotUnderstood do: [:ex | aBlock value: ex]
 !

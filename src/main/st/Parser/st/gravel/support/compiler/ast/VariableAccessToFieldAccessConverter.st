@@ -35,14 +35,14 @@ ownerReference {^Reference}
 (reader addMethod: 'visiting')
 !
 visitAssignmentNode: anObject {AssignmentNode} {^Expression}
+	(self includesLocalName: anObject variable name)
+		ifTrue: [^LocalWriteNode name: anObject variable name value: (self visit: anObject value)].
 	(instVarNames includes: anObject variable name)
 		ifTrue: 
 			[^FieldWriteNode
 				owner: owner
 				field: anObject variable name
 				value: (self visit: anObject value)].
-	(self includesLocalName: anObject variable name)
-		ifTrue: [^LocalWriteNode name: anObject variable name value: (self visit: anObject value)].
 	^GlobalWriteNode
 		namespace: namespace
 		name: anObject variable name
@@ -53,9 +53,9 @@ visitAssignmentNode: anObject {AssignmentNode} {^Expression}
 visitVariableNode: anObject {VariableNode} {^Expression}
 	anObject name = 'self' ifTrue: [^SelfNode new].
 	anObject name = 'super' ifTrue: [^SuperNode reference: ownerReference].
+	(self includesLocalName: anObject name) ifTrue: [^LocalReadNode name: anObject name].
 	(instVarNames includes: anObject name)
 		ifTrue: [^FieldReadNode owner: owner field: anObject name].
-	(self includesLocalName: anObject name) ifTrue: [^LocalReadNode name: anObject name].
 	^GlobalReadNode namespace: namespace name: anObject name
 !
 (reader addClassMethod: 'instance creation')

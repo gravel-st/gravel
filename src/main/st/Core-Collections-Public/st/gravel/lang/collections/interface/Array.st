@@ -4,6 +4,15 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ArrayedCollection class')
 !
+(reader addMethod: 'comparing')
+!
+= anArray
+	self == anArray ifTrue: [^true].
+	anArray isArray ifFalse: [^false].
+	self size = anArray size ifFalse: [^false].
+	self with: anArray do: [:a :b | a = b ifFalse: [^false]].
+	^true
+!
 (reader addMethod: 'gravel')
 !
 anySatisfy: aBlock
@@ -22,6 +31,14 @@ collect: aBlock
 	newColl := Array new: self size.
 	1 to: self size do: [:i | newColl at: i put: (aBlock value: (self at: i))].
 	^newColl
+!
+(reader addMethod: 'comparing')
+!
+hash
+	| sum |
+	sum := self class hash.
+	self do: [:elem | sum := sum bitXor: elem hash].
+	^sum
 !
 (reader addMethod: 'testing')
 !

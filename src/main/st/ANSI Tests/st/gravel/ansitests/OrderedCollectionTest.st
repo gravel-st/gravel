@@ -1,5 +1,17 @@
 (reader defineClass: 'OrderedCollectionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterIndex
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTarget
+	^1
+!
 (reader addMethod: 'tests')
 !
 test_addAllFirst_
@@ -15,15 +27,15 @@ test_addAllLast_
 			[:testValue |
 			| res |
 			res := testValue addAllLast: self parameterNewElements.
-			self assert: (self valueIsKindOfSequencedCollection: res)]
+			self assert: res = self parameterNewElements]
 !
 (reader addMethod: 'tests')
 !
 test_addAll_afterIndex_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue addAll: self parameterNewElements afterIndex: self parameterIndex]
+	| oc |
+	oc := #(#a #b #c) asOrderedCollection.
+	oc addAll: #(#x #y #z) afterIndex: 2.
+	self assert: oc asArray = #(#a #b #x #y #z #c)
 !
 (reader addMethod: 'tests')
 !
@@ -36,10 +48,10 @@ test_addAll_after_
 (reader addMethod: 'tests')
 !
 test_addAll_beforeIndex_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue addAll: self parameterIndex beforeIndex: self parameterNewElements]
+	| oc |
+	oc := #(#a #b #c) asOrderedCollection.
+	oc addAll: #(#x #y #z) beforeIndex: 2.
+	self assert: oc asArray = #(#a #x #y #z #b #c)
 !
 (reader addMethod: 'tests')
 !
@@ -97,7 +109,7 @@ test_add_beforeIndex_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue add: self parameterIndex beforeIndex: self parameterNewElement.
+			res := testValue add: self parameterNewElement beforeIndex: self parameterIndex.
 			self assert: (self valueIsKindOfObject: res)]
 !
 (reader addMethod: 'tests')
@@ -108,4 +120,9 @@ test_add_before_
 			| res |
 			res := testValue add: self parameterNewElement before: self parameterTarget.
 			self assert: (self valueIsKindOfObject: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: (OrderedCollection with: 1)
 !

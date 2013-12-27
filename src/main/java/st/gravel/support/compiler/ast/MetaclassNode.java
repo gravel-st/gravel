@@ -190,6 +190,11 @@ public class MetaclassNode extends ClassDescriptionNode implements Cloneable {
 	}
 
 	@Override
+	public boolean isSystemTest() {
+		return false;
+	}
+
+	@Override
 	public boolean isTrait() {
 		return _classNode.isTrait();
 	}

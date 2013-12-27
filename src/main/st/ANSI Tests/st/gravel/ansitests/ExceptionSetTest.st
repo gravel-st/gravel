@@ -1,4 +1,6 @@
-(reader defineClass: 'ExceptionSetTest' superclass: 'st.gravel.ansitests.ANSITest')
+(reader defineClass: 'ExceptionSetTest' superclass: 'st.gravel.ansitests.AbstractExceptionSelectorTest')
+!
+(reader propertyAt: 'isSystemTest' put: 'Ja')
 !
 (reader addMethod: 'tests')
 !

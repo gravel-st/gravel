@@ -114,6 +114,11 @@ isMeta {^Bool}
 isNilClass {^Bool}
 	^self subclassResponsibility
 !
+(reader addMethod: 'As yet unclassified')
+!
+isSystemTest {^Bool}
+	^self subclassResponsibility
+!
 (reader addMethod: 'testing')
 !
 isTrait {^Bool}

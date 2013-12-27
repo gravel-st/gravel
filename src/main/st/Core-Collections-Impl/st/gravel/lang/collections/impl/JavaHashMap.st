@@ -63,8 +63,8 @@ size
 	<primitive: 'size'>
 	
 !
-(reader addClassMethod: 'instance creation')
+(reader addClassMethod: 'As yet unclassified')
 !
-new: anInteger
-	^self basicNew
+defaultImplementation
+	^self
 !

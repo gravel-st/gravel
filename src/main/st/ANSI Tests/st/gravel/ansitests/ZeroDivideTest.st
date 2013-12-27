@@ -1,5 +1,7 @@
 (reader defineClass: 'ZeroDivideTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_dividend
@@ -17,4 +19,9 @@ test_isResumable
 			| res |
 			res := testValue isResumable.
 			self assert: (self valueIsKindOfBoolean: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	[1 / 0] on: ZeroDivide do: [:ex | aBlock value: ex]
 !

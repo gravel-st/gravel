@@ -1,5 +1,7 @@
 (reader defineClass: 'BagFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_new
@@ -69,4 +71,9 @@ test_with_with_with_with_
 						with: self parameterElement2
 						with: self parameterElement4.
 			self assert: (self valueIsKindOfBag: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Bag
 !

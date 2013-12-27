@@ -37,6 +37,13 @@ isEmpty {^Bool}
 !
 (reader addMethod: 'As yet unclassified')
 !
+newTraitRequirementNotDefinedFor: method {MethodNode} {^MethodNode}
+	^method
+		withBody: (SequenceNode statement: (SelfNode new send: 'traitRequirementNotDefined:'
+						with: (SymbolLiteralNode value: method selector asSymbol)))
+!
+(reader addMethod: 'As yet unclassified')
+!
 prerequisiteReferences {^Arr[Reference]}
 	^self subclassResponsibility
 !

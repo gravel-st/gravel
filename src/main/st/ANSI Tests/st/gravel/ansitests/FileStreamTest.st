@@ -1,5 +1,7 @@
 (reader defineClass: 'FileStreamTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_contents
@@ -7,8 +9,7 @@ test_contents
 			[:testValue |
 			| res |
 			res := testValue contents.
-			self assert: (self valueIsKindOfString: res).
-			self assert: (self valueIsKindOfByteArray: res)]
+			self assert: (self valueIsKindOfString: res)]
 !
 (reader addMethod: 'tests')
 !
@@ -36,4 +37,15 @@ test_isText
 			| res |
 			res := testValue isText.
 			self assert: (self valueIsKindOfBoolean: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: (EncodedStream on: (ReadStream on: #[102 114 111 109 97 103 101])
+				encodedBy: UTF8StreamEncoder new)
+!
+(reader addClassMethod: 'testing')
+!
+isAbstract
+	^true
 !

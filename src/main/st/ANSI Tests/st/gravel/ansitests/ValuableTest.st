@@ -1,5 +1,12 @@
 (reader defineClass: 'ValuableTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterArgumentArray
+	^#()
+!
 (reader addMethod: 'tests')
 !
 test_argumentCount
@@ -17,4 +24,9 @@ test_valueWithArguments_
 			| res |
 			res := testValue valueWithArguments: self parameterArgumentArray.
 			self assert: (self valueIsKindOfANY: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: []
 !

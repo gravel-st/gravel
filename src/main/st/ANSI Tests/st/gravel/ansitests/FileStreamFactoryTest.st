@@ -1,5 +1,7 @@
 (reader defineClass: 'FileStreamFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_read_
@@ -48,4 +50,9 @@ test_write_mode_check_type_
 						check: self parameterFileID
 						type: self parameterFileType.
 			self assert: (self valueIsKindOfWriteFileStream: res)]
+!
+(reader addClassMethod: 'testing')
+!
+isAbstract
+	^true
 !

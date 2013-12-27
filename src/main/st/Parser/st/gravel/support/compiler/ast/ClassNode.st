@@ -127,6 +127,13 @@ isNilClass {^Bool}
 	isNilClass := properties at: 'isNilClass' ifAbsent: [nil].
 	^isNilClass = 'true'
 !
+(reader addMethod: 'As yet unclassified')
+!
+isSystemTest {^Bool}
+	| prop {Nil | Str} |
+	prop := properties at: 'isSystemTest' ifAbsent: [nil].
+	^prop = 'true'
+!
 (reader addMethod: 'testing')
 !
 isTrait {^Bool}

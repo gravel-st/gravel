@@ -1,5 +1,42 @@
 (reader defineClass: 'SequencedCollectionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterIndex
+	^2
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterIndices
+	^#(1 3)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElement
+	^#fromage
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElements
+	^#(1 2)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementStart
+	^2
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStart
+	^1
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStop
+	^2
+!
 (reader addMethod: 'tests')
 !
 test_atAllPut_
@@ -30,32 +67,35 @@ test_at_put_
 test_replaceFrom_to_withObject_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue
-						replaceFrom: self parameterStart
-						to: self parameterReplacementElement
-						withObject: self parameterStop]
+			testValue
+				replaceFrom: self parameterStart
+				to: self parameterStop
+				withObject: self parameterReplacementElement]
 !
 (reader addMethod: 'tests')
 !
 test_replaceFrom_to_with_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue
-						replaceFrom: self parameterStart
-						to: self parameterReplacementElements
-						with: self parameterStop]
+			testValue
+				replaceFrom: self parameterStart
+				to: self parameterStop
+				with: self parameterReplacementElements]
 !
 (reader addMethod: 'tests')
 !
 test_replaceFrom_to_with_startingAt_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue
-						replaceFrom: self parameterStop
-						to: self parameterStart
-						with: self parameterReplacementStart
-						startingAt: self parameterReplacementElements]
+			testValue
+				replaceFrom: self parameterStop
+				to: self parameterStart
+				with: self parameterReplacementElements
+				startingAt: self parameterReplacementStart]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: #(#a #b #c) copy.
+	aBlock value: (OrderedCollection with: 1 with: 2 with: 3)
 !

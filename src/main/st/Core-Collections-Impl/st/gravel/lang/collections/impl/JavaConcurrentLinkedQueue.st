@@ -49,3 +49,8 @@ size
 	<primitive: 'size'>
 	
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+defaultImplementation
+	^self
+!

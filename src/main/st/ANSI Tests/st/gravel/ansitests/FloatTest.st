@@ -1,5 +1,12 @@
 (reader defineClass: 'FloatTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^'0.2'
+!
 (reader addMethod: 'tests')
 !
 test_arcCos
@@ -48,7 +55,7 @@ test_degreesToRadians
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -125,4 +132,9 @@ test_tan
 			| res |
 			res := testValue tan.
 			self assert: (self valueIsKindOfFloat: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: '0.1'
 !

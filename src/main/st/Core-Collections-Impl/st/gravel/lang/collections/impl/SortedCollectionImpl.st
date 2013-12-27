@@ -77,12 +77,12 @@ defaultSortBlock
 !
 (reader addClassMethod: 'instance creation')
 !
-new
-	^self new: self defaultInitialCapacity
+newImpl
+	^self newImpl: self defaultInitialCapacity
 !
 (reader addClassMethod: 'instance creation')
 !
-new: initialCapacity
+newImpl: initialCapacity
 	^(super new)
 		initialize: initialCapacity;
 		sortBlock: self defaultSortBlock

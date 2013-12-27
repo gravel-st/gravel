@@ -1,5 +1,32 @@
 (reader defineClass: 'CollectionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterExceptionHandler
+	^[Object new]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterInitialValue
+	^nil
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperation
+	^[:each | each printString]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSeparator
+	^[1 + 2]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTarget
+	^Object new
+!
 (reader addMethod: 'tests')
 !
 test_allSatisfy_
@@ -105,8 +132,8 @@ test_detect_ifNone_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue detect: self parameterExceptionHandler
-						ifNone: self parameterDiscriminator.
+			res := testValue detect: self parameterDiscriminator
+						ifNone: self parameterExceptionHandler.
 			self assert: (self valueIsKindOfObject: res).
 			self assert: (self valueIsKindOfObject: res)]
 !
@@ -121,10 +148,8 @@ test_do_
 (reader addMethod: 'tests')
 !
 test_do_separatedBy_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue do: self parameterSeparator separatedBy: self parameterOperation]
+	self
+		valuesDo: [:testValue | testValue do: self parameterOperation separatedBy: self parameterSeparator]
 !
 (reader addMethod: 'tests')
 !
@@ -141,7 +166,8 @@ test_inject_into_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue inject: self parameterInitialValue into: self parameterOperation.
+			res := testValue inject: self parameterInitialValue
+						into: [:s :e | s isNil ifTrue: [e] ifFalse: [s + e]].
 			self assert: (self valueIsKindOfObject: res)]
 !
 (reader addMethod: 'tests')
@@ -205,4 +231,10 @@ test_size
 			| res |
 			res := testValue size.
 			self assert: (self valueIsKindOfInteger: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: (OrderedCollection with: 1 with: 255).
+	aBlock value: (Set with: 1)
 !

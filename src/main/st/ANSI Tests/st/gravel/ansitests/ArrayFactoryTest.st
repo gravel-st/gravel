@@ -1,5 +1,7 @@
 (reader defineClass: 'ArrayFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_new
@@ -64,9 +66,14 @@ test_with_with_with_with_
 			[:testValue |
 			| res |
 			res := testValue
-						with: self parameterElement3
+						with: self parameterElement1
 						with: self parameterElement2
-						with: self parameterElement4
-						with: self parameterElement1.
+						with: self parameterElement3
+						with: self parameterElement4.
 			self assert: (self valueIsKindOfArray: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Array
 !

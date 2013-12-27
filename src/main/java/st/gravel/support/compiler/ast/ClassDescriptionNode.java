@@ -285,6 +285,8 @@ abstract public class ClassDescriptionNode extends Node implements Cloneable {
 
 	public abstract boolean isNilClass();
 
+	public abstract boolean isSystemTest();
+
 	public abstract boolean isTrait();
 
 	@Override

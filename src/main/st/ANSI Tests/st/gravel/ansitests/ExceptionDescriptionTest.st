@@ -1,5 +1,7 @@
 (reader defineClass: 'ExceptionDescriptionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_defaultAction
@@ -34,8 +36,7 @@ test_messageText
 			[:testValue |
 			| res |
 			res := testValue messageText.
-			self assert: (self valueIsKindOfReadableString: res).
-			self assert: (self valueIsKindOfNil: res)]
+			self assert: (self valueIsKindOfReadableString: res)]
 !
 (reader addMethod: 'tests')
 !
@@ -44,6 +45,10 @@ test_tag
 			[:testValue |
 			| res |
 			res := testValue tag.
-			self assert: (self valueIsKindOfNil: res).
 			self assert: (self valueIsKindOfObject: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Notification new
 !

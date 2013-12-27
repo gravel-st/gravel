@@ -46,7 +46,7 @@ flattenClassDescriptionNode: aClassDescriptionNode {ClassDescriptionNode} in: aS
 					method isTraitRequirement
 						ifTrue: [canUnderstand ifFalse: [requirements add: (method ofTrait: component reference)]]
 						ifFalse: 
-							[canUnderstand
+							[(aClassDescriptionNode includesSelector: selector)
 								ifFalse: 
 									[| other {MethodNode | Nil} |
 									other := definitionInOtherTraits at: selector ifAbsent: [nil].
@@ -63,10 +63,9 @@ flattenClassDescriptionNode: aClassDescriptionNode {ClassDescriptionNode} in: aS
 							definitionInOtherTraits at: method selector put: method]]].
 	requirements do: 
 			[:method {MethodNode} |
-			(definitionInOtherTraits includesKey: method selector)
-				ifFalse: 
-					[n := n withMethodNode: (method
-										withBody: (SequenceNode statement: (SelfNode new send: 'traitRequirementNotDefined')))]].
+			((definitionInOtherTraits includesKey: method selector)
+				or: [n includesSelector: method selector])
+					ifFalse: [n := n withMethodNode: (self newTraitRequirementNotDefinedFor: method)]].
 	^n
 !
 (reader addMethod: 'initialize-release')

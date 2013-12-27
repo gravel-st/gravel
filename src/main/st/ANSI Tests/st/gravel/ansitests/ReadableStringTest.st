@@ -1,5 +1,52 @@
 (reader defineClass: 'ReadableStringTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterNewElement
+	^$d
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^'def'
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElement
+	^$c
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElements
+	^'def'
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSeparators
+	self halt
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStart
+	^2
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStop
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetElement
+	^$b
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetElements
+	^'c'
+!
 (reader addMethod: 'tests')
 !
 test_asLowercase
@@ -51,8 +98,8 @@ test_copyReplaceAll_with_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue copyReplaceAll: self parameterReplacementElements
-						with: self parameterTargetElements.
+			res := testValue copyReplaceAll: self parameterTargetElements
+						with: self parameterReplacementElements.
 			self assert: (self valueIsKindOfReadableString: res)]
 !
 (reader addMethod: 'tests')
@@ -73,8 +120,8 @@ test_copyReplacing_withObject_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue copyReplacing: self parameterReplacementElement
-						withObject: self parameterTargetElement.
+			res := testValue copyReplacing: self parameterTargetElement
+						withObject: self parameterReplacementElement.
 			self assert: (self valueIsKindOfReadableString: res)]
 !
 (reader addMethod: 'tests')
@@ -134,9 +181,13 @@ test_sameAs_
 (reader addMethod: 'tests')
 !
 test_subStrings_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue subStrings: self parameterSeparators.
-			self assert: (self valueIsKindOfArray: res)]
+	| res |
+	res := 'ab,cd|ef' subStrings: ',|'.
+	self assert: res asArray = #('ab' 'cd' 'ef')
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 'abc'.
+	aBlock value: #abc
 !

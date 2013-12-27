@@ -425,12 +425,12 @@ trim
 !
 (reader addClassMethod: 'gravel')
 !
-new
+newImpl
 	^super new initializeCapacity: 3
 !
 (reader addClassMethod: 'gravel')
 !
-new: size
+newImpl: size
 	^super new initializeCapacity: size
 !
 (reader addClassMethod: 'gravel')

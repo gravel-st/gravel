@@ -60,7 +60,7 @@
 	^self == comparand
 		ifTrue: [true]
 		ifFalse: 
-			[self species = comparand species
+			[self class = comparand class
 				ifTrue: [self asNanoSeconds = comparand asNanoSeconds]
 				ifFalse: [false]]
 !
@@ -126,7 +126,7 @@ minutes
 !
 (reader addMethod: 'gravel')
 !
-nanoSeconds
+nanoseconds
 	^nanos
 !
 (reader addMethod: 'gravel')
@@ -152,7 +152,7 @@ printOn: aStream
 	h := self hours abs.
 	m := self minutes abs.
 	s := self seconds abs truncated.
-	n := self nanoSeconds abs.
+	n := self nanoseconds abs.
 	self negative ifTrue: [aStream nextPut: $-].
 	d printOn: aStream.
 	aStream nextPut: $:.
@@ -209,7 +209,7 @@ ticks
 	^Array
 		with: self days
 		with: self hours * 3600 + (self minutes * 60) + self seconds truncated
-		with: self nanoSeconds
+		with: self nanoseconds
 !
 (reader addMethod: 'printing')
 !

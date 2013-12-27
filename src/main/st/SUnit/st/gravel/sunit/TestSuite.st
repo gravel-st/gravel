@@ -30,6 +30,11 @@ allTestsDo: aBlock
 !
 (reader addMethod: 'gravel')
 !
+debug
+	self tests do: [:each | each runCase]
+!
+(reader addMethod: 'gravel')
+!
 defaultResources
 	^self tests inject: OrderedCollection new
 		into: 

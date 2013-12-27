@@ -149,6 +149,14 @@ join: elemBlock with: sepString
 maxPrint
 	^5000
 !
+(reader addMethod: 'accessing')
+!
+occurrencesOf: anObject
+	| tally |
+	tally := 0.
+	self do: [:each | anObject = each ifTrue: [tally := tally + 1]].
+	^tally
+!
 (reader addMethod: 'parallel processing')
 !
 parallel: threadCount collect: collectBlock
@@ -209,10 +217,20 @@ defaultImplementation
 (reader addClassMethod: 'gravel')
 !
 new
-	^self new: 0
+	^self defaultImplementation newImpl
 !
 (reader addClassMethod: 'gravel')
 !
 new: initialSize
-	^self defaultImplementation new: initialSize
+	^self defaultImplementation newImpl: initialSize
+!
+(reader addClassMethod: 'gravel')
+!
+newImpl
+	^self newImpl: 0
+!
+(reader addClassMethod: 'gravel')
+!
+newImpl: initialSize
+	^self traitRequirement
 !

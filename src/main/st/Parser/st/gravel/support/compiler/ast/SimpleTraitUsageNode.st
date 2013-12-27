@@ -42,10 +42,10 @@ flattenClassDescriptionNode: aClassDescriptionNode {ClassDescriptionNode} in: aS
 				ifTrue: 
 					[canUnderstand
 						ifFalse: 
-							[n := n withMethodNode: (method
-												withBody: (SequenceNode statement: (SelfNode new send: 'traitRequirementNotDefined')))
-										ofTrait: reference]]
-				ifFalse: [canUnderstand ifFalse: [n := n withMethodNode: method ofTrait: reference]]].
+							[n := n withMethodNode: (self newTraitRequirementNotDefinedFor: method) ofTrait: reference]]
+				ifFalse: 
+					[(n includesSelector: method selector)
+						ifFalse: [n := n withMethodNode: method ofTrait: reference]]].
 	^n
 !
 (reader addMethod: 'initialize-release')

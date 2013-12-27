@@ -124,7 +124,7 @@ public class StringExtensions {
 		return rec + other;
 	}
 
-	public static boolean equals_(String receiver, String other) {
+	public static boolean equals_(String receiver, Object other) {
 		return (receiver == null && other == null)
 				|| (receiver != null && other != null && receiver.equals(other));
 	}

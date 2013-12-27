@@ -1,5 +1,12 @@
 (reader defineClass: 'GettableStreamTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperation
+	^[:e | e printString]
+!
 (reader addMethod: 'tests')
 !
 test_atEnd
@@ -41,7 +48,7 @@ test_nextMatchFor_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue nextMatchFor: self parameterAnObject.
+			res := testValue nextMatchFor: $a.
 			self assert: (self valueIsKindOfBoolean: res)]
 !
 (reader addMethod: 'tests')
@@ -50,7 +57,7 @@ test_next_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue next: self parameterAmount.
+			res := testValue next: 2.
 			self assert: (self valueIsKindOfSequencedReadableCollection: res)]
 !
 (reader addMethod: 'tests')
@@ -68,7 +75,7 @@ test_peekFor_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue peekFor: self parameterAnObject.
+			res := testValue peekFor: $a.
 			self assert: (self valueIsKindOfBoolean: res)]
 !
 (reader addMethod: 'tests')
@@ -77,16 +84,13 @@ test_skipTo_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue skipTo: self parameterAnObject.
+			res := testValue skipTo: $a.
 			self assert: (self valueIsKindOfBoolean: res)]
 !
 (reader addMethod: 'tests')
 !
 test_skip_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue skip: self parameterAmount]
+	self valuesDo: [:testValue | testValue skip: 2]
 !
 (reader addMethod: 'tests')
 !
@@ -94,6 +98,11 @@ test_upTo_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue upTo: self parameterAnObject.
+			res := testValue upTo: $a.
 			self assert: (self valueIsKindOfSequencedReadableCollection: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 'abc' readStream
 !

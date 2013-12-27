@@ -35,7 +35,7 @@ public class LargeIntegerExtensions {
 
 	public static BigInteger quo_(BigInteger receiver, Object argument) {
 		if (argument instanceof Integer)
-			return receiver.divide(BigInteger.valueOf((long) argument));
+			return receiver.divide(BigInteger.valueOf((int)argument));
 		if (argument instanceof BigInteger)
 			return receiver.divide((BigInteger) argument);
 		throw new IllegalArgumentException("argument.class: "
@@ -44,9 +44,18 @@ public class LargeIntegerExtensions {
 
 	public static BigInteger rem_(BigInteger receiver, Object argument) {
 		if (argument instanceof Integer)
-			return receiver.remainder(BigInteger.valueOf((long) argument));
+			return receiver.remainder(BigInteger.valueOf((int)argument));
 		if (argument instanceof BigInteger)
 			return receiver.remainder((BigInteger) argument);
+		throw new IllegalArgumentException("argument.class: "
+				+ argument.getClass());
+	}
+
+	public static BigInteger gcd_(BigInteger receiver, Object argument) {
+		if (argument instanceof Integer)
+			return receiver.gcd(BigInteger.valueOf((int)argument));
+		if (argument instanceof BigInteger)
+			return receiver.gcd((BigInteger) argument);
 		throw new IllegalArgumentException("argument.class: "
 				+ argument.getClass());
 	}

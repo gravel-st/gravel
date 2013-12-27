@@ -51,12 +51,6 @@ copyFrom: start to: stop
 do: aBlock
 	1 to: self size do: [:i | aBlock value: (self at: i)]
 !
-(reader addMethod: 'comparing')
-!
-hash
-	<primitive: 'hashCode'>
-	
-!
 (reader addMethod: 'gravel')
 !
 isString
@@ -87,6 +81,12 @@ tokensBasedOn: anObject
 (reader addClassMethod: '')
 !
 new: size
+	<primitive: #('st.gravel.support.jvm.StringExtensions' 'newInstance_')>
+	
+!
+(reader addClassMethod: '')
+!
+newImpl: size
 	<primitive: #('st.gravel.support.jvm.StringExtensions' 'newInstance_')>
 	
 !

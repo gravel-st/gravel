@@ -1,5 +1,37 @@
 (reader defineClass: 'NumberTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterFactor
+	^10
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperation
+	^[:e | e printString]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterScale
+	^4
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStep
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStop
+	^3
+!
 (reader addMethod: 'tests')
 !
 test_abs
@@ -93,7 +125,7 @@ test_ceiling
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -230,9 +262,11 @@ test_raisedTo_
 test_reciprocal
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue reciprocal.
-			self assert: res notNil]
+			testValue = 0
+				ifFalse: 
+					[| res |
+					res := testValue reciprocal.
+					self assert: res notNil]]
 !
 (reader addMethod: 'tests')
 !
@@ -293,9 +327,11 @@ test_slash_slash
 test_sqrt
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue sqrt.
-			self assert: (self valueIsKindOfNumber: res)]
+			testValue positive
+				ifTrue: 
+					[| res |
+					res := testValue sqrt.
+					self assert: (self valueIsKindOfNumber: res)]]
 !
 (reader addMethod: 'tests')
 !
@@ -347,10 +383,9 @@ test_to_by_
 test_to_by_do_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue to: self parameterStop
-						by: self parameterOperation
-						do: self parameterStep]
+			testValue to: self parameterStop
+				by: self parameterStep
+				do: self parameterOperation]
 !
 (reader addMethod: 'tests')
 !
@@ -377,4 +412,15 @@ test_truncateTo_
 			| res |
 			res := testValue truncateTo: self parameterFactor.
 			self assert: res notNil]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: -1.
+	aBlock value: 0.
+	aBlock value: 1.
+	aBlock value: 23489713298471982374981324.
+	aBlock value: '3.0'.
+	aBlock value: 721s.
+	aBlock value: 3 / 7
 !

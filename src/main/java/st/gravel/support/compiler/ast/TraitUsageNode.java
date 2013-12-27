@@ -17,6 +17,9 @@ import st.gravel.support.compiler.ast.SimpleTraitUsageNode;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.MetaclassNode;
+import st.gravel.support.compiler.ast.SequenceNode;
+import st.gravel.support.compiler.ast.SelfNode;
+import st.gravel.support.compiler.ast.SymbolLiteralNode;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.SourcePrinter;
 import st.gravel.support.compiler.ast.SourcePosition;
@@ -99,6 +102,10 @@ abstract public class TraitUsageNode extends Node implements Cloneable {
 	@Override
 	public TraitUsageNode localVarNamesDo_(final st.gravel.support.jvm.Block1<Object, String> _aBlock) {
 		return this;
+	}
+
+	public MethodNode newTraitRequirementNotDefinedFor_(final MethodNode _method) {
+		return _method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_with_("traitRequirementNotDefined:", SymbolLiteralNode.factory.value_(st.gravel.core.Symbol.value(_method.selector())))));
 	}
 
 	@Override

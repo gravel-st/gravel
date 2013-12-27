@@ -1,5 +1,12 @@
 (reader defineClass: 'CharacterFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterInteger
+	^1
+!
 (reader addMethod: 'tests')
 !
 test_codePoint_
@@ -44,4 +51,9 @@ test_tab
 			| res |
 			res := testValue tab.
 			self assert: (self valueIsKindOfCharacter: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Character
 !

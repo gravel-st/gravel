@@ -81,6 +81,11 @@ public class SelfNode extends StateAccessNode implements Cloneable {
 	}
 
 	@Override
+	public boolean isSelfNode() {
+		return true;
+	}
+
+	@Override
 	public SelfNode localVarNamesDo_(final st.gravel.support.jvm.Block1<Object, String> _aBlock) {
 		_aBlock.value_("self");
 		return this;

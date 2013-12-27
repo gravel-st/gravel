@@ -1,5 +1,17 @@
 (reader defineClass: 'PuttableStreamTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterACollection
+	^'fromage'
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterAnObject
+	^$a
+!
 (reader addMethod: 'tests')
 !
 test_cr
@@ -47,4 +59,9 @@ test_tab
 			[:testValue |
 			| res |
 			res := testValue tab]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: (WriteStream on: String new)
 !

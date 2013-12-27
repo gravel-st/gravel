@@ -1,5 +1,12 @@
 (reader defineClass: 'SequencedContractibleCollectionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterIndex
+	^2
+!
 (reader addMethod: 'tests')
 !
 test_removeAtIndex_
@@ -26,4 +33,9 @@ test_removeLast
 			| res |
 			res := testValue removeLast.
 			self assert: (self valueIsKindOfObject: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: #(#a #b #c) asOrderedCollection
 !

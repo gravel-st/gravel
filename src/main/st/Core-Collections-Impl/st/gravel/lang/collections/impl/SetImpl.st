@@ -41,6 +41,15 @@ do: aBlock
 includes: anObject
 	(array at: (self scanFor: anObject)) ifNil: [^false] ifNotNil: [^true]
 !
+(reader addMethod: 'private')
+!
+noCheckNoGrowFillFrom: anArray
+	1 to: anArray size
+		do: 
+			[:index |
+			(anArray at: index)
+				ifNotNil: [:object | array at: (self scanForEmptySlotFor: object) put: object]]
+!
 (reader addMethod: 'testing')
 !
 occurrencesOf: anObject
@@ -57,4 +66,9 @@ scanFor: anObject
 	(index := index \\ array size + 1) = start]
 			whileFalse.
 	self errorNoFreeSpace
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+defaultImplementation
+	^self
 !

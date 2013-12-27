@@ -44,12 +44,6 @@ do: aBlock
 	<primitive: #('st.gravel.support.jvm.SymbolExtensions' 'do_')>
 	
 !
-(reader addMethod: 'comparing')
-!
-hash
-	<primitive: 'hashCode'>
-	^super hash
-!
 (reader addMethod: 'gravel')
 !
 isLiteralSymbol

@@ -73,5 +73,5 @@ from: start to: stop
 (reader addClassMethod: 'gravel')
 !
 from: start to: stop by: step
-	^self new initializeFrom: start to: stop by: step
+	^super new initializeFrom: start to: stop by: step
 !

@@ -1,5 +1,42 @@
 (reader defineClass: 'IntegerTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterBase
+	^16
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterIndex
+	^23
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterMask
+	^170
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^7
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterScale
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterShift
+	^-4
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterValue
+	^1
+!
 (reader addMethod: 'tests')
 !
 test_allMask_
@@ -93,11 +130,9 @@ test_even
 (reader addMethod: 'tests')
 !
 test_factorial
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue factorial.
-			self assert: (self valueIsKindOfInteger: res)]
+	| res |
+	res := 10 factorial.
+	self assert: (self valueIsKindOfInteger: res)
 !
 (reader addMethod: 'tests')
 !
@@ -113,9 +148,11 @@ test_gcd_
 test_highBit
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue highBit.
-			self assert: (self valueIsKindOfInteger: res)]
+			testValue positive
+				ifTrue: 
+					[| res |
+					res := testValue highBit.
+					self assert: (self valueIsKindOfInteger: res)]]
 !
 (reader addMethod: 'tests')
 !
@@ -149,11 +186,10 @@ test_odd
 test_printOn_base_showRadix_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue
-						printOn: self parameterFlag
-						base: self parameterBase
-						showRadix: self parameterOutput]
+			testValue
+				printOn: (WriteStream on: String new)
+				base: 16
+				showRadix: true]
 !
 (reader addMethod: 'tests')
 !
@@ -163,4 +199,13 @@ test_printStringRadix_
 			| res |
 			res := testValue printStringRadix: self parameterBase.
 			self assert: (self valueIsKindOfReadableString: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 1.
+	aBlock value: -1.
+	aBlock value: 3485792834759872345907.
+	aBlock value: 1234324.
+	aBlock value: -48592837213134123312
 !

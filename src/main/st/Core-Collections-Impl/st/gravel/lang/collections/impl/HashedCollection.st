@@ -94,12 +94,12 @@ goodPrimes
 !
 (reader addClassMethod: 'instance creation')
 !
-new
+newImpl
 	^self basicNew initialize: 5
 !
 (reader addClassMethod: 'instance creation')
 !
-new: nElements
+newImpl: nElements
 	^self basicNew initialize: (self sizeFor: nElements)
 !
 (reader addClassMethod: 'sizing')

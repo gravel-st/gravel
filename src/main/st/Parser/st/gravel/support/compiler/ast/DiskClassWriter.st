@@ -8,7 +8,7 @@
 !
 asLiteralNode: aValue {String | Nil} {^Expression}
 	aValue isNil ifTrue: [^NilLiteralNode new].
-	^StringLiteralNode value: aValue
+	^StringLiteralNode value: aValue asString
 !
 (reader addMethod: 'accessing')
 !

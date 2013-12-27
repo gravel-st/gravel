@@ -178,6 +178,11 @@ public class KeywordMessageNode extends MessageNode implements Cloneable {
 	}
 
 	@Override
+	public boolean isTraitRequirementMessage() {
+		return _receiver.isSelfNode() && st.gravel.support.jvm.StringExtensions.equals_(_selector, "traitRequirementNotDefined:");
+	}
+
+	@Override
 	public KeywordMessageNode localVarNamesDo_(final st.gravel.support.jvm.Block1<Object, String> _aBlock) {
 		return this;
 	}

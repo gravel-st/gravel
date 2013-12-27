@@ -1,9 +1,11 @@
 (reader defineClass: 'CharacterTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_asLowercase
-	receiver result receiver self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue asLowercase.
@@ -21,7 +23,7 @@ test_asString
 (reader addMethod: 'tests')
 !
 test_asUppercase
-	receiver result receiver self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue asUppercase.
@@ -39,7 +41,7 @@ test_codePoint
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -89,4 +91,9 @@ test_isUppercase
 			| res |
 			res := testValue isUppercase.
 			self assert: (self valueIsKindOfBoolean: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	'abcde$_' do: aBlock
 !

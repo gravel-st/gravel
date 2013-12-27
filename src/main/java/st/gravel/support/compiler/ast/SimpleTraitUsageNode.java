@@ -16,8 +16,6 @@ import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.SystemNode;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
-import st.gravel.support.compiler.ast.SequenceNode;
-import st.gravel.support.compiler.ast.SelfNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.CompositeTraitUsageNode;
 import st.gravel.support.compiler.ast.SourcePrinter;
@@ -134,10 +132,10 @@ public class SimpleTraitUsageNode extends TraitUsageNode implements Cloneable {
 				_canUnderstand = _n[0].canUnderstand_in_(_method.selector(), _aSystemNode);
 				if (_method.isTraitRequirement()) {
 					if (!_canUnderstand) {
-						return _n[0] = _n[0].withMethodNode_ofTrait_(_method.withBody_(SequenceNode.factory.statement_(SelfNode.factory.basicNew().send_("traitRequirementNotDefined"))), _reference);
+						return _n[0] = _n[0].withMethodNode_ofTrait_(SimpleTraitUsageNode.this.newTraitRequirementNotDefinedFor_(_method), _reference);
 					}
 				} else {
-					if (!_canUnderstand) {
+					if (!_n[0].includesSelector_(_method.selector())) {
 						return _n[0] = _n[0].withMethodNode_ofTrait_(_method, _reference);
 					}
 				}

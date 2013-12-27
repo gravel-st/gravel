@@ -26,5 +26,5 @@ duration: aDuration
 (reader addClassMethod: 'As yet unclassified')
 !
 forMilliseconds: ms
-	^self duration: ms milliSeconds
+	^self duration: ms milliseconds
 !

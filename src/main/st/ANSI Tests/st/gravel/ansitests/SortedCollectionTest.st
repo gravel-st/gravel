@@ -1,5 +1,42 @@
 (reader defineClass: 'SortedCollectionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^#(#d #e #f)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElement
+	^#zuurkool
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElements
+	^#(#d #e #f)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStart
+	^2
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStop
+	^3
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetElement
+	^#b
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetElements
+	^#(#a)
+!
 (reader addMethod: 'tests')
 !
 test_add_
@@ -52,8 +89,8 @@ test_copyReplaceFrom_to_withObject_
 			[:testValue |
 			| res |
 			res := testValue
-						copyReplaceFrom: self parameterStop
-						to: self parameterStart
+						copyReplaceFrom: self parameterStart
+						to: self parameterStop
 						withObject: self parameterReplacementElement.
 			self assert: (self valueIsKindOfSortedCollection: res)]
 !
@@ -103,6 +140,11 @@ test_sortBlock_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue sortBlock: self parameterDiscriminator.
+			res := testValue sortBlock: [:a :b | a printString < b printString].
 			self assert: (self valueIsKindOfSortedCollection: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: #(#c #b #a) asSortedCollection
 !

@@ -1,5 +1,7 @@
 (reader defineClass: 'ClassDescriptionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_allSubclasses
@@ -42,6 +44,13 @@ test_superclass
 			[:testValue |
 			| res |
 			res := testValue superclass.
-			self assert: (self valueIsKindOfClassDescription: res).
-			self assert: (self valueIsKindOfNil: res)]
+			self assert: (res isNil or: [self valueIsKindOfClassDescription: res])]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Object.
+	aBlock value: Object class.
+	aBlock value: String.
+	aBlock value: String class
 !

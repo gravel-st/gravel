@@ -220,4 +220,9 @@ public class MethodTools {
 		}
 	}
 
+	public static void debugTest(String reference, String selector) throws Throwable {
+		Object testcase = ImageBootstrapper.systemMapping.singletonAtReferenceString_(reference);
+		MethodTools.perform(testcase, "debug:", (Symbol.value(selector)));
+	}
+
 }

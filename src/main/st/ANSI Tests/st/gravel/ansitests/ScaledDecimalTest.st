@@ -1,5 +1,7 @@
 (reader defineClass: 'ScaledDecimalTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_scale
@@ -8,4 +10,9 @@ test_scale
 			| res |
 			res := testValue scale.
 			self assert: (self valueIsKindOfInteger: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 2s
 !

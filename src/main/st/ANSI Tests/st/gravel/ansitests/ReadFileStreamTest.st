@@ -1,5 +1,17 @@
 (reader defineClass: 'ReadFileStreamTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterAmount
+	^2
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterAnObject
+	^$b
+!
 (reader addMethod: 'tests')
 !
 test_next_
@@ -17,4 +29,9 @@ test_upTo_
 			| res |
 			res := testValue upTo: self parameterAnObject.
 			self assert: (self valueIsKindOfSequencedReadableCollection: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 'abc' readStream
 !

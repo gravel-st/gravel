@@ -169,7 +169,6 @@ keysDo: aBlock
 (reader addMethod: 'private')
 !
 noCheckNoGrowFillFrom: anArray
-	<squeak>
 	1 to: anArray size
 		do: 
 			[:index |
@@ -232,6 +231,11 @@ values
 valuesDo: aBlock
 	<squeak>
 	self associationsDo: [:association | aBlock value: association value]
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+defaultImplementation
+	^self
 !
 (reader addClassMethod: 'instance creation')
 !

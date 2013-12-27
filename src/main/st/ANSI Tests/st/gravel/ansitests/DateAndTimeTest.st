@@ -1,5 +1,17 @@
 (reader defineClass: 'DateAndTimeTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOffset
+	^30 minutes
+!
+(reader addMethod: 'tests')
+!
+parameterOperand
+	^Timestamp readFrom: '12/26/2013 8:11:02.038' readStream
+!
 (reader addMethod: 'tests')
 !
 test_asLocal
@@ -66,7 +78,7 @@ test_dayOfYear
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -131,10 +143,8 @@ test_meridianAbbreviation
 test_minus
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue - self parameterOperand.
-			self assert: (self valueIsKindOfDuration: res).
-			self assert: (self valueIsKindOfDateAndTime: res)]
+			self assert: (self valueIsKindOfDuration: testValue - testValue).
+			self assert: (self valueIsKindOfDateAndTime: testValue - 1 seconds)]
 !
 (reader addMethod: 'tests')
 !
@@ -252,4 +262,9 @@ test_year
 			| res |
 			res := testValue year.
 			self assert: (self valueIsKindOfInteger: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Timestamp now
 !

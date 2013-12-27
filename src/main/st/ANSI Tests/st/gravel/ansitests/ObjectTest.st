@@ -1,5 +1,27 @@
 (reader defineClass: 'ObjectTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterCandidateClass
+	^Number
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterMessage
+	^Message selector: #foo: arguments: #(1)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSelector
+	^#printString
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterSignalerText
+	^'fromage'
+!
 (reader addMethod: 'tests')
 !
 test_class
@@ -23,14 +45,16 @@ test_copy
 test_doesNotUnderstand_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue doesNotUnderstand: self parameterMessage.
-			self assert: (self valueIsKindOfObject: res)]
+			| reachedHandler |
+			reachedHandler := false.
+			[testValue doesNotUnderstand: self parameterMessage] on: MessageNotUnderstood
+				do: [:ex | reachedHandler := true].
+			self assert: reachedHandler]
 !
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -50,8 +74,14 @@ test_equals_equals
 test_error_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue error: self parameterSignalerText]
+			| reachedHandler |
+			reachedHandler := false.
+			[testValue error: self parameterSignalerText] on: Error
+				do: 
+					[:ex |
+					self assert: ex messageText = self parameterSignalerText.
+					reachedHandler := true].
+			self assert: reachedHandler]
 !
 (reader addMethod: 'tests')
 !
@@ -110,7 +140,7 @@ test_notNil
 (reader addMethod: 'tests')
 !
 test_perform_
-	message not understood message not understood self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue perform: self parameterSelector.
@@ -119,53 +149,40 @@ test_perform_
 (reader addMethod: 'tests')
 !
 test_perform_withArguments_
-	message not understood message not understood self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue perform: self parameterSelector withArguments: self parameterArguments.
-			self assert: (self valueIsKindOfANY: res)]
+	| res |
+	res := #(1) perform: #, withArguments: #(#(2 3)).
+	self assert: res = #(1 2 3)
 !
 (reader addMethod: 'tests')
 !
 test_perform_with_
-	message not understood message not understood self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue perform: self parameterArgument1 with: self parameterSelector.
-			self assert: (self valueIsKindOfANY: res)]
+	| res |
+	res := #(1) perform: #copyWith: with: 2.
+	self assert: res = #(1 2)
 !
 (reader addMethod: 'tests')
 !
 test_perform_with_with_
-	message not understood message not understood self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue
-						perform: self parameterSelector
-						with: self parameterArgument1
-						with: self parameterArgument2.
-			self assert: (self valueIsKindOfANY: res)]
+	| res |
+	res := 1 perform: #to:by: with: 2 with: 1.
+	self assert: res isInterval
 !
 (reader addMethod: 'tests')
 !
 test_perform_with_with_with_
-	message not understood message not understood self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue
-						perform: self parameterArgument3
-						with: self parameterArgument1
-						with: self parameterArgument2
-						with: self parameterSelector.
-			self assert: (self valueIsKindOfANY: res)]
+	| blockReached |
+	blockReached := false.
+	1
+		perform: #to:by:do:
+		with: 2
+		with: 1
+		with: [:i | blockReached := true].
+	self assert: blockReached
 !
 (reader addMethod: 'tests')
 !
 test_printOn_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue printOn: self parameterTarget]
+	self valuesDo: [:testValue | testValue printOn: (WriteStream on: String new)]
 !
 (reader addMethod: 'tests')
 !
@@ -188,7 +205,7 @@ test_respondsTo_
 (reader addMethod: 'tests')
 !
 test_tilde_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue ~= self parameterComparand.
@@ -211,4 +228,9 @@ test_yourself
 			| res |
 			res := testValue yourself.
 			self assert: (self valueIsKindOfObject: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: Object new
 !

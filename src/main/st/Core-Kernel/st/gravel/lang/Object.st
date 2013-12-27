@@ -14,12 +14,11 @@
 	<primitive: #('st.gravel.support.jvm.ObjectExtensions' 'identityEquals_')>
 	
 !
-(reader addMethod: 'class membership')
+(reader addMethod: '')
 !
-class
-	<primitive: #('org.gravel.support.jvm.ObjectExtensions' 'r_class')>
-	<squeak>
-	self primitiveFailed
+breakpoint
+	<primitive: #('st.gravel.support.jvm.ObjectExtensions' 'breakpoint')>
+	
 !
 (reader addMethod: 'copying')
 !
@@ -40,7 +39,7 @@ doesNotUnderstand: aSelector arguments: arguments
 (reader addMethod: 'error handling')
 !
 error: aString
-	^Error new signal: aString
+	^Error raiseSignal: aString
 !
 (reader addMethod: 'gravel')
 !
@@ -185,7 +184,14 @@ shallowCopy
 (reader addMethod: 'error handling')
 !
 subclassResponsibility
-	^self error: 'My subclass should have overridden this message'
+	^SubclassResponsibilityError
+		raiseSignal: 'My subclass should have overridden this message'
+!
+(reader addMethod: 'error handling')
+!
+traitRequirementNotDefined: aSymbol
+	^TraitRequirementNotDefined
+		raiseSignal: 'Trait requirement is not defined: ' , aSymbol printString
 !
 (reader addMethod: 'gravel')
 !

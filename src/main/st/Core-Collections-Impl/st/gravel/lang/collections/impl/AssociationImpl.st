@@ -40,6 +40,11 @@ printOn: aStream
 value
 	^value
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+defaultImplementation
+	^self
+!
 (reader addClassMethod: 'instance creation')
 !
 key: aClass value: anInteger

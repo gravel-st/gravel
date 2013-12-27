@@ -123,5 +123,12 @@ public class ObjectExtensions {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static Object breakpoint(Object receiver) {
+		receiver.toString();
+		return receiver;
+	}
+	
+	
 
 }

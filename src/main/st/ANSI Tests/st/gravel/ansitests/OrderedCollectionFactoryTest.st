@@ -1,5 +1,7 @@
 (reader defineClass: 'OrderedCollectionFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_new
@@ -69,4 +71,9 @@ test_with_with_with_with_
 						with: self parameterElement3
 						with: self parameterElement1.
 			self assert: (self valueIsKindOfOrderedCollection: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: OrderedCollection
 !

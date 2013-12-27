@@ -1,5 +1,7 @@
 (reader defineClass: 'FailedMessageTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'tests')
 !
 test_arguments
@@ -17,4 +19,9 @@ test_selector
 			| res |
 			res := testValue selector.
 			self assert: (self valueIsKindOfSelector: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	[1 zork] on: MessageNotUnderstood do: [:ex | aBlock value: ex parameter]
 !

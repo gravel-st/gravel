@@ -1,9 +1,19 @@
 (reader defineClass: 'Integer' superclass: 'st.gravel.lang.Number')
 !
+(reader addMethod: 'arithmetic')
+!
+/ aNumber
+	^aNumber quotientFromInteger: self
+!
 (reader addMethod: 'gravel')
 !
 > aMagnitude
 	^aMagnitude < self
+!
+(reader addMethod: 'arithmetic')
+!
+abs
+	^self < 0 ifTrue: [0 - self] ifFalse: [self]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -41,10 +51,20 @@ factorial
 	2 to: self do: [:i | tmp := tmp * i].
 	^tmp
 !
+(reader addMethod: 'As yet unclassified')
+!
+hashMultiply
+	^(self bitAnd: 268435455) hashMultiply
+!
 (reader addMethod: 'testing')
 !
 isInteger
 	^true
+!
+(reader addMethod: 'testing')
+!
+isZero
+	^self = 0
 !
 (reader addMethod: 'gravel')
 !
@@ -60,6 +80,11 @@ printOn: aStream
 !
 printOn: aStream base: base
 	aStream nextPutAll: (self printBase: base)
+!
+(reader addMethod: 'arithmetic')
+!
+quotientFromInteger: aNumber
+	^Fraction reducedNumerator: aNumber denominator: self
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -97,4 +122,9 @@ tinyBenchmarks
 !
 to: stop
 	^Interval from: self to: stop by: 1
+!
+(reader addMethod: 'converting')
+!
+truncated
+	^self
 !

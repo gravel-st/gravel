@@ -12,6 +12,21 @@ asJavaMap
 	self keysAndValuesDo: [:k :v | dict at: k put: v].
 	^dict
 !
+(reader addMethod: 'accessing')
+!
+at: key ifAbsent: aBlock
+	^self traitRequirement
+!
+(reader addMethod: 'accessing')
+!
+at: key ifAbsentPut: valueBlock
+	^self at: key ifAbsent: [self at: key put: valueBlock value]
+!
+(reader addMethod: 'accessing')
+!
+at: key put: value
+	^self traitRequirement
+!
 (reader addMethod: 'requirements')
 !
 keysAndValuesDo: aBlock

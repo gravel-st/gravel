@@ -12,17 +12,12 @@ hours
 !
 (reader addMethod: 'durations')
 !
-microSeconds
+microseconds
 	^Duration microSeconds: self
 !
 (reader addMethod: 'durations')
 !
-microseconds
-	^self microSeconds
-!
-(reader addMethod: 'durations')
-!
-milliSeconds
+milliseconds
 	^Duration milliSeconds: self
 !
 (reader addMethod: 'durations')
@@ -32,7 +27,7 @@ minutes
 !
 (reader addMethod: 'durations')
 !
-nanoSeconds
+nanoseconds
 	^Duration nanoSeconds: self
 !
 (reader addMethod: 'durations')

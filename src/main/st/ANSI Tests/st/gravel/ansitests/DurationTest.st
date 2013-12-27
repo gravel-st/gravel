@@ -1,5 +1,12 @@
 (reader defineClass: 'DurationTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^1 seconds
+!
 (reader addMethod: 'tests')
 !
 test_abs
@@ -30,7 +37,7 @@ test_days
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -141,8 +148,7 @@ test_slash
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue / self parameterOperand.
-			self assert: (self valueIsKindOfNumber: res).
+			res := testValue / 3.
 			self assert: (self valueIsKindOfDuration: res)]
 !
 (reader addMethod: 'tests')
@@ -151,6 +157,12 @@ test_times
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue * self parameterOperand.
+			res := testValue * 3.
 			self assert: (self valueIsKindOfDuration: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 1 milliseconds.
+	aBlock value: 1 milliseconds + 100 days
 !

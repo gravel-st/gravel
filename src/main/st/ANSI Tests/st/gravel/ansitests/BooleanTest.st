@@ -1,5 +1,12 @@
 (reader defineClass: 'BooleanTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperand
+	^true
+!
 (reader addMethod: 'tests')
 !
 test_and
@@ -12,10 +19,10 @@ test_and
 (reader addMethod: 'tests')
 !
 test_and_
-	Short circuit self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue and: self parameterOperand.
+			res := testValue and: [1 = 2].
 			self assert: (self valueIsKindOfBoolean: res)]
 !
 (reader addMethod: 'tests')
@@ -42,7 +49,7 @@ test_ifFalse_ifTrue_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue ifFalse: self parameterFalseOperand ifTrue: self parameterTrueOperand.
+			res := testValue ifFalse: [#f] ifTrue: [#t].
 			self assert: (self valueIsKindOfANY: res)]
 !
 (reader addMethod: 'tests')
@@ -60,7 +67,7 @@ test_ifTrue_ifFalse_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue ifTrue: self parameterTrueOperand ifFalse: self parameterFalseOperand.
+			res := testValue ifTrue: [#t] ifFalse: [#f].
 			self assert: (self valueIsKindOfANY: res)]
 !
 (reader addMethod: 'tests')
@@ -75,10 +82,10 @@ test_not
 (reader addMethod: 'tests')
 !
 test_or_
-	Short circuit self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue or: self parameterOperand.
+			res := testValue or: [1 = 2].
 			self assert: (self valueIsKindOfBoolean: res)]
 !
 (reader addMethod: 'tests')
@@ -107,4 +114,10 @@ test_xor_
 			| res |
 			res := testValue xor: self parameterOperand.
 			self assert: (self valueIsKindOfBoolean: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: true.
+	aBlock value: false
 !

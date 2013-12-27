@@ -1,13 +1,83 @@
 (reader defineClass: 'SequencedReadableCollectionTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterExceptionHandler
+	^[#ex]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterIndex
+	^1
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterNewElement
+	^$z
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOldElement
+	^1
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOperation
+	^[:e | e printString]
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterOtherCollection: anInteger
+	^Array new: anInteger withAll: #fromage
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElement
+	^$c
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterReplacementElements
+	^#(#kaas #aap)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStart
+	^1
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterStop
+	^2
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTarget
+	^#b
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetElement
+	^$a
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetElements
+	^#(1)
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterTargetSequence
+	^'bc'
+!
 (reader addMethod: 'tests')
 !
 test_after_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue after: self parameterTarget.
-			self assert: (self valueIsKindOfObject: res)]
+	| res |
+	res := #(#a #b #c) after: self parameterTarget.
+	self assert: res = #c
 !
 (reader addMethod: 'tests')
 !
@@ -21,21 +91,30 @@ test_at_
 (reader addMethod: 'tests')
 !
 test_at_ifAbsent_
+	| handlerReached |
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue at: self parameterIndex ifAbsent: self parameterExceptionBlock.
-			self assert: (self valueIsKindOfANY: res).
-			self assert: (self valueIsKindOfObject: res)]
+			handlerReached := false.
+			res := testValue at: 1
+						ifAbsent: 
+							[handlerReached := true.
+							Object new].
+			self deny: handlerReached.
+			self assert: res = testValue first.
+			res := testValue at: -1
+						ifAbsent: 
+							[handlerReached := true.
+							#foo].
+			self assert: handlerReached.
+			self assert: res = #foo]
 !
 (reader addMethod: 'tests')
 !
 test_before_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue before: self parameterTarget.
-			self assert: (self valueIsKindOfObject: res)]
+	| res |
+	res := #(#a #b #c) before: self parameterTarget.
+	self assert: res = #a
 !
 (reader addMethod: 'tests')
 !
@@ -43,7 +122,7 @@ test_comma
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue , self parameterOperand.
+			res := testValue , 'abc'.
 			self assert: (self valueIsKindOfSequencedReadableCollection: res)]
 !
 (reader addMethod: 'tests')
@@ -84,9 +163,9 @@ test_copyReplaceFrom_to_with_
 			[:testValue |
 			| res |
 			res := testValue
-						copyReplaceFrom: self parameterStop
-						to: self parameterStart
-						with: self parameterReplacementElements.
+						copyReplaceFrom: self parameterStart
+						to: self parameterStop
+						with: 'def'.
 			self assert: (self valueIsKindOfSequencedReadableCollection: res)]
 !
 (reader addMethod: 'tests')
@@ -128,7 +207,7 @@ test_do_
 (reader addMethod: 'tests')
 !
 test_equals
-	equivalent equivalent self valuesDo: 
+	self valuesDo: 
 			[:testValue |
 			| res |
 			res := testValue = self parameterComparand.
@@ -177,11 +256,10 @@ test_from_to_do_
 test_from_to_keysAndValuesDo_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue
-						from: self parameterStart
-						to: self parameterStop
-						keysAndValuesDo: self parameterOperation]
+			testValue
+				from: self parameterStart
+				to: self parameterStop
+				keysAndValuesDo: [:i :v | ]]
 !
 (reader addMethod: 'tests')
 !
@@ -201,10 +279,9 @@ test_indexOfSubCollection_startingAt_ifAbsent_
 			| res |
 			res := testValue
 						indexOfSubCollection: self parameterTargetSequence
-						startingAt: self parameterExceptionHandler
-						ifAbsent: self parameterStart.
-			self assert: (self valueIsKindOfObject: res).
-			self assert: (self valueIsKindOfInteger: res)]
+						startingAt: self parameterStart
+						ifAbsent: self parameterExceptionHandler.
+			self assert: (self valueIsKindOfInteger: res) | (res = #ex)]
 !
 (reader addMethod: 'tests')
 !
@@ -221,17 +298,13 @@ test_indexOf_ifAbsent_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue indexOf: self parameterExceptionHandler ifAbsent: self parameterTarget.
-			self assert: (self valueIsKindOfObject: res).
-			self assert: (self valueIsKindOfInteger: res)]
+			res := testValue indexOf: self parameterTarget ifAbsent: self parameterExceptionHandler.
+			self assert: (self valueIsKindOfInteger: res) | (res = #ex)]
 !
 (reader addMethod: 'tests')
 !
 test_keysAndValuesDo_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue keysAndValuesDo: self parameterOperation]
+	self valuesDo: [:testValue | testValue keysAndValuesDo: [:k :v | ]]
 !
 (reader addMethod: 'tests')
 !
@@ -262,8 +335,14 @@ test_reverseDo_
 (reader addMethod: 'tests')
 !
 test_with_do_
-	self valuesDo: 
-			[:testValue |
-			| res |
-			res := testValue with: self parameterOtherCollection do: self parameterOperation]
+	self
+		valuesDo: [:testValue | testValue with: (self parameterOtherCollection: testValue size) do: [:a :b | ]]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: 'abc'.
+	aBlock value: #(1 2 3).
+	aBlock value: (OrderedCollection with: 1 with: #zork).
+	aBlock value: (1 to: 10)
 !

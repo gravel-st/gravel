@@ -46,6 +46,12 @@ compressed
 !
 (reader addMethod: '')
 !
+gcd: anInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'gcd_')>
+	
+!
+(reader addMethod: '')
+!
 printBase: base
 	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'printBase_')>
 	

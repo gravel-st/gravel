@@ -61,6 +61,11 @@ innerSourceSendOn: aStream {WStream[Char]} {^Self}
 !
 (reader addMethod: 'As yet unclassified')
 !
+isTraitRequirementMessage {^Bool}
+	^receiver isSelfNode and: [selector = 'traitRequirementNotDefined:']
+!
+(reader addMethod: 'As yet unclassified')
+!
 nodesDo: aBlock {[Node, ^Object]}
 	aBlock value: receiver.
 	arguments do: aBlock

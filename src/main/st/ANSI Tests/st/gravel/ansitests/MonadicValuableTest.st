@@ -1,5 +1,12 @@
 (reader defineClass: 'MonadicValuableTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterArgument
+	^3
+!
 (reader addMethod: 'tests')
 !
 test_argumentCount
@@ -17,4 +24,9 @@ test_value_
 			| res |
 			res := testValue value: self parameterArgument.
 			self assert: (self valueIsKindOfANY: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: [:a | a + 4]
 !

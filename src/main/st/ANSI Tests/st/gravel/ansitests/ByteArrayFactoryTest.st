@@ -1,5 +1,32 @@
 (reader defineClass: 'ByteArrayFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement1
+	^0
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement2
+	^255
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement3
+	^1
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterElement4
+	^128
+!
+(reader addMethod: 'As yet unclassified')
+!
+parameterNewElements
+	^#(0 1 2 3)
+!
 (reader addMethod: 'tests')
 !
 test_new
@@ -69,4 +96,9 @@ test_with_with_with_with_
 						with: self parameterElement4
 						with: self parameterElement2.
 			self assert: (self valueIsKindOfByteArray: res)]
+!
+(reader addMethod: 'As yet unclassified')
+!
+valuesDo: aBlock
+	aBlock value: ByteArray
 !

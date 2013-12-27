@@ -20,28 +20,8 @@ do: aBlock
 	<primitive: #('st.gravel.support.jvm.CollectionExtensions' 'do_')>
 	
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'instance creation')
 !
-with: anObject
-	| newCollection |
-	newCollection := self new.
-	newCollection add: anObject.
-	^newCollection
-!
-(reader addClassMethod: 'gravel')
-!
-with: anObject1 with: anObject2
-	| newCollection |
-	newCollection := self new.
-	newCollection add: anObject1.
-	newCollection add: anObject2.
-	^newCollection
-!
-(reader addClassMethod: 'gravel')
-!
-withAll: aCollection
-	| newCollection |
-	newCollection := self new.
-	newCollection addAll: aCollection.
-	^newCollection
+newImpl: anInteger
+	^self basicNew
 !

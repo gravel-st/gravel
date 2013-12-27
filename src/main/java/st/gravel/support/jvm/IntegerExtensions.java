@@ -249,5 +249,18 @@ public class IntegerExtensions {
 	public static int rem_(int receiver, int other) {
 		return receiver % other;
 	}
+	
+	public static int hashMultiply(int receiver) {
+		int low14Bits = receiver & 0x3FFF;
+		int a = receiver >> 14;
+		int b = 0x0065 * low14Bits;
+		int c = 0x260D * a + b;
+		int d = c & 0x3FFF;
+		int e = 0x260D * low14Bits;
+		int f = 16384 * d;
+		int g = f + e;
+		return g & 0xFFFFFFF;
+	}
+	
 
 }

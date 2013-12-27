@@ -10,6 +10,11 @@ accept: visitor {NodeVisitor[X def]} {^X}
 innerSourceOn: aStream {WStream[Char]} {^Self}
 	aStream nextPutAll: '{self}'
 !
+(reader addMethod: 'testing')
+!
+isSelfNode {^Bool}
+	^true
+!
 (reader addMethod: 'As yet unclassified')
 !
 localVarNamesDo: aBlock {[Str, ^Object]} {^Self}
