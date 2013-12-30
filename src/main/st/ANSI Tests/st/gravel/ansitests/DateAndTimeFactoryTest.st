@@ -30,7 +30,7 @@ parameterMonth
 (reader addMethod: 'As yet unclassified')
 !
 parameterOffset
-	^-3
+	^-1 hours
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -110,13 +110,13 @@ test_year_month_day_hour_minute_second_offset_
 			[:testValue |
 			| res |
 			res := testValue
-						year: self parameterMinute
-						month: self parameterHour
-						day: self parameterMonth
-						hour: self parameterSecond
-						minute: self parameterOffset
-						second: self parameterDayOfMonth
-						offset: self parameterYear.
+						year: self parameterYear
+						month: self parameterMonth
+						day: self parameterDayOfMonth
+						hour: self parameterHour
+						minute: self parameterMinute
+						second: self parameterSecond
+						offset: self parameterOffset.
 			self assert: (self valueIsKindOfDateAndTime: res)]
 !
 (reader addMethod: 'As yet unclassified')

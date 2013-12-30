@@ -334,7 +334,7 @@ public class ClassNode extends ClassDescriptionNode implements Cloneable {
 		final String _prop;
 		String _temp1 = _properties.get("isSystemTest");
 		_prop = ((String) _temp1);
-		return st.gravel.support.jvm.StringExtensions.equals_(_prop, "true");
+		return (_prop != null) && (!st.gravel.support.jvm.StringExtensions.equals_(_prop, "false"));
 	}
 
 	@Override

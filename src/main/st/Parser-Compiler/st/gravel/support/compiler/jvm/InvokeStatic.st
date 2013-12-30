@@ -12,6 +12,11 @@ effectStack: aJVMStack {JVMStack} {^JVMInstruction}
 	signature returnType isVoidType ifFalse: [aJVMStack push: signature returnType].
 	^self
 !
+(reader addMethod: 'testing')
+!
+isInvokeStatic {^Bool}
+	^true
+!
 (reader addMethod: 'As yet unclassified')
 !
 staticSignature {^JVMMethodType}

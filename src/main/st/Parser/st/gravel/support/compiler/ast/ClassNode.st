@@ -130,9 +130,9 @@ isNilClass {^Bool}
 (reader addMethod: 'As yet unclassified')
 !
 isSystemTest {^Bool}
-	| prop {Nil | Str} |
+	| prop {Str | Nil} |
 	prop := properties at: 'isSystemTest' ifAbsent: [nil].
-	^prop = 'true'
+	^prop notNil and: [(prop = 'false') not]
 !
 (reader addMethod: 'testing')
 !

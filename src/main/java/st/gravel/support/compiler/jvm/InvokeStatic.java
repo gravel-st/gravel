@@ -80,6 +80,11 @@ public class InvokeStatic extends Invoke implements Cloneable {
 	}
 
 	@Override
+	public boolean isInvokeStatic() {
+		return true;
+	}
+
+	@Override
 	public InvokeStatic printOn_(final StringBuilder _aStream) {
 		final String _title;
 		_title = this.factory().toString();

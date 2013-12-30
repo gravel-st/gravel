@@ -47,6 +47,11 @@ initialize: n
 !
 (reader addMethod: 'removing')
 !
+rehash
+	
+!
+(reader addMethod: 'removing')
+!
 removeAll
 	self initialize: self capacity
 !

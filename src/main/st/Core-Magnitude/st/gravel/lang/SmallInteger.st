@@ -4,27 +4,23 @@
 !
 (reader addMethod: 'arithmetic')
 !
-* anObject
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'multiply_')>
-	
+* operand
+	^operand productFromSmallInteger: self
 !
 (reader addMethod: 'arithmetic')
 !
-+ anObject
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'plus_')>
-	
++ operand
+	^operand sumFromSmallInteger: self
 !
 (reader addMethod: 'arithmetic')
 !
-- anObject
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'minus_')>
-	
+- operand
+	^operand differenceFromSmallInteger: self
 !
 (reader addMethod: 'arithmetic')
 !
-// anObject
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerDivision_')>
-	
+// operand
+	^operand integerQuotientFromSmallInteger: self
 !
 (reader addMethod: '')
 !
@@ -61,10 +57,33 @@ bitXor: anObject
 compressed
 	^self
 !
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'differenceFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'differenceFromSmallInteger_')>
+	
+!
 (reader addMethod: 'arithmetic')
 !
-gcd: anInteger
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'gcd_')>
+gcd: aNumber
+	^aNumber gcdFromSmallInteger: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+gcdFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'gcdFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+gcdFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'gcdFromSmallInteger_')>
 	
 !
 (reader addMethod: 'comparing')
@@ -86,16 +105,67 @@ hashMultiply
 	g := (f + e).
 	^(g bitAnd: 268435455)
 !
+(reader addMethod: 'private-arithmetic')
+!
+integerQuotientFromLargeInteger: anObject
+	<
+	primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerQuotientFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+integerQuotientFromSmallInteger: anObject
+	<
+	primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerQuotientFromSmallInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+moduloQuotientFromLargeInteger: anObject
+	<
+	primitive: #('st.gravel.support.jvm.IntegerExtensions' 'moduloQuotientFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+moduloQuotientFromSmallInteger: anObject
+	<
+	primitive: #('st.gravel.support.jvm.IntegerExtensions' 'moduloQuotientFromSmallInteger_')>
+	
+!
 (reader addMethod: '')
 !
 printBase: base
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'printBase_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'private-arithmetic')
 !
-quo: aNumber
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'quo_')>
+productFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'productFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'productFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
+quo: operand
+	^operand quoFromSmallInteger: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+quoFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'quoFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quoFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'quoFromSmallInteger_')>
 	
 !
 (reader addMethod: '')
@@ -106,8 +176,31 @@ raisedToInteger: aNumber
 !
 (reader addMethod: '')
 !
-rem: aNumber
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'rem_')>
+rem: operand
+	^operand remFromSmallInteger: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+remFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'remFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+remFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'remFromSmallInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'sumFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'sumFromSmallInteger_')>
 	
 !
 (reader addMethod: 'gravel')
@@ -123,7 +216,6 @@ toMinimumGenerality
 !
 (reader addMethod: 'arithmetic')
 !
-\\ anObject
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerRemainder_')>
-	
+\\ operand
+	^operand moduloQuotientFromSmallInteger: self
 !

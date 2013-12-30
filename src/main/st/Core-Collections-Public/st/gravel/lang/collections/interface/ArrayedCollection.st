@@ -2,13 +2,13 @@
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.interface.SequenceableCollection')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.AddableCollection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Addable')
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.interface.IndexedCollection')
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SequenceableCollection class')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.AddableCollection class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Addable class')
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.IndexedCollection class')
 !

@@ -89,6 +89,11 @@ ifNotNil: notNilBlock ifNil: nilBlock
 initialize
 	
 !
+(reader addMethod: 'testing')
+!
+isException
+	^false
+!
 (reader addMethod: 'class membership')
 !
 isKindOf: aClass
@@ -107,6 +112,11 @@ isNil
 (reader addMethod: 'gravel')
 !
 isNilOrEmpty
+	^false
+!
+(reader addMethod: 'testing')
+!
+isSignalledException
 	^false
 !
 (reader addMethod: 'gravel')

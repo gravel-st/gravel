@@ -4,6 +4,41 @@
 !
 (reader addInstVar: 'denominator')
 !
+(reader addMethod: 'arithmetic')
+!
+* operand
+	^operand productFromFraction: self
+!
+(reader addMethod: 'arithmetic')
+!
++ operand
+	^operand sumFromFraction: self
+!
+(reader addMethod: 'arithmetic')
+!
+- operand
+	^operand differenceFromFraction: self
+!
+(reader addMethod: 'arithmetic')
+!
+/ operand
+	^operand quotientFromFraction: self
+!
+(reader addMethod: 'arithmetic')
+!
+// operand
+	^operand integerQuotientFromFraction: self
+!
+(reader addMethod: 'gravel')
+!
+< aFraction
+	^aFraction lessFromFraction: self
+!
+(reader addMethod: 'converting')
+!
+asFraction
+	^self
+!
 (reader addMethod: 'accessing')
 !
 denominator
@@ -15,6 +50,13 @@ initializeNumerator: anInteger denominator: anInteger2
 	numerator := anInteger.
 	denominator := anInteger2.
 	self initialize
+!
+(reader addMethod: 'gravel')
+!
+lessFromFraction: aFraction
+	| neg |
+	(neg := aFraction negative) = self negative ifFalse: [^neg].
+	^aFraction numerator * denominator < (numerator * aFraction denominator)
 !
 (reader addMethod: 'accessing')
 !
@@ -31,6 +73,26 @@ printOn: aStream
 		nextPutAll: ' / ';
 		print: denominator;
 		nextPut: $)
+!
+(reader addMethod: 'arithmetic')
+!
+quo: operand
+	^operand quoFromFraction: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromInteger: anInteger
+	^self class numerator: anInteger * denominator + numerator denominator: denominator
+!
+(reader addMethod: 'truncation and round off')
+!
+truncated
+	^numerator quo: denominator
+!
+(reader addMethod: 'arithmetic')
+!
+\\ operand
+	^operand moduloQuotientFromFraction: self
 !
 (reader addClassMethod: 'instance creation')
 !
@@ -53,4 +115,9 @@ reducedNumerator: numInteger denominator: denInteger
 	denominator = gcd ifTrue: [^numerator // gcd].
 	gcd = 1 ifTrue: [^self basicNew initializeNumerator: numerator denominator: denominator].
 	^self basicNew initializeNumerator: numerator // gcd denominator: denominator // gcd
+!
+(reader addClassMethod: 'constants')
+!
+unity
+	^self numerator: 1 denominator: 1
 !

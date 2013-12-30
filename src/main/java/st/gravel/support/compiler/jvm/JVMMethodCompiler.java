@@ -401,6 +401,8 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		final String _name;
 		final Invoke _invoke;
 		final JVMMethodType[] _staticSignature;
+		final int[] _selfOffset;
+		_selfOffset = new int[1];
 		_staticSignature = new JVMMethodType[1];
 		_ownerType = JVMDefinedObjectType.factory.dottedClassName_(_prim[0]);
 		_name = _prim[1];
@@ -413,14 +415,19 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 			JVMMethodCompiler.this.emit_(AThrow.factory.basicNew());
 			return JVMMethodCompiler.this;
 		}
-		this.produceVarRead_("self");
 		_staticSignature[0] = _invoke.staticSignature();
-		this.ensureCast_(_staticSignature[0].arguments()[0]);
+		if (_invoke.isInvokeStatic() && st.gravel.support.jvm.IntegerExtensions.equals_(_invoke.signature().numArgs(), _aMethodNode.numArgs())) {
+			_selfOffset[0] = 0;
+		} else {
+			_selfOffset[0] = 1;
+			JVMMethodCompiler.this.produceVarRead_("self");
+			JVMMethodCompiler.this.ensureCast_(_staticSignature[0].arguments()[0]);
+		}
 		for (int _temp1 = 0; _temp1 < _aMethodNode.arguments().length; _temp1++) {
 			final int _i = _temp1 + 1;
 			final VariableDeclarationNode _each = _aMethodNode.arguments()[_temp1];
 			JVMMethodCompiler.this.produceVarRead_(_each.name());
-			JVMMethodCompiler.this.ensureCast_(_staticSignature[0].arguments()[(_i + 1) - 1]);
+			JVMMethodCompiler.this.ensureCast_(_staticSignature[0].arguments()[(_i + (_selfOffset[0])) - 1]);
 		}
 		this.emit_(_invoke);
 		if (_staticSignature[0].returnType().isVoidType()) {

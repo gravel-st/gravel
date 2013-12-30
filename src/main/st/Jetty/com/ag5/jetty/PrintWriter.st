@@ -1,20 +1,24 @@
-(reader defineClass: 'PrintWriter' superclass: 'st.gravel.lang.WriteStream')
+(reader defineClass: 'PrintWriter' superclass: 'st.gravel.lang.Object')
+!
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.WriteStream')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.WriteStream class')
 !
 (reader propertyAt: 'javaClass' put: 'java.io.PrintWriter')
 !
-(reader addMethod: '')
+(reader addMethod: 'gravel')
 !
 java_print: aString
 	<primitive: 'print'>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'accessing')
 !
 nextPut: aCharacter
 	<primitive: 'print'>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
 !
 nextPutAll: aString
 	self java_print: aString asString

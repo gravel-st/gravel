@@ -15,6 +15,16 @@
 abs
 	^self < 0 ifTrue: [0 - self] ifFalse: [self]
 !
+(reader addMethod: 'converting')
+!
+asFraction
+	^self / 1
+!
+(reader addMethod: 'converting')
+!
+asScaledDecimal: scale
+	^FixedPoint preReducedNumerator: self denominator: 1 scale: scale
+!
 (reader addMethod: 'As yet unclassified')
 !
 benchFib
@@ -51,6 +61,11 @@ factorial
 	2 to: self do: [:i | tmp := tmp * i].
 	^tmp
 !
+(reader addMethod: 'arithmetic')
+!
+gcd: operand
+	^self subclassResponsibility
+!
 (reader addMethod: 'As yet unclassified')
 !
 hashMultiply
@@ -65,6 +80,11 @@ isInteger
 !
 isZero
 	^self = 0
+!
+(reader addMethod: 'comparing')
+!
+lessFromFraction: aFraction
+	^aFraction numerator < (self * aFraction denominator)
 !
 (reader addMethod: 'gravel')
 !
@@ -81,7 +101,31 @@ printOn: aStream
 printOn: aStream base: base
 	aStream nextPutAll: (self printBase: base)
 !
-(reader addMethod: 'arithmetic')
+(reader addMethod: 'printing')
+!
+printOn: aStream paddedTo: anInteger
+	self printOn: aStream paddedWith: $0 to: anInteger
+!
+(reader addMethod: 'printing')
+!
+printOn: aStream paddedWith: aCharacter to: anInteger
+	self
+		printOn: aStream
+		paddedWith: aCharacter
+		to: anInteger
+		base: 10
+!
+(reader addMethod: 'printing')
+!
+printOn: aStream paddedWith: aCharacter to: anInteger base: aRadix
+	| digitStream digits |
+	digitStream := WriteStream on: (String new: 10).
+	self printOn: digitStream base: aRadix.
+	digits := digitStream contents.
+	anInteger - digits size timesRepeat: [aStream nextPut: aCharacter].
+	aStream nextPutAll: digits
+!
+(reader addMethod: 'private-arithmetic')
 !
 quotientFromInteger: aNumber
 	^Fraction reducedNumerator: aNumber denominator: self
@@ -118,13 +162,13 @@ tinyBenchmarks
 	^(n1 * 500000 * 1000 // t1) printString , ' bytecodes/sec; '
 		, (r * 1000 // t2) printString , ' sends/sec'
 !
-(reader addMethod: 'gravel')
-!
-to: stop
-	^Interval from: self to: stop by: 1
-!
 (reader addMethod: 'converting')
 !
 truncated
 	^self
+!
+(reader addClassMethod: 'constants')
+!
+unity
+	^1
 !

@@ -14,6 +14,11 @@ initializeOwnerType: aJVMDefinedObjectType {JVMDefinedObjectType} name: aString 
 	signature := aJVMMethodType.
 	self initialize
 !
+(reader addMethod: 'testing')
+!
+isInvokeStatic {^Bool}
+	^false
+!
 (reader addMethod: 'accessing')
 !
 name {^Str}

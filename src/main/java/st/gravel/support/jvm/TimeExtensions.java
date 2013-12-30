@@ -1,12 +1,38 @@
 package st.gravel.support.jvm;
 
 import java.math.BigInteger;
+import java.util.TimeZone;
 
 public class TimeExtensions {
 	private static final BigInteger ONE_MILLION = BigInteger.valueOf(1000000);
+	private static final long nanoOffset = calculateNanoOffset();
 
-	public static long nanosecondClock(Object receiver) {
-		return System.nanoTime();
+	public static long nanosecondClock() {
+		return System.nanoTime() + nanoOffset;
+	}
+
+	public static long clockPrecisionNS() {
+		long sample = System.nanoTime();
+		long prec = Long.MAX_VALUE;
+		for (int samples =0 ; samples < 10; ) {
+			long diff = System.nanoTime() - sample;
+			if (diff > 0) {
+				prec = Math.min(diff, prec);
+				samples++;
+			}
+		}
+		System.out.println(prec);
+		return prec;
+	}
+
+	public static long timezoneOffsetMS_(Object millisecondsSince1970) {
+		return TimeZone.getDefault().getOffset(LargeIntegerExtensions.asLong(millisecondsSince1970));
+	}
+
+	private static long calculateNanoOffset() {
+		long currentTimeMillis = System.currentTimeMillis();
+		long nanoTime = System.nanoTime();
+		return (currentTimeMillis * 1000000) - nanoTime;
 	}
 
 	public static Object waitForNanoseconds(final Object receiver,

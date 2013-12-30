@@ -1,6 +1,12 @@
 (reader defineClass: 'Time' superclass: 'st.gravel.lang.Temporal')
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'clock')
+!
+currentTimeMillis
+	<primitive: #('java.lang.System' 'currentTimeMillis')>
+	
+!
+(reader addClassMethod: 'clock')
 !
 microsecondClock
 	^self nanosecondClock // 1000
@@ -16,16 +22,22 @@ microsecondsToRun: timedBlock
 (reader addClassMethod: 'As yet unclassified')
 !
 millisecondClockValue
-	^self microsecondClock // 1000
+	^self currentTimeMillis
 !
 (reader addClassMethod: 'gravel')
 !
 millisecondsToRun: aBlock
 	^((self microsecondsToRun: aBlock) + 500) // 1000
 !
-(reader addClassMethod: '')
+(reader addClassMethod: 'clock')
 !
 nanosecondClock
 	<primitive: #('st.gravel.support.jvm.TimeExtensions' 'nanosecondClock')>
+	
+!
+(reader addClassMethod: 'clock')
+!
+nanoTime
+	<primitive: #('java.lang.System' 'nanoTime')>
 	
 !

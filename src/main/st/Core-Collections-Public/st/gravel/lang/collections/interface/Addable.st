@@ -1,4 +1,4 @@
-(reader defineTrait: 'AddableCollection' superclass: nil)
+(reader defineTrait: 'Addable' superclass: nil)
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -10,11 +10,6 @@ add: anElement
 addAll: aCollection
 	aCollection do: [:each | self add: each].
 	^aCollection
-!
-(reader addMethod: 'As yet unclassified')
-!
-do: aBlock
-	^self traitRequirement
 !
 (reader addClassMethod: 'instance creation')
 !

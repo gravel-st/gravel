@@ -279,6 +279,9 @@ public class IntermediateNodeRewriter extends MessageSendRewriter implements Clo
 		if (!_loopExpr.isBlockNode()) {
 			return null;
 		}
+		if (!_step.isIntegerLiteralNode()) {
+			return null;
+		}
 		_loopBlockNode = ((BlockNode) _loopExpr);
 		return ToDoNode.factory.start_stop_step_counterName_doSequence_(((Expression) this.visit_(_start)), ((Expression) this.visit_(_stop)), ((Expression) this.visit_(_step)), _loopBlockNode.arguments()[0].name(), ((SequenceNode) this.visit_(_loopBlockNode.body())));
 	}

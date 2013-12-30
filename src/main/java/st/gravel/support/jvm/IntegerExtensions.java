@@ -3,12 +3,17 @@ package st.gravel.support.jvm;
 import java.math.BigInteger;
 
 public class IntegerExtensions {
+	private static final BigInteger MIN_INT_VALUE = BigInteger
+			.valueOf(Integer.MIN_VALUE);
+	private static final BigInteger MAX_INT_VALUE = BigInteger
+			.valueOf(Integer.MAX_VALUE);
+
 	public static class Factory {
 
 		public static Number fromValue(BigInteger integer) {
-			if (integer.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == 1) {
+			if (integer.compareTo(MAX_INT_VALUE) == 1) {
 				return integer;
-			} else if (integer.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) == -1) {
+			} else if (integer.compareTo(MIN_INT_VALUE) == -1) {
 				return (integer);
 			} else {
 				return (integer.intValue());
@@ -24,44 +29,106 @@ public class IntegerExtensions {
 
 	}
 
-	public static Number plus_(Object receiver, Object argument) {
-		if (receiver instanceof Integer)
-			return plus_((int) receiver, argument);
-		if (receiver instanceof BigInteger)
-			return plus_((BigInteger) receiver, argument);
-		throw new IllegalArgumentException();
-	}
-
-	public static Number plus_(int receiver, Object argument) {
-		if (argument instanceof Integer)
-			return integerPlusInteger(receiver, (Integer) argument);
-		if (argument instanceof BigInteger)
-			return integerPlusBigInteger(receiver, (BigInteger) argument);
-		throw new IllegalArgumentException("argument.class: "
-				+ argument.getClass());
-	}
-
-	public static Number plus_(Integer receiver, Object argument) {
-		if (argument instanceof Integer)
-			return integerPlusInteger(receiver, (Integer) argument);
-		if (argument instanceof BigInteger)
-			return integerPlusBigInteger(receiver, (BigInteger) argument);
-		throw new IllegalArgumentException("argument.class: "
-				+ argument.getClass());
-	}
-
-	private static Number integerPlusBigInteger(long receiver,
-			BigInteger argument) {
-		return BigInteger.valueOf(receiver).add(argument);
-	}
-
-	private static Number integerPlusInteger(long receiver, long argument) {
-		final long result = ((long) (receiver)) + argument;
+	static Number objectFromLong(final long result) {
 		if (result > Integer.MAX_VALUE)
 			return BigInteger.valueOf(result);
 		if (result < Integer.MIN_VALUE)
 			return BigInteger.valueOf(result);
 		return Integer.valueOf((int) result);
+	}
+
+	static Number objectFromBigInteger(final BigInteger result) {
+		if (result.compareTo(MAX_INT_VALUE) == 1) {
+			return result;
+		} else if (result.compareTo(MIN_INT_VALUE) == -1) {
+			return (result);
+		} else {
+			return (result.intValue());
+		}
+	}
+
+	public static Number sumFromSmallInteger_(int receiver, int argument) {
+		return objectFromLong(((long) (argument)) + receiver);
+	}
+
+	public static Number productFromSmallInteger_(int receiver, int argument) {
+		return objectFromLong(((long) (argument)) * receiver);
+	}
+
+	public static Number differenceFromSmallInteger_(int receiver, int argument) {
+		return objectFromLong(((long) (argument)) - receiver);
+	}
+
+	public static int remFromSmallInteger_(int receiver, int argument) {
+		return argument % receiver;
+	}
+
+	public static Number sumFromLargeInteger_(int receiver, BigInteger argument) {
+		return objectFromBigInteger(argument.add(BigInteger.valueOf(receiver)));
+	}
+
+	public static Number quoFromLargeInteger_(int receiver, BigInteger argument) {
+		return objectFromBigInteger(argument.divide(BigInteger
+				.valueOf(receiver)));
+	}
+
+	public static Number quoFromSmallInteger_(int receiver, int argument) {
+		return objectFromLong(((long) (argument)) / receiver);
+	}
+
+	public static int integerQuotientFromSmallInteger_(int y, int x) {
+		int q = x / y;
+		if ((x % y != 0) && ((x < 0) != (y < 0)))
+			--q;
+		return q;
+	}
+
+	public static Number integerQuotientFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return LargeIntegerExtensions.integerQuotientFromLargeInteger_(
+				BigInteger.valueOf(receiver), argument);
+	}
+
+	public static int moduloQuotientFromSmallInteger_(int y, int x) {
+		int r = x % y;
+		if (((r < 0) && (y > 0)) || ((r > 0) && (y < 0)))
+			r += y;
+		return r;
+	}
+
+	public static Number moduloQuotientFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return LargeIntegerExtensions.moduloQuotientFromLargeInteger_(
+				BigInteger.valueOf(receiver), argument);
+	}
+
+	public static Number productFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		if (receiver == 0)
+			return 0;
+		return argument.multiply(BigInteger.valueOf(receiver));
+	}
+
+	public static Number differenceFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return objectFromBigInteger(argument.subtract(BigInteger
+				.valueOf(receiver)));
+	}
+
+	public static Number remFromLargeInteger_(int receiver, BigInteger argument) {
+		return objectFromBigInteger(argument.remainder(BigInteger
+				.valueOf(receiver)));
+	}
+
+	public static int gcdFromSmallInteger_(int a, int b) {
+		if (b == 0)
+			return a;
+		return gcdFromSmallInteger_(a % b, b);
+	}
+
+	public static Number gcdFromLargeInteger_(int receiver, BigInteger argument) {
+		return LargeIntegerExtensions.gcdFromLargeInteger_(
+				BigInteger.valueOf(receiver), argument);
 	}
 
 	public static Number minus_(Object receiver, Object argument) {
@@ -97,11 +164,7 @@ public class IntegerExtensions {
 
 	private static Number integerMinusInteger(long receiver, long argument) {
 		final long result = ((long) (receiver)) - argument;
-		if (result > Integer.MAX_VALUE)
-			return BigInteger.valueOf(result);
-		if (result < Integer.MIN_VALUE)
-			return BigInteger.valueOf(result);
-		return Integer.valueOf((int) result);
+		return objectFromLong(result);
 	}
 
 	public static Number multiply_(Object receiver, Object argument) {
@@ -135,11 +198,7 @@ public class IntegerExtensions {
 
 	private static Number integerMultiplyInteger(long receiver, int argument) {
 		final long result = receiver * argument;
-		if (result > Integer.MAX_VALUE)
-			return BigInteger.valueOf(result);
-		if (result < Integer.MIN_VALUE)
-			return BigInteger.valueOf(result);
-		return Integer.valueOf((int) result);
+		return objectFromLong(result);
 	}
 
 	public static boolean equals_(int receiver, int other) {
@@ -159,8 +218,9 @@ public class IntegerExtensions {
 	}
 
 	public static boolean isSmallerThan_(Integer receiver, Object other) {
-		if (other instanceof BigInteger) return true; 
-		return receiver < (Integer)other;
+		if (other instanceof BigInteger)
+			return true;
+		return receiver < (Integer) other;
 	}
 
 	public static Number integerDivision_(Object receiver, Object argument) {
@@ -206,7 +266,8 @@ public class IntegerExtensions {
 	}
 
 	public static Object raisedToInteger_(final int ibase, final int iexp) {
-		// From: http://stackoverflow.com/questions/101439/the-most-efficient-way-to-implement-an-integer-based-power-function-powint-int
+		// From:
+		// http://stackoverflow.com/questions/101439/the-most-efficient-way-to-implement-an-integer-based-power-function-powint-int
 		long result = 1;
 		long base = ibase;
 		int exp = iexp;
@@ -228,7 +289,8 @@ public class IntegerExtensions {
 	}
 
 	public static BigInteger bigIntegerRaisedToInteger_(int ibase, int iexp) {
-		// From: http://stackoverflow.com/questions/101439/the-most-efficient-way-to-implement-an-integer-based-power-function-powint-int
+		// From:
+		// http://stackoverflow.com/questions/101439/the-most-efficient-way-to-implement-an-integer-based-power-function-powint-int
 		BigInteger result = BigInteger.valueOf(1);
 		BigInteger base = BigInteger.valueOf(ibase);
 		long exp = iexp;
@@ -249,7 +311,7 @@ public class IntegerExtensions {
 	public static int rem_(int receiver, int other) {
 		return receiver % other;
 	}
-	
+
 	public static int hashMultiply(int receiver) {
 		int low14Bits = receiver & 0x3FFF;
 		int a = receiver >> 14;
@@ -261,6 +323,5 @@ public class IntegerExtensions {
 		int g = f + e;
 		return g & 0xFFFFFFF;
 	}
-	
 
 }

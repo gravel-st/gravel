@@ -100,6 +100,14 @@ matchesPattern: pattern ignoreCase: ignoreCase do: aBlock
 			singleMatches do: [:index | aBlock value: index value: index]].
 	^true
 !
+(reader addMethod: 'converting')
+!
+padded: leftOrRight to: length with: char
+	leftOrRight = #left
+		ifTrue: [^(String new: (length - self size max: 0) withAll: char) , self].
+	leftOrRight = #right
+		ifTrue: [^self , (String new: (length - self size max: 0) withAll: char)]
+!
 (reader addMethod: 'As yet unclassified')
 !
 storeOn: aStream
@@ -121,6 +129,14 @@ stringStoreOn: aStream
 !
 defaultImplementation
 	^JavaString
+!
+(reader addClassMethod: 'instance creation')
+!
+new: size withAll: aCharacter
+	| wstr |
+	wstr := WriteStream on: String new.
+	size timesRepeat: [wstr nextPut: aCharacter].
+	^wstr contents
 !
 (reader addClassMethod: 'instance creation')
 !

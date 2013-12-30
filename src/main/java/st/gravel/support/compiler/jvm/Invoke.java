@@ -61,6 +61,10 @@ abstract public class Invoke extends JVMInstruction implements Cloneable {
 		return this;
 	}
 
+	public boolean isInvokeStatic() {
+		return false;
+	}
+
 	public String name() {
 		return _name;
 	}

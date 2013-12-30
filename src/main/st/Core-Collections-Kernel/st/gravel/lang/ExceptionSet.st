@@ -1,8 +1,12 @@
 (reader defineClass: 'ExceptionSet' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.AddableCollection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Addable')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.AddableCollection class')
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Addable class')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
 !
 (reader addInstVar: 'handlers')
 !

@@ -1,0 +1,14 @@
+{
+	"sharedVariables": {
+		"DayNames": null,
+		"NanosInMillisecond": null,
+		"NanosInSecond": null,
+		"SecondsInDay": null,
+		"DaysInMonth": null,
+		"SecondsInHour": null,
+		"MonthNames": null,
+		"SecondsInMinute": null
+	},
+	"privateImports": ["st.gravel.lang"],
+	"publicImports": []
+}

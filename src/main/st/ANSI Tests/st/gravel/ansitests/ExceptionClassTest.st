@@ -32,11 +32,13 @@ test_signal
 			[:testValue |
 			| reachedHandler |
 			reachedHandler := false.
-			[testValue signal] on: testValue
-				do: 
-					[:ex |
-					reachedHandler := true.
-					self assert: ex class = testValue].
+			
+			[testValue signal.
+			self assert: false] on: testValue
+					do: 
+						[:ex |
+						reachedHandler := true.
+						self assert: ex class = testValue].
 			self assert: reachedHandler]
 !
 (reader addMethod: 'As yet unclassified')

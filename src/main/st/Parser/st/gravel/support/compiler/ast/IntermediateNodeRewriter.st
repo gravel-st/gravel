@@ -138,6 +138,7 @@ produce: receiver {Node} or: testExpr {Expression} {^BooleanOrNode}
 produce: start {Expression} to: stop {Expression} by: step {Expression} do: loopExpr {Expression} {^ToDoNode}
 	| loopBlockNode {BlockNode} |
 	loopExpr isBlockNode ifFalse: [^nil].
+	step isIntegerLiteralNode ifFalse: [^nil].
 	loopBlockNode := loopExpr.
 	^ToDoNode
 		start: (self visit: start)

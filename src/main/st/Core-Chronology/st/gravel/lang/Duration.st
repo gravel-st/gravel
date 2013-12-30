@@ -1,21 +1,5 @@
 (reader defineClass: 'Duration' superclass: 'st.gravel.lang.Magnitude')
 !
-(reader defineSharedVariable: 'DayNames' init: nil)
-!
-(reader defineSharedVariable: 'DaysInMonth' init: nil)
-!
-(reader defineSharedVariable: 'MonthNames' init: nil)
-!
-(reader defineSharedVariable: 'NanosInMillisecond' init: nil)
-!
-(reader defineSharedVariable: 'NanosInSecond' init: nil)
-!
-(reader defineSharedVariable: 'SecondsInDay' init: nil)
-!
-(reader defineSharedVariable: 'SecondsInHour' init: nil)
-!
-(reader defineSharedVariable: 'SecondsInMinute' init: nil)
-!
 (reader addInstVar: 'nanos')
 !
 (reader addInstVar: 'seconds')
@@ -81,7 +65,7 @@ asDuration
 !
 (reader addMethod: 'gravel')
 !
-asMilliSeconds
+asMilliseconds
 	^(seconds * NanosInSecond + nanos) // (10 raisedToInteger: 6)
 !
 (reader addMethod: 'gravel')
@@ -98,6 +82,12 @@ asSeconds
 !
 days
 	^seconds quo: SecondsInDay
+!
+(reader addMethod: 'arithmetic')
+!
+differenceFromTimestamp: aTimestamp
+	^Timestamp millisecondsSince1970: aTimestamp millisecondsSince1970 - self asMilliseconds
+		offsetMS: aTimestamp offsetMS
 !
 (reader addMethod: 'comparing')
 !
@@ -164,16 +154,7 @@ printOn: aStream
 	aStream nextPut: $:.
 	s < 10 ifTrue: [aStream nextPut: $0].
 	s printOn: aStream.
-	n = 0
-		ifFalse: 
-			[| z ps |
-			aStream nextPut: $..
-			ps := n printString padded: #left to: 9 with: $0.
-			z := ps findLast: [:c | c asciiValue > $0 asciiValue].
-			ps
-				from: 1
-				to: z
-				do: [:c | aStream nextPut: c]]
+	n = 0 ifFalse: [n printOn: aStream paddedTo: 9]
 !
 (reader addMethod: 'gravel')
 !
@@ -202,6 +183,12 @@ storeOn: aStream
 		nextPutAll: ' nanoSeconds: ';
 		print: nanos;
 		nextPut: $)
+!
+(reader addMethod: 'arithmetic')
+!
+sumFromTimestamp: aTimestamp
+	^Timestamp millisecondsSince1970: aTimestamp millisecondsSince1970 + self asMilliseconds
+		offsetMS: aTimestamp offsetMS
 !
 (reader addMethod: 'printing')
 !

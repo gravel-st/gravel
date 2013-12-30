@@ -70,7 +70,7 @@ valueIsKindOfANY: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfArray: aValue
-	^aValue class = Array
+	^aValue isArray
 !
 (reader addMethod: 'tests')
 !
@@ -398,7 +398,7 @@ valueIsKindOfReadFileStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfReadStream: aValue
-	^aValue class = ReadStream
+	^aValue isReadStream
 !
 (reader addMethod: 'tests')
 !
@@ -516,7 +516,7 @@ valueIsKindOfWriteFileStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfWriteStream: aValue
-	^aValue class = WriteStream
+	^aValue isWriteStream
 !
 (reader addMethod: 'tests')
 !

@@ -61,6 +61,11 @@ isString
 printOn: aStream
 	self storeOn: aStream
 !
+(reader addMethod: 'As yet unclassified')
+!
+readStream
+	^JavaCharBuffer on: self
+!
 (reader addMethod: '')
 !
 size
@@ -77,6 +82,11 @@ species
 tokensBasedOn: anObject
 	<primitive: #('st.gravel.support.jvm.StringExtensions' 'tokensBasedOn_')>
 	
+!
+(reader addMethod: 'converting')
+!
+writeStream
+	^JavaStringBuilder on: self
 !
 (reader addClassMethod: '')
 !

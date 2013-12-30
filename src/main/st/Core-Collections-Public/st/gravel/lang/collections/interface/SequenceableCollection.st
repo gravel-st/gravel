@@ -85,6 +85,11 @@ copyReplaceFrom: start to: stop with: replacementCollection
 copySpecies
 	^self class
 !
+(reader addMethod: 'copying')
+!
+copyTo: stop
+	^self copyFrom: 1 to: stop
+!
 (reader addMethod: 'gravel')
 !
 copyWith: newElement
@@ -144,6 +149,14 @@ endsWith: suffix
 fifth
 	^self at: 5
 !
+(reader addMethod: 'enumerating')
+!
+findLast: aBlock
+	self size to: 1
+		by: -1
+		do: [:index | (aBlock value: (self at: index)) ifTrue: [^index]].
+	^0
+!
 (reader addMethod: 'accessing')
 !
 first
@@ -188,6 +201,11 @@ indexOf: anElement startingAt: start ifAbsent: exceptionBlock
 last
 	^self at: self size
 !
+(reader addMethod: 'converting')
+!
+readStream
+	^ReadStreamImpl collection: self
+!
 (reader addMethod: 'gravel')
 !
 replaceElementsFrom: start to: stop withSequenceableCollection: replacement startingAt: repStart
@@ -231,14 +249,6 @@ reverseDo: aBlock
 !
 second
 	^self at: 2
-!
-(reader addMethod: 'enumerating')
-!
-select: aBlock
-	| newCollection |
-	newCollection := self species new.
-	self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
-	^newCollection
 !
 (reader addMethod: 'accessing')
 !
@@ -290,4 +300,9 @@ with: otherCollection do: aBlock separatedBy: separatorBlock
 			[:i |
 			i = 1 ifFalse: [separatorBlock value].
 			aBlock value: (self at: i) value: (otherCollection at: i)]
+!
+(reader addMethod: 'converting')
+!
+writeStream
+	^WriteStreamImpl collection: self
 !

@@ -15,8 +15,10 @@ import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.SystemMapping;
 import st.gravel.support.compiler.ast.SystemMappingCompilerTools;
 import st.gravel.support.compiler.jvm.Invoke;
+import st.gravel.support.compiler.jvm.Invoke.Invoke_Factory;
 import st.gravel.support.compiler.jvm.InvokeInterface;
 import st.gravel.support.compiler.jvm.InvokeStatic;
+import st.gravel.support.compiler.jvm.InvokeStatic.InvokeStatic_Factory;
 import st.gravel.support.compiler.jvm.InvokeVirtual;
 import st.gravel.support.compiler.jvm.JVMArrayType;
 import st.gravel.support.compiler.jvm.JVMBooleanType;
@@ -72,47 +74,42 @@ public final class JavaSystemMappingCompilerTools extends
 				_numArgs + 1, true);
 		if (method == null) {
 			method = MethodTools.searchForMethod(receiverClass, _name,
+					_numArgs, true);
+		}
+		if (method == null) {
+			method = MethodTools.searchForMethod(receiverClass, _name,
 					_numArgs, false);
 
 			if (method == null) {
 				return null;
 			}
-			JVMType[] arguments = ArrayExtensions.collect_(
-					method.getParameterTypes(),
-					new Block1<JVMType, Class<?>>() {
-
-						@Override
-						public JVMType value_(Class<?> arg1) {
-							return jvmTypeForClass_(arg1);
-						}
-					});
-			JVMMethodType _aJVMMethodType = JVMMethodType.factory
-					.returnType_arguments_(
-							jvmTypeForClass_(method.getReturnType()), arguments);
 			if (receiverClass.isInterface()) {
-				return InvokeInterface.factory.ownerType_name_signature_(_type,
-						_name, _aJVMMethodType);
+				return createInvoke(InvokeInterface.factory, _type, _name, method);
 			} else {
-				return InvokeVirtual.factory.ownerType_name_signature_(_type,
-						_name, _aJVMMethodType);
+				return createInvoke(InvokeVirtual.factory, _type, _name, method);
 			}
 
 		} else {
-			JVMType[] arguments = ArrayExtensions.collect_(
-					method.getParameterTypes(),
-					new Block1<JVMType, Class<?>>() {
-
-						@Override
-						public JVMType value_(Class<?> arg1) {
-							return jvmTypeForClass_(arg1);
-						}
-					});
-			JVMMethodType _aJVMMethodType = JVMMethodType.factory
-					.returnType_arguments_(
-							jvmTypeForClass_(method.getReturnType()), arguments);
-			return InvokeStatic.factory.ownerType_name_signature_(_type, _name,
-					_aJVMMethodType);
+			return createInvoke(InvokeStatic.factory, _type, _name, method);
 		}
+	}
+
+	private Invoke createInvoke(Invoke_Factory invokeFactory,
+			JVMDefinedObjectType _type, String _name, Method method) {
+		JVMType[] arguments = ArrayExtensions.collect_(
+				method.getParameterTypes(),
+				new Block1<JVMType, Class<?>>() {
+
+					@Override
+					public JVMType value_(Class<?> arg1) {
+						return jvmTypeForClass_(arg1);
+					}
+				});
+		JVMMethodType _aJVMMethodType = JVMMethodType.factory
+				.returnType_arguments_(
+						jvmTypeForClass_(method.getReturnType()), arguments);
+		return invokeFactory.ownerType_name_signature_(_type, _name,
+				_aJVMMethodType);
 	}
 
 	@Override

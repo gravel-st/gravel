@@ -2,7 +2,17 @@
 !
 (reader propertyAt: 'isSystemTest' put: 'Ja')
 !
-(reader addMethod: 'As yet unclassified')
+(reader addMethod: 'parameters')
+!
+parameterNilaryBlockOperand
+	^[#fromage]
+!
+(reader addMethod: 'parameters')
+!
+parameterNilaryBooleanBlockOperand
+	^[2 = 3]
+!
+(reader addMethod: 'parameters')
 !
 parameterOperand
 	^true
@@ -19,6 +29,11 @@ test_and
 (reader addMethod: 'tests')
 !
 test_and_
+	self valuesDo: 
+			[:testValue |
+			| res |
+			res := testValue and: self parameterNilaryBooleanBlockOperand.
+			self assert: (self valueIsKindOfBoolean: res)].
 	self valuesDo: 
 			[:testValue |
 			| res |
@@ -40,12 +55,24 @@ test_ifFalse_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue ifFalse: self parameterOperand.
+			res := testValue ifFalse: self parameterNilaryBlockOperand.
+			self assert: (self valueIsKindOfANY: res)].
+	self valuesDo: 
+			[:testValue |
+			| res |
+			res := testValue ifFalse: [#f].
 			self assert: (self valueIsKindOfANY: res)]
 !
 (reader addMethod: 'tests')
 !
 test_ifFalse_ifTrue_
+	self valuesDo: 
+			[:testValue |
+			| res |
+			res := testValue
+						ifFalse: self parameterNilaryBlockOperand
+						ifTrue: self parameterNilaryBlockOperand.
+			self assert: (self valueIsKindOfANY: res)].
 	self valuesDo: 
 			[:testValue |
 			| res |
@@ -58,12 +85,24 @@ test_ifTrue_
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue ifTrue: self parameterOperand.
+			res := testValue ifTrue: self parameterNilaryBlockOperand.
+			self assert: (self valueIsKindOfANY: res)].
+	self valuesDo: 
+			[:testValue |
+			| res |
+			res := testValue ifTrue: [#t].
 			self assert: (self valueIsKindOfANY: res)]
 !
 (reader addMethod: 'tests')
 !
 test_ifTrue_ifFalse_
+	self valuesDo: 
+			[:testValue |
+			| res |
+			res := testValue
+						ifTrue: self parameterNilaryBlockOperand
+						ifFalse: self parameterNilaryBlockOperand.
+			self assert: (self valueIsKindOfANY: res)].
 	self valuesDo: 
 			[:testValue |
 			| res |
@@ -82,6 +121,11 @@ test_not
 (reader addMethod: 'tests')
 !
 test_or_
+	self valuesDo: 
+			[:testValue |
+			| res |
+			res := testValue or: self parameterNilaryBooleanBlockOperand.
+			self assert: (self valueIsKindOfBoolean: res)].
 	self valuesDo: 
 			[:testValue |
 			| res |

@@ -21,6 +21,31 @@ currentHandler
 currentHandler: anObject
 	currentHandler := anObject
 !
+(reader addMethod: 'accessing')
+!
+defaultAction
+	self subclassResponsibility
+!
+(reader addMethod: 'accessing')
+!
+defaultResumeValue
+	^nil
+!
+(reader addMethod: 'testing')
+!
+isException
+	^true
+!
+(reader addMethod: 'testing')
+!
+isResumable
+	^true
+!
+(reader addMethod: 'testing')
+!
+isSignalledException
+	^true
+!
 (reader addMethod: 'gravel')
 !
 messageText
@@ -85,4 +110,9 @@ raiseSignal: aString
 	^(self new)
 		messageText: aString;
 		raise
+!
+(reader addClassMethod: 'gravel')
+!
+signal
+	^self raiseSignal
 !

@@ -223,7 +223,7 @@ produceNonLocalCatchMethod: aMethodNode {MethodNode} {^Self}
 (reader addMethod: 'visiting')
 !
 producePrimitive: aMethodNode {MethodNode} def: prim {Arr[Str]} {^Self}
-	| ownerType {JVMDefinedObjectType} name {Str} invoke {Invoke} staticSignature {JVMMethodType} |
+	| ownerType {JVMDefinedObjectType} name {Str} invoke {Invoke} staticSignature {JVMMethodType} selfOffset {Int} |
 	ownerType := JVMDefinedObjectType dottedClassName: prim first.
 	name := prim second.
 	invoke := parent
@@ -239,13 +239,17 @@ producePrimitive: aMethodNode {MethodNode} def: prim {Arr[Str]} {^Self}
 						voidArguments: (Array with: JVMDefinedObjectType string)).
 			self emit: AThrow new.
 			^self].
-	self produceVarRead: 'self'.
 	staticSignature := invoke staticSignature.
-	self ensureCast: staticSignature arguments first.
+	(invoke isInvokeStatic and: [invoke signature numArgs = aMethodNode numArgs])
+		ifTrue: [selfOffset := 0]
+		ifFalse: 
+			[selfOffset := 1.
+			self produceVarRead: 'self'.
+			self ensureCast: staticSignature arguments first].
 	aMethodNode arguments keysAndValuesDo: 
 			[:i {Int} :each {VariableDeclarationNode} |
 			self produceVarRead: each name.
-			self ensureCast: (staticSignature arguments at: i + 1)].
+			self ensureCast: (staticSignature arguments at: i + selfOffset)].
 	self emit: invoke.
 	staticSignature returnType isVoidType
 		ifTrue: [self produceVarRead: 'self']

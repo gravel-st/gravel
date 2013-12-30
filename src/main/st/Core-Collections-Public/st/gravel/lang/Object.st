@@ -7,6 +7,11 @@
 !
 (reader addMethod: 'testing')
 !
+isArray
+	^false
+!
+(reader addMethod: 'testing')
+!
 isBag
 	^false
 !
@@ -22,6 +27,16 @@ isOrderedCollection
 !
 (reader addMethod: 'testing')
 !
+isReadStream
+	^false
+!
+(reader addMethod: 'testing')
+!
 isSet
+	^false
+!
+(reader addMethod: 'testing')
+!
+isWriteStream
 	^false
 !
