@@ -149,6 +149,7 @@ printOn: aStream paddedWith: aCharacter to: anInteger base: aRadix
 (reader addMethod: 'private-arithmetic')
 !
 productFromFraction: aFraction
+	self = 0 ifTrue: [^self].
 	^(Fraction numerator: 1 denominator: self) productFromFraction: aFraction
 !
 (reader addMethod: 'private-arithmetic')

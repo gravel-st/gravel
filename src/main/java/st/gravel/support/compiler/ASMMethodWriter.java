@@ -14,6 +14,7 @@ import st.gravel.support.compiler.jvm.ArrayLength;
 import st.gravel.support.compiler.jvm.ByteArrayStore;
 import st.gravel.support.compiler.jvm.CastArrayToObject;
 import st.gravel.support.compiler.jvm.CastBooleanToObject;
+import st.gravel.support.compiler.jvm.CastByteToObject;
 import st.gravel.support.compiler.jvm.CastCharToObject;
 import st.gravel.support.compiler.jvm.CastDefinedToObject;
 import st.gravel.support.compiler.jvm.CastFloatToObject;
@@ -56,7 +57,6 @@ import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
 import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
 import st.gravel.support.compiler.jvm.JVMMethod;
-import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.LabelLineNumber;
 import st.gravel.support.compiler.jvm.NewArray;
 import st.gravel.support.compiler.jvm.NewInstance;
@@ -96,6 +96,10 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		throw new UnsupportedOperationException("Not Implemented Yet");
 	}
 
+	public Integer fromage(byte x) {
+		return (int)x;
+	}
+
 	public void logToErr(final String string) {
 		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "err",
 				"Ljava/io/PrintStream;");
@@ -103,7 +107,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println",
 				"(Ljava/lang/String;)V");
 	}
-
 	private void produceLocalVariableInfo(Label startLabel, JVMLocalDeclaration[] jvmLocalDeclarations) {
 		Label varLabel = new Label();
 		mv.visitLabel(varLabel);
@@ -112,9 +115,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 					local.type().descriptorString()
 					, null, startLabel, varLabel, local.index());
 		}
-	}
-	public Object fromage(float x) {
-		return x;
 	}
 
 	public void pushFloat(float value) {
@@ -233,6 +233,12 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	public Void visitCastBooleanToObject_(CastBooleanToObject node) {
 		mv.visitMethodInsn(INVOKESTATIC, "java/lang/Boolean", "valueOf",
 				"(Z)Ljava/lang/Boolean;");
+		return null;
+	}
+
+	@Override
+	public Void visitCastByteToObject_(CastByteToObject node) {
+		mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;");
 		return null;
 	}
 
@@ -695,7 +701,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
+	
 	@Override
 	public Void visitWhileLessThanLoop_(WhileLessThanLoop node) {
 		Label testLabel = new Label();
@@ -708,7 +714,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-	
+
+
+
 	@Override
 	public Void visitWhileTrueLoop_(WhileTrueLoop node) {
 		Label topLabel = new Label();
@@ -725,8 +733,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
-
 
 	public void write(JVMMethod method) {
 		mv = cw.visitMethod(ACC_PUBLIC + (method.isStatic() ? ACC_STATIC : 0),

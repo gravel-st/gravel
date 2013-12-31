@@ -29,4 +29,16 @@ public class ByteArrayExtensions {
 		return true;
 	}
 
+	public static byte at_(byte[] receiver, int index) {
+		return receiver[index - 1];
+	}
+
+	public static byte at_put_(byte[] receiver, int index, byte value) {
+		return receiver[index - 1] = value;
+	}
+
+	public static int size(byte[] receiver) {
+		return receiver.length;
+	}
+
 }

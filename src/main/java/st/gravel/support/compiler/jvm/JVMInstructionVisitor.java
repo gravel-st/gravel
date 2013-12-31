@@ -20,6 +20,7 @@ import st.gravel.support.compiler.jvm.Breakpoint;
 import st.gravel.support.compiler.jvm.ByteArrayStore;
 import st.gravel.support.compiler.jvm.CastArrayToObject;
 import st.gravel.support.compiler.jvm.CastBooleanToObject;
+import st.gravel.support.compiler.jvm.CastByteToObject;
 import st.gravel.support.compiler.jvm.CastCharToObject;
 import st.gravel.support.compiler.jvm.CastDefinedToObject;
 import st.gravel.support.compiler.jvm.CastFloatToObject;
@@ -164,6 +165,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 	}
 
 	public X visitCastBooleanToObject_(final CastBooleanToObject _anObject) {
+		return this.visitCastTo_(_anObject);
+	}
+
+	public X visitCastByteToObject_(final CastByteToObject _anObject) {
 		return this.visitCastTo_(_anObject);
 	}
 

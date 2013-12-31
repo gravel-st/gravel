@@ -46,6 +46,34 @@
 !
 (reader addMethod: 'converting')
 !
+asFloat
+	| a b mantissa exponent hasTruncatedBits lostBit n ha hb hm |
+	a := numerator abs.
+	b := denominator.
+	ha := a highBitOfMagnitude.
+	hb := b highBitOfMagnitude.
+	n := 1 + Float precision.
+	(ha < n and: [hb < n]) ifTrue: [^numerator asFloat / denominator asFloat].
+	exponent := ha - hb - n.
+	exponent >= 0
+		ifTrue: [b := b bitShift: exponent]
+		ifFalse: [a := a bitShift: exponent negated].
+	mantissa := a quo: b.
+	hasTruncatedBits := a > (mantissa * b).
+	hm := mantissa highBit.
+	lostBit := Float emin - (exponent + hm - 1).
+	lostBit > 0 ifTrue: [n := n - lostBit max: 1].
+	hm > n
+		ifTrue: 
+			[exponent := exponent + hm - n.
+			hasTruncatedBits := hasTruncatedBits or: [mantissa anyBitOfMagnitudeFrom: 1 to: hm - n].
+			mantissa := mantissa bitShift: n - hm].
+	(hasTruncatedBits and: [mantissa odd]) ifTrue: [mantissa := mantissa + 1].
+	^(self positive ifTrue: [mantissa asFloat] ifFalse: [mantissa asFloat negated])
+		timesTwoPower: exponent
+!
+(reader addMethod: 'converting')
+!
 asFraction
 	^self
 !

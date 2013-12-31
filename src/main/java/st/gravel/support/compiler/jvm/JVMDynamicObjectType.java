@@ -18,6 +18,7 @@ import st.gravel.support.compiler.jvm.JVMIntType;
 import st.gravel.support.compiler.jvm.JVMArrayType;
 import st.gravel.support.compiler.jvm.CastArrayToObject;
 import st.gravel.support.compiler.jvm.CastBooleanToObject;
+import st.gravel.support.compiler.jvm.CastByteToObject;
 import st.gravel.support.compiler.jvm.CastCharToObject;
 import st.gravel.support.compiler.jvm.CastTo;
 import st.gravel.support.compiler.jvm.CastDefinedToObject;
@@ -113,6 +114,11 @@ public class JVMDynamicObjectType extends JVMNonPrimitiveType implements Cloneab
 	@Override
 	public CastBooleanToObject newCastInstructionFromBoolean() {
 		return CastBooleanToObject.factory.basicNew();
+	}
+
+	@Override
+	public CastByteToObject newCastInstructionFromByte() {
+		return CastByteToObject.factory.basicNew();
 	}
 
 	@Override

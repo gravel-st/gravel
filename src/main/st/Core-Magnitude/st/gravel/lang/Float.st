@@ -168,6 +168,11 @@ javaPositiveInfinity
 !
 (reader addClassMethod: 'constants')
 !
+precision
+	^24
+!
+(reader addClassMethod: 'constants')
+!
 unity
 	^1.0
 !

@@ -34,6 +34,12 @@
 	<primitive: 'equals'>
 	
 !
+(reader addMethod: 'converting')
+!
+asFloat
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'asFloat')>
+	
+!
 (reader addMethod: '')
 !
 compressed

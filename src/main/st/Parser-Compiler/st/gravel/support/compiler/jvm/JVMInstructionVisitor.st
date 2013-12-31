@@ -57,6 +57,11 @@ visitCastBooleanToObject: anObject {CastBooleanToObject} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitCastByteToObject: anObject {CastByteToObject} {^X}
+	^self visitCastTo: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitCastCharToObject: anObject {CastCharToObject} {^X}
 	^self visitCastTo: anObject
 !

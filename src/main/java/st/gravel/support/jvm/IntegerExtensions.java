@@ -52,6 +52,10 @@ public class IntegerExtensions {
 		return result;
 	}
 
+	public static float asFloat(int receiver) {
+		return receiver;
+	}
+
 	public static int bitAnd_(int receiver, int other) {
 		return receiver & other;
 	}

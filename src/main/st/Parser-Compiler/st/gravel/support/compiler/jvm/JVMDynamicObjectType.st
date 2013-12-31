@@ -64,6 +64,11 @@ newCastInstructionFromBoolean {^CastBooleanToObject}
 !
 (reader addMethod: 'As yet unclassified')
 !
+newCastInstructionFromByte {^CastByteToObject}
+	^CastByteToObject new
+!
+(reader addMethod: 'As yet unclassified')
+!
 newCastInstructionFromChar {^CastCharToObject}
 	^CastCharToObject new
 !

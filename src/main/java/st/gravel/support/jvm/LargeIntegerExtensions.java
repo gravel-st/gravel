@@ -6,6 +6,10 @@ public class LargeIntegerExtensions {
 	public static class Factory extends IntegerExtensions.Factory {
 	}
 
+	public static float asFloat(BigInteger receiver) {
+		return receiver.floatValue();
+	}
+
 	public static Object compressed(BigInteger integer) {
 		return Factory.fromValue(integer);
 	}
@@ -17,20 +21,20 @@ public class LargeIntegerExtensions {
 	public static Number differenceFromSmallInteger_(BigInteger receiver, int argument) {
 		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).subtract(receiver));
 	}
-
+	
 	public static boolean equals_(BigInteger receiver, BigInteger other) {
 		return (receiver == null && other == null)
 				|| (receiver != null && other != null && receiver.equals(other));
 	}
-	
+
 	public static Number gcdFromLargeInteger_(BigInteger receiver, BigInteger argument) {
 		return IntegerExtensions.objectFromBigInteger(argument.gcd(receiver));
 	}
-
+	
 	public static Number gcdFromSmallInteger_(BigInteger receiver, int argument) {
 		return gcdFromLargeInteger_(receiver, BigInteger.valueOf(argument));
 	}
-	
+
 	public static Number integerQuotientFromLargeInteger_(BigInteger y, BigInteger x) {
 		// http://www.microhowto.info/howto/round_towards_minus_infinity_when_dividing_integers_in_java.html
 		BigInteger q = x.divide(y);
@@ -73,11 +77,11 @@ public class LargeIntegerExtensions {
 	public static String printBase_(BigInteger receiver, int radix) {
 		return receiver.toString(radix);
 	}
-
+	
 	public static BigInteger productFromLargeInteger_(BigInteger receiver, BigInteger argument) {
 		return argument.multiply(receiver);
 	}
-	
+
 	public static Number productFromSmallInteger_(BigInteger receiver, int argument) {
 		if (argument == 0) return 0;
 		return BigInteger.valueOf(argument).multiply(receiver);

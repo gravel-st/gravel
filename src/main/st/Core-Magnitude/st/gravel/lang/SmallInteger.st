@@ -34,6 +34,12 @@
 	<primitive: 'equals'>
 	
 !
+(reader addMethod: 'converting')
+!
+asFloat
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'asFloat')>
+	
+!
 (reader addMethod: '')
 !
 bitAnd: anObject
@@ -110,6 +116,39 @@ hashMultiply
 	f := (16384 * d).
 	g := (f + e).
 	^(g bitAnd: 268435455)
+!
+(reader addMethod: 'bit manipulation')
+!
+highBit
+	self < 0 ifTrue: [^self error: 'highBit is not defined for negative integers'].
+	^self highBitOfPositiveReceiver
+!
+(reader addMethod: 'private')
+!
+highBitOfByte
+	^#[0 1 2 2 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8]
+		at: self + 1
+!
+(reader addMethod: 'bit manipulation')
+!
+highBitOfMagnitude
+	self < 0 ifTrue: [^self negated highBitOfMagnitude].
+	^self highBitOfPositiveReceiver
+!
+(reader addMethod: 'private')
+!
+highBitOfPositiveReceiver
+	| shifted bitNo |
+	shifted := self.
+	bitNo := 0.
+	[shifted < 65536] whileFalse: 
+			[shifted := shifted bitShift: -16.
+			bitNo := bitNo + 16].
+	shifted < 256
+		ifFalse: 
+			[shifted := shifted bitShift: -8.
+			bitNo := bitNo + 8].
+	^bitNo + shifted highBitOfByte
 !
 (reader addMethod: 'private-arithmetic')
 !
