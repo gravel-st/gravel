@@ -36,6 +36,34 @@ public class IntegerArithmeticTest {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_backslashbackslash_negLong");
 	}
 	@Test
+	public void test_big_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__big");
+	}
+	@Test
+	public void test_big_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__int");
+	}
+	@Test
+	public void test_big_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__long");
+	}
+	@Test
+	public void test_big_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__negBig");
+	}
+	@Test
+	public void test_big_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__negInt");
+	}
+	@Test
+	public void test_big_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__negLong");
+	}
+	@Test
+	public void test_big_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_gcd__zero");
+	}
+	@Test
 	public void test_big_minus_big() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_big_minus_big");
 	}
@@ -214,6 +242,34 @@ public class IntegerArithmeticTest {
 	@Test
 	public void test_int_backslashbackslash_negLong() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_backslashbackslash_negLong");
+	}
+	@Test
+	public void test_int_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__big");
+	}
+	@Test
+	public void test_int_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__int");
+	}
+	@Test
+	public void test_int_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__long");
+	}
+	@Test
+	public void test_int_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__negBig");
+	}
+	@Test
+	public void test_int_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__negInt");
+	}
+	@Test
+	public void test_int_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__negLong");
+	}
+	@Test
+	public void test_int_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_int_gcd__zero");
 	}
 	@Test
 	public void test_int_minus_big() throws Throwable {
@@ -396,6 +452,34 @@ public class IntegerArithmeticTest {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_backslashbackslash_negLong");
 	}
 	@Test
+	public void test_long_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__big");
+	}
+	@Test
+	public void test_long_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__int");
+	}
+	@Test
+	public void test_long_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__long");
+	}
+	@Test
+	public void test_long_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__negBig");
+	}
+	@Test
+	public void test_long_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__negInt");
+	}
+	@Test
+	public void test_long_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__negLong");
+	}
+	@Test
+	public void test_long_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_gcd__zero");
+	}
+	@Test
 	public void test_long_minus_big() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_long_minus_big");
 	}
@@ -574,6 +658,34 @@ public class IntegerArithmeticTest {
 	@Test
 	public void test_negBig_backslashbackslash_negLong() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_backslashbackslash_negLong");
+	}
+	@Test
+	public void test_negBig_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__big");
+	}
+	@Test
+	public void test_negBig_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__int");
+	}
+	@Test
+	public void test_negBig_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__long");
+	}
+	@Test
+	public void test_negBig_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__negBig");
+	}
+	@Test
+	public void test_negBig_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__negInt");
+	}
+	@Test
+	public void test_negBig_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__negLong");
+	}
+	@Test
+	public void test_negBig_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negBig_gcd__zero");
 	}
 	@Test
 	public void test_negBig_minus_big() throws Throwable {
@@ -756,6 +868,34 @@ public class IntegerArithmeticTest {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_backslashbackslash_negLong");
 	}
 	@Test
+	public void test_negInt_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__big");
+	}
+	@Test
+	public void test_negInt_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__int");
+	}
+	@Test
+	public void test_negInt_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__long");
+	}
+	@Test
+	public void test_negInt_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__negBig");
+	}
+	@Test
+	public void test_negInt_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__negInt");
+	}
+	@Test
+	public void test_negInt_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__negLong");
+	}
+	@Test
+	public void test_negInt_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_gcd__zero");
+	}
+	@Test
 	public void test_negInt_minus_big() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negInt_minus_big");
 	}
@@ -936,6 +1076,34 @@ public class IntegerArithmeticTest {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_backslashbackslash_negLong");
 	}
 	@Test
+	public void test_negLong_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__big");
+	}
+	@Test
+	public void test_negLong_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__int");
+	}
+	@Test
+	public void test_negLong_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__long");
+	}
+	@Test
+	public void test_negLong_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__negBig");
+	}
+	@Test
+	public void test_negLong_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__negInt");
+	}
+	@Test
+	public void test_negLong_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__negLong");
+	}
+	@Test
+	public void test_negLong_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_gcd__zero");
+	}
+	@Test
 	public void test_negLong_minus_big() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_negLong_minus_big");
 	}
@@ -1114,6 +1282,34 @@ public class IntegerArithmeticTest {
 	@Test
 	public void test_zero_backslashbackslash_negLong() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_backslashbackslash_negLong");
+	}
+	@Test
+	public void test_zero_gcd__big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__big");
+	}
+	@Test
+	public void test_zero_gcd__int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__int");
+	}
+	@Test
+	public void test_zero_gcd__long() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__long");
+	}
+	@Test
+	public void test_zero_gcd__negBig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__negBig");
+	}
+	@Test
+	public void test_zero_gcd__negInt() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__negInt");
+	}
+	@Test
+	public void test_zero_gcd__negLong() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__negLong");
+	}
+	@Test
+	public void test_zero_gcd__zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.IntegerArithmeticTest", "test_zero_gcd__zero");
 	}
 	@Test
 	public void test_zero_minus_big() throws Throwable {

@@ -40,6 +40,46 @@ test_big_backslashbackslash_negLong
 !
 (reader addMethod: 'tests')
 !
+test_big_gcd__big
+	self assert: (301434622508125532092685287301027586161
+				gcd: 301434622508125532092685287301027586161)
+		equals: 301434622508125532092685287301027586161
+!
+(reader addMethod: 'tests')
+!
+test_big_gcd__int
+	self assert: (301434622508125532092685287301027586161 gcd: 19) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_big_gcd__long
+	self assert: (301434622508125532092685287301027586161 gcd: 1239482337033371) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_big_gcd__negBig
+	self assert: (301434622508125532092685287301027586161
+				gcd: -251172765292171600923361522612285166173)
+		equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_big_gcd__negInt
+	self assert: (301434622508125532092685287301027586161 gcd: -234239) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_big_gcd__negLong
+	self assert: (301434622508125532092685287301027586161 gcd: -123948723370333) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_big_gcd__zero
+	self assert: (301434622508125532092685287301027586161 gcd: 0)
+		equals: 301434622508125532092685287301027586161
+!
+(reader addMethod: 'tests')
+!
 test_big_minus_big
 	self
 		assert: 301434622508125532092685287301027586161 - 301434622508125532092685287301027586161
@@ -314,6 +354,41 @@ test_int_backslashbackslash_negLong
 !
 (reader addMethod: 'tests')
 !
+test_int_gcd__big
+	self assert: (19 gcd: 301434622508125532092685287301027586161) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_int_gcd__int
+	self assert: (19 gcd: 19) equals: 19
+!
+(reader addMethod: 'tests')
+!
+test_int_gcd__long
+	self assert: (19 gcd: 1239482337033371) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_int_gcd__negBig
+	self assert: (19 gcd: -251172765292171600923361522612285166173) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_int_gcd__negInt
+	self assert: (19 gcd: -234239) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_int_gcd__negLong
+	self assert: (19 gcd: -123948723370333) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_int_gcd__zero
+	self assert: (19 gcd: 0) equals: 19
+!
+(reader addMethod: 'tests')
+!
 test_int_minus_big
 	self assert: 19 - 301434622508125532092685287301027586161
 		equals: -301434622508125532092685287301027586142
@@ -544,6 +619,41 @@ test_long_backslashbackslash_negInt
 !
 test_long_backslashbackslash_negLong
 	self assert: 1239482337033371 \\ -123948723370333 equals: -4896669959
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__big
+	self assert: (1239482337033371 gcd: 301434622508125532092685287301027586161) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__int
+	self assert: (1239482337033371 gcd: 19) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__long
+	self assert: (1239482337033371 gcd: 1239482337033371) equals: 1239482337033371
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__negBig
+	self assert: (1239482337033371 gcd: -251172765292171600923361522612285166173) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__negInt
+	self assert: (1239482337033371 gcd: -234239) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__negLong
+	self assert: (1239482337033371 gcd: -123948723370333) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_long_gcd__zero
+	self assert: (1239482337033371 gcd: 0) equals: 1239482337033371
 !
 (reader addMethod: 'tests')
 !
@@ -783,6 +893,46 @@ test_negBig_backslashbackslash_negInt
 test_negBig_backslashbackslash_negLong
 	self assert: -251172765292171600923361522612285166173 \\ -123948723370333
 		equals: -82729736657494
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__big
+	self assert: (-251172765292171600923361522612285166173
+				gcd: 301434622508125532092685287301027586161)
+		equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__int
+	self assert: (-251172765292171600923361522612285166173 gcd: 19) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__long
+	self assert: (-251172765292171600923361522612285166173 gcd: 1239482337033371) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__negBig
+	self assert: (-251172765292171600923361522612285166173
+				gcd: -251172765292171600923361522612285166173)
+		equals: 251172765292171600923361522612285166173
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__negInt
+	self assert: (-251172765292171600923361522612285166173 gcd: -234239) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__negLong
+	self assert: (-251172765292171600923361522612285166173 gcd: -123948723370333) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negBig_gcd__zero
+	self assert: (-251172765292171600923361522612285166173 gcd: 0)
+		equals: 251172765292171600923361522612285166173
 !
 (reader addMethod: 'tests')
 !
@@ -1060,6 +1210,41 @@ test_negInt_backslashbackslash_negLong
 !
 (reader addMethod: 'tests')
 !
+test_negInt_gcd__big
+	self assert: (-234239 gcd: 301434622508125532092685287301027586161) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negInt_gcd__int
+	self assert: (-234239 gcd: 19) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negInt_gcd__long
+	self assert: (-234239 gcd: 1239482337033371) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negInt_gcd__negBig
+	self assert: (-234239 gcd: -251172765292171600923361522612285166173) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negInt_gcd__negInt
+	self assert: (-234239 gcd: -234239) equals: 234239
+!
+(reader addMethod: 'tests')
+!
+test_negInt_gcd__negLong
+	self assert: (-234239 gcd: -123948723370333) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negInt_gcd__zero
+	self assert: (-234239 gcd: 0) equals: 234239
+!
+(reader addMethod: 'tests')
+!
 test_negInt_minus_big
 	self assert: -234239 - 301434622508125532092685287301027586161
 		equals: -301434622508125532092685287301027820400
@@ -1290,6 +1475,41 @@ test_negLong_backslashbackslash_negInt
 !
 test_negLong_backslashbackslash_negLong
 	self assert: -123948723370333 \\ -123948723370333 equals: 0
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__big
+	self assert: (-123948723370333 gcd: 301434622508125532092685287301027586161) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__int
+	self assert: (-123948723370333 gcd: 19) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__long
+	self assert: (-123948723370333 gcd: 1239482337033371) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__negBig
+	self assert: (-123948723370333 gcd: -251172765292171600923361522612285166173) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__negInt
+	self assert: (-123948723370333 gcd: -234239) equals: 1
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__negLong
+	self assert: (-123948723370333 gcd: -123948723370333) equals: 123948723370333
+!
+(reader addMethod: 'tests')
+!
+test_negLong_gcd__zero
+	self assert: (-123948723370333 gcd: 0) equals: 123948723370333
 !
 (reader addMethod: 'tests')
 !
@@ -1526,6 +1746,43 @@ test_zero_backslashbackslash_negLong
 !
 (reader addMethod: 'tests')
 !
+test_zero_gcd__big
+	self assert: (0 gcd: 301434622508125532092685287301027586161)
+		equals: 301434622508125532092685287301027586161
+!
+(reader addMethod: 'tests')
+!
+test_zero_gcd__int
+	self assert: (0 gcd: 19) equals: 19
+!
+(reader addMethod: 'tests')
+!
+test_zero_gcd__long
+	self assert: (0 gcd: 1239482337033371) equals: 1239482337033371
+!
+(reader addMethod: 'tests')
+!
+test_zero_gcd__negBig
+	self assert: (0 gcd: -251172765292171600923361522612285166173)
+		equals: 251172765292171600923361522612285166173
+!
+(reader addMethod: 'tests')
+!
+test_zero_gcd__negInt
+	self assert: (0 gcd: -234239) equals: 234239
+!
+(reader addMethod: 'tests')
+!
+test_zero_gcd__negLong
+	self assert: (0 gcd: -123948723370333) equals: 123948723370333
+!
+(reader addMethod: 'tests')
+!
+test_zero_gcd__zero
+	self assert: (0 gcd: 0) equals: 0
+!
+(reader addMethod: 'tests')
+!
 test_zero_minus_big
 	self assert: 0 - 301434622508125532092685287301027586161
 		equals: -301434622508125532092685287301027586161
@@ -1734,7 +1991,7 @@ generate
 				with: #(-251172765292171600923361522612285166173 -123948723370333 -234239 0 19 1239482337033371 301434622508125532092685287301027586161)
 				do: 
 					[:bn :b |
-					#(#* #+ #- #// #quo: #rem: #\\) do: 
+					#(#* #+ #- #// #quo: #rem: #\\ #gcd:) do: 
 							[:sel |
 							self
 								generateTest: an

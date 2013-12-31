@@ -49,6 +49,11 @@ halt
 (reader addMethod: 'comparing')
 !
 hash
+	^self identityHash
+!
+(reader addMethod: 'comparing')
+!
+identityHash
 	<primitive: 'hashCode'>
 	
 !

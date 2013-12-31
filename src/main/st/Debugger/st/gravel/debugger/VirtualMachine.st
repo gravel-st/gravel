@@ -129,7 +129,6 @@ initialize
 	javaClassInstances := Dictionary new.
 	self addClassType: JVMDefinedObjectType integer.
 	self addClassType: JVMDefinedObjectType boolean.
-	self addClassType: JVMDefinedObjectType bigDecimal.
 	self addClassType: JVMDefinedObjectType bigInteger.
 	self addClassType: JVMDefinedObjectType nonLocalReturn.
 	self addClassType: JVMDefinedObjectType object.

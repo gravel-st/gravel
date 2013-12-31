@@ -2,12 +2,11 @@
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
 !
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.SequencedReadable')
+!
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
 !
-(reader addMethod: 'As yet unclassified')
-!
-, aCollection
-	^self copyWithAll: aCollection
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SequencedReadable class')
 !
 (reader addMethod: 'gravel')
 !
@@ -38,17 +37,6 @@ collect: aBlock
 !
 copyEmpty: aSize
 	^self class new: aSize
-!
-(reader addMethod: 'copying')
-!
-copyFrom: start to: stop
-	| newSize |
-	newSize := stop - start + 1.
-	^(self copySpecies new: newSize)
-		replaceFrom: 1
-		to: newSize
-		with: self
-		startingAt: start
 !
 (reader addMethod: 'copying')
 !
@@ -131,42 +119,6 @@ copyWithFirst: anObject
 		at: 1 put: anObject;
 		yourself
 !
-(reader addMethod: 'enumerating')
-!
-do: aBlock
-	1 to: self size do: [:index | aBlock value: (self at: index)]
-!
-(reader addMethod: 'As yet unclassified')
-!
-endsWith: suffix
-	| extra |
-	(extra := self size - suffix size) < 0 ifTrue: [^false].
-	1 to: suffix size do: [:i | (self at: extra + i) = (suffix at: i) ifFalse: [^false]].
-	^true
-!
-(reader addMethod: 'accessing')
-!
-fifth
-	^self at: 5
-!
-(reader addMethod: 'enumerating')
-!
-findLast: aBlock
-	self size to: 1
-		by: -1
-		do: [:index | (aBlock value: (self at: index)) ifTrue: [^index]].
-	^0
-!
-(reader addMethod: 'accessing')
-!
-first
-	^self at: 1
-!
-(reader addMethod: 'accessing')
-!
-fourth
-	^self at: 4
-!
 (reader addMethod: 'initialize-release')
 !
 growSize
@@ -179,32 +131,6 @@ hash
 	hash := self species hash.
 	1 to: self size do: [:i | hash := (hash + (self at: i) hash) hashMultiply].
 	^hash
-!
-(reader addMethod: 'accessing')
-!
-indexOf: anElement
-	^self indexOf: anElement ifAbsent: [0]
-!
-(reader addMethod: 'accessing')
-!
-indexOf: anElement ifAbsent: exceptionBlock
-	^self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock
-!
-(reader addMethod: 'accessing')
-!
-indexOf: anElement startingAt: start ifAbsent: exceptionBlock
-	start to: self size do: [:index | (self at: index) = anElement ifTrue: [^index]].
-	^exceptionBlock value
-!
-(reader addMethod: 'accessing')
-!
-last
-	^self at: self size
-!
-(reader addMethod: 'converting')
-!
-readStream
-	^ReadStreamImpl collection: self
 !
 (reader addMethod: 'gravel')
 !
@@ -238,28 +164,6 @@ replaceFrom: start to: stop with: replacement startingAt: repStart
 		from: start
 		to: stop
 !
-(reader addMethod: 'gravel')
-!
-reverseDo: aBlock
-	self size to: 1
-		by: -1
-		do: [:index | aBlock value: (self at: index)]
-!
-(reader addMethod: 'accessing')
-!
-second
-	^self at: 2
-!
-(reader addMethod: 'accessing')
-!
-seventh
-	^self at: 7
-!
-(reader addMethod: 'accessing')
-!
-sixth
-	^self at: 6
-!
 (reader addMethod: 'enumerating')
 !
 species
@@ -273,33 +177,6 @@ startingAt: repStart replaceElementsIn: collection from: start to: stop
 		to: stop
 		withSequenceableCollection: self
 		startingAt: repStart
-!
-(reader addMethod: 'accessing')
-!
-tail
-	self size < 2 ifTrue: [^self copySpecies new].
-	^self copyFrom: 2 to: self size
-!
-(reader addMethod: 'accessing')
-!
-third
-	^self at: 3
-!
-(reader addMethod: 'As yet unclassified')
-!
-with: otherCollection do: aBlock
-	self size ~= otherCollection size ifTrue: [^self noMatchError].
-	1 to: self size do: [:i | aBlock value: (self at: i) value: (otherCollection at: i)]
-!
-(reader addMethod: 'As yet unclassified')
-!
-with: otherCollection do: aBlock separatedBy: separatorBlock
-	self size ~= otherCollection size ifTrue: [^self noMatchError].
-	1 to: self size
-		do: 
-			[:i |
-			i = 1 ifFalse: [separatorBlock value].
-			aBlock value: (self at: i) value: (otherCollection at: i)]
 !
 (reader addMethod: 'converting')
 !

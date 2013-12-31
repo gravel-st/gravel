@@ -22,12 +22,22 @@ isCollection
 !
 (reader addMethod: 'testing')
 !
+isDictionary
+	^false
+!
+(reader addMethod: 'testing')
+!
 isOrderedCollection
 	^false
 !
 (reader addMethod: 'testing')
 !
 isReadStream
+	^false
+!
+(reader addMethod: 'testing')
+!
+isSequencedReadable
 	^false
 !
 (reader addMethod: 'testing')
@@ -39,4 +49,9 @@ isSet
 !
 isWriteStream
 	^false
+!
+(reader addMethod: 'comparing')
+!
+scaledIdentityHash
+	^self identityHash bitShift: 18
 !

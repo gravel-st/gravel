@@ -420,7 +420,8 @@ valuesDo: aBlock
 	aBlock value: 0.
 	aBlock value: 1.
 	aBlock value: 23489713298471982374981324.
-	aBlock value: '3.0'.
+	aBlock value: -23489713298471982374981324.
+	aBlock value: 3.0.
 	aBlock value: 721s.
 	aBlock value: 3 / 7
 !

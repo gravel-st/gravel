@@ -16,7 +16,7 @@ initializeValueString: aString {Str} {^Self}
 (reader addMethod: 'As yet unclassified')
 !
 innerSourceOn: aStream {WStream[Char]} {^Self}
-	aStream print: valueString
+	aStream nextPutAll: valueString
 !
 (reader addMethod: 'As yet unclassified')
 !

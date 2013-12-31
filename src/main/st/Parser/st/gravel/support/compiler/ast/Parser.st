@@ -400,7 +400,7 @@ parseMethod {^MethodNode | Nil}
 !
 (reader addMethod: 'As yet unclassified')
 !
-parseNegativeNumber {^IntegerLiteralNode | Nil}
+parseNegativeNumber {^NumberLiteralNode | Nil}
 	stream next.
 	stream peek isDigit
 		ifFalse: 

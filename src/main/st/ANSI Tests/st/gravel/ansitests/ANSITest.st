@@ -60,7 +60,7 @@ parameterTransformer
 (reader addMethod: 'tests')
 !
 valueIsKindOfAbstractDictionary: aValue
-	^aValue class = Dictionary or: [aValue class = IdentityDictionary]
+	^aValue isDictionary
 !
 (reader addMethod: 'tests')
 !
@@ -145,7 +145,7 @@ valueIsKindOfDateAndTimeFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfDictionary: aValue
-	^aValue class = Dictionary
+	^aValue isDictionary
 !
 (reader addMethod: 'tests')
 !
@@ -438,10 +438,7 @@ valueIsKindOfSequencedContractibleCollection: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfSequencedReadableCollection: aValue
-	^aValue class = SequenceableCollection or: 
-			[aValue class = OrderedCollection or: 
-					[(self valueIsKindOfString: aValue)
-						or: [(self valueIsKindOfArray: aValue) or: [self valueIsKindOfInterval: aValue]]]]
+	^aValue isSequencedReadable
 !
 (reader addMethod: 'tests')
 !

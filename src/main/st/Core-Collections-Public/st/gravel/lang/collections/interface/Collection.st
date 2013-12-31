@@ -190,6 +190,11 @@ parallel: threadCount do: aBlock
 !
 (reader addMethod: 'iterating')
 !
+reject: aBlock
+	^self select: [:each | (aBlock value: each) not]
+!
+(reader addMethod: 'iterating')
+!
 select: aBlock
 	| newCollection |
 	newCollection := self species new.

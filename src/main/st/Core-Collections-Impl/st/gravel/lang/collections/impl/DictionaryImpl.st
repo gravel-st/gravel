@@ -135,6 +135,13 @@ includesKey: key
 !
 (reader addMethod: 'accessing')
 !
+keyAtIdentityValue: value ifAbsent: exceptionBlock
+	self
+		associationsDo: [:association | value == association value ifTrue: [^association key]].
+	^exceptionBlock value
+!
+(reader addMethod: 'accessing')
+!
 keyAtValue: value
 	^self keyAtValue: value ifAbsent: [self errorValueNotFound]
 !
@@ -181,12 +188,6 @@ postCopy
 	<squeak>
 	super postCopy.
 	array := array collect: [:association | association ifNotNil: [association copy]]
-!
-(reader addMethod: 'removing')
-!
-removeKey: key
-	<squeak>
-	^self removeKey: key ifAbsent: [self errorKeyNotFound: key]
 !
 (reader addMethod: 'removing')
 !

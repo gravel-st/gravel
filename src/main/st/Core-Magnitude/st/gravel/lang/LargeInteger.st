@@ -85,6 +85,11 @@ integerQuotientFromSmallInteger: anObject
 	primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'integerQuotientFromSmallInteger_')>
 	
 !
+(reader addMethod: 'testing')
+!
+isLarge
+	^true
+!
 (reader addMethod: 'private-arithmetic')
 !
 moduloQuotientFromLargeInteger: anObject

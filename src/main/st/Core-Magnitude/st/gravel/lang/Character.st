@@ -20,17 +20,38 @@ asInteger
 	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'asInteger')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'converting')
+!
+asLowercase
+	<primitive: 'toLowerCase'>
+	
+!
+(reader addMethod: 'converting')
 !
 asUppercase
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'asUppercase')>
+	<primitive: 'toUpperCase'>
 	
+!
+(reader addMethod: 'converting')
+!
+codePoint
+	^self digitValue
 !
 (reader addMethod: '')
 !
 digitValue
 	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'digitValue')>
 	
+!
+(reader addMethod: 'testing')
+!
+isAlphaNumeric
+	^self isLetter or: [self isDigit]
+!
+(reader addMethod: 'testing')
+!
+isCharacter
+	^true
 !
 (reader addMethod: '')
 !
@@ -48,6 +69,18 @@ isLetter
 !
 isLineBreak
 	^self = Character cr or: [self = Character lf]
+!
+(reader addMethod: 'testing')
+!
+isLowercase
+	<primitive: 'isLowerCase'>
+	
+!
+(reader addMethod: 'testing')
+!
+isUppercase
+	<primitive: 'isUpperCase'>
+	
 !
 (reader addMethod: '')
 !

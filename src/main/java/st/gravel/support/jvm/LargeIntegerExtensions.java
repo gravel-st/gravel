@@ -6,40 +6,31 @@ public class LargeIntegerExtensions {
 	public static class Factory extends IntegerExtensions.Factory {
 	}
 
-	private static final BigInteger INTEGER_MIN_VALUE = BigInteger
-			.valueOf(Integer.MIN_VALUE);
-	private static final BigInteger INTEGER_MAX_VALUE = BigInteger
-			.valueOf(Integer.MAX_VALUE);
-
 	public static Object compressed(BigInteger integer) {
 		return Factory.fromValue(integer);
-	}
-	
-	public static BigInteger productFromLargeInteger_(BigInteger receiver, BigInteger argument) {
-		return argument.multiply(receiver);
-	}
-
-	public static Number quoFromLargeInteger_(BigInteger receiver, BigInteger argument) {
-		return IntegerExtensions.objectFromBigInteger(argument.divide(receiver));
-	}
-
-	public static BigInteger sumFromLargeInteger_(BigInteger receiver, BigInteger argument) {
-		return argument.add(receiver);
-	}
-
-	public static Number remFromLargeInteger_(BigInteger receiver, BigInteger argument) {
-		return IntegerExtensions.objectFromBigInteger(argument.remainder(receiver));
 	}
 
 	public static Number differenceFromLargeInteger_(BigInteger receiver, BigInteger argument) {
 		return IntegerExtensions.objectFromBigInteger(argument.subtract(receiver));
 	}
-	
-	public static Number integerQuotientFromSmallInteger_(BigInteger receiver, int argument) {
-		if (argument == 0) return 0;
-		return integerQuotientFromLargeInteger_(receiver, BigInteger.valueOf(argument));
+
+	public static Number differenceFromSmallInteger_(BigInteger receiver, int argument) {
+		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).subtract(receiver));
 	}
 
+	public static boolean equals_(BigInteger receiver, BigInteger other) {
+		return (receiver == null && other == null)
+				|| (receiver != null && other != null && receiver.equals(other));
+	}
+	
+	public static Number gcdFromLargeInteger_(BigInteger receiver, BigInteger argument) {
+		return IntegerExtensions.objectFromBigInteger(argument.gcd(receiver));
+	}
+
+	public static Number gcdFromSmallInteger_(BigInteger receiver, int argument) {
+		return gcdFromLargeInteger_(receiver, BigInteger.valueOf(argument));
+	}
+	
 	public static Number integerQuotientFromLargeInteger_(BigInteger y, BigInteger x) {
 		// http://www.microhowto.info/howto/round_towards_minus_infinity_when_dividing_integers_in_java.html
 		BigInteger q = x.divide(y);
@@ -47,10 +38,16 @@ public class LargeIntegerExtensions {
 			return IntegerExtensions.objectFromBigInteger(q.subtract(BigInteger.ONE));
 		return IntegerExtensions.objectFromBigInteger(q);
 	}
-	
-	public static Number moduloQuotientFromSmallInteger_(BigInteger receiver, int argument) {
+
+	public static Number integerQuotientFromSmallInteger_(BigInteger receiver, int argument) {
 		if (argument == 0) return 0;
-		return moduloQuotientFromLargeInteger_(receiver, BigInteger.valueOf(argument));
+		return integerQuotientFromLargeInteger_(receiver, BigInteger.valueOf(argument));
+	}
+
+	public static boolean isSmallerThan_(BigInteger receiver, Object other) {
+		if (other instanceof BigInteger)
+			return receiver.compareTo((BigInteger) other) < 0;
+		return receiver.compareTo(BigInteger.valueOf((Integer) other)) < 0;
 	}
 
 	public static Number moduloQuotientFromLargeInteger_(BigInteger n, BigInteger x) {
@@ -60,65 +57,9 @@ public class LargeIntegerExtensions {
 		return IntegerExtensions.objectFromBigInteger(r);
 	}
 
-	public static Number sumFromSmallInteger_(BigInteger receiver, int argument) {
-		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).add(receiver));
-	}
-
-	public static Number productFromSmallInteger_(BigInteger receiver, int argument) {
+	public static Number moduloQuotientFromSmallInteger_(BigInteger receiver, int argument) {
 		if (argument == 0) return 0;
-		return BigInteger.valueOf(argument).multiply(receiver);
-	}
-
-	public static Number differenceFromSmallInteger_(BigInteger receiver, int argument) {
-		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).subtract(receiver));
-	}
-
-	public static Number quoFromSmallInteger_(BigInteger receiver, int argument) {
-		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).divide(receiver));
-	}
-
-	public static Number remFromSmallInteger_(BigInteger receiver, int argument) {
-		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).remainder(receiver));
-	}
-
-	public static Number gcdFromSmallInteger_(BigInteger receiver, int argument) {
-		return gcdFromLargeInteger_(receiver, BigInteger.valueOf(argument));
-	}
-
-	public static Number gcdFromLargeInteger_(BigInteger receiver, BigInteger argument) {
-		return IntegerExtensions.objectFromBigInteger(argument.gcd(receiver));
-	}
-	
-	public static int asSmallInteger(BigInteger integer) {
-		if ((integer.compareTo(INTEGER_MAX_VALUE) == 1)
-				|| (integer.compareTo(INTEGER_MIN_VALUE) == -1)) {
-			throw new RuntimeException("Integer out of range");
-		} else {
-			return (integer.intValue());
-		}
-	}
-
-	public static boolean equals_(BigInteger receiver, BigInteger other) {
-		return (receiver == null && other == null)
-				|| (receiver != null && other != null && receiver.equals(other));
-	}
-
-	public static String printBase_(BigInteger receiver, int radix) {
-		return receiver.toString(radix);
-	}
-
-	public static boolean isSmallerThan_(BigInteger receiver, Object other) {
-		if (other instanceof BigInteger)
-			return receiver.compareTo((BigInteger) other) < 0;
-		return receiver.compareTo(BigInteger.valueOf((Integer) other)) < 0;
-	}
-
-	public static long asLong(Object argument) {
-		if (argument instanceof Integer)
-			return (int) argument;
-		if (argument instanceof BigInteger)
-			return ((BigInteger) argument).longValue();
-		throw new IllegalArgumentException();
+		return moduloQuotientFromLargeInteger_(receiver, BigInteger.valueOf(argument));
 	}
 
 	public static BigInteger multiply_(BigInteger receiver, int argument) {
@@ -127,6 +68,43 @@ public class LargeIntegerExtensions {
 
 	public static BigInteger plus_(BigInteger receiver, int argument) {
 		return BigInteger.valueOf(argument).add(receiver);
+	}
+
+	public static String printBase_(BigInteger receiver, int radix) {
+		return receiver.toString(radix);
+	}
+
+	public static BigInteger productFromLargeInteger_(BigInteger receiver, BigInteger argument) {
+		return argument.multiply(receiver);
+	}
+	
+	public static Number productFromSmallInteger_(BigInteger receiver, int argument) {
+		if (argument == 0) return 0;
+		return BigInteger.valueOf(argument).multiply(receiver);
+	}
+
+	public static Number quoFromLargeInteger_(BigInteger receiver, BigInteger argument) {
+		return IntegerExtensions.objectFromBigInteger(argument.divide(receiver));
+	}
+
+	public static Number quoFromSmallInteger_(BigInteger receiver, int argument) {
+		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).divide(receiver));
+	}
+
+	public static Number remFromLargeInteger_(BigInteger receiver, BigInteger argument) {
+		return IntegerExtensions.objectFromBigInteger(argument.remainder(receiver));
+	}
+
+	public static Number remFromSmallInteger_(BigInteger receiver, int argument) {
+		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).remainder(receiver));
+	}
+
+	public static BigInteger sumFromLargeInteger_(BigInteger receiver, BigInteger argument) {
+		return argument.add(receiver);
+	}
+
+	public static Number sumFromSmallInteger_(BigInteger receiver, int argument) {
+		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).add(receiver));
 	}
 
 }

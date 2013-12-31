@@ -75,7 +75,8 @@ public class ASMClassWriter implements Opcodes {
 
 	public Class<?> createClass() {
 		byte[] bytes = createBytes();
-//		printBytecode(bytes);
+//		if (jvmClass.type().dottedClassName().equals("st.gravel.lang.Float$Factory"))
+//			printBytecode(bytes);
 		Class<?> instanceClass = loader.defineClass(jvmClass.type()
 				.dottedClassName(), bytes);
 		return instanceClass;

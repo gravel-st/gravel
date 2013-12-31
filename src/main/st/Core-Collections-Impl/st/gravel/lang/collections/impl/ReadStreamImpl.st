@@ -8,9 +8,19 @@
 !
 (reader addInstVar: 'position')
 !
+(reader addMethod: 'testing')
+!
+atEnd
+	^position >= collection size
+!
 (reader addMethod: 'accessing')
 !
 collection
+	^collection
+!
+(reader addMethod: 'accessing')
+!
+contents
 	^collection
 !
 (reader addMethod: 'gravel')
@@ -23,6 +33,21 @@ initialize
 initializeCollection: anArray
 	collection := anArray.
 	self initialize
+!
+(reader addMethod: 'accessing')
+!
+position
+	^position
+!
+(reader addMethod: 'positioning')
+!
+position: aPosition
+	position := aPosition
+!
+(reader addMethod: 'positioning')
+!
+setToEnd
+	position := collection size
 !
 (reader addClassMethod: 'instance creation')
 !

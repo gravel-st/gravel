@@ -1,14 +1,24 @@
 (reader defineTrait: 'SequencedStream' superclass: nil)
 !
+(reader addMethod: 'testing')
+!
+atEnd
+	^self traitRequirement
+!
 (reader addMethod: 'open/close')
 !
 close
 	
 !
+(reader addMethod: 'accessing')
+!
+contents
+	^self traitRequirement
+!
 (reader addMethod: 'testing')
 !
 isEmpty
-	^self traitRequirement
+	^self atEnd
 !
 (reader addMethod: 'accessing')
 !
@@ -23,7 +33,7 @@ position: aPosition
 (reader addMethod: 'positioning')
 !
 reset
-	^self traitRequirement
+	self position: 0
 !
 (reader addMethod: 'positioning')
 !

@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
 
 import st.gravel.core.Symbol;
 import st.gravel.support.compiler.ast.SelectorConverter;
@@ -11,9 +12,43 @@ import st.gravel.support.compiler.ast.SelectorConverter;
 public class MethodTools {
 	private static final SelectorConverter selectorConverter = (SelectorConverter) SelectorConverter.factory
 			.r_new();
+	private static final HashMap<Class, Class> primitiveMap = buildPrimitiveMap();
+
+	public static java.lang.reflect.Method searchForStaticMethod(Class type,
+			String name, int numArgs) {
+		
+		Class primType = primitiveMap.get(type);
+		if ((primType != null) && (numArgs >= 1)) {
+			Class[] params = new Class[numArgs];
+			params[0]= primType;
+			Method method = searchForMethod(type, name, params, true);
+			if (method != null ) return method;
+		}
+		return searchForMethod(type, name, numArgs, true);
+	}
+	
+	private static HashMap<Class, Class> buildPrimitiveMap() {
+		HashMap<Class, Class> hashMap = new HashMap<Class,Class>();
+		hashMap.put(Boolean.class, Boolean.TYPE); 
+		hashMap.put(Integer.class, Integer.TYPE );
+		hashMap.put(Long.class, Long.TYPE );
+		hashMap.put(Double.class, Double.TYPE );
+		hashMap.put(Float.class, Float.TYPE );
+		hashMap.put(Boolean.class, Boolean.TYPE );
+		hashMap.put(Character.class, Character.TYPE );
+		hashMap.put(Byte.class, Byte.TYPE );
+		hashMap.put(Void.class, Void.TYPE );
+		hashMap.put(Short.class, Short.TYPE );
+		return hashMap;
+	}
 
 	public static java.lang.reflect.Method searchForMethod(Class type,
 			String name, int numArgs, boolean isStatic) {
+		return searchForMethod(type, name, numArgs, isStatic, true);
+	}
+
+	public static java.lang.reflect.Method searchForMethod(Class type,
+			String name, int numArgs, boolean isStatic, boolean mayCast) {
 		java.lang.reflect.Method[] methods = type.getMethods();
 		Method best = null;
 		for (int i = 0; i < methods.length; i++) {
@@ -34,8 +69,9 @@ public class MethodTools {
 				best = methods[i];
 
 			} else {
-				if (areTypesCompatible(methods[i].getParameterTypes(),
-						best.getParameterTypes())) {
+				if (mayCast ? areTypesCompatible(methods[i].getParameterTypes(),
+						best.getParameterTypes()) : areTypesSame(methods[i].getParameterTypes(),
+								best.getParameterTypes())) {
 					best = methods[i];
 				}
 			}
@@ -79,6 +115,30 @@ public class MethodTools {
 				}
 		}
 		return best;
+	}
+
+	public static boolean areTypesSame(Class<?>[] targets,
+			Class<?>[] sources) {
+		if (targets.length != sources.length)
+			return (false);
+
+		for (int i = 0; i < targets.length; i++) {
+			if (sources[i] == null)
+				continue;
+
+			if (targets[i].isInterface()) {
+				Class<?>[] interfaces = sources[i].getInterfaces();
+				for (Class<?> in : interfaces) {
+					if (targets[i].equals(in))
+						return true;
+				}
+			}
+
+			if (!translateFromPrimitive(targets[i]).equals(
+					translateFromPrimitive(sources[i])))
+				return false;
+		}
+		return true;
 	}
 
 	public static boolean areTypesCompatible(Class<?>[] targets,

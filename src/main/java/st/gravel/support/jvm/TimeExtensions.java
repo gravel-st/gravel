@@ -26,7 +26,7 @@ public class TimeExtensions {
 	}
 
 	public static long timezoneOffsetMS_(Object millisecondsSince1970) {
-		return TimeZone.getDefault().getOffset(LargeIntegerExtensions.asLong(millisecondsSince1970));
+		return TimeZone.getDefault().getOffset(IntegerExtensions.asLong(millisecondsSince1970));
 	}
 
 	private static long calculateNanoOffset() {

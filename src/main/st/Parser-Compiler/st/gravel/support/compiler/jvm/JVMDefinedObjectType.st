@@ -100,11 +100,6 @@ withArgument: aJVMType {JVMType} {^JVMMethodType}
 !
 (reader addClassMethod: 'As yet unclassified')
 !
-bigDecimal {^JVMDefinedObjectType}
-	^self className: 'java/math/BigDecimal'
-!
-(reader addClassMethod: 'As yet unclassified')
-!
 bigInteger {^JVMDefinedObjectType}
 	^self className: 'java/math/BigInteger'
 !

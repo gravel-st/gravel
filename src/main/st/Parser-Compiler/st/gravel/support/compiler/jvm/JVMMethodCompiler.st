@@ -352,11 +352,8 @@ pushChar: anObject {Object} {^JVMMethodCompiler}
 (reader addMethod: 'producing')
 !
 pushFixedPoint: aFixedPoint {FixedPoint} {^Self}
-	self emit: (NewInstance type: JVMDefinedObjectType bigDecimal).
-	self emit: Dup new.
 	self pushString: aFixedPoint printStringWithoutS.
-	self emit: (InvokeSpecial init: JVMDefinedObjectType bigDecimal
-				voidArguments: (Array with: JVMDefinedObjectType string))
+	self produceMessageSend: (UnaryMessageNode receiver: nil selector: 'asScaledDecimal')
 !
 (reader addMethod: 'producing')
 !
@@ -577,7 +574,7 @@ visitFieldWriteNode: aNode {FieldWriteNode} {^Self}
 (reader addMethod: 'visiting')
 !
 visitFixedPointLiteralNode: anObject {FixedPointLiteralNode} {^Self}
-	self produceConstant: anObject ifAbsentPut: [self pushFixedPoint: anObject value]
+	self pushFixedPoint: anObject value
 !
 (reader addMethod: 'visiting')
 !

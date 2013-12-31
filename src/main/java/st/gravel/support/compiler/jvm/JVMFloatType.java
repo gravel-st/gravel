@@ -75,7 +75,7 @@ public class JVMFloatType extends JVMPrimitiveType implements Cloneable {
 
 	@Override
 	public JVMFloatType sourceOn_(final StringBuilder _aStream) {
-		_aStream.append(st.gravel.core.Symbol.value(this.getClass().getSimpleName()));
+		_aStream.append('F');
 		return this;
 	}
 }

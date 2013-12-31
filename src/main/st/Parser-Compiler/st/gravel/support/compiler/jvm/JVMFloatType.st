@@ -20,3 +20,8 @@ newCastInstructionFromDynamicObject {^CastObjectToFloat}
 newCastInstructionTo: aJVMType {JVMType} {^CastTo}
 	^aJVMType newCastInstructionFromFloat
 !
+(reader addMethod: 'printing')
+!
+sourceOn: aStream {WStream[Char]} {^Self}
+	aStream nextPut: $F
+!

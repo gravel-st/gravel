@@ -58,4 +58,27 @@ public class ReadStreamExtensions {
 		return receiver.position();
 	}
 
+	public static CharBuffer position_(CharBuffer receiver, int newPosition) {
+		receiver.position(newPosition);
+		return receiver;
+	}
+
+	public static CharBuffer setToEnd(CharBuffer receiver) {
+		receiver.position(receiver.limit());
+		return receiver;
+	}
+
+	public static String contents(CharBuffer receiver) {
+		int oldPos = receiver.position();
+		receiver.rewind();
+		String string = receiver.toString();
+		receiver.position(oldPos);
+		return string;
+	}
+
+	public static CharBuffer reset(CharBuffer receiver) {
+		receiver.rewind();
+		return receiver;
+	}
+
 }

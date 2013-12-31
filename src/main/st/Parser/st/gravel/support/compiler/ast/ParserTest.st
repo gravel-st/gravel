@@ -165,9 +165,20 @@ testParseFloat
 	node := (Parser source: '123412341345145145123412341234.003213123123') parseExpression.
 	self assert: FloatLiteralNode equals: node class.
 	self
-		assert: '123412341345145145123412341234.003213123123'
+		assert: 123412341345145145123412341234.003213123123
 		equals: node value
-		delta: '0.000000001'
+		delta: 0.000000001
+!
+(reader addMethod: 'tests')
+!
+testParseFloat2
+	| node {FloatLiteralNode | Nil} |
+	node := (Parser source: '3.0.') parseExpression.
+	self assert: FloatLiteralNode equals: node class.
+	self
+		assert: 3.0
+		equals: node value
+		delta: 0.000000001
 !
 (reader addMethod: 'tests')
 !
@@ -176,9 +187,9 @@ testParseFloatWithExponent
 	node := (Parser source: '1.23412e29') parseExpression.
 	self assert: FloatLiteralNode equals: node class.
 	self
-		assert: '1.23412e29'
+		assert: 1.23412e29
 		equals: node value
-		delta: '0.000000001'
+		delta: 0.000000001
 !
 (reader addMethod: 'tests')
 !
@@ -187,9 +198,9 @@ testParseFloatWithNegativeExponent
 	node := (Parser source: '1.23412e-29') parseExpression.
 	self assert: FloatLiteralNode equals: node class.
 	self
-		assert: '1.23412e-29'
+		assert: 1.23412e-29
 		equals: node value
-		delta: '0.000000001'
+		delta: 0.000000001
 !
 (reader addMethod: 'tests')
 !

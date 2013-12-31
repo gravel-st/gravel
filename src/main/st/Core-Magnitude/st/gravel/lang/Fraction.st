@@ -34,6 +34,16 @@
 < aFraction
 	^aFraction lessFromFraction: self
 !
+(reader addMethod: 'comparing')
+!
+= aNumber
+	aNumber isNumber ifFalse: [^false].
+	aNumber isFraction
+		ifTrue: 
+			[numerator = 0 ifTrue: [^aNumber numerator = 0].
+			^numerator * aNumber denominator = (aNumber numerator * denominator)].
+	^aNumber asFraction = aNumber
+!
 (reader addMethod: 'converting')
 !
 asFraction
@@ -44,12 +54,35 @@ asFraction
 denominator
 	^denominator
 !
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromFraction: aFraction
+	^aFraction + self negated
+!
+(reader addMethod: 'comparing')
+!
+hash
+	| tmp |
+	denominator isPowerOfTwo
+		ifTrue: 
+			[tmp := self asFloat.
+			tmp isFinite ifTrue: [^tmp hash]].
+	^numerator hash bitXor: denominator hash
+!
 (reader addMethod: 'initialize-release')
 !
-initializeNumerator: anInteger denominator: anInteger2
-	numerator := anInteger.
-	denominator := anInteger2.
-	self initialize
+initializeNumerator: n denominator: d
+	d = 0
+		ifTrue: [^(ZeroDivide dividend: n) signal]
+		ifFalse: 
+			[numerator := n asInteger.
+			denominator := d asInteger abs.
+			d < 0 ifTrue: [numerator := numerator negated]]
+!
+(reader addMethod: 'testing')
+!
+isFraction
+	^true
 !
 (reader addMethod: 'gravel')
 !
@@ -58,12 +91,17 @@ lessFromFraction: aFraction
 	(neg := aFraction negative) = self negative ifFalse: [^neg].
 	^aFraction numerator * denominator < (numerator * aFraction denominator)
 !
+(reader addMethod: 'testing')
+!
+negative
+	^numerator negative
+!
 (reader addMethod: 'accessing')
 !
 numerator
 	^numerator
 !
-(reader addMethod: 'accessing')
+(reader addMethod: 'printing')
 !
 printOn: aStream
 	aStream
@@ -74,10 +112,55 @@ printOn: aStream
 		print: denominator;
 		nextPut: $)
 !
+(reader addMethod: 'private-arithmetic')
+!
+productFromFraction: aFraction
+	| d1 d2 |
+	d1 := aFraction numerator gcd: denominator.
+	d2 := aFraction denominator gcd: numerator.
+	(d2 = aFraction denominator and: [d1 = denominator])
+		ifTrue: [^aFraction numerator // d1 * (numerator // d2)].
+	^Fraction numerator: aFraction numerator // d1 * (numerator // d2)
+		denominator: aFraction denominator // d2 * (denominator // d1)
+!
 (reader addMethod: 'arithmetic')
 !
 quo: operand
 	^operand quoFromFraction: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromFraction: aFraction
+	^aFraction * self reciprocal
+!
+(reader addMethod: 'arithmetic')
+!
+reciprocal
+	numerator abs = 1 ifTrue: [^denominator * numerator].
+	^self class numerator: denominator denominator: numerator
+!
+(reader addMethod: 'private')
+!
+reduced
+	| gcd numer denom |
+	numerator = 0 ifTrue: [^0].
+	gcd := numerator gcd: denominator.
+	numer := numerator // gcd.
+	denom := denominator // gcd.
+	denom = 1 ifTrue: [^numer].
+	^Fraction numerator: numer denominator: denom
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromFraction: aFraction
+	| d n d1 d2 |
+	d := aFraction denominator gcd: denominator.
+	n := aFraction numerator * (d1 := denominator // d)
+				+ (numerator * (d2 := aFraction denominator // d)).
+	d1 := d1 * d2.
+	n := n // (d2 := n gcd: d).
+	(d := d1 * (d // d2)) = 1 ifTrue: [^n].
+	^Fraction numerator: n denominator: d
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -96,25 +179,8 @@ truncated
 !
 (reader addClassMethod: 'instance creation')
 !
-numerator: numerator denominator: denominator
-	numerator < 0
-		ifTrue: [^self numerator: numerator negated denominator: denominator negated].
-	denominator = 1 ifTrue: [^numerator].
-	^self new initializeNumerator: numerator truncated denominator: denominator truncated
-!
-(reader addClassMethod: 'instance creation')
-!
-reducedNumerator: numInteger denominator: denInteger
-	| gcd denominator numerator |
-	denominator := denInteger truncated abs.
-	denominator isZero ifTrue: [^self divisionByZeroError].
-	denInteger negative
-		ifTrue: [numerator := numInteger truncated negated]
-		ifFalse: [numerator := numInteger truncated].
-	gcd := numerator gcd: denominator.
-	denominator = gcd ifTrue: [^numerator // gcd].
-	gcd = 1 ifTrue: [^self basicNew initializeNumerator: numerator denominator: denominator].
-	^self basicNew initializeNumerator: numerator // gcd denominator: denominator // gcd
+numerator: numInteger denominator: denInteger
+	^self new initializeNumerator: numInteger denominator: denInteger
 !
 (reader addClassMethod: 'constants')
 !

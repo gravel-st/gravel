@@ -111,7 +111,7 @@ public class FloatLiteralNode extends NumberLiteralNode implements Cloneable {
 
 	@Override
 	public FloatLiteralNode innerSourceOn_(final StringBuilder _aStream) {
-		_aStream.append("" + _valueString);
+		_aStream.append(_valueString);
 		return this;
 	}
 

@@ -24,6 +24,11 @@
 	<primitive: #('st.gravel.support.jvm.StringExtensions' 'equals_')>
 	
 !
+(reader addMethod: 'converting')
+!
+asScaledDecimal
+	^ScaledDecimal readFrom: self
+!
 (reader addMethod: 'gravel')
 !
 asString

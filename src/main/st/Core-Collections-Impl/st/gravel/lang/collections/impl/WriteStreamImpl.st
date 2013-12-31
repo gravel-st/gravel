@@ -8,6 +8,11 @@
 !
 (reader addInstVar: 'position')
 !
+(reader addMethod: 'testing')
+!
+atEnd
+	^position >= collection size
+!
 (reader addMethod: 'accessing')
 !
 collection
@@ -52,6 +57,21 @@ pastEndPut: anObject
 				startingAt: 1.
 	collection at: (position := position + 1) put: anObject.
 	^anObject
+!
+(reader addMethod: 'accessing')
+!
+position
+	^position
+!
+(reader addMethod: 'accessing')
+!
+position: aPosition
+	position := aPosition
+!
+(reader addMethod: 'accessing')
+!
+setToEnd
+	position := collection size
 !
 (reader addClassMethod: 'instance creation')
 !

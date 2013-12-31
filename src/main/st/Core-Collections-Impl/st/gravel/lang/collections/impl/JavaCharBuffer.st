@@ -12,6 +12,12 @@ atEnd
 	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'atEnd')>
 	
 !
+(reader addMethod: 'accessing')
+!
+contents
+	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'contents')>
+	
+!
 (reader addMethod: '')
 !
 next
@@ -40,6 +46,24 @@ peekFor: aCharacter
 !
 position
 	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'position')>
+	
+!
+(reader addMethod: 'positioning')
+!
+position: aPosition
+	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'position_')>
+	
+!
+(reader addMethod: 'positioning')
+!
+reset
+	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'reset')>
+	
+!
+(reader addMethod: 'positioning')
+!
+setToEnd
+	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'setToEnd')>
 	
 !
 (reader addMethod: '')

@@ -63,6 +63,7 @@ import st.gravel.support.compiler.jvm.NewArray;
 import st.gravel.support.compiler.jvm.JVMByteType;
 import st.gravel.support.compiler.jvm.ByteArrayStore;
 import st.gravel.support.compiler.jvm.PushChar;
+import st.gravel.support.compiler.ast.UnaryMessageNode;
 import st.gravel.support.compiler.jvm.PushFloat;
 import st.gravel.support.compiler.jvm.PushInt;
 import st.gravel.support.compiler.jvm.PushNull;
@@ -546,10 +547,8 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	}
 
 	public JVMMethodCompiler pushFixedPoint_(final java.math.BigDecimal _aFixedPoint) {
-		this.emit_(NewInstance.factory.type_(JVMDefinedObjectType.factory.bigDecimal()));
-		this.emit_(Dup.factory.basicNew());
 		this.pushString_(_aFixedPoint.toString());
-		this.emit_(InvokeSpecial.factory.init_voidArguments_(JVMDefinedObjectType.factory.bigDecimal(), st.gravel.support.jvm.ArrayFactory.with_(JVMDefinedObjectType.factory.string())));
+		this.produceMessageSend_(UnaryMessageNode.factory.receiver_selector_(null, "asScaledDecimal"));
 		return this;
 	}
 
@@ -817,13 +816,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 
 	@Override
 	public JVMMethodCompiler visitFixedPointLiteralNode_(final FixedPointLiteralNode _anObject) {
-		this.produceConstant_ifAbsentPut_(_anObject, new st.gravel.support.jvm.Block0<Object>() {
-
-			@Override
-			public Object value() {
-				return JVMMethodCompiler.this.pushFixedPoint_(_anObject.value());
-			}
-		});
+		this.pushFixedPoint_(_anObject.value());
 		return this;
 	}
 

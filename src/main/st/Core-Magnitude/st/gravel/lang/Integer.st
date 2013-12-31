@@ -18,12 +18,17 @@ abs
 (reader addMethod: 'converting')
 !
 asFraction
-	^self / 1
+	^self
+!
+(reader addMethod: 'converting')
+!
+asInteger
+	^self
 !
 (reader addMethod: 'converting')
 !
 asScaledDecimal: scale
-	^FixedPoint preReducedNumerator: self denominator: 1 scale: scale
+	^ScaledDecimal newFromNumber: self scale: scale
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -53,6 +58,12 @@ benchmark
 							count := count + 1]]].
 	^count
 !
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromFraction: aFraction
+	^(Fraction numerator: aFraction numerator - (aFraction denominator * self)
+		denominator: aFraction denominator) reduced
+!
 (reader addMethod: 'gravel')
 !
 factorial
@@ -73,8 +84,18 @@ hashMultiply
 !
 (reader addMethod: 'testing')
 !
+isFraction
+	^true
+!
+(reader addMethod: 'testing')
+!
 isInteger
 	^true
+!
+(reader addMethod: 'testing')
+!
+isLarge
+	^false
 !
 (reader addMethod: 'testing')
 !
@@ -127,8 +148,13 @@ printOn: aStream paddedWith: aCharacter to: anInteger base: aRadix
 !
 (reader addMethod: 'private-arithmetic')
 !
-quotientFromInteger: aNumber
-	^Fraction reducedNumerator: aNumber denominator: self
+productFromFraction: aFraction
+	^(Fraction numerator: 1 denominator: self) productFromFraction: aFraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromInteger: anInteger
+	^(Fraction numerator: anInteger denominator: self) reduced
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -146,6 +172,12 @@ raisedToInteger: aNumber
 !
 rounded
 	^self
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromFraction: aFraction
+	^Fraction numerator: aFraction numerator + (aFraction denominator * self)
+		denominator: aFraction denominator
 !
 (reader addMethod: 'As yet unclassified')
 !

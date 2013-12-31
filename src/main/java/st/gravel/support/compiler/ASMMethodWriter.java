@@ -96,6 +96,44 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		throw new UnsupportedOperationException("Not Implemented Yet");
 	}
 
+	public void logToErr(final String string) {
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "err",
+				"Ljava/io/PrintStream;");
+		mv.visitLdcInsn(string);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println",
+				"(Ljava/lang/String;)V");
+	}
+
+	private void produceLocalVariableInfo(Label startLabel, JVMLocalDeclaration[] jvmLocalDeclarations) {
+		Label varLabel = new Label();
+		mv.visitLabel(varLabel);
+		for (JVMLocalDeclaration local: jvmLocalDeclarations) {
+			mv.visitLocalVariable(local.varName(), 
+					local.type().descriptorString()
+					, null, startLabel, varLabel, local.index());
+		}
+	}
+	public Object fromage(float x) {
+		return x;
+	}
+
+	public void pushFloat(float value) {
+		if (value == 0.0f) {
+			mv.visitInsn(FCONST_0);
+			return;
+		}
+		if (value == 1.0f) {
+			mv.visitInsn(FCONST_1);
+			return;
+		}
+		if (value == 2.0f) {
+			mv.visitInsn(FCONST_2);
+			return;
+		}
+		mv.visitLdcInsn(value);
+		return;
+	}
+
 	public void pushInt(int i) {
 		switch (i) {
 		case (0):
@@ -132,14 +170,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 //		logToErr("Start: " + node);
 		node.accept_(this);
 		return null;
-	}
-
-	public void logToErr(final String string) {
-		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "err",
-				"Ljava/io/PrintStream;");
-		mv.visitLdcInsn(string);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println",
-				"(Ljava/lang/String;)V");
 	}
 
 	@Override
@@ -219,8 +249,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
-	public Void visitCastFloatToObject_(CastFloatToObject _anObject) {
-		throw new UnsupportedOperationException("Not Implemented Yet");
+	public Void visitCastFloatToObject_(CastFloatToObject node) {
+		mv.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf", "(F)Ljava/lang/Float;");
+		return null;
 	}
 
 	@Override
@@ -424,9 +455,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
-	public Void visitIfObjectsEqualThenElse_(IfObjectsEqualThenElse node) {
+	public Void visitIfObjectIsNullThenElse_(IfObjectIsNullThenElse node) {
 		Label elseLabel = new Label();
-		mv.visitJumpInsn(IF_ACMPNE, elseLabel);
+		mv.visitJumpInsn(IFNONNULL, elseLabel);
 		visit_(node.trueFrame());
 		Label end = new Label();
 		mv.visitJumpInsn(GOTO, end);
@@ -437,9 +468,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
-	public Void visitIfObjectIsNullThenElse_(IfObjectIsNullThenElse node) {
+	public Void visitIfObjectsEqualThenElse_(IfObjectsEqualThenElse node) {
 		Label elseLabel = new Label();
-		mv.visitJumpInsn(IFNONNULL, elseLabel);
+		mv.visitJumpInsn(IF_ACMPNE, elseLabel);
 		visit_(node.trueFrame());
 		Label end = new Label();
 		mv.visitJumpInsn(GOTO, end);
@@ -492,6 +523,14 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	@Override
 	public Void visitIStore_(IStore node) {
 		mv.visitVarInsn(ISTORE, node.index());
+		return null;
+	}
+
+	@Override
+	public Void visitLabelLineNumber_(LabelLineNumber node) {
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(node.line(), l1);
 		return null;
 	}
 
@@ -557,8 +596,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
-	public Void visitPushFloat_(PushFloat _anObject) {
-		throw new UnsupportedOperationException("Not Implemented Yet");
+	public Void visitPushFloat_(PushFloat node) {
+		pushFloat(node.value());
+		return null;
 	}
 
 	@Override
@@ -668,7 +708,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
+	
 	@Override
 	public Void visitWhileTrueLoop_(WhileTrueLoop node) {
 		Label topLabel = new Label();
@@ -686,6 +726,8 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		return null;
 	}
 
+
+
 	public void write(JVMMethod method) {
 		mv = cw.visitMethod(ACC_PUBLIC + (method.isStatic() ? ACC_STATIC : 0),
 				method.name(), method.signature().descriptorString(), null,
@@ -702,25 +744,5 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		produceLocalVariableInfo(startLabel, method.locals());
 		mv.visitMaxs(0, 0);
 		mv.visitEnd();
-	}
-	
-	private void produceLocalVariableInfo(Label startLabel, JVMLocalDeclaration[] jvmLocalDeclarations) {
-		Label varLabel = new Label();
-		mv.visitLabel(varLabel);
-		for (JVMLocalDeclaration local: jvmLocalDeclarations) {
-			mv.visitLocalVariable(local.varName(), 
-					local.type().descriptorString()
-					, null, startLabel, varLabel, local.index());
-		}
-	}
-
-
-
-	@Override
-	public Void visitLabelLineNumber_(LabelLineNumber node) {
-		Label l1 = new Label();
-		mv.visitLabel(l1);
-		mv.visitLineNumber(node.line(), l1);
-		return null;
 	}
 }

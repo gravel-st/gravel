@@ -5,7 +5,7 @@
 (reader addMethod: 'As yet unclassified')
 !
 parameterOperand
-	^'0.2'
+	^0.2
 !
 (reader addMethod: 'tests')
 !
@@ -136,5 +136,5 @@ test_tan
 (reader addMethod: 'As yet unclassified')
 !
 valuesDo: aBlock
-	aBlock value: '0.1'
+	aBlock value: 0.1
 !

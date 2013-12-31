@@ -69,5 +69,7 @@ test_setToEnd
 (reader addMethod: 'As yet unclassified')
 !
 valuesDo: aBlock
-	aBlock value: (ReadStream on: 'fromage')
+	aBlock value: (ReadStream on: 'fromage').
+	aBlock value: (ReadStream on: #(#a #b #c)).
+	aBlock value: (WriteStream on: OrderedCollection new)
 !

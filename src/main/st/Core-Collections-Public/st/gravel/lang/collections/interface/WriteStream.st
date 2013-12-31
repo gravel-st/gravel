@@ -51,6 +51,11 @@ nextPutAll: aCollection
 position
 	^self traitRequirement
 !
+(reader addMethod: 'printing')
+!
+print: anObject
+	anObject printOn: self
+!
 (reader addMethod: 'character writing')
 !
 space

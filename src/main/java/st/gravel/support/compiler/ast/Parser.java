@@ -33,9 +33,9 @@ import st.gravel.support.compiler.ast.KeywordMessageNode;
 import st.gravel.support.compiler.ast.KeywordMethodNode;
 import st.gravel.support.compiler.ast.MessageNode;
 import st.gravel.support.compiler.ast.CascadeNode;
-import st.gravel.support.compiler.ast.IntegerLiteralNode;
-import st.gravel.support.compiler.ast.TypeCast;
 import st.gravel.support.compiler.ast.NumberLiteralNode;
+import st.gravel.support.compiler.ast.TypeCast;
+import st.gravel.support.compiler.ast.IntegerLiteralNode;
 import st.gravel.support.compiler.ast.FloatLiteralNode;
 import st.gravel.support.compiler.ast.FixedPointLiteralNode;
 import st.gravel.support.compiler.ast.ReferenceLiteralNode;
@@ -436,7 +436,7 @@ public class Parser extends Object implements Cloneable {
 		while (!_temp1) {
 			_temp1 = st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, ']');
 			if (!_temp1) {
-				_bytes = st.gravel.support.jvm.ByteArrayExtensions.copyWith_(_bytes, st.gravel.support.jvm.LargeIntegerExtensions.asSmallInteger(Parser.this.readInteger()));
+				_bytes = st.gravel.support.jvm.ByteArrayExtensions.copyWith_(_bytes, st.gravel.support.jvm.IntegerExtensions.asInt(Parser.this.readInteger()));
 				Parser.this.eatWhitespace();
 			}
 		}
@@ -632,13 +632,13 @@ public class Parser extends Object implements Cloneable {
 		return null;
 	}
 
-	public IntegerLiteralNode parseNegativeNumber() {
+	public NumberLiteralNode parseNegativeNumber() {
 		st.gravel.support.jvm.ReadStreamExtensions.next(_stream);
 		if (!st.gravel.support.jvm.CharacterExtensions.isDigit(st.gravel.support.jvm.ReadStreamExtensions.peek(_stream))) {
 			st.gravel.support.jvm.ReadStreamExtensions.skip_(_stream, -1);
 			return null;
 		}
-		return ((IntegerLiteralNode) this.parseNumber().negated());
+		return this.parseNumber().negated();
 	}
 
 	public Expression parseNestedExpression() {
@@ -677,7 +677,7 @@ public class Parser extends Object implements Cloneable {
 		String _fractionString;
 		_value = this.readInteger_(10);
 		if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 'r')) {
-			return IntegerLiteralNode.factory.integer_(Parser.this.readInteger_(st.gravel.support.jvm.LargeIntegerExtensions.asSmallInteger(_value)));
+			return IntegerLiteralNode.factory.integer_(Parser.this.readInteger_(st.gravel.support.jvm.IntegerExtensions.asInt(_value)));
 		}
 		_fractionString = null;
 		if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, '.')) {
@@ -696,7 +696,7 @@ public class Parser extends Object implements Cloneable {
 		} else {
 			if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 's')) {
 				final int _scale;
-				_scale = st.gravel.support.jvm.LargeIntegerExtensions.asSmallInteger(Parser.this.readInteger_(10));
+				_scale = st.gravel.support.jvm.IntegerExtensions.asInt(Parser.this.readInteger_(10));
 				if (_fractionString == null) {
 					_fractionString = "";
 				}
@@ -1143,7 +1143,7 @@ public class Parser extends Object implements Cloneable {
 		final java.math.BigInteger _value;
 		_value = this.readInteger_(10);
 		if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 'r')) {
-			return Parser.this.readInteger_(st.gravel.support.jvm.LargeIntegerExtensions.asSmallInteger(_value));
+			return Parser.this.readInteger_(st.gravel.support.jvm.IntegerExtensions.asInt(_value));
 		}
 		return _value;
 	}

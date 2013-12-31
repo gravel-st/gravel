@@ -16,6 +16,8 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 
 import st.gravel.core.Symbol;
+import st.gravel.support.jvm.runtime.ImageBootstrapper;
+import st.gravel.support.jvm.runtime.MethodTools;
 
 public class StringExtensions {
 
@@ -141,7 +143,7 @@ public class StringExtensions {
 	public static File asFilename(String pathname) {
 		return new File(pathname);
 	}
-
+	
 	public static Float parseFloat(String _valueString) {
 		return Float.valueOf(_valueString);
 	}

@@ -2,7 +2,11 @@
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.interface.Addable')
 !
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
+!
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Addable class')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
 !
 (reader addMethod: 'testing')
 !

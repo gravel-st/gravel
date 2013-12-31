@@ -48,6 +48,12 @@ bitOr: anObject
 !
 (reader addMethod: '')
 !
+bitShift: anInteger
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitShift_')>
+	
+!
+(reader addMethod: '')
+!
 bitXor: anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitXor_')>
 	
@@ -118,6 +124,11 @@ integerQuotientFromSmallInteger: anObject
 	<
 	primitive: #('st.gravel.support.jvm.IntegerExtensions' 'integerQuotientFromSmallInteger_')>
 	
+!
+(reader addMethod: 'testing')
+!
+isPowerOfTwo
+	^self > 0 and: [(self bitAnd: self - 1) = 0]
 !
 (reader addMethod: 'private-arithmetic')
 !

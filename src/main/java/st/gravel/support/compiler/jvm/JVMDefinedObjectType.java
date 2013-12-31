@@ -32,10 +32,6 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return newInstance;
 		}
 
-		public JVMDefinedObjectType bigDecimal() {
-			return this.className_("java/math/BigDecimal");
-		}
-
 		public JVMDefinedObjectType bigInteger() {
 			return this.className_("java/math/BigInteger");
 		}
@@ -103,10 +99,6 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 		public JVMDefinedObjectType symbol() {
 			return this.className_("st/gravel/core/Symbol");
 		}
-	}
-
-	static public JVMDefinedObjectType _bigDecimal(Object receiver) {
-		return factory.bigDecimal();
 	}
 
 	static public JVMDefinedObjectType _bigInteger(Object receiver) {

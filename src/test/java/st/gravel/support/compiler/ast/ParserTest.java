@@ -17,6 +17,7 @@ import st.gravel.support.compiler.ast.ByteArrayLiteralNode;
 import st.gravel.support.compiler.ast.CascadeNode;
 import st.gravel.support.compiler.ast.CharacterLiteralNode;
 import st.gravel.support.compiler.ast.FixedPointLiteralNode;
+import st.gravel.support.compiler.ast.FloatLiteralNode;
 import st.gravel.support.compiler.ast.IntegerLiteralNode;
 import st.gravel.support.compiler.ast.KeywordMessageNode;
 import st.gravel.support.compiler.ast.KeywordMethodNode;
@@ -171,6 +172,38 @@ public class ParserTest {
 		_node = ((FixedPointLiteralNode) Parser.factory.source_("5.1s2").parseExpression());
 		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
 		assertEquals((java.math.BigDecimal) st.gravel.support.jvm.FixedPointExtensions.fromSmalltalkString_("5.1s"), (java.math.BigDecimal) _node.value());
+	}
+
+	@Test
+	public void testParseFloat() {
+		final FloatLiteralNode _node;
+		_node = ((FloatLiteralNode) Parser.factory.source_("123412341345145145123412341234.003213123123").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FloatLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((float) 123412341345145145123412341234.003213123123f, (float) _node.value(), (float) 0.000000001f);
+	}
+
+	@Test
+	public void testParseFloat2() {
+		final FloatLiteralNode _node;
+		_node = ((FloatLiteralNode) Parser.factory.source_("3.0.").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FloatLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((float) 3.0f, (float) _node.value(), (float) 0.000000001f);
+	}
+
+	@Test
+	public void testParseFloatWithExponent() {
+		final FloatLiteralNode _node;
+		_node = ((FloatLiteralNode) Parser.factory.source_("1.23412e29").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FloatLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((float) 1.23412e29f, (float) _node.value(), (float) 0.000000001f);
+	}
+
+	@Test
+	public void testParseFloatWithNegativeExponent() {
+		final FloatLiteralNode _node;
+		_node = ((FloatLiteralNode) Parser.factory.source_("1.23412e-29").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FloatLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((float) 1.23412e-29f, (float) _node.value(), (float) 0.000000001f);
 	}
 
 	@Test

@@ -58,17 +58,27 @@ asFraction
 (reader addMethod: 'converting')
 !
 asInteger
-	^self subclassResponsibility
+	^self truncated
 !
 (reader addMethod: 'converting')
 !
 asScaledDecimal: scale
-	^self subclassResponsibility
+	^ScaledDecimal newFromNumber: self scale: scale
 !
 (reader addMethod: 'truncation and round off')
 !
 ceiling
 	^self subclassResponsibility
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromFraction: aFraction
+	^self asFraction differenceFromFraction: aFraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromScaledDecimal: operand
+	^ScaledDecimal newFromNumber: operand fraction - self asFraction scale: operand scale
 !
 (reader addMethod: 'testing')
 !
@@ -88,7 +98,7 @@ fractionPart
 (reader addMethod: 'truncation and round off')
 !
 integerPart
-	^self subclassResponsibility
+	^self - self fractionPart
 !
 (reader addMethod: 'testing')
 !
@@ -110,10 +120,35 @@ negative
 positive
 	^self >= 0
 !
+(reader addMethod: 'private-arithmetic')
+!
+productFromFraction: aFraction
+	^self asFraction productFromFraction: aFraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromScaledDecimal: operand
+	^ScaledDecimal newFromNumber: operand fraction * self asFraction scale: operand scale
+!
 (reader addMethod: 'arithmetic')
 !
 quo: operand
 	^self subclassResponsibility
+!
+(reader addMethod: 'private-arithmetic')
+!
+quoFromInteger: anInteger
+	^(anInteger / self) truncated
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromFraction: aFraction
+	^self asFraction quotientFromFraction: aFraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromScaledDecimal: operand
+	^ScaledDecimal newFromNumber: operand fraction / self asFraction scale: operand scale
 !
 (reader addMethod: 'arithmetic')
 !
@@ -166,6 +201,21 @@ squared
 !
 strictlyPositive
 	^self > 0
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromFraction: aFraction
+	^self asFraction sumFromFraction: aFraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromLargeInteger: aSmallInteger
+	^self sumFromInteger: aSmallInteger
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromScaledDecimal: operand
+	^ScaledDecimal newFromNumber: operand fraction + self asFraction scale: operand scale
 !
 (reader addMethod: 'private-arithmetic')
 !

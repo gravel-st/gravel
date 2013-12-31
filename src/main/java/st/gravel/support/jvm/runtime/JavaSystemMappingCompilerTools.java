@@ -26,6 +26,7 @@ import st.gravel.support.compiler.jvm.JVMByteType;
 import st.gravel.support.compiler.jvm.JVMCharType;
 import st.gravel.support.compiler.jvm.JVMClass;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import st.gravel.support.compiler.jvm.JVMFloatType;
 import st.gravel.support.compiler.jvm.JVMIntType;
 import st.gravel.support.compiler.jvm.JVMLongType;
 import st.gravel.support.compiler.jvm.JVMMethodType;
@@ -70,15 +71,12 @@ public final class JavaSystemMappingCompilerTools extends
 		} catch (ClassNotFoundException e) {
 			return null;
 		}
-		Method method = MethodTools.searchForMethod(receiverClass, _name,
-				_numArgs + 1, true);
+		Method method = MethodTools.searchForStaticMethod(receiverClass, _name, _numArgs);
 		if (method == null) {
-			method = MethodTools.searchForMethod(receiverClass, _name,
-					_numArgs, true);
+			method = MethodTools.searchForStaticMethod(receiverClass, _name, _numArgs + 1);
 		}
 		if (method == null) {
-			method = MethodTools.searchForMethod(receiverClass, _name,
-					_numArgs, false);
+			method = MethodTools.searchForMethod(receiverClass, _name, _numArgs, false);
 
 			if (method == null) {
 				return null;
@@ -163,8 +161,8 @@ public final class JavaSystemMappingCompilerTools extends
 					.singletonAtReference_(_aClassMapping.reference().nonmeta());
 			final MethodHandle unreflect = MethodHandles.lookup().unreflect(
 					method);
-			unreflect.invoke(instance);
 			System.out.println("Initializing " + identityClass);
+			unreflect.invoke(instance);
 			return this;
 		} catch (NoSuchMethodException e) {
 			return this;
@@ -209,6 +207,8 @@ public final class JavaSystemMappingCompilerTools extends
 				return JVMLongType.factory.basicNew();
 			if (_aClass == boolean.class)
 				return JVMBooleanType.factory.basicNew();
+			if (_aClass == float.class)
+				return JVMFloatType.factory.basicNew();
 			throw new RuntimeException("niy: " + _aClass);
 		}
 		if (_aClass.isArray()) {
