@@ -9,6 +9,10 @@ import st.gravel.support.compiler.ast.SimpleTraitUsageNode;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class ArrayExtensions {
+	
+	public static <E> E[] copy(E[] receiver) {
+		return receiver.clone();
+	}
 
 	public static <E> boolean allSatisfy_(E[] receiver, Predicate1<E> predicate) {
 		for (E element : receiver) {

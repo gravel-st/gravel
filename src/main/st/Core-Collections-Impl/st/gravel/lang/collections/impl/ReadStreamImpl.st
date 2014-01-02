@@ -1,12 +1,8 @@
-(reader defineClass: 'ReadStreamImpl' superclass: 'st.gravel.lang.Object')
+(reader defineClass: 'ReadStreamImpl' superclass: 'st.gravel.lang.collections.impl.PositionableStreamImpl')
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.interface.ReadStream')
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ReadStream class')
-!
-(reader addInstVar: 'collection')
-!
-(reader addInstVar: 'position')
 !
 (reader addMethod: 'testing')
 !

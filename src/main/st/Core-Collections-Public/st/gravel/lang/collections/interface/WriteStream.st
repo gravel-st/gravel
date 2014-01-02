@@ -81,3 +81,8 @@ tab: anInteger
 on: aCollection
 	^aCollection writeStream
 !
+(reader addClassMethod: 'instance creation')
+!
+with: aCollection
+	^(self on: aCollection) setToEnd
+!

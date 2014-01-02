@@ -111,6 +111,11 @@ do: elementBlock separatedBy: separatorBlock
 			first ifTrue: [first := false] ifFalse: [separatorBlock value].
 			elementBlock value: elem]
 !
+(reader addMethod: 'As yet unclassified')
+!
+errorNotFound: anObject
+	^self error: 'Object is not in the collection.'
+!
 (reader addMethod: 'iterating')
 !
 includes: o {Object} {^Boolean}
@@ -243,4 +248,9 @@ newImpl
 !
 newImpl: initialSize
 	^self traitRequirement
+!
+(reader addClassMethod: 'gravel')
+!
+ofSize: n
+	^self new: n
 !

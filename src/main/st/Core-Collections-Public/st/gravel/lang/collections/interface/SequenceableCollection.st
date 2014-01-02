@@ -164,6 +164,21 @@ replaceFrom: start to: stop with: replacement startingAt: repStart
 		from: start
 		to: stop
 !
+(reader addMethod: 'converting')
+!
+reverse
+	^self reversed
+!
+(reader addMethod: 'converting')
+!
+reversed
+	| n result src |
+	n := self size.
+	result := self species ofSize: n.
+	src := n + 1.
+	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
+	^result
+!
 (reader addMethod: 'enumerating')
 !
 species
