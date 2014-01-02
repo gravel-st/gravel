@@ -16,12 +16,6 @@ at: index
 at: index put: anObject
 	^self basicAt: index put: anObject
 !
-(reader addMethod: 'copying')
-!
-copy
-	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'copy')>
-	
-!
 (reader addMethod: 'gravel')
 !
 do: aBlock
@@ -42,6 +36,12 @@ printOn: aStream
 			element printOn: aStream]
 		separatedBy: [aStream space].
 	aStream nextPut: $)
+!
+(reader addMethod: 'copying')
+!
+shallowCopy
+	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'shallowCopy')>
+	
 !
 (reader addMethod: '')
 !
