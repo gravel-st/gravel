@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.Expression;
@@ -695,11 +694,12 @@ public class Parser extends Object implements Cloneable {
 			return FloatLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, _exponent);
 		} else {
 			if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 's')) {
-				final int _scale;
+				int _scale;
 				_scale = st.gravel.support.jvm.IntegerExtensions.asInt(Parser.this.readInteger_(10));
 				if (_fractionString == null) {
 					_fractionString = "";
 				}
+				_scale = java.lang.Math.max(_scale, _fractionString.length());
 				return FixedPointLiteralNode.factory.integer_fractionString_scale_(_value, _fractionString, _scale);
 			}
 		}

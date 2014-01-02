@@ -14,5 +14,5 @@ test_scale
 (reader addMethod: 'As yet unclassified')
 !
 valuesDo: aBlock
-	aBlock value: 2s
+	aBlock value: 2.01s
 !

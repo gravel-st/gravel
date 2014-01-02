@@ -44,6 +44,21 @@ nextIntegerBase: aRadix
 	value := (self nextUnsignedIntegerBase: aRadix).
 	^(isNeg ifTrue: [ value negated] ifFalse: [ value])
 !
+(reader addMethod: 'parsing-private')
+!
+nextLargeIntegerBase: aRadix nPackets: nPackets
+	| high nDigitsHigh low nDigitsLow halfPackets |
+	halfPackets := nPackets bitShift: -1.
+	halfPackets = 0 ifTrue: [^self nextElementaryLargeIntegerBase: aRadix].
+	high := self nextLargeIntegerBase: aRadix nPackets: halfPackets.
+	high isLarge ifFalse: [^high].
+	nDigitsHigh := nDigits.
+	low := self nextLargeIntegerBase: aRadix nPackets: halfPackets.
+	nDigitsLow := nDigits.
+	nDigits := nDigitsHigh + nDigitsLow.
+	lastNonZero = 0 ifFalse: [lastNonZero := lastNonZero + nDigitsHigh].
+	^high * (aRadix raisedToInteger: nDigitsLow) + low
+!
 (reader addMethod: 'parsing-public')
 !
 nextUnsignedIntegerBase: aRadix

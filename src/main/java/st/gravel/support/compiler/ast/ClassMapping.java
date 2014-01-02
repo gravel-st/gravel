@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.AbstractMapping;

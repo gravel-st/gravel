@@ -67,8 +67,3 @@ printOn: aStream
 defaultImplementation
 	^JavaArray
 !
-(reader addClassMethod: 'As yet unclassified')
-!
-withSize: size
-	^self defaultImplementation new: size
-!

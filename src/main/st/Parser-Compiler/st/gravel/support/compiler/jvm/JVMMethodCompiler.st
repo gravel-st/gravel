@@ -128,6 +128,23 @@ newFrame: aBlock {[^Obj]} {^Frame}
 !
 (reader addMethod: 'As yet unclassified')
 !
+newSubFrame: aBlock {[^Obj]} {^Frame}
+	| oldStack {JVMStack} oldInstructions {OrdColl[JVMInstruction]} frame {Frame} oldLocals {Dict[Str, JVMLocalDeclaration]} |
+	oldStack := stack.
+	oldInstructions := instructions.
+	oldLocals := locals.
+	locals := oldLocals copy.
+	instructions := OrderedCollection new.
+	stack := oldStack copy.
+	aBlock value.
+	frame := Frame instructions: instructions asArray endStack: stack.
+	stack := oldStack.
+	instructions := oldInstructions.
+	locals := oldLocals.
+	^frame
+!
+(reader addMethod: 'As yet unclassified')
+!
 newTempName {^Str}
 	^'_temp' , (temp := temp + 1) printString
 !
@@ -193,32 +210,31 @@ produceNonLocalCatchMethod: aMethodNode {MethodNode} {^Self}
 	self emit: Dup new.
 	self emit: (InvokeSpecial init: JVMDefinedObjectType object voidArguments: #()).
 	self localStore: aMethodNode nlrMarker.
-	self emit: (TryCatch
-				tryFrame: (self newFrame: [self produceMethodBody: aMethodNode body])
-				exception: JVMDefinedObjectType nonLocalReturn
-				catchFrame: (self newFrame: 
-							[| ex {Str} |
-							stack push: JVMDefinedObjectType nonLocalReturn.
-							ex := self newTempName.
-							self pushLocal: ex type: JVMDefinedObjectType nonLocalReturn.
-							self localStore: ex.
-							self produceVarRead: ex.
-							self emit: (GetField
-										ownerType: JVMDefinedObjectType nonLocalReturn
-										name: 'marker'
-										type: JVMDefinedObjectType object).
-							self produceVarRead: aMethodNode nlrMarker.
-							self emit: (IfObjectsEqualThenElse
-										trueFrame: (self newFrame: 
-													[self produceVarRead: ex.
-													self emit: (GetField
-																ownerType: JVMDefinedObjectType nonLocalReturn
-																name: 'returnValue'
-																type: JVMDynamicObjectType new).
-													self emit: AReturn new])
-										falseFrame: (self newFrame: 
-													[self produceVarRead: ex.
-													self emit: AThrow new]))]))
+	self
+		try: [self produceMethodBody: aMethodNode body]
+		exception: JVMDefinedObjectType nonLocalReturn
+		catch: 
+			[| ex {Str} |
+			ex := self newTempName.
+			self pushLocal: ex type: JVMDefinedObjectType nonLocalReturn.
+			self localStore: ex.
+			self produceVarRead: ex.
+			self emit: (GetField
+						ownerType: JVMDefinedObjectType nonLocalReturn
+						name: 'marker'
+						type: JVMDefinedObjectType object).
+			self produceVarRead: aMethodNode nlrMarker.
+			self emit: (IfObjectsEqualThenElse
+						trueFrame: (self newFrame: 
+									[self produceVarRead: ex.
+									self emit: (GetField
+												ownerType: JVMDefinedObjectType nonLocalReturn
+												name: 'returnValue'
+												type: JVMDynamicObjectType new).
+									self emit: AReturn new])
+						falseFrame: (self newFrame: 
+									[self produceVarRead: ex.
+									self emit: AThrow new]))]
 !
 (reader addMethod: 'visiting')
 !
@@ -256,6 +272,35 @@ producePrimitive: aMethodNode {MethodNode} def: prim {Arr[Str]} {^Self}
 		ifFalse: [self ensureCast: JVMDynamicObjectType new].
 	self emit: AReturn new
 !
+(reader addMethod: 'As yet unclassified')
+!
+produceSafe: start {Str} to: stop {Str} counterName: counterName {Str} step: step {Int} do: doSequence {Node} {^Self}
+	self
+		emit: (self newFrame: 
+					[self pushLocal: counterName.
+					self produceVarRead: start.
+					self localStore: counterName.
+					self emit: (WhileTrueLoop
+								testFrame: (self newFrame: 
+											[| compareFunctionName {Str} |
+											self produceVarRead: counterName.
+											self produceVarRead: stop.
+											compareFunctionName := step < 0
+														ifTrue: [parent selectorConverter selectorAsFunctionName: #>=]
+														ifFalse: [parent selectorConverter selectorAsFunctionName: #<=].
+											self emit: (DynamicMessageSend functionName: compareFunctionName numArgs: 1).
+											self ensureCast: JVMBooleanType new])
+								doFrame: (self newFrame: 
+											[self visit: doSequence.
+											self trashStack.
+											self produceVarRead: counterName.
+											self pushInt: step.
+											self ensureCast: JVMDynamicObjectType new.
+											self emit: (DynamicMessageSend
+														functionName: (parent selectorConverter selectorAsFunctionName: #+)
+														numArgs: 1).
+											self localStore: counterName]))])
+!
 (reader addMethod: 'producing')
 !
 produceSuperSend: messageNode {MessageNode} {^Self}
@@ -292,24 +337,59 @@ produceSuperSend: messageNode {MessageNode} {^Self}
 produceToDoNodeConstantStep: toDoNode {ToDoNode} step: step {Int} {^Self}
 	self
 		emit: (self newFrame: 
-					[| stop {Str} testFrame {Frame} doFrame {Frame} |
+					[| stop {Str} startObj {Str} stopObj {Str} |
+					startObj := self newTempName.
+					stopObj := self newTempName.
+					self pushLocal: startObj.
+					self pushLocal: stopObj.
+					self visit: toDoNode start.
+					self localStore: startObj.
+					self visit: toDoNode stop.
+					self localStore: stopObj.
 					self pushLocal: toDoNode counterName type: JVMIntType new.
 					stop := self newTempName.
 					self pushLocal: stop type: JVMIntType new.
-					self visit: toDoNode start.
-					self localStore: toDoNode counterName.
-					self visit: toDoNode stop.
-					self localStore: stop.
-					testFrame := self newFrame: 
-									[self produceVarRead: toDoNode counterName.
-									self produceVarRead: stop].
-					doFrame := self newFrame: 
-									[self visit: toDoNode doSequence.
-									self trashStack.
-									self emit: (IncrementLocal local: (locals at: toDoNode counterName) increment: step)].
-					self emit: (step > 0
-								ifTrue: [WhileLessThanLoop testFrame: testFrame doFrame: doFrame]
-								ifFalse: [WhileGreaterThanLoop testFrame: testFrame doFrame: doFrame])]).
+					self
+						try: 
+							[self produceVarRead: stopObj.
+							self localStore: stop]
+						do: 
+							[self
+								try: 
+									[self produceVarRead: startObj.
+									self localStore: toDoNode counterName]
+								do: 
+									[| testFrame {Frame} doFrame {Frame} |
+									testFrame := self newFrame: 
+													[self produceVarRead: toDoNode counterName.
+													self produceVarRead: stop].
+									doFrame := self newFrame: 
+													[self visit: toDoNode doSequence.
+													self trashStack.
+													self emit: (IncrementLocal local: (locals at: toDoNode counterName) increment: step)].
+									self emit: (step > 0
+												ifTrue: [WhileLessThanLoop testFrame: testFrame doFrame: doFrame]
+												ifFalse: [WhileGreaterThanLoop testFrame: testFrame doFrame: doFrame])]
+								exception: JVMDefinedObjectType classCastException
+								catch: 
+									[self emit: Pop new.
+									self renameLocal: toDoNode counterName to: self newTempName.
+									self
+										produceSafe: startObj
+										to: stopObj
+										counterName: toDoNode counterName
+										step: step
+										do: toDoNode doSequence]]
+						exception: JVMDefinedObjectType classCastException
+						catch: 
+							[self emit: Pop new.
+							self renameLocal: toDoNode counterName to: self newTempName.
+							self
+								produceSafe: startObj
+								to: stopObj
+								counterName: toDoNode counterName
+								step: step
+								do: toDoNode doSequence]]).
 	self pushNull
 !
 (reader addMethod: 'As yet unclassified')
@@ -348,12 +428,6 @@ pushByteArray: ba {ByteArray} {^Self}
 !
 pushChar: anObject {Object} {^JVMMethodCompiler}
 	^self emit: (PushChar value: anObject)
-!
-(reader addMethod: 'producing')
-!
-pushFixedPoint: aFixedPoint {FixedPoint} {^Self}
-	self pushString: aFixedPoint printStringWithoutS.
-	self produceMessageSend: (UnaryMessageNode receiver: nil selector: 'asScaledDecimal')
 !
 (reader addMethod: 'producing')
 !
@@ -408,6 +482,13 @@ pushSymbol: aSymbol {Sym} {^JVMMethodCompiler}
 				name: 'value'
 				signature: (JVMDefinedObjectType symbol withArgument: JVMDefinedObjectType string))
 !
+(reader addMethod: 'As yet unclassified')
+!
+renameLocal: oldName {Str} to: newName {Str} {^Self}
+	| local {JVMLocalDeclaration} |
+	local := locals removeKey: oldName.
+	locals at: newName put: (local withVarName: newName)
+!
 (reader addMethod: 'initialize-release')
 !
 reset {^Self}
@@ -419,6 +500,28 @@ reset {^Self}
 !
 trashStack {^Self}
 	[stack isEmpty] whileFalse: [self emit: Pop new]
+!
+(reader addMethod: 'As yet unclassified')
+!
+try: tryBlock {[^Obj]} do: doBlock {[^Obj]} exception: ex {JVMDefinedObjectType} catch: catchBlock {[^Obj]} {^Self}
+	self emit: (TryCatch
+				tryFrame: (self newFrame: tryBlock)
+				doFrame: (self newFrame: doBlock)
+				exception: ex
+				catchFrame: (self newFrame: 
+							[stack push: ex.
+							catchBlock value]))
+!
+(reader addMethod: 'As yet unclassified')
+!
+try: tryBlock {[^Obj]} exception: ex {JVMDefinedObjectType} catch: catchBlock {[^Obj]} {^Self}
+	self emit: (TryCatch
+				tryFrame: (self newFrame: tryBlock)
+				doFrame: nil
+				exception: ex
+				catchFrame: (self newFrame: 
+							[stack push: ex.
+							catchBlock value]))
 !
 (reader addMethod: 'visiting')
 !
@@ -574,7 +677,22 @@ visitFieldWriteNode: aNode {FieldWriteNode} {^Self}
 (reader addMethod: 'visiting')
 !
 visitFixedPointLiteralNode: anObject {FixedPointLiteralNode} {^Self}
-	self pushFixedPoint: anObject value
+	self pushLargeInteger: anObject numerator.
+	self emit: (DynamicMessageSend
+				functionName: (parent selectorConverter selectorAsFunctionName: #compressed)
+				numArgs: 0).
+	self pushLargeInteger: anObject denominator.
+	self emit: (DynamicMessageSend
+				functionName: (parent selectorConverter selectorAsFunctionName: #compressed)
+				numArgs: 0).
+	self emit: (DynamicMessageSend
+				functionName: (parent selectorConverter selectorAsFunctionName: #/)
+				numArgs: 1).
+	self pushInt: anObject scale.
+	self ensureCast: JVMDynamicObjectType new.
+	self emit: (DynamicMessageSend
+				functionName: (parent selectorConverter selectorAsFunctionName: #asScaledDecimal:)
+				numArgs: 1)
 !
 (reader addMethod: 'visiting')
 !

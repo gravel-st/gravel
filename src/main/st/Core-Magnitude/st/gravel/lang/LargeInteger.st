@@ -19,6 +19,11 @@
 !
 (reader addMethod: 'arithmetic')
 !
+/ aNumber
+	^aNumber quotientFromLargeInteger: self
+!
+(reader addMethod: 'arithmetic')
+!
 // operand
 	^operand integerQuotientFromLargeInteger: self
 !
@@ -57,6 +62,23 @@ differenceFromLargeInteger: anObject
 differenceFromSmallInteger: anObject
 	<
 	primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'differenceFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
+floatDiv: operand
+	^operand floatDivFromLargeInteger: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+floatDivFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'floatDivFromLargeInteger:')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+floatDivFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'floatDivFromSmallInteger_')>
 	
 !
 (reader addMethod: '')
@@ -106,6 +128,15 @@ lessFromLargeInteger: aSmallInteger
 lessFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'lessFromSmallInteger_')>
 	
+!
+(reader addMethod: 'mathematical functions')
+!
+ln
+	| res h |
+	res := super ln.
+	res isFinite ifTrue: [^res].
+	h := self highBit.
+	^2 ln * h + (self / (1 << h)) asFloat ln
 !
 (reader addMethod: 'private-arithmetic')
 !

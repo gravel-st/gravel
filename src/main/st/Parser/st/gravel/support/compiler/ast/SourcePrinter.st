@@ -346,7 +346,7 @@ visitClassTypeNode: anObject {ClassTypeNode} {^Self}
 (reader addMethod: 'visiting')
 !
 visitFixedPointLiteralNode: anObject {FixedPointLiteralNode} {^Self}
-	stream print: anObject fixedPoint
+	stream nextPutAll: anObject valueString
 !
 (reader addMethod: 'visiting')
 !

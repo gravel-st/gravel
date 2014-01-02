@@ -37,6 +37,11 @@ isReadStream
 !
 (reader addMethod: 'testing')
 !
+isReadWriteStream
+	^false
+!
+(reader addMethod: 'testing')
+!
 isSequencedReadable
 	^false
 !

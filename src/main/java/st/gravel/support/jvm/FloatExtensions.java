@@ -65,7 +65,44 @@ public class FloatExtensions {
 		return argument + receiver;
 	}
 
+	public static float sumFromSmallInteger_(float receiver, int argument) {
+		return argument + receiver;
+	}
+
+	public static float productFromSmallInteger_(float receiver, int argument) {
+		return argument * receiver;
+	}
+
+	public static float differenceFromSmallInteger_(float receiver, int argument) {
+		return argument - receiver;
+	}
+
+	public static float quotientFromSmallInteger_(float receiver, int argument) {
+		return argument / receiver;
+	}
+
+	public static float sumFromLargeInteger_(float receiver, BigInteger argument) {
+		return argument.floatValue() + receiver;
+	}
+
+	public static float productFromLargeInteger_(float receiver, BigInteger argument) {
+		return argument.floatValue() * receiver;
+	}
+
+	public static float differenceFromLargeInteger_(float receiver, BigInteger argument) {
+		return argument.floatValue() - receiver;
+	}
+
+	public static float quotientFromLargeInteger_(float receiver, BigInteger argument) {
+		return argument.floatValue() / receiver;
+	}
+
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
+	}
+	public static String printBase_(float receiver, int radix) {
+		if (radix == 10 )
+			return Float.toString(receiver);
+		throw new UnsupportedOperationException("Unsupported radix: "+radix);
 	}
 }

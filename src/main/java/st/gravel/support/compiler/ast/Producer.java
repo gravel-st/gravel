@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import java.util.Map;
@@ -50,6 +49,10 @@ abstract public class Producer extends Object implements Cloneable {
 	}
 
 	public abstract ClassNode produceClass_superclassPath_properties_instVars_classInstVars_sharedVariables_instanceMethods_classMethods_namespace_traitUsage_classTraitUsage_(final String _aString, final String _superclassPath, final Map<String, String> _properties, final VariableDeclarationNode[] _instVars, final VariableDeclarationNode[] _classInstVars, final SharedDeclarationNode[] _sharedVariables, final MethodNode[] _instanceMethods, final MethodNode[] _classMethods, final String[] _anArray, final TraitUsageNode _traitUsage, final TraitUsageNode _classTraitUsage);
+
+	public MethodNode produceMethod_namespace_(final String _aString, final String[] _anArray) {
+		return this.produceMethod_sourceFile_namespace_(_aString, null, _anArray);
+	}
 
 	public abstract MethodNode produceMethod_sourceFile_namespace_(final String _aString, final SourceFile _sourceFile, final String[] _anArray);
 

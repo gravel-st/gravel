@@ -9,7 +9,7 @@ import st.gravel.support.jvm.runtime.MethodTools;
 public class CrossTypeArithmeticTest {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		st.gravel.support.compiler.testtools.TestBootstrap.getSingleton();
 	}
 	@Test
 	public void test_big_backslashbackslash_big() throws Throwable {

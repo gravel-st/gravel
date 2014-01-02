@@ -408,7 +408,7 @@ valueIsKindOfReadStreamFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfReadWriteStream: aValue
-	^aValue class = ReadWriteStream
+	^aValue isReadWriteStream
 !
 (reader addMethod: 'tests')
 !

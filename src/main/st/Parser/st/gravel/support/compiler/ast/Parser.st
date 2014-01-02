@@ -467,6 +467,7 @@ parseNumber {^NumberLiteralNode}
 					[| scale {Int} |
 					scale := (self readInteger: 10) asSmallInteger.
 					fractionString isNil ifTrue: [fractionString := ''].
+					scale := scale max: fractionString size.
 					^FixedPointLiteralNode integer: value fractionString: fractionString scale: scale]].
 	^fractionString isNil
 		ifTrue: [IntegerLiteralNode integer: value]

@@ -1,6 +1,10 @@
 (reader defineClass: 'FixedPointLiteralNode' superclass: 'st.gravel.support.compiler.ast.NumberLiteralNode')
 !
-(reader addInstVar: 'fixedPoint')
+(reader addInstVar: 'numerator')
+!
+(reader addInstVar: 'denominator')
+!
+(reader addInstVar: 'scale')
 !
 (reader addMethod: 'visitor')
 !
@@ -9,19 +13,37 @@ accept: visitor {NodeVisitor[X def]} {^X}
 !
 (reader addMethod: 'accessing')
 !
-fixedPoint {^FixedPoint}
-	^fixedPoint
+denominator {^LargeInteger}
+	^denominator
 !
 (reader addMethod: 'initialize-release')
 !
-initializeFixedPoint: aFixedPoint {FixedPoint} {^Self}
-	fixedPoint := aFixedPoint.
+initializeNumerator: anInteger {LargeInteger} denominator: anInteger2 {LargeInteger} scale: anInteger3 {Int} {^Self}
+	numerator := anInteger.
+	denominator := anInteger2.
+	scale := anInteger3.
 	self initialize
 !
 (reader addMethod: 'As yet unclassified')
 !
 innerSourceOn: aStream {WStream[Char]} {^Self}
-	aStream nextPutAll: fixedPoint printString
+	| digits {Int} fractionDigits {Int} firstDigitAfterDot {Int} numeratorString {Str} |
+	numeratorString := numerator printString.
+	digits := numeratorString size.
+	fractionDigits := denominator printString size - 1.
+	digits to: fractionDigits
+		do: 
+			[:i |
+			i = 2 ifTrue: [aStream nextPut: $.].
+			aStream nextPut: $0].
+	firstDigitAfterDot := digits - fractionDigits + 1.
+	1 to: digits
+		do: 
+			[:i {Int} |
+			i = firstDigitAfterDot ifTrue: [aStream nextPut: $.].
+			aStream nextPut: (numeratorString at: i)].
+	aStream nextPut: $s.
+	fractionDigits = scale ifFalse: [aStream print: scale]
 !
 (reader addMethod: 'testing')
 !
@@ -31,31 +53,50 @@ isFixedPointLiteralNode {^Bool}
 (reader addMethod: 'As yet unclassified')
 !
 negated {^FixedPointLiteralNode}
-	^FixedPointLiteralNode fixedPoint: fixedPoint negated
+	^FixedPointLiteralNode
+		numerator: numerator negated
+		denominator: denominator
+		scale: scale
 !
 (reader addMethod: 'accessing')
 !
-value {^FixedPoint}
-	^fixedPoint
+numerator {^LargeInteger}
+	^numerator
 !
-(reader addClassMethod: 'instance creation')
+(reader addMethod: 'accessing')
 !
-fixedPoint: aFixedPoint {FixedPoint} {^Instance}
-	^self new initializeFixedPoint: aFixedPoint
+scale {^Int}
+	^scale
+!
+(reader addMethod: 'accessing')
+!
+value {^Obj}
+	^self error: 'Cannot calculate value'
+!
+(reader addMethod: 'As yet unclassified')
+!
+valueString {^Str}
+	| aStream {WStream[Char]} |
+	aStream := WriteStream on: String new.
+	self innerSourceOn: aStream.
+	^aStream contents
 !
 (reader addClassMethod: 'pegon')
 !
-instVarTypes {^[FixedPoint]}
-	^#('fixedPoint')
+instVarTypes {^[LargeInteger, LargeInteger, Int]}
+	^#('numerator' 'denominator' 'scale')
 !
-(reader addClassMethod: 'As yet unclassified')
-!
-integer: anInteger {LargeInteger} fractionString: aString {Str} {^FixedPointLiteralNode}
-	^self integer: anInteger fractionString: aString scale: 1
-!
-(reader addClassMethod: 'As yet unclassified')
+(reader addClassMethod: 'instance creation')
 !
 integer: anInteger {LargeInteger} fractionString: aString {Str} scale: scale {Int} {^FixedPointLiteralNode}
-	^FixedPointLiteralNode
-		fixedPoint: (FixedPoint fromString: anInteger printString , '.' , aString scale: scale)
+	| denominator {LargeInteger} numerator {LargeInteger} |
+	denominator := 10 raisedToInteger: aString size.
+	numerator := anInteger * denominator.
+	aString isEmpty ifFalse: [numerator := numerator + aString asInteger].
+	^FixedPointLiteralNode numerator: numerator denominator: denominator scale: scale
+!
+(reader addClassMethod: 'instance creation')
+!
+numerator: anInteger {LargeInteger} denominator: anInteger2 {LargeInteger} scale: anInteger3 {Int} {^FixedPointLiteralNode}
+	^self new initializeNumerator: anInteger denominator: anInteger2 scale: anInteger3
 !

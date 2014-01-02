@@ -163,7 +163,23 @@ public class ParserTest {
 		final FixedPointLiteralNode _node;
 		_node = ((FixedPointLiteralNode) Parser.factory.source_("12345.0067s").parseExpression());
 		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
-		assertEquals((java.math.BigDecimal) st.gravel.support.jvm.FixedPointExtensions.fromSmalltalkString_("12345s"), (java.math.BigDecimal) _node.value());
+		assertEquals((String) "12345.0067s", (String) _node.valueString());
+	}
+
+	@Test
+	public void testParseFixedPointNegativeWithExponent() {
+		final FixedPointLiteralNode _node;
+		_node = ((FixedPointLiteralNode) Parser.factory.source_("-2.5s2").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((String) "-2.5s2", (String) _node.valueString());
+	}
+
+	@Test
+	public void testParseFixedPointNegativeWithoutExponent() {
+		final FixedPointLiteralNode _node;
+		_node = ((FixedPointLiteralNode) Parser.factory.source_("-2.5s").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((String) "-2.5s", (String) _node.valueString());
 	}
 
 	@Test
@@ -171,7 +187,31 @@ public class ParserTest {
 		final FixedPointLiteralNode _node;
 		_node = ((FixedPointLiteralNode) Parser.factory.source_("5.1s2").parseExpression());
 		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
-		assertEquals((java.math.BigDecimal) st.gravel.support.jvm.FixedPointExtensions.fromSmalltalkString_("5.1s"), (java.math.BigDecimal) _node.value());
+		assertEquals((String) "5.1s2", (String) _node.valueString());
+	}
+
+	@Test
+	public void testParseFixedPointWithoutExponent() {
+		final FixedPointLiteralNode _node;
+		_node = ((FixedPointLiteralNode) Parser.factory.source_("2.5s").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((String) "2.5s", (String) _node.valueString());
+	}
+
+	@Test
+	public void testParseFixedPointWithZero() {
+		final FixedPointLiteralNode _node;
+		_node = ((FixedPointLiteralNode) Parser.factory.source_("0.5s").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((String) "0.5s", (String) _node.valueString());
+	}
+
+	@Test
+	public void testParseFixedPointWithZero2() {
+		final FixedPointLiteralNode _node;
+		_node = ((FixedPointLiteralNode) Parser.factory.source_("0.05s").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) FixedPointLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((String) "0.05s", (String) _node.valueString());
 	}
 
 	@Test

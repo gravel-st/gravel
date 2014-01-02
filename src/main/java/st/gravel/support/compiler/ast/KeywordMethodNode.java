@@ -5,15 +5,14 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.MethodNode.MethodNode_Factory;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
 import st.gravel.support.compiler.ast.SequenceNode;
-import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.PragmaNode;
+import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Reference;
@@ -39,6 +38,10 @@ public class KeywordMethodNode extends MethodNode implements Cloneable {
 			return newInstance;
 		}
 
+		public KeywordMethodNode selector_arguments_body_(final String _aString, final VariableDeclarationNode[] _anArray, final SequenceNode _aSequenceNode) {
+			return ((KeywordMethodNode) this.selector_arguments_body_returnType_pragmas_protocol_nlrMarker_(_aString, _anArray, _aSequenceNode, null, new PragmaNode[] {}, null, null));
+		}
+
 		public KeywordMethodNode selector_arguments_body_returnType_pragmas_protocol_(final String _aString, final VariableDeclarationNode[] _anArray, final SequenceNode _aSequenceNode, final TypeNode _anUndefinedObject, final PragmaNode[] _anArray2, final String _protocol) {
 			return ((KeywordMethodNode) this.selector_arguments_body_returnType_pragmas_protocol_nlrMarker_(_aString, _anArray, _aSequenceNode, _anUndefinedObject, _anArray2, _protocol, null));
 		}
@@ -56,6 +59,10 @@ public class KeywordMethodNode extends MethodNode implements Cloneable {
 		public KeywordMethodNode selector_body_returnType_pragmas_protocol_nlrMarker_(final String _aString, final SequenceNode _aSequenceNode, final TypeNode _returnType, final PragmaNode[] _anArray, final String _protocol, final String _nlrMarker) {
 			return ((KeywordMethodNode) this.basicNew().initializeSelector_body_returnType_pragmas_protocol_nlrMarker_(_aString, _aSequenceNode, _returnType, _anArray, _protocol, _nlrMarker));
 		}
+	}
+
+	static public KeywordMethodNode _selector_arguments_body_(Object receiver, final String _aString, final VariableDeclarationNode[] _anArray, final SequenceNode _aSequenceNode) {
+		return factory.selector_arguments_body_(_aString, _anArray, _aSequenceNode);
 	}
 
 	static public KeywordMethodNode _selector_arguments_body_returnType_pragmas_protocol_(Object receiver, final String _aString, final VariableDeclarationNode[] _anArray, final SequenceNode _aSequenceNode, final TypeNode _anUndefinedObject, final PragmaNode[] _anArray2, final String _protocol) {

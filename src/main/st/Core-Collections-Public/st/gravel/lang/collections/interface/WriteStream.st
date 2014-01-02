@@ -38,6 +38,12 @@ lf
 !
 (reader addMethod: 'accessing')
 !
+next: anInteger put: anObject
+	anInteger timesRepeat: [self nextPut: anObject].
+	^anObject
+!
+(reader addMethod: 'accessing')
+!
 nextPut: anElement
 	self traitRequirement
 !
@@ -80,4 +86,9 @@ tab: anInteger
 !
 on: aCollection
 	^aCollection writeStream
+!
+(reader addClassMethod: 'instance creation')
+!
+with: aCollection
+	^(self on: aCollection) setToEnd
 !

@@ -148,7 +148,23 @@ testParseFixedPoint
 	| node {FixedPointLiteralNode | Nil} |
 	node := (Parser source: '12345.0067s') parseExpression.
 	self assert: FixedPointLiteralNode equals: node class.
-	self assert: 12345s equals: node value
+	self assert: '12345.0067s' equals: node valueString
+!
+(reader addMethod: 'tests')
+!
+testParseFixedPointNegativeWithExponent
+	| node {FixedPointLiteralNode | Nil} |
+	node := (Parser source: '-2.5s2') parseExpression.
+	self assert: FixedPointLiteralNode equals: node class.
+	self assert: '-2.5s2' equals: node valueString
+!
+(reader addMethod: 'tests')
+!
+testParseFixedPointNegativeWithoutExponent
+	| node {FixedPointLiteralNode | Nil} |
+	node := (Parser source: '-2.5s') parseExpression.
+	self assert: FixedPointLiteralNode equals: node class.
+	self assert: '-2.5s' equals: node valueString
 !
 (reader addMethod: 'tests')
 !
@@ -156,7 +172,31 @@ testParseFixedPointWithExponent
 	| node {FixedPointLiteralNode | Nil} |
 	node := (Parser source: '5.1s2') parseExpression.
 	self assert: FixedPointLiteralNode equals: node class.
-	self assert: 5.1s equals: node value
+	self assert: '5.1s2' equals: node valueString
+!
+(reader addMethod: 'tests')
+!
+testParseFixedPointWithoutExponent
+	| node {FixedPointLiteralNode | Nil} |
+	node := (Parser source: '2.5s') parseExpression.
+	self assert: FixedPointLiteralNode equals: node class.
+	self assert: '2.5s' equals: node valueString
+!
+(reader addMethod: 'tests')
+!
+testParseFixedPointWithZero
+	| node {FixedPointLiteralNode | Nil} |
+	node := (Parser source: '0.5s') parseExpression.
+	self assert: FixedPointLiteralNode equals: node class.
+	self assert: '0.5s' equals: node valueString
+!
+(reader addMethod: 'tests')
+!
+testParseFixedPointWithZero2
+	| node {FixedPointLiteralNode | Nil} |
+	node := (Parser source: '0.05s') parseExpression.
+	self assert: FixedPointLiteralNode equals: node class.
+	self assert: '0.05s' equals: node valueString
 !
 (reader addMethod: 'tests')
 !

@@ -125,8 +125,11 @@ writeDirective: aNode {Node} on: aWriteStream {WriteStream[Char]} {^Self}
 (reader addMethod: 'As yet unclassified')
 !
 writeMethod: aNode {Node} on: aWriteStream {WriteStream[Char]} {^Self}
+	| sourceOrNil {Str | Nil} |
+	sourceOrNil := aNode getDiskSource.
+	sourceOrNil isNil ifTrue: [sourceOrNil := formatter format: aNode].
 	aWriteStream
-		nextPutAll: (formatter format: aNode);
+		nextPutAll: sourceOrNil;
 		cr;
 		nextPut: $!;
 		cr

@@ -667,8 +667,14 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(nlrTryStart);
 		visit_(node.tryFrame());
 		mv.visitLabel(nlrTryEnd);
+		Label endLabel = new Label();
+		if (node.doFrame() != null) { 
+			visit_(node.doFrame());
+		}
+		mv.visitJumpInsn(GOTO, endLabel);
 		mv.visitLabel(nlrTryHandler);
 		visit_(node.catchFrame());
+		mv.visitLabel(endLabel);
 		return null;
 	}
 

@@ -383,17 +383,21 @@ test_to_by_
 test_to_by_do_
 	self valuesDo: 
 			[:testValue |
-			testValue to: self parameterStop
-				by: self parameterStep
-				do: self parameterOperation]
+			testValue negative
+				ifFalse: 
+					[testValue to: self parameterStop
+						by: self parameterStep
+						do: self parameterOperation]]
 !
 (reader addMethod: 'tests')
 !
 test_to_do_
 	self valuesDo: 
 			[:testValue |
-			| res |
-			res := testValue to: self parameterStop do: self parameterOperation]
+			testValue negative
+				ifFalse: 
+					[| res |
+					res := testValue to: self parameterStop do: self parameterOperation]]
 !
 (reader addMethod: 'tests')
 !
@@ -422,6 +426,6 @@ valuesDo: aBlock
 	aBlock value: 23489713298471982374981324.
 	aBlock value: -23489713298471982374981324.
 	aBlock value: 3.0.
-	aBlock value: 721s.
+	aBlock value: 721.02s.
 	aBlock value: 3 / 7
 !

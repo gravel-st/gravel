@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import st.gravel.benchmark.DeltaBlue;
+import st.gravel.support.compiler.testtools.TestBootstrap;
 import st.gravel.support.jvm.runtime.ImageBootstrapper;
 import st.gravel.support.jvm.runtime.MethodTools;
 
@@ -15,7 +16,7 @@ public class DeltaBlueTest {
 
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		TestBootstrap.getSingleton();
 	}
 
 	@Test

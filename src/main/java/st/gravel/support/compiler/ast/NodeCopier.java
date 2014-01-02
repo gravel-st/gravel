@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.NodeVisitor;
@@ -313,7 +312,7 @@ public class NodeCopier extends NodeVisitor<Node> implements Cloneable {
 
 	@Override
 	public FixedPointLiteralNode visitFixedPointLiteralNode_(final FixedPointLiteralNode _anObject) {
-		return FixedPointLiteralNode.factory.fixedPoint_(_anObject.fixedPoint());
+		return FixedPointLiteralNode.factory.numerator_denominator_scale_(_anObject.numerator(), _anObject.denominator(), _anObject.scale());
 	}
 
 	@Override

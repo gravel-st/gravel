@@ -20,10 +20,20 @@ initializeVarName: aString {Str} type: aJVMObjectType {JVMType} index: anInteger
 	index := anInteger.
 	self initialize
 !
+(reader addMethod: 'accessing')
+!
+pvtSetVarName: aName {Str} {^Self}
+	varName := aName
+!
 (reader addMethod: 'printing')
 !
 sourceOn: aStream {WStream[Char]} {^Self}
 	aStream nextPutAll: varName
+!
+(reader addMethod: 'accessing')
+!
+withVarName: aName {Str} {^Self}
+	^self copy pvtSetVarName: aName
 !
 (reader addClassMethod: 'instance creation')
 !

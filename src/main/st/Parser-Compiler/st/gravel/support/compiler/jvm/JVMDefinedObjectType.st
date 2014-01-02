@@ -123,6 +123,11 @@ character {^JVMDefinedObjectType}
 charBuffer {^JVMDefinedObjectType}
 	^self className: 'java/nio/CharBuffer'
 !
+(reader addClassMethod: 'As yet unclassified')
+!
+classCastException {^JVMDefinedObjectType}
+	^self className: 'java/lang/ClassCastException'
+!
 (reader addClassMethod: 'instance creation')
 !
 className: aString {Str} {^JVMDefinedObjectType}

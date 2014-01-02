@@ -4,7 +4,7 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.OrderedCollection class')
 !
-(reader addInstVar: 'contents')
+(reader addInstVar: 'array')
 !
 (reader addInstVar: 'firstIndex')
 !
@@ -59,15 +59,15 @@ addAllLast: aCollection
 addFirst: newObject
 	firstIndex = 1 ifTrue: [self makeRoomAtFirst].
 	firstIndex := firstIndex - 1.
-	contents basicAt: firstIndex put: newObject.
+	array basicAt: firstIndex put: newObject.
 	^newObject
 !
 (reader addMethod: 'adding')
 !
 addLast: newObject
-	lastIndex = contents basicSize ifTrue: [self makeRoomAtLast].
+	lastIndex = array basicSize ifTrue: [self makeRoomAtLast].
 	lastIndex := lastIndex + 1.
-	contents basicAt: lastIndex put: newObject.
+	array basicAt: lastIndex put: newObject.
 	^newObject
 !
 (reader addMethod: 'accessing')
@@ -75,7 +75,7 @@ addLast: newObject
 after: oldObject
 	| index |
 	index := self find: oldObject.
-	index = lastIndex ifTrue: [^self lastObjectError] ifFalse: [^contents basicAt: index + 1]
+	index = lastIndex ifTrue: [^self lastObjectError] ifFalse: [^array basicAt: index + 1]
 !
 (reader addMethod: 'gravel')
 !
@@ -91,26 +91,24 @@ asArray
 at: anInteger
 	(anInteger < 1 or: [anInteger + firstIndex - 1 > lastIndex])
 		ifTrue: [self errorNoSuchElement]
-		ifFalse: [^contents basicAt: anInteger + firstIndex - 1]
+		ifFalse: [^array basicAt: anInteger + firstIndex - 1]
 !
 (reader addMethod: 'initialize-release')
 !
 at: anInteger put: anObject
-	^contents basicAt: anInteger + firstIndex - 1 put: anObject
+	^array basicAt: anInteger + firstIndex - 1 put: anObject
 !
 (reader addMethod: 'accessing')
 !
 before: oldObject
 	| index |
 	index := self find: oldObject.
-	index = firstIndex
-		ifTrue: [^self firstObjectError]
-		ifFalse: [^contents basicAt: index - 1]
+	index = firstIndex ifTrue: [^self firstObjectError] ifFalse: [^array basicAt: index - 1]
 !
 (reader addMethod: 'initialize-release')
 !
 capacity
-	^contents basicSize
+	^array basicSize
 !
 (reader addMethod: 'initialize-release')
 !
@@ -118,8 +116,8 @@ changeCapacityTo: newCapacity
 	| newContents |
 	newContents := Array new: newCapacity.
 	firstIndex to: lastIndex
-		do: [:index | newContents at: index - firstIndex + 1 put: (contents basicAt: index)].
-	contents := newContents.
+		do: [:index | newContents at: index - firstIndex + 1 put: (array basicAt: index)].
+	array := newContents.
 	lastIndex := lastIndex - firstIndex + 1.
 	firstIndex := 1
 !
@@ -134,7 +132,7 @@ changeSizeTo: newSize
 	newSize <= (self capacity + 1 - firstIndex)
 		ifTrue: 
 			[newLast := firstIndex + newSize - 1.
-			newLast + 1 to: lastIndex do: [:i | contents basicAt: i put: nil].
+			newLast + 1 to: lastIndex do: [:i | array basicAt: i put: nil].
 			lastIndex := newLast.
 			^self].
 	newSize <= self capacity
@@ -151,8 +149,13 @@ collect: aBlock
 	| newCollection |
 	newCollection := self copyEmpty: self size.
 	firstIndex to: lastIndex
-		do: [:index | newCollection addLast: (aBlock value: (contents basicAt: index))].
+		do: [:index | newCollection addLast: (aBlock value: (array basicAt: index))].
 	^newCollection
+!
+(reader addMethod: 'private')
+!
+collector
+	^array
 !
 (reader addMethod: 'enumerating')
 !
@@ -161,25 +164,35 @@ detect: aBlock ifNone: exceptionBlock
 		do: 
 			[:i |
 			| each |
-			each := contents basicAt: i.
+			each := array basicAt: i.
 			(aBlock value: each) ifTrue: [^each]].
 	^exceptionBlock value
 !
 (reader addMethod: 'enumerating')
 !
 do: aBlock
-	firstIndex to: lastIndex do: [:index | aBlock value: (contents basicAt: index)]
+	firstIndex to: lastIndex do: [:index | aBlock value: (array basicAt: index)]
 !
 (reader addMethod: 'As yet unclassified')
 !
 emptyCheck
 	self isEmpty ifTrue: [^self emptyCollectionError]
 !
+(reader addMethod: 'adding')
+!
+find: oldObject
+	| index |
+	index := firstIndex.
+	[index <= lastIndex] whileTrue: 
+			[(array at: index) = oldObject ifTrue: [^index].
+			index := index + 1].
+	self errorNotFound: oldObject
+!
 (reader addMethod: 'accessing')
 !
 first
 	self emptyCheck.
-	^contents basicAt: firstIndex
+	^array basicAt: firstIndex
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -194,7 +207,7 @@ grow
 (reader addMethod: 'testing')
 !
 includes: anObject
-	firstIndex to: lastIndex do: [:i | anObject = (contents basicAt: i) ifTrue: [^true]].
+	firstIndex to: lastIndex do: [:i | anObject = (array basicAt: i) ifTrue: [^true]].
 	^false
 !
 (reader addMethod: 'private')
@@ -204,24 +217,17 @@ increaseCapacity
 !
 (reader addMethod: 'initialize-release')
 !
-initializeCapacity: size
-	contents := Array withSize: size.
-	firstIndex := 1.
-	lastIndex := 0
-!
-(reader addMethod: 'initialize-release')
-!
 initializeContents: anArray
-	contents := anArray.
+	array := anArray.
 	firstIndex := 1.
-	lastIndex := contents basicSize
+	lastIndex := array basicSize
 !
 (reader addMethod: 'private')
 !
 insert: anObject before: spot
 	| index delta spotIndex shouldMovePrecedingElements |
 	shouldMovePrecedingElements := spot + spot < (firstIndex + lastIndex)
-				or: [lastIndex = contents basicSize].
+				or: [lastIndex = array basicSize].
 	shouldMovePrecedingElements
 		ifTrue: 
 			[spotIndex := spot - 1.
@@ -232,15 +238,15 @@ insert: anObject before: spot
 					spotIndex := firstIndex + delta].
 			index := firstIndex := firstIndex - 1.
 			[index < spotIndex] whileTrue: 
-					[contents basicAt: index put: (contents basicAt: index + 1).
+					[array basicAt: index put: (array basicAt: index + 1).
 					index := index + 1]]
 		ifFalse: 
 			[spotIndex := spot.
 			index := lastIndex := lastIndex + 1.
 			[index > spotIndex] whileTrue: 
-					[contents basicAt: index put: (contents basicAt: index - 1).
+					[array basicAt: index put: (array basicAt: index - 1).
 					index := index - 1]].
-	contents basicAt: index put: anObject.
+	array basicAt: index put: anObject.
 	^anObject
 !
 (reader addMethod: 'testing')
@@ -252,19 +258,19 @@ isEmpty
 !
 keysAndValuesDo: aBlock
 	firstIndex to: lastIndex
-		do: [:index | aBlock value: index - firstIndex + 1 value: (contents basicAt: index)]
+		do: [:index | aBlock value: index - firstIndex + 1 value: (array basicAt: index)]
 !
 (reader addMethod: 'accessing')
 !
 last
 	self emptyCheck.
-	^contents basicAt: lastIndex
+	^array basicAt: lastIndex
 !
 (reader addMethod: 'private')
 !
 makeRoomAtFirst
 	| delta |
-	delta := contents basicSize - lastIndex.
+	delta := array basicSize - lastIndex.
 	delta = 0
 		ifTrue: 
 			[self increaseCapacity.
@@ -272,10 +278,10 @@ makeRoomAtFirst
 			^self].
 	lastIndex to: firstIndex
 		by: -1
-		do: [:i | contents basicAt: i + delta put: (contents basicAt: i)].
-	firstIndex to: firstIndex + delta - 1 do: [:i | contents basicAt: i put: nil].
+		do: [:i | array basicAt: i + delta put: (array basicAt: i)].
+	firstIndex to: firstIndex + delta - 1 do: [:i | array basicAt: i put: nil].
 	firstIndex := firstIndex + delta.
-	lastIndex := contents basicSize
+	lastIndex := array basicSize
 !
 (reader addMethod: 'private')
 !
@@ -283,8 +289,8 @@ makeRoomAtLast
 	| delta |
 	delta := 1 - firstIndex.
 	delta = 0 ifTrue: [^self increaseCapacity].
-	firstIndex to: lastIndex do: [:i | contents basicAt: i + delta put: (contents basicAt: i)].
-	lastIndex + delta + 1 to: lastIndex do: [:i | contents basicAt: i put: nil].
+	firstIndex to: lastIndex do: [:i | array basicAt: i + delta put: (array basicAt: i)].
+	lastIndex + delta + 1 to: lastIndex do: [:i | array basicAt: i put: nil].
 	firstIndex := 1.
 	lastIndex := lastIndex + delta
 !
@@ -295,41 +301,31 @@ notEmpty
 !
 (reader addMethod: 'removing')
 !
-remove: oldObject ifAbsent: anExceptionBlock
-	firstIndex to: lastIndex
-		do: 
-			[:index |
-			oldObject = (contents basicAt: index)
+remove: oldObject ifAbsent: absentBlock
+	| index |
+	index := firstIndex.
+	[index <= lastIndex] whileTrue: 
+			[oldObject = (array at: index)
 				ifTrue: 
 					[self removeIndex: index.
-					^oldObject]].
-	^anExceptionBlock value
+					^oldObject]
+				ifFalse: [index := index + 1]].
+	^absentBlock value
 !
 (reader addMethod: 'removing')
 !
 removeAllSuchThat: aBlock
-	| element newCollection index removed |
-	newCollection := self copyEmpty.
-	index := firstIndex.
-	removed := 0.
-	[index <= lastIndex] whileTrue: 
-			[element := contents basicAt: index.
-			(aBlock value: element)
-				ifTrue: 
-					[| replacementObject |
-					replacementObject := index = lastIndex
-								ifTrue: [nil]
-								ifFalse: [contents basicAt: index + 1].
-					newCollection add: element.
-					contents basicAt: index - removed put: replacementObject.
-					removed := removed + 1]
+	| n |
+	n := firstIndex.
+	firstIndex to: lastIndex
+		do: 
+			[:index |
+			(aBlock value: (array at: index))
 				ifFalse: 
-					[removed > 0 ifTrue: [contents basicAt: index - removed put: (contents basicAt: index)]].
-			index := index + 1].
-	lastIndex - removed + 1 to: lastIndex
-		do: [:nillingIndex | contents basicAt: nillingIndex put: nil].
-	lastIndex := lastIndex - removed.
-	^newCollection
+					[array at: n put: (array at: index).
+					n := n + 1]].
+	array from: n to: lastIndex put: nil.
+	lastIndex := n - 1
 !
 (reader addMethod: 'removing')
 !
@@ -344,8 +340,8 @@ removeAtIndex: anIndex
 removeFirst
 	| firstObject |
 	self emptyCheck.
-	firstObject := contents basicAt: firstIndex.
-	contents basicAt: firstIndex put: nil.
+	firstObject := array basicAt: firstIndex.
+	array basicAt: firstIndex put: nil.
 	firstIndex := firstIndex + 1.
 	^firstObject
 !
@@ -358,8 +354,8 @@ removeFirst: numElements
 	1 to: numElements
 		do: 
 			[:index |
-			result at: index put: (contents basicAt: firstIndex).
-			contents basicAt: firstIndex put: nil.
+			result at: index put: (array basicAt: firstIndex).
+			array basicAt: firstIndex put: nil.
 			firstIndex := firstIndex + 1].
 	^result
 !
@@ -369,9 +365,9 @@ removeIndex: removedIndex
 	| index |
 	index := removedIndex.
 	[index < lastIndex] whileTrue: 
-			[contents basicAt: index put: (contents basicAt: index + 1).
+			[array basicAt: index put: (array basicAt: index + 1).
 			index := index + 1].
-	contents basicAt: lastIndex put: nil.
+	array basicAt: lastIndex put: nil.
 	lastIndex := lastIndex - 1
 !
 (reader addMethod: 'removing')
@@ -379,8 +375,8 @@ removeIndex: removedIndex
 removeLast
 	| lastObject |
 	self emptyCheck.
-	lastObject := contents basicAt: lastIndex.
-	contents basicAt: lastIndex put: nil.
+	lastObject := array basicAt: lastIndex.
+	array basicAt: lastIndex put: nil.
 	lastIndex := lastIndex - 1.
 	^lastObject
 !
@@ -393,17 +389,28 @@ removeLast: numElements
 	1 to: numElements
 		do: 
 			[:index |
-			result at: numElements + 1 - index put: (contents basicAt: lastIndex).
-			contents basicAt: lastIndex put: nil.
+			result at: numElements + 1 - index put: (array basicAt: lastIndex).
+			array basicAt: lastIndex put: nil.
 			lastIndex := lastIndex - 1].
 	^result
+!
+(reader addMethod: 'removing')
+!
+reset
+	self resetTo: 1
+!
+(reader addMethod: 'removing')
+!
+resetTo: index
+	firstIndex := index.
+	lastIndex := firstIndex - 1
 !
 (reader addMethod: 'enumerating')
 !
 reverseDo: aBlock
 	lastIndex to: firstIndex
 		by: -1
-		do: [:index | aBlock value: (contents basicAt: index)]
+		do: [:index | aBlock value: (array basicAt: index)]
 !
 (reader addMethod: 'enumerating')
 !
@@ -412,6 +419,20 @@ select: aBlock
 	newCollection := self copyEmpty.
 	self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
 	^newCollection
+!
+(reader addMethod: 'private')
+!
+setCollection: anArray
+	<squeak>
+	array := anArray.
+	self reset
+!
+(reader addMethod: 'private')
+!
+setContents: anArray
+	array := anArray.
+	firstIndex := 1.
+	lastIndex := array size
 !
 (reader addMethod: 'gravel')
 !
@@ -423,18 +444,27 @@ size
 trim
 	self changeCapacityTo: self size
 !
+(reader addClassMethod: 'private')
+!
+arrayType
+	<squeak>
+	^Array
+!
 (reader addClassMethod: 'gravel')
 !
 newImpl
-	^super new initializeCapacity: 3
+	^self newImpl: 3
 !
 (reader addClassMethod: 'gravel')
 !
 newImpl: size
-	^super new initializeCapacity: size
+	^super new setCollection: (self arrayType new: size)
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'instance creation')
 !
-withSize: size
-	^super new initializeContents: (Array withSize: size)
+ofSize: n
+	| collection |
+	collection := self new: n.
+	collection setContents: collection collector.
+	^collection
 !

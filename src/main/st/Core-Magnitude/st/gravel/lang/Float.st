@@ -71,11 +71,40 @@ differenceFromFloat: aFloat
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'differenceFromFloat_')>
 	
 !
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'differenceFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromScaledDecimal: operand
+	^operand asFloat - self
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'differenceFromSmallInteger_')>
+	
+!
+(reader addMethod: 'truncation and round off')
+!
+exponent
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'exponent')>
+	
+!
 (reader addMethod: 'truncation and round off')
 !
 floor
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'floor')>
 	
+!
+(reader addMethod: 'mathematical functions')
+!
+floorLog: radix
+	(radix = 2 and: [self > 0.0 and: [self isFinite]]) ifTrue: [^self exponent].
+	^(self log: radix) floor
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -135,22 +164,73 @@ lessFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromSmallInteger_')>
 	
 !
+(reader addMethod: 'mathematical functions')
+!
+ln
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'ln')>
+	
+!
+(reader addMethod: 'printing')
+!
+printBase: base
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'printBase_')>
+	
+!
 (reader addMethod: 'private-arithmetic')
 !
 productFromFloat: aFloat
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'productFromFloat_')>
 	
 !
-(reader addMethod: 'arithmetic')
+(reader addMethod: 'private-arithmetic')
 !
-quo: operand
-	^(self / operand) truncated
+productFromFraction: aFraction
+	^aFraction asFloat * self
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'productFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromScaledDecimal: operand
+	^operand asFloat * self
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'productFromSmallInteger_')>
+	
 !
 (reader addMethod: 'private-arithmetic')
 !
 quotientFromFloat: aFloat
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'quotientFromFloat_')>
 	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'quotientFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromScaledDecimal: operand
+	^operand asFloat / self
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'quotientFromSmallInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raising: aNumber
+	^aNumber raisedToFloat: self
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -162,6 +242,23 @@ rounded
 !
 sumFromFloat: aFloat
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'sumFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'sumFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromScaledDecimal: operand
+	^operand asFloat + self
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'sumFromSmallInteger_')>
 	
 !
 (reader addMethod: 'truncation and round off')
@@ -199,6 +296,12 @@ javaNegativeInfinity
 javaPositiveInfinity
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'javaPositiveInfinity')>
 	
+!
+(reader addClassMethod: 'constants')
+!
+one
+	<squeak>
+	^1.0
 !
 (reader addClassMethod: 'constants')
 !

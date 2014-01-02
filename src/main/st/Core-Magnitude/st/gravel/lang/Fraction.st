@@ -27,7 +27,7 @@
 (reader addMethod: 'arithmetic')
 !
 // operand
-	^operand integerQuotientFromFraction: self
+	^(self / operand) floor
 !
 (reader addMethod: 'gravel')
 !
@@ -47,30 +47,7 @@
 (reader addMethod: 'converting')
 !
 asFloat
-	| a b mantissa exponent hasTruncatedBits lostBit n ha hb hm |
-	a := numerator abs.
-	b := denominator.
-	ha := a highBitOfMagnitude.
-	hb := b highBitOfMagnitude.
-	n := 1 + Float precision.
-	(ha < n and: [hb < n]) ifTrue: [^numerator asFloat / denominator asFloat].
-	exponent := ha - hb - n.
-	exponent >= 0
-		ifTrue: [b := b bitShift: exponent]
-		ifFalse: [a := a bitShift: exponent negated].
-	mantissa := a quo: b.
-	hasTruncatedBits := a > (mantissa * b).
-	hm := mantissa highBit.
-	lostBit := Float emin - (exponent + hm - 1).
-	lostBit > 0 ifTrue: [n := n - lostBit max: 1].
-	hm > n
-		ifTrue: 
-			[exponent := exponent + hm - n.
-			hasTruncatedBits := hasTruncatedBits or: [mantissa anyBitOfMagnitudeFrom: 1 to: hm - n].
-			mantissa := mantissa bitShift: n - hm].
-	(hasTruncatedBits and: [mantissa odd]) ifTrue: [mantissa := mantissa + 1].
-	^(self positive ifTrue: [mantissa asFloat] ifFalse: [mantissa asFloat negated])
-		timesTwoPower: exponent
+	^numerator floatDiv: denominator
 !
 (reader addMethod: 'converting')
 !
@@ -86,6 +63,16 @@ denominator
 !
 differenceFromFraction: aFraction
 	^aFraction + self negated
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromInteger: anInteger
+	^self class numerator: anInteger * denominator - numerator denominator: denominator
+!
+(reader addMethod: 'truncation and round off')
+!
+floor
+	^numerator // denominator
 !
 (reader addMethod: 'comparing')
 !
@@ -124,6 +111,21 @@ lessFromFraction: aFraction
 lessFromInteger: anInteger
 	^anInteger * denominator < numerator
 !
+(reader addMethod: 'mathematical functions')
+!
+ln
+ <squeak>| res |
+	(self <= 0) ifTrue: [ DomainError signal: 'ln is only defined for x > 0'].
+	(numerator < denominator) ifTrue: [ ^(((self reciprocal) ln) negated)].
+	res := (super ln).
+	(res isFinite) ifTrue: [ ^res].
+	^((numerator ln) - (denominator ln))
+!
+(reader addMethod: 'arithmetic')
+!
+negated
+	^self class numerator: numerator negated denominator: denominator
+!
 (reader addMethod: 'testing')
 !
 negative
@@ -145,26 +147,46 @@ printOn: aStream
 		print: denominator;
 		nextPut: $)
 !
+(reader addMethod: 'printing')
+!
+printTruncatedOn: aStream showingDecimalPlaces: placesDesired
+	| truncatedFractionPart integerPart scaling |
+	placesDesired <= 0
+		ifTrue: [self truncated printOn: aStream]
+		ifFalse: 
+			[scaling := 10 raisedToInteger: placesDesired.
+			integerPart := numerator abs quo: denominator.
+			truncatedFractionPart := (numerator abs - (integerPart * denominator)) * scaling
+						quo: denominator.
+			numerator negative ifTrue: [aStream nextPut: $-].
+			integerPart printOn: aStream.
+			aStream nextPut: $..
+			truncatedFractionPart
+				printOn: aStream
+				base: 10
+				length: placesDesired
+				padded: true]
+!
 (reader addMethod: 'private-arithmetic')
 !
 productFromFraction: aFraction
-	| d1 d2 |
-	d1 := aFraction numerator gcd: denominator.
-	d2 := aFraction denominator gcd: numerator.
-	(d2 = aFraction denominator and: [d1 = denominator])
-		ifTrue: [^aFraction numerator // d1 * (numerator // d2)].
-	^Fraction numerator: aFraction numerator // d1 * (numerator // d2)
-		denominator: aFraction denominator // d2 * (denominator // d1)
+	^(Fraction numerator: aFraction numerator * numerator
+		denominator: aFraction denominator * denominator) reduced
 !
-(reader addMethod: 'arithmetic')
+(reader addMethod: 'private-arithmetic')
 !
-quo: operand
-	^operand quoFromFraction: self
+productFromInteger: anInteger
+	^(self class numerator: anInteger * numerator denominator: denominator) reduced
 !
 (reader addMethod: 'private-arithmetic')
 !
 quotientFromFraction: aFraction
 	^aFraction * self reciprocal
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromInteger: anInteger
+	^(self class numerator: anInteger * denominator denominator: numerator) reduced
 !
 (reader addMethod: 'arithmetic')
 !
@@ -173,6 +195,11 @@ raisedToInteger: anInteger
 	anInteger < 0 ifTrue: [^self reciprocal raisedToInteger: anInteger negated].
 	^Fraction numerator: (numerator raisedToInteger: anInteger)
 		denominator: (denominator raisedToInteger: anInteger)
+!
+(reader addMethod: 'private-arithmetic')
+!
+raising: aNumber
+	^aNumber raisedToFraction: self
 !
 (reader addMethod: 'arithmetic')
 !

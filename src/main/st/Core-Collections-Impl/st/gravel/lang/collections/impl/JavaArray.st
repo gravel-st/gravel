@@ -16,6 +16,12 @@ at: index
 at: index put: anObject
 	^self basicAt: index put: anObject
 !
+(reader addMethod: 'copying')
+!
+copy
+	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'copy')>
+	
+!
 (reader addMethod: 'gravel')
 !
 do: aBlock
@@ -39,12 +45,6 @@ printOn: aStream
 !
 (reader addMethod: '')
 !
-replaceFrom: start to: stop with: replacement startingAt: repStart
-	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'replaceFrom_to_with_startingAt_')>
-	
-!
-(reader addMethod: '')
-!
 size
 	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'size')>
 	
@@ -59,6 +59,12 @@ zeroAt: index
 !
 zeroAt: index put: anObject
 	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'zeroAt_put_')>
+	
+!
+(reader addMethod: '')
+!
+_replaceFrom: start to: stop with: replacement startingAt: repStart
+	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'replaceFrom_to_with_startingAt_')>
 	
 !
 (reader addClassMethod: 'gravel')

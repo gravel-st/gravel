@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.NumberLiteralNode;
@@ -19,7 +18,11 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 
 	public static FixedPointLiteralNode_Factory factory = new FixedPointLiteralNode_Factory();
 
-	java.math.BigDecimal _fixedPoint;
+	java.math.BigInteger _denominator;
+
+	java.math.BigInteger _numerator;
+
+	int _scale;
 
 	public static class FixedPointLiteralNode_Factory extends NumberLiteralNode_Factory {
 
@@ -29,29 +32,28 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 			return newInstance;
 		}
 
-		public FixedPointLiteralNode fixedPoint_(final java.math.BigDecimal _aFixedPoint) {
-			return ((FixedPointLiteralNode) this.basicNew().initializeFixedPoint_(_aFixedPoint));
-		}
-
-		public FixedPointLiteralNode integer_fractionString_(final java.math.BigInteger _anInteger, final String _aString) {
-			return this.integer_fractionString_scale_(_anInteger, _aString, 1);
-		}
-
 		public FixedPointLiteralNode integer_fractionString_scale_(final java.math.BigInteger _anInteger, final String _aString, final int _scale) {
-			return FixedPointLiteralNode.factory.fixedPoint_(st.gravel.support.jvm.FixedPointExtensions.fromString_scale_(_anInteger.toString() + "." + _aString, _scale));
+			final java.math.BigInteger _denominator;
+			java.math.BigInteger _numerator;
+			_denominator = BigInteger.valueOf(10).pow(_aString.length());
+			_numerator = st.gravel.support.jvm.LargeIntegerExtensions.multiply_(_anInteger, _denominator);
+			if (_aString.length() != 0) {
+				_numerator = st.gravel.support.jvm.LargeIntegerExtensions.plus_(_numerator, new java.math.BigInteger(_aString));
+			}
+			return FixedPointLiteralNode.factory.numerator_denominator_scale_(_numerator, _denominator, _scale);
 		}
-	}
 
-	static public FixedPointLiteralNode _fixedPoint_(Object receiver, final java.math.BigDecimal _aFixedPoint) {
-		return factory.fixedPoint_(_aFixedPoint);
-	}
-
-	static public FixedPointLiteralNode _integer_fractionString_(Object receiver, final java.math.BigInteger _anInteger, final String _aString) {
-		return factory.integer_fractionString_(_anInteger, _aString);
+		public FixedPointLiteralNode numerator_denominator_scale_(final java.math.BigInteger _anInteger, final java.math.BigInteger _anInteger2, final int _anInteger3) {
+			return this.basicNew().initializeNumerator_denominator_scale_(_anInteger, _anInteger2, _anInteger3);
+		}
 	}
 
 	static public FixedPointLiteralNode _integer_fractionString_scale_(Object receiver, final java.math.BigInteger _anInteger, final String _aString, final int _scale) {
 		return factory.integer_fractionString_scale_(_anInteger, _aString, _scale);
+	}
+
+	static public FixedPointLiteralNode _numerator_denominator_scale_(Object receiver, final java.math.BigInteger _anInteger, final java.math.BigInteger _anInteger2, final int _anInteger3) {
+		return factory.numerator_denominator_scale_(_anInteger, _anInteger2, _anInteger3);
 	}
 
 	@Override
@@ -96,23 +98,48 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 		}
 	}
 
+	public java.math.BigInteger denominator() {
+		return _denominator;
+	}
+
 	public FixedPointLiteralNode_Factory factory() {
 		return factory;
 	}
 
-	public java.math.BigDecimal fixedPoint() {
-		return _fixedPoint;
-	}
-
-	public FixedPointLiteralNode initializeFixedPoint_(final java.math.BigDecimal _aFixedPoint) {
-		_fixedPoint = _aFixedPoint;
+	public FixedPointLiteralNode initializeNumerator_denominator_scale_(final java.math.BigInteger _anInteger, final java.math.BigInteger _anInteger2, final int _anInteger3) {
+		_numerator = _anInteger;
+		_denominator = _anInteger2;
+		_scale = _anInteger3;
 		this.initialize();
 		return this;
 	}
 
 	@Override
 	public FixedPointLiteralNode innerSourceOn_(final StringBuilder _aStream) {
-		_aStream.append(_fixedPoint.toString() + "s");
+		final int _digits;
+		final int _fractionDigits;
+		final int _firstDigitAfterDot;
+		final String _numeratorString;
+		_numeratorString = _numerator.toString();
+		_digits = _numeratorString.length();
+		_fractionDigits = (_denominator.toString().length() - 1);
+		for (int _i = _digits; _i <= _fractionDigits; _i++) {
+			if (st.gravel.support.jvm.IntegerExtensions.equals_(_i, 2)) {
+				_aStream.append('.');
+			}
+			_aStream.append('0');
+		}
+		_firstDigitAfterDot = ((_digits - _fractionDigits) + 1);
+		for (int _i = 1; _i <= _digits; _i++) {
+			if (st.gravel.support.jvm.IntegerExtensions.equals_(_i, _firstDigitAfterDot)) {
+				_aStream.append('.');
+			}
+			_aStream.append(_numeratorString.charAt(_i - 1));
+		}
+		_aStream.append('s');
+		if (!st.gravel.support.jvm.IntegerExtensions.equals_(_fractionDigits, _scale)) {
+			_aStream.append("" + _scale);
+		}
 		return this;
 	}
 
@@ -128,7 +155,11 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 
 	@Override
 	public FixedPointLiteralNode negated() {
-		return FixedPointLiteralNode.factory.fixedPoint_(_fixedPoint.negate());
+		return FixedPointLiteralNode.factory.numerator_denominator_scale_(_numerator.negate(), _denominator, _scale);
+	}
+
+	public java.math.BigInteger numerator() {
+		return _numerator;
 	}
 
 	@Override
@@ -155,6 +186,10 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 		return this;
 	}
 
+	public int scale() {
+		return _scale;
+	}
+
 	@Override
 	public FixedPointLiteralNode sourceOn_(final StringBuilder _aStream) {
 		if (!this.needsBrackets()) {
@@ -167,8 +202,15 @@ public class FixedPointLiteralNode extends NumberLiteralNode implements Cloneabl
 	}
 
 	@Override
-	public java.math.BigDecimal value() {
-		return _fixedPoint;
+	public Object value() {
+		throw new RuntimeException("Cannot calculate value");
+	}
+
+	public String valueString() {
+		final StringBuilder _aStream;
+		_aStream = st.gravel.support.jvm.WriteStreamFactory.on_(new String());
+		this.innerSourceOn_(_aStream);
+		return _aStream.toString();
 	}
 
 	@Override

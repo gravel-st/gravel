@@ -239,6 +239,14 @@ public class IntegerExtensions {
 		return objectFromBigInteger(argument.add(BigInteger.valueOf(receiver)));
 	}
 
+	public static float floatDivFromSmallInteger_(int receiver, int argument) {
+		return (float) argument / receiver;
+	}
+
+	public static float floatDivFromLargeInteger_(int receiver, BigInteger argument) {
+		return (float) (argument.doubleValue() / receiver);
+	}
+
 	public static Number sumFromSmallInteger_(int receiver, int argument) {
 		return objectFromLong(((long) (argument)) + receiver);
 	}

@@ -1,12 +1,10 @@
-(reader defineClass: 'WriteStreamImpl' superclass: 'st.gravel.lang.Object')
+(reader defineClass: 'WriteStreamImpl' superclass: 'st.gravel.lang.collections.impl.PositionableStreamImpl')
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.interface.WriteStream')
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.WriteStream class')
 !
-(reader addInstVar: 'collection')
-!
-(reader addInstVar: 'position')
+(reader addInstVar: 'writeLimit')
 !
 (reader addMethod: 'testing')
 !
@@ -24,17 +22,6 @@ contents
 	collection size = position ifTrue: [^collection].
 	^collection copyTo: position
 !
-(reader addMethod: 'gravel')
-!
-initialize
-	position := 0
-!
-(reader addMethod: 'initialize-release')
-!
-initializeCollection: anOrderedCollectionImpl
-	collection := anOrderedCollectionImpl.
-	self initialize
-!
 (reader addMethod: 'accessing')
 !
 nextPut: anObject
@@ -43,6 +30,13 @@ nextPut: anObject
 		ifFalse: 
 			[position := position + 1.
 			collection at: position put: anObject]
+!
+(reader addMethod: 'accessing')
+!
+on: aCollection
+	super on: aCollection.
+	readLimit := 0.
+	writeLimit := aCollection size
 !
 (reader addMethod: 'private')
 !
@@ -68,13 +62,20 @@ position
 position: aPosition
 	position := aPosition
 !
+(reader addMethod: 'positioning')
+!
+reset
+	readLimit := readLimit max: position.
+	position := 0
+!
 (reader addMethod: 'accessing')
 !
 setToEnd
 	position := collection size
 !
-(reader addClassMethod: 'instance creation')
+(reader addMethod: 'accessing')
 !
-collection: anOrderedCollectionImpl
-	^self new initializeCollection: anOrderedCollectionImpl
+with: aCollection
+	super on: aCollection.
+	position := readLimit := writeLimit := aCollection size
 !

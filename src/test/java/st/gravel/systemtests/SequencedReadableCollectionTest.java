@@ -9,7 +9,7 @@ import st.gravel.support.jvm.runtime.MethodTools;
 public class SequencedReadableCollectionTest {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		st.gravel.support.compiler.testtools.TestBootstrap.getSingleton();
 	}
 	@Test
 	public void test_after_() throws Throwable {

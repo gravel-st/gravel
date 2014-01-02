@@ -187,7 +187,10 @@ visitFieldWriteNode: anObject {FieldWriteNode} {^FieldWriteNode}
 (reader addMethod: 'visiting')
 !
 visitFixedPointLiteralNode: anObject {FixedPointLiteralNode} {^FixedPointLiteralNode}
-	^FixedPointLiteralNode fixedPoint: anObject fixedPoint
+	^FixedPointLiteralNode
+		numerator: anObject numerator
+		denominator: anObject denominator
+		scale: anObject scale
 !
 (reader addMethod: 'visiting')
 !

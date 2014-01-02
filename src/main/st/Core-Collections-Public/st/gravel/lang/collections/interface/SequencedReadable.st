@@ -52,7 +52,7 @@ copyReplaceFrom: start to: stop withObject: replacementElement
 	| newSequenceableCollection newSize replacementCollection |
 	newSize := self size.
 	replacementCollection := Array new: stop - start + 1 withAll: replacementElement.
-	newSequenceableCollection := self copySpecies withSize: newSize.
+	newSequenceableCollection := self copySpecies ofSize: newSize.
 	newSequenceableCollection
 		replaceFrom: 1
 		to: start - 1
@@ -73,6 +73,11 @@ copyReplaceFrom: start to: stop withObject: replacementElement
 (reader addMethod: 'copying')
 !
 copyReplacing: sourceElement withObject: destElement
+	^self traitRequirement
+!
+(reader addMethod: 'copying')
+!
+copySpecies
 	^self traitRequirement
 !
 (reader addMethod: 'copying')
@@ -156,12 +161,27 @@ indexOf: anElement startingAt: start ifAbsent: exceptionBlock
 (reader addMethod: 'accessing')
 !
 indexOfSubCollection: aSubCollection startingAt: anIndex
-	^self traitRequirement
+	^self
+		indexOfSubCollection: aSubCollection
+		startingAt: anIndex
+		ifAbsent: [0]
 !
 (reader addMethod: 'accessing')
 !
-indexOfSubCollection: aSubCollection startingAt: anIndex ifAbsent: exceptionBlock
-	^self traitRequirement
+indexOfSubCollection: sub startingAt: start ifAbsent: exceptionBlock
+	| first index |
+	sub isEmpty ifTrue: [^exceptionBlock value].
+	first := sub first.
+	start to: self size - sub size + 1
+		do: 
+			[:startIndex |
+			(self at: startIndex) = first
+				ifTrue: 
+					[index := 1.
+					[(self at: startIndex + index - 1) = (sub at: index)] whileTrue: 
+							[index = sub size ifTrue: [^startIndex].
+							index := index + 1]]].
+	^exceptionBlock value
 !
 (reader addMethod: 'testing')
 !
@@ -209,6 +229,11 @@ seventh
 !
 sixth
 	^self at: 6
+!
+(reader addMethod: 'accessing')
+!
+size
+	^self traitRequirement
 !
 (reader addMethod: 'accessing')
 !
