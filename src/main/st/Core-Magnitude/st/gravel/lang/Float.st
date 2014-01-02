@@ -33,6 +33,17 @@
 // operand
 	^(self / operand) floor
 !
+(reader addMethod: 'comparing')
+!
+< operand
+	^operand lessFromFloat: self
+!
+(reader addMethod: 'comparing')
+!
+= aMagnitude
+	<primitive: 'equals'>
+	
+!
 (reader addMethod: 'converting')
 !
 asFloat
@@ -100,6 +111,29 @@ isLiteral
 !
 isNaN
 	^self ~= self
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromFraction: aFraction
+	^aFraction < self asFraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromSmallInteger_')>
+	
 !
 (reader addMethod: 'private-arithmetic')
 !

@@ -32,38 +32,13 @@
 (reader addMethod: 'comparing')
 !
 < operand
-	<squeak>
-	(operand isKindOf: ScaledDecimal) ifTrue: [^fraction < operand asFraction].
-	^operand adaptToScaledDecimal: self andCompare: #<
-!
-(reader addMethod: 'comparing')
-!
-<= operand
-	<squeak>
-	(operand isKindOf: ScaledDecimal) ifTrue: [^fraction <= operand asFraction].
-	^operand adaptToScaledDecimal: self andCompare: #<=
+	^operand lessFromScaledDecimal: self
 !
 (reader addMethod: 'comparing')
 !
 = comparand
-	<squeak>
 	comparand isNumber ifFalse: [^false].
-	(comparand isKindOf: ScaledDecimal) ifTrue: [^fraction = comparand asFraction].
-	^comparand adaptToScaledDecimal: self andCompare: #=
-!
-(reader addMethod: 'comparing')
-!
-> operand
-	<squeak>
-	(operand isKindOf: ScaledDecimal) ifTrue: [^fraction > operand asFraction].
-	^operand adaptToScaledDecimal: self andCompare: #>
-!
-(reader addMethod: 'comparing')
-!
->= operand
-	<squeak>
-	(operand isKindOf: ScaledDecimal) ifTrue: [^fraction >= operand asFraction].
-	^operand adaptToScaledDecimal: self andCompare: #>=
+	^fraction = comparand asFraction
 !
 (reader addMethod: 'converting')
 !
@@ -100,6 +75,26 @@ fractionPart
 integerPart
 	<squeak>
 	^ScaledDecimal newFromNumber: fraction integerPart scale: scale
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromFraction: aFraction
+	^aFraction < fraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromLargeInteger: aSmallInteger
+	^fraction lessFromLargeInteger: aSmallInteger
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromScaledDecimal: aScaledDecimal
+	^aScaledDecimal asFraction < fraction
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromSmallInteger: aSmallInteger
+	^fraction lessFromSmallInteger: aSmallInteger
 !
 (reader addMethod: 'arithmetic')
 !
@@ -156,7 +151,6 @@ quotientFromScaledDecimal: operand
 (reader addMethod: 'mathematical functions')
 !
 raisedToInteger: aNumber
-	<squeak>
 	^self class newFromNumber: (fraction raisedToInteger: aNumber) scale: scale
 !
 (reader addMethod: 'arithmetic')

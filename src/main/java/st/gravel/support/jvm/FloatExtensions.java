@@ -1,6 +1,7 @@
 package st.gravel.support.jvm;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 
 public class FloatExtensions {
@@ -18,6 +19,19 @@ public class FloatExtensions {
 
 	public static Object javaNaN() {
 		return Float.NaN;
+	}
+	
+	public static boolean lessFromFloat_(float receiver, float argument) {
+		return argument < receiver;
+	}
+
+	public static boolean lessFromSmallInteger_(float receiver, int argument) {
+		return argument < receiver;
+	}
+
+	public static boolean lessFromLargeInteger_(float receiver,
+			BigInteger argument) {
+		return new BigDecimal(argument).compareTo(BigDecimal.valueOf(receiver)) == -1;
 	}
 
 	public static Object javaNegativeInfinity() {

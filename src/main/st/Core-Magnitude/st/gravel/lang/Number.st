@@ -105,6 +105,26 @@ integerPart
 isNumber
 	^true
 !
+(reader addMethod: 'private-arithmetic')
+!
+lessFromFloat: aFloat
+	^aFloat < self asFloat
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromLargeInteger: aSmallInteger
+	^self lessFromInteger: aSmallInteger
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromScaledDecimal: aScaledDecimal
+	^aScaledDecimal asFraction < self
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromSmallInteger: aSmallInteger
+	^self lessFromInteger: aSmallInteger
+!
 (reader addMethod: 'arithmetic')
 !
 negated
@@ -157,8 +177,17 @@ raisedTo: operand
 !
 (reader addMethod: 'arithmetic')
 !
-raisedToInteger: operand
-	^self subclassResponsibility
+raisedToInteger: anInteger
+	| bitProbe result |
+	anInteger negative ifTrue: [^(self raisedToInteger: anInteger negated) reciprocal].
+	bitProbe := 1 bitShift: anInteger highBit - 1.
+	result := self class one.
+	
+	[(anInteger bitAnd: bitProbe) = 0 ifFalse: [result := result * self].
+	bitProbe := bitProbe bitShift: -1.
+	bitProbe > 0]
+			whileTrue: [result := result * result].
+	^result
 !
 (reader addMethod: 'arithmetic')
 !
@@ -235,9 +264,7 @@ to: stop by: step
 (reader addMethod: 'gravel')
 !
 to: stop by: step do: aBlock
-	^self to: stop
-		by: step
-		do: [:i | aBlock value: i]
+	(Interval from: self to: stop by: step) do: aBlock
 !
 (reader addMethod: 'gravel')
 !

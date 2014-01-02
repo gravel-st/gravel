@@ -58,6 +58,11 @@ benchmark
 							count := count + 1]]].
 	^count
 !
+(reader addMethod: 'accessing')
+!
+denominator
+	^1
+!
 (reader addMethod: 'private-arithmetic')
 !
 differenceFromFraction: aFraction
@@ -106,6 +111,11 @@ isZero
 !
 lessFromFraction: aFraction
 	^aFraction numerator < (self * aFraction denominator)
+!
+(reader addMethod: 'accessing')
+!
+numerator
+	^self
 !
 (reader addMethod: 'gravel')
 !

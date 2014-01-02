@@ -25,12 +25,6 @@ add: anAssociation
 		ifNotNil: [:element | element value: anAssociation value].
 	^anAssociation
 !
-(reader addMethod: 'adding')
-!
-addAll: aCollection
-	aCollection == self ifFalse: [aCollection associationsDo: [:assoc | self add: assoc]].
-	^aCollection
-!
 (reader addMethod: 'accessing')
 !
 associationAt: key ifAbsent: aBlock

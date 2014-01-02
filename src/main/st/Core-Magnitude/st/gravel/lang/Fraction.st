@@ -38,11 +38,11 @@
 !
 = aNumber
 	aNumber isNumber ifFalse: [^false].
-	aNumber isFraction
+	(aNumber isFraction or: [aNumber isInteger])
 		ifTrue: 
 			[numerator = 0 ifTrue: [^aNumber numerator = 0].
 			^numerator * aNumber denominator = (aNumber numerator * denominator)].
-	^aNumber asFraction = aNumber
+	^aNumber asFraction = self
 !
 (reader addMethod: 'converting')
 !
@@ -119,6 +119,11 @@ lessFromFraction: aFraction
 	(neg := aFraction negative) = self negative ifFalse: [^neg].
 	^aFraction numerator * denominator < (numerator * aFraction denominator)
 !
+(reader addMethod: 'private-arithmetic')
+!
+lessFromInteger: anInteger
+	^anInteger * denominator < numerator
+!
 (reader addMethod: 'testing')
 !
 negative
@@ -160,6 +165,14 @@ quo: operand
 !
 quotientFromFraction: aFraction
 	^aFraction * self reciprocal
+!
+(reader addMethod: 'arithmetic')
+!
+raisedToInteger: anInteger
+	anInteger = 0 ifTrue: [^1].
+	anInteger < 0 ifTrue: [^self reciprocal raisedToInteger: anInteger negated].
+	^Fraction numerator: (numerator raisedToInteger: anInteger)
+		denominator: (denominator raisedToInteger: anInteger)
 !
 (reader addMethod: 'arithmetic')
 !

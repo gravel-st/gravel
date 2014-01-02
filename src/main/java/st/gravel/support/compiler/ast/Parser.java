@@ -838,6 +838,12 @@ public class Parser extends Object implements Cloneable {
 		if (st.gravel.support.jvm.StringExtensions.equals_(_id, "false")) {
 			return BooleanLiteralNode.factory.value_(false);
 		}
+		if (_id == null) {
+			final String _bin;
+			_bin = Parser.this.parseBinaryMessageSelector();
+			st.gravel.support.jvm.ObjectExtensions.assert_(Parser.this, _bin != null);
+			return SymbolLiteralNode.factory.value_(st.gravel.core.Symbol.value(_bin));
+		}
 		return this.parseSymbolNoHash_(_id);
 	}
 

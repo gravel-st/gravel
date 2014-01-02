@@ -140,10 +140,12 @@ public class IntegerExtensions {
 		return q;
 	}
 
-	public static boolean isSmallerThan_(Integer receiver, Object other) {
-		if (other instanceof BigInteger)
-			return true;
-		return receiver < (Integer) other;
+	public static boolean lessFromSmallInteger_(Integer receiver, Integer argument) {
+		return argument < receiver;
+	}
+
+	public static boolean lessFromLargeInteger_(Integer receiver, BigInteger argument) {
+		return argument.compareTo(BigInteger.valueOf((int)receiver)) == -1;
 	}
 
 	public static Number moduloQuotientFromLargeInteger_(int receiver,

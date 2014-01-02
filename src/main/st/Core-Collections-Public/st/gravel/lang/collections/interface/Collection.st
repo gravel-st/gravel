@@ -4,6 +4,11 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Emptyness class')
 !
+(reader addMethod: 'private')
+!
+addToDictionary: aDictionary
+	self do: [:assoc | aDictionary add: assoc]
+!
 (reader addMethod: 'iterating')
 !
 allSatisfy: aBlock

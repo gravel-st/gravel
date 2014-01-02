@@ -25,8 +25,7 @@
 (reader addMethod: '')
 !
 < aMagnitude
-	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'isSmallerThan_')>
-	
+	^aMagnitude lessFromLargeInteger: self
 !
 (reader addMethod: '')
 !
@@ -95,6 +94,18 @@ integerQuotientFromSmallInteger: anObject
 !
 isLarge
 	^true
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'lessFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'lessFromSmallInteger_')>
+	
 !
 (reader addMethod: 'private-arithmetic')
 !

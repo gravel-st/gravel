@@ -14,6 +14,17 @@ add: anAssociation
 	self at: anAssociation key put: anAssociation value.
 	^anAssociation
 !
+(reader addMethod: 'accessing')
+!
+addAll: aCollection
+	aCollection addToDictionary: self.
+	^aCollection
+!
+(reader addMethod: 'private')
+!
+addToDictionary: aDictionary
+	self keysAndValuesDo: [:k :v | aDictionary at: k put: v]
+!
 (reader addMethod: 'As yet unclassified')
 !
 asJavaMap

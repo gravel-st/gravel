@@ -565,6 +565,12 @@ parseSymbolNoHash {^LiteralNode}
 	id = 'nil' ifTrue: [^NilLiteralNode new].
 	id = 'true' ifTrue: [^BooleanLiteralNode value: true].
 	id = 'false' ifTrue: [^BooleanLiteralNode value: false].
+	id isNil
+		ifTrue: 
+			[| bin {Str | Nil} |
+			bin := self parseBinaryMessageSelector.
+			self assert: bin notNil.
+			^SymbolLiteralNode value: bin asSymbol].
 	^self parseSymbolNoHash: id
 !
 (reader addMethod: 'As yet unclassified')

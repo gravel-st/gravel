@@ -22,11 +22,10 @@
 // operand
 	^operand integerQuotientFromSmallInteger: self
 !
-(reader addMethod: '')
+(reader addMethod: 'comparing')
 !
 < aMagnitude
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'isSmallerThan_')>
-	
+	^aMagnitude lessFromSmallInteger: self
 !
 (reader addMethod: '')
 !
@@ -168,6 +167,18 @@ integerQuotientFromSmallInteger: anObject
 !
 isPowerOfTwo
 	^self > 0 and: [(self bitAnd: self - 1) = 0]
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'lessFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'lessFromSmallInteger_')>
+	
 !
 (reader addMethod: 'private-arithmetic')
 !

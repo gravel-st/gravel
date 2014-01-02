@@ -111,4 +111,13 @@ public class LargeIntegerExtensions {
 		return IntegerExtensions.objectFromBigInteger(BigInteger.valueOf(argument).add(receiver));
 	}
 
+	public static boolean lessFromSmallInteger_(BigInteger receiver, Integer argument) {
+		return BigInteger.valueOf((int)argument).compareTo(receiver) == -1;
+	}
+
+	public static boolean lessFromLargeInteger_(BigInteger receiver, BigInteger argument) {
+		return argument.compareTo(receiver) == -1;
+	}
+
+
 }
