@@ -116,10 +116,16 @@ public class ObjectExtensions {
 	}
 
 	public static Object shallowCopy(Object receiver) {
+		Class<? extends Object> receiverClass = receiver.getClass();
 		try {
-			return getCloneMethod(receiver.getClass()).invoke(receiver);
+			return receiverClass.getMethod("clone").invoke(receiver);
 		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
+				| InvocationTargetException | SecurityException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			if (receiverClass == Object.class) {
+				return new Object();
+			}
 			throw new RuntimeException(e);
 		}
 	}

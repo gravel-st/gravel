@@ -133,7 +133,7 @@ public class LargeIntegerExtensions {
 
 	public static double doubleDivFromLargeInteger_(BigInteger receiver,
 			BigInteger argument) {
-		return  (argument.doubleValue() / receiver.doubleValue());
+		return argument.doubleValue() / receiver.doubleValue();
 	}
 
 	public static double doubleDivFromSmallInteger_(BigInteger receiver, int argument) {
@@ -146,7 +146,7 @@ public class LargeIntegerExtensions {
 	}
 
 	public static float floatDivFromSmallInteger_(BigInteger receiver, int argument) {
-		return (float) (argument / receiver.doubleValue());
+		return (float) ((double) argument / receiver.doubleValue());
 	}
 
 

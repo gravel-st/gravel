@@ -38,6 +38,11 @@ isException
 !
 (reader addMethod: 'testing')
 !
+isExceptionBuilder
+	^true
+!
+(reader addMethod: 'testing')
+!
 isResumable
 	^true
 !

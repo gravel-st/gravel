@@ -51,6 +51,14 @@ copyFrom: start to: stop
 	<primitive: #('st.gravel.support.jvm.StringExtensions' 'copyFrom_to_')>
 	
 !
+(reader addMethod: 'copying')
+!
+copyReplacing: sourceElement withObject: destElement
+	| str |
+	str := WriteStream on: String new.
+	self do: [:ch | str nextPut: (ch = sourceElement ifTrue: [destElement] ifFalse: [ch])].
+	^str contents
+!
 (reader addMethod: 'gravel')
 !
 do: aBlock

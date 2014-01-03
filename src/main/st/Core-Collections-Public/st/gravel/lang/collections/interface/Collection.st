@@ -44,6 +44,16 @@ asArray
 !
 (reader addMethod: 'converting')
 !
+asBag
+	^Bag withAll: self
+!
+(reader addMethod: 'converting')
+!
+asByteArray
+	^ByteArray withAll: self
+!
+(reader addMethod: 'converting')
+!
 asJavaList
 	^JavaArrayList withAll: self
 !
@@ -59,6 +69,11 @@ asOrderedCollection
 	anOrderedCollection := OrderedCollection new.
 	self do: [:each | anOrderedCollection addLast: each].
 	^anOrderedCollection
+!
+(reader addMethod: 'converting')
+!
+asSet
+	^Set withAll: self
 !
 (reader addMethod: 'converting')
 !
@@ -197,6 +212,11 @@ parallel: threadCount do: aBlock
 					fork].
 	semaphores do: [:sema | sema wait].
 	failed ifTrue: [self error: 'Process curtailed']
+!
+(reader addMethod: 'ANSI')
+!
+rehash
+	^self
 !
 (reader addMethod: 'iterating')
 !

@@ -15,6 +15,11 @@ isArray
 isBag
 	^false
 !
+(reader addMethod: 'testing')
+!
+isByteArray
+	^false
+!
 (reader addMethod: 'gravel')
 !
 isCollection
@@ -53,6 +58,11 @@ isSequencedReadable
 (reader addMethod: 'testing')
 !
 isSet
+	^false
+!
+(reader addMethod: 'testing')
+!
+isSortedCollection
 	^false
 !
 (reader addMethod: 'testing')

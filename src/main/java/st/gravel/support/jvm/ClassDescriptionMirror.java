@@ -116,12 +116,17 @@ public abstract class ClassDescriptionMirror {
 		if (!(selObject instanceof Symbol))
 			return null;
 		Symbol selector = (Symbol) selObject;
-		MethodNode method = runtimeClassNode().methodOrNilAt_(
-				selector.asString());
+		MethodNode method = getMethodNode(selector);
 		if (method == null) {
 			return null;
 		}
 		return new MethodMirror(method, this);
+	}
+
+	private MethodNode getMethodNode(Symbol selector) {
+		MethodNode method = runtimeClassNode().methodOrNilAt_(
+				selector.asString());
+		return method;
 	}
 
 	@Override
@@ -179,6 +184,10 @@ public abstract class ClassDescriptionMirror {
 		if (superclassReference == null)
 			return null;
 		return ClassDescriptionMirror.forReference(superclassReference);
+	}
+
+	public boolean canUnderstand_(Symbol selector) {
+		return getMethodNode(selector) != null;
 	}
 
 }

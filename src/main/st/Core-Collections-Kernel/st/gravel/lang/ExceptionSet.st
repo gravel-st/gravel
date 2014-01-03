@@ -41,12 +41,27 @@ handles: anException
 !
 (reader addMethod: 'gravel')
 !
-initialize
+initialize: initialCapacity
 	super initialize.
-	handlers := OrderedCollection new
+	handlers := OrderedCollection new: initialCapacity
+!
+(reader addClassMethod: 'gravel')
+!
+defaultImplementation
+	^self
 !
 (reader addClassMethod: 'gravel')
 !
 new
-	^super new initialize
+	^self new: 2
+!
+(reader addClassMethod: 'gravel')
+!
+new: initialCapacity
+	^super new initialize: initialCapacity
+!
+(reader addClassMethod: 'gravel')
+!
+newImpl: initialCapacity
+	^self new: initialCapacity
 !

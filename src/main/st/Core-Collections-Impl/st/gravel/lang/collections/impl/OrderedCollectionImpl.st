@@ -157,6 +157,11 @@ collect: aBlock
 collector
 	^array
 !
+(reader addMethod: 'copying')
+!
+copyEmpty
+	^self species new
+!
 (reader addMethod: 'enumerating')
 !
 detect: aBlock ifNone: exceptionBlock
@@ -412,12 +417,13 @@ reverseDo: aBlock
 		by: -1
 		do: [:index | aBlock value: (array basicAt: index)]
 !
-(reader addMethod: 'enumerating')
+(reader addMethod: 'accessing')
 !
 select: aBlock
-	| newCollection |
+	| newCollection element |
 	newCollection := self copyEmpty.
-	self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
+	firstIndex to: lastIndex
+		do: [:index | (aBlock value: (element := array at: index)) ifTrue: [newCollection addLast: element]].
 	^newCollection
 !
 (reader addMethod: 'private')

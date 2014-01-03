@@ -41,4 +41,8 @@ public class ByteArrayExtensions {
 		return receiver.length;
 	}
 
+	public static byte[] newInstance_(int size) {
+		return new byte[size];
+	}
+
 }

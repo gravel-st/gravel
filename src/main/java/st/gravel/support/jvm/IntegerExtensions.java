@@ -289,7 +289,7 @@ public class IntegerExtensions {
 	}
 
 	public static float floatDivFromSmallInteger_(int receiver, int argument) {
-		return (float) (argument / receiver);
+		return (float) argument / receiver;
 	}
 
 

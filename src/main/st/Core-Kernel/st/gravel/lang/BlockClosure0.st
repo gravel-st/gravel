@@ -49,6 +49,16 @@ ifCurtailed: handlerBlock
 	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'ifCurtailed_')>
 	
 !
+(reader addMethod: 'testing')
+!
+isMonadicBlock
+	^true
+!
+(reader addMethod: 'testing')
+!
+isMonadicValuable
+	^true
+!
 (reader addMethod: 'gravel')
 !
 numArgs

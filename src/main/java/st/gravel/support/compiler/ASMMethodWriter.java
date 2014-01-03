@@ -298,8 +298,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 
 	@Override
 	public Void visitCastObjectToByte_(CastObjectToByte _anObject) {
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Byte");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Byte", "byteValue", "()B");
+		mv.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Integer", "intValue",
+				"()I");
 		return null;
 	}
 
