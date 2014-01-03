@@ -16,12 +16,6 @@ at: index
 at: index put: anObject
 	^self basicAt: index put: anObject
 !
-(reader addMethod: 'copying')
-!
-copy
-	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'copy')>
-	
-!
 (reader addMethod: 'gravel')
 !
 do: aBlock

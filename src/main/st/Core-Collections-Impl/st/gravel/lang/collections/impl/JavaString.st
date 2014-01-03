@@ -58,6 +58,12 @@ copyWith: aCharacter
 	<primitive: #('st.gravel.support.jvm.StringExtensions' 'copyWith_')>
 	
 !
+(reader addMethod: 'copying')
+!
+copyWithAll: aString
+	<primitive: #('st.gravel.support.jvm.StringExtensions' 'copyWithAll_')>
+	
+!
 (reader addMethod: 'gravel')
 !
 do: aBlock

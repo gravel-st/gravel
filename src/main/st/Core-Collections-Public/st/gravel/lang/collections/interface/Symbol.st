@@ -8,6 +8,11 @@
 !
 (reader addMethod: 'copying')
 !
+copyWith: aCharacter
+	^self asString copyWith: aCharacter
+!
+(reader addMethod: 'copying')
+!
 copyWithAll: aCollection
 	^self asString copyWithAll: aCollection
 !

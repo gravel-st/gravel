@@ -139,6 +139,10 @@ public class StringExtensions {
 		return receiver + ch;
 	}
 
+	public static String copyWithAll_(String receiver, String argument) {
+		return receiver + argument;
+	}
+
 	public static void writeToFile_(String receiver, File file) {
 		throw new UnsupportedOperationException("Not Implemented Yet");
 	}

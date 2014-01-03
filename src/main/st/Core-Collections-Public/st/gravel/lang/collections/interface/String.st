@@ -71,6 +71,11 @@ copyReplacing: sourceElement withObject: destElement
 copySpecies
 	^String
 !
+(reader addMethod: 'copying')
+!
+copyWithAll: aString
+	^self traitRequirement
+!
 (reader addMethod: 'As yet unclassified')
 !
 keywords
