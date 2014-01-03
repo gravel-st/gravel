@@ -127,7 +127,7 @@ newImpl: size
 !
 (reader addClassMethod: '')
 !
-withSize: size
+ofSize: size
 	<primitive: #('st.gravel.support.jvm.OrderedCollectionExtensions' 'withSize_')>
 	
 !

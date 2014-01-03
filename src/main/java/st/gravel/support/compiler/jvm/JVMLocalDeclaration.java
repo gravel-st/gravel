@@ -5,7 +5,6 @@ package st.gravel.support.compiler.jvm;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMVariable;
@@ -104,9 +103,18 @@ public class JVMLocalDeclaration extends JVMVariable implements Cloneable {
 		return this;
 	}
 
+	public JVMLocalDeclaration pvtSetVarName_(final String _aName) {
+		_varName = _aName;
+		return this;
+	}
+
 	@Override
 	public JVMLocalDeclaration sourceOn_(final StringBuilder _aStream) {
 		_aStream.append(_varName);
 		return this;
+	}
+
+	public JVMLocalDeclaration withVarName_(final String _aName) {
+		return this.copy().pvtSetVarName_(_aName);
 	}
 }

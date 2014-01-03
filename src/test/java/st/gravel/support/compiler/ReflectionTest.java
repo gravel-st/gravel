@@ -10,12 +10,13 @@ import org.junit.Test;
 
 import st.gravel.core.Symbol;
 import st.gravel.support.compiler.testtools.ClassBuilder;
+import st.gravel.support.compiler.testtools.TestBootstrap;
 import st.gravel.support.jvm.runtime.ImageBootstrapper;
 
 public class ReflectionTest {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		TestBootstrap.getSingleton();
 	}
 	@Test
 	public void testReflect() throws InstantiationException,

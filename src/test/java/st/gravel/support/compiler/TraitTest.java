@@ -7,13 +7,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.Before;
 import org.junit.Test;
 
+import st.gravel.support.compiler.testtools.TestBootstrap;
 import st.gravel.support.jvm.runtime.ImageBootstrapper;
 import st.gravel.support.jvm.runtime.MethodTools;
 
 public class TraitTest {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		TestBootstrap.getSingleton();
 	}
 
 	@Test

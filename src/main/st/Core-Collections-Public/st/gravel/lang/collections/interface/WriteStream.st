@@ -38,6 +38,12 @@ lf
 !
 (reader addMethod: 'accessing')
 !
+next: anInteger put: anObject
+	anInteger timesRepeat: [self nextPut: anObject].
+	^anObject
+!
+(reader addMethod: 'accessing')
+!
 nextPut: anElement
 	self traitRequirement
 !

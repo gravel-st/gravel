@@ -187,6 +187,18 @@ public class ArrayExtensions {
 		return true;
 	}
 
+	public static <E> String join_with_(E[] receiver, Block1<String, E> block,
+			String sepString) {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < receiver.length; i++) {
+			if (i != 0)
+				str.append(sepString);
+			E element = receiver[i];
+			str.append(block.value_(element));
+		}
+		return str.toString();
+	}
+
 	public static String joinWith_(String[] receiver, String separator) {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < receiver.length; i++) {
@@ -245,6 +257,10 @@ public class ArrayExtensions {
 		E[] newInstance = (E[]) Array.newInstance(receiver.getClass()
 				.getComponentType(), list.size());
 		return list.toArray(newInstance);
+	}
+
+	public static <E> E[] shallowCopy(E[] receiver) {
+		return receiver.clone();
 	}
 
 	public static <E> Object size(E[] receiver) {
@@ -320,18 +336,6 @@ public class ArrayExtensions {
 
 	public static <E> E zeroAt_put_(E[] receiver, int index, E value) {
 		return receiver[index] = value;
-	}
-
-	public static <E> String join_with_(E[] receiver, Block1<String, E> block,
-			String sepString) {
-		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < receiver.length; i++) {
-			if (i != 0)
-				str.append(sepString);
-			E element = receiver[i];
-			str.append(block.value_(element));
-		}
-		return str.toString();
 	}
 
 }

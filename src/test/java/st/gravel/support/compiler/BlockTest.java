@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import st.gravel.support.compiler.testtools.ClassBuilder;
+import st.gravel.support.compiler.testtools.TestBootstrap;
 import st.gravel.support.jvm.runtime.ImageBootstrapper;
 
 public class BlockTest {
@@ -16,7 +17,7 @@ public class BlockTest {
 
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		TestBootstrap.getSingleton();
 	}
 
 	@Test

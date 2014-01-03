@@ -6,13 +6,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import st.gravel.core.Symbol;
+import st.gravel.support.compiler.testtools.TestBootstrap;
 import st.gravel.support.jvm.runtime.ImageBootstrapper;
 import st.gravel.support.jvm.runtime.MethodTools;
 
 public class BrowserApplicationTest {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		TestBootstrap.getSingleton();
 	}
 
 	@Test

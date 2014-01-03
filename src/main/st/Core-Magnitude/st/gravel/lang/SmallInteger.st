@@ -19,6 +19,11 @@
 !
 (reader addMethod: 'arithmetic')
 !
+/ aNumber
+	^aNumber quotientFromSmallInteger: self
+!
+(reader addMethod: 'arithmetic')
+!
 // operand
 	^operand integerQuotientFromSmallInteger: self
 !
@@ -78,6 +83,23 @@ differenceFromLargeInteger: anObject
 !
 differenceFromSmallInteger: anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'differenceFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
+floatDiv: operand
+	^operand floatDivFromSmallInteger: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+floatDivFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'floatDivFromLargeInteger:')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+floatDivFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'floatDivFromSmallInteger_')>
 	
 !
 (reader addMethod: 'arithmetic')

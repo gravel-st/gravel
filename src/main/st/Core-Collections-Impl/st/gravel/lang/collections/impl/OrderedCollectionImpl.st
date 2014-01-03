@@ -217,13 +217,6 @@ increaseCapacity
 !
 (reader addMethod: 'initialize-release')
 !
-initializeCapacity: size
-	array := Array withSize: size.
-	firstIndex := 1.
-	lastIndex := 0
-!
-(reader addMethod: 'initialize-release')
-!
 initializeContents: anArray
 	array := anArray.
 	firstIndex := 1.
@@ -308,38 +301,31 @@ notEmpty
 !
 (reader addMethod: 'removing')
 !
-remove: oldObject ifAbsent: anExceptionBlock
-	firstIndex to: lastIndex
-		do: 
-			[:index |
-			oldObject = (array basicAt: index)
+remove: oldObject ifAbsent: absentBlock
+	| index |
+	index := firstIndex.
+	[index <= lastIndex] whileTrue: 
+			[oldObject = (array at: index)
 				ifTrue: 
 					[self removeIndex: index.
-					^oldObject]].
-	^anExceptionBlock value
+					^oldObject]
+				ifFalse: [index := index + 1]].
+	^absentBlock value
 !
 (reader addMethod: 'removing')
 !
 removeAllSuchThat: aBlock
-	| element newCollection index removed |
-	newCollection := self copyEmpty.
-	index := firstIndex.
-	removed := 0.
-	[index <= lastIndex] whileTrue: 
-			[element := array basicAt: index.
-			(aBlock value: element)
-				ifTrue: 
-					[| replacementObject |
-					replacementObject := index = lastIndex ifTrue: [nil] ifFalse: [array basicAt: index + 1].
-					newCollection add: element.
-					array basicAt: index - removed put: replacementObject.
-					removed := removed + 1]
-				ifFalse: [removed > 0 ifTrue: [array basicAt: index - removed put: (array basicAt: index)]].
-			index := index + 1].
-	lastIndex - removed + 1 to: lastIndex
-		do: [:nillingIndex | array basicAt: nillingIndex put: nil].
-	lastIndex := lastIndex - removed.
-	^newCollection
+	| n |
+	n := firstIndex.
+	firstIndex to: lastIndex
+		do: 
+			[:index |
+			(aBlock value: (array at: index))
+				ifFalse: 
+					[array at: n put: (array at: index).
+					n := n + 1]].
+	array from: n to: lastIndex put: nil.
+	lastIndex := n - 1
 !
 (reader addMethod: 'removing')
 !
@@ -408,6 +394,17 @@ removeLast: numElements
 			lastIndex := lastIndex - 1].
 	^result
 !
+(reader addMethod: 'removing')
+!
+reset
+	self resetTo: 1
+!
+(reader addMethod: 'removing')
+!
+resetTo: index
+	firstIndex := index.
+	lastIndex := firstIndex - 1
+!
 (reader addMethod: 'enumerating')
 !
 reverseDo: aBlock
@@ -422,6 +419,13 @@ select: aBlock
 	newCollection := self copyEmpty.
 	self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
 	^newCollection
+!
+(reader addMethod: 'private')
+!
+setCollection: anArray
+	<squeak>
+	array := anArray.
+	self reset
 !
 (reader addMethod: 'private')
 !
@@ -440,18 +444,27 @@ size
 trim
 	self changeCapacityTo: self size
 !
+(reader addClassMethod: 'private')
+!
+arrayType
+	<squeak>
+	^Array
+!
 (reader addClassMethod: 'gravel')
 !
 newImpl
-	^super new initializeCapacity: 3
+	^self newImpl: 3
 !
 (reader addClassMethod: 'gravel')
 !
 newImpl: size
-	^super new initializeCapacity: size
+	^super new setCollection: (self arrayType new: size)
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'instance creation')
 !
-withSize: size
-	^super new initializeContents: (Array withSize: size)
+ofSize: n
+	| collection |
+	collection := self new: n.
+	collection setContents: collection collector.
+	^collection
 !

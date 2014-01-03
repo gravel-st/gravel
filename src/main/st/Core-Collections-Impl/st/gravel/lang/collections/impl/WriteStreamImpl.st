@@ -79,8 +79,3 @@ with: aCollection
 	super on: aCollection.
 	position := readLimit := writeLimit := aCollection size
 !
-(reader addClassMethod: 'instance creation')
-!
-collection: anOrderedCollectionImpl
-	^self new on: anOrderedCollectionImpl
-!

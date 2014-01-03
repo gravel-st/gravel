@@ -43,10 +43,10 @@ printOn: aStream
 		separatedBy: [aStream space].
 	aStream nextPut: $)
 !
-(reader addMethod: '')
+(reader addMethod: 'copying')
 !
-replaceFrom: start to: stop with: replacement startingAt: repStart
-	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'replaceFrom_to_with_startingAt_')>
+shallowCopy
+	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'shallowCopy')>
 	
 !
 (reader addMethod: '')
@@ -65,6 +65,12 @@ zeroAt: index
 !
 zeroAt: index put: anObject
 	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'zeroAt_put_')>
+	
+!
+(reader addMethod: '')
+!
+_replaceFrom: start to: stop with: replacement startingAt: repStart
+	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'replaceFrom_to_with_startingAt_')>
 	
 !
 (reader addClassMethod: 'gravel')

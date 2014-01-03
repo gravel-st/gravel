@@ -26,6 +26,11 @@ collect: aBlock
 	self do: [:v | result at: (i := i + 1) put: (aBlock value: v)].
 	^result
 !
+(reader addMethod: 'As yet unclassified')
+!
+copySpecies
+	^Array
+!
 (reader addMethod: 'gravel')
 !
 do: aBlock

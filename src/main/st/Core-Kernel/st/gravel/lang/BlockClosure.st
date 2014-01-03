@@ -2,7 +2,12 @@
 !
 (reader propertyAt: 'javaClass' put: 'st.gravel.support.jvm.AbstractBlock')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
+!
+argumentCount
+	^self numArgs
+!
+(reader addMethod: 'accessing')
 !
 numArgs
 	^self subclassResponsibility

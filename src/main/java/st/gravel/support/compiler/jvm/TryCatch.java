@@ -5,7 +5,6 @@ package st.gravel.support.compiler.jvm;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMControlFlowInstruction;
@@ -23,6 +22,8 @@ public class TryCatch extends JVMControlFlowInstruction implements Cloneable {
 
 	Frame _catchFrame;
 
+	Frame _doFrame;
+
 	JVMDefinedObjectType _exception;
 
 	Frame _tryFrame;
@@ -35,9 +36,17 @@ public class TryCatch extends JVMControlFlowInstruction implements Cloneable {
 			return newInstance;
 		}
 
-		public TryCatch tryFrame_exception_catchFrame_(final Frame _aFrame, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame2) {
-			return this.basicNew().initializeTryFrame_exception_catchFrame_(_aFrame, _aJVMDefinedObjectType, _aFrame2);
+		public TryCatch tryFrame_doFrame_exception_catchFrame_(final Frame _aFrame, final Frame _aFrame2, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame3) {
+			return this.basicNew().initializeTryFrame_doFrame_exception_catchFrame_(_aFrame, _aFrame2, _aJVMDefinedObjectType, _aFrame3);
 		}
+
+		public TryCatch tryFrame_exception_catchFrame_(final Frame _aFrame, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame2) {
+			return this.tryFrame_doFrame_exception_catchFrame_(_aFrame, null, _aJVMDefinedObjectType, _aFrame2);
+		}
+	}
+
+	static public TryCatch _tryFrame_doFrame_exception_catchFrame_(Object receiver, final Frame _aFrame, final Frame _aFrame2, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame3) {
+		return factory.tryFrame_doFrame_exception_catchFrame_(_aFrame, _aFrame2, _aJVMDefinedObjectType, _aFrame3);
 	}
 
 	static public TryCatch _tryFrame_exception_catchFrame_(Object receiver, final Frame _aFrame, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame2) {
@@ -63,6 +72,10 @@ public class TryCatch extends JVMControlFlowInstruction implements Cloneable {
 		}
 	}
 
+	public Frame doFrame() {
+		return _doFrame;
+	}
+
 	@Override
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
 		return this;
@@ -76,10 +89,11 @@ public class TryCatch extends JVMControlFlowInstruction implements Cloneable {
 		return factory;
 	}
 
-	public TryCatch initializeTryFrame_exception_catchFrame_(final Frame _aFrame, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame2) {
+	public TryCatch initializeTryFrame_doFrame_exception_catchFrame_(final Frame _aFrame, final Frame _aFrame2, final JVMDefinedObjectType _aJVMDefinedObjectType, final Frame _aFrame3) {
 		_tryFrame = _aFrame;
+		_doFrame = _aFrame2;
 		_exception = _aJVMDefinedObjectType;
-		_catchFrame = _aFrame2;
+		_catchFrame = _aFrame3;
 		this.initialize();
 		return this;
 	}

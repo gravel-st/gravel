@@ -19,3 +19,8 @@ on: aCollection
 reset
 	position := 0
 !
+(reader addClassMethod: 'instance creation')
+!
+collection: anOrderedCollectionImpl
+	^self new on: anOrderedCollectionImpl
+!

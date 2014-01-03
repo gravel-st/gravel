@@ -19,17 +19,6 @@ collection
 contents
 	^collection
 !
-(reader addMethod: 'gravel')
-!
-initialize
-	position := 0
-!
-(reader addMethod: 'initialize-release')
-!
-initializeCollection: anArray
-	collection := anArray.
-	self initialize
-!
 (reader addMethod: 'accessing')
 !
 position
@@ -44,9 +33,4 @@ position: aPosition
 !
 setToEnd
 	position := collection size
-!
-(reader addClassMethod: 'instance creation')
-!
-collection: aCollection
-	^self new initializeCollection: aCollection
 !

@@ -52,7 +52,7 @@ public class ';
 		nextPutAll: ' {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		st.gravel.support.compiler.testtools.TestBootstrap.getSingleton();
 	}
 '.
 	testMethods do: 

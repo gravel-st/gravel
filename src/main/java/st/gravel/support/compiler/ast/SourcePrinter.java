@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.NodeVisitor;
@@ -487,7 +486,7 @@ public class SourcePrinter<X> extends NodeVisitor<Object> implements Cloneable {
 
 	@Override
 	public SourcePrinter visitFixedPointLiteralNode_(final FixedPointLiteralNode _anObject) {
-		_stream.append("" + _anObject.fixedPoint());
+		_stream.append(_anObject.valueString());
 		return this;
 	}
 

@@ -1,10 +1,5 @@
 (reader defineClass: 'Integer' superclass: 'st.gravel.lang.Number')
 !
-(reader addMethod: 'arithmetic')
-!
-/ aNumber
-	^aNumber quotientFromInteger: self
-!
 (reader addMethod: 'gravel')
 !
 > aMagnitude
@@ -58,6 +53,27 @@ benchmark
 							count := count + 1]]].
 	^count
 !
+(reader addMethod: 'private-arithmetic')
+!
+compressed
+	
+!
+(reader addMethod: 'printing')
+!
+decimalDigitLength
+	^self < 10000
+		ifTrue: 
+			[self < 100
+				ifTrue: [self < 10 ifTrue: [1] ifFalse: [2]]
+				ifFalse: [self < 1000 ifTrue: [3] ifFalse: [4]]]
+		ifFalse: 
+			[self < 1000000
+				ifTrue: [self < 100000 ifTrue: [5] ifFalse: [6]]
+				ifFalse: 
+					[self < 100000000
+						ifTrue: [self < 10000000 ifTrue: [7] ifFalse: [8]]
+						ifFalse: [self < 1000000000 ifTrue: [9] ifFalse: [10]]]]
+!
 (reader addMethod: 'accessing')
 !
 denominator
@@ -76,6 +92,16 @@ factorial
 	tmp := 1.
 	2 to: self do: [:i | tmp := tmp * i].
 	^tmp
+!
+(reader addMethod: 'arithmetic')
+!
+floatDiv: operand
+	^self subclassResponsibility
+!
+(reader addMethod: 'truncation and round off')
+!
+floor
+	^self
 !
 (reader addMethod: 'arithmetic')
 !
@@ -112,6 +138,19 @@ isZero
 lessFromFraction: aFraction
 	^aFraction numerator < (self * aFraction denominator)
 !
+(reader addMethod: 'mathematical functions')
+!
+ln
+	self > 0 ifTrue: [^super ln].
+	^DomainError signal: 'ln is only defined for x > 0'
+!
+(reader addMethod: 'printing')
+!
+numberOfDigitsInBase: b
+	b = 10 ifFalse: [^super numberOfDigitsInBase: b].
+	self < 0 ifTrue: [^self negated numberOfDigitsInBase: b].
+	^self decimalDigitLength
+!
 (reader addMethod: 'accessing')
 !
 numerator
@@ -122,15 +161,42 @@ numerator
 printBase: base
 	self subclassResponsibility
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'printing')
 !
 printOn: aStream
 	self printOn: aStream base: 10
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'printing')
 !
-printOn: aStream base: base
-	aStream nextPutAll: (self printBase: base)
+printOn: stream base: base length: minimumLength padded: padWithZeroes
+	| n numberOfDigits totalLength divisor |
+	self < 0
+		ifTrue: 
+			[n := self negated.
+			totalLength := 1]
+		ifFalse: 
+			[n := self.
+			totalLength := 0].
+	numberOfDigits := n numberOfDigitsInBase: base.
+	totalLength := totalLength + numberOfDigits.
+	padWithZeroes
+		ifFalse: 
+			[[totalLength < minimumLength] whileTrue: 
+					[stream space.
+					totalLength := totalLength + 1]].
+	n = self ifFalse: [stream nextPut: $-].
+	padWithZeroes
+		ifTrue: 
+			[[totalLength < minimumLength] whileTrue: 
+					[stream nextPut: $0.
+					totalLength := totalLength + 1]].
+	divisor := base raisedToInteger: numberOfDigits - 1.
+	[divisor > 0] whileTrue: 
+			[| digit |
+			digit := n // divisor.
+			stream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: digit + 1).
+			n := n - (digit * divisor).
+			divisor := divisor // base]
 !
 (reader addMethod: 'printing')
 !
@@ -156,30 +222,38 @@ printOn: aStream paddedWith: aCharacter to: anInteger base: aRadix
 	anInteger - digits size timesRepeat: [aStream nextPut: aCharacter].
 	aStream nextPutAll: digits
 !
+(reader addMethod: 'printing')
+!
+printTruncatedOn: aStream showingDecimalPlaces: placesDesired
+	self printOn: aStream.
+	placesDesired > 0
+		ifTrue: 
+			[aStream nextPut: $..
+			aStream next: placesDesired put: $0]
+!
 (reader addMethod: 'private-arithmetic')
 !
 productFromFraction: aFraction
 	self = 0 ifTrue: [^self].
-	^(Fraction numerator: 1 denominator: self) productFromFraction: aFraction
+	^(Fraction numerator: aFraction numerator * self denominator: aFraction denominator)
+		reduced
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromFraction: aFraction
+	^aFraction * self reciprocal
 !
 (reader addMethod: 'private-arithmetic')
 !
 quotientFromInteger: anInteger
 	^(Fraction numerator: anInteger denominator: self) reduced
 !
-(reader addMethod: 'As yet unclassified')
+(reader addMethod: 'private-arithmetic')
 !
-raisedTo: aNumber
-	| n |
-	(n := aNumber toMinimumGenerality) isInteger ifTrue: [^self raisedToInteger: n].
-	self notImplementedYet
+raising: aNumber
+	^aNumber raisedToInteger: self
 !
-(reader addMethod: 'As yet unclassified')
-!
-raisedToInteger: aNumber
-	^self subclassResponsibility
-!
-(reader addMethod: 'gravel')
+(reader addMethod: 'truncation and round off')
 !
 rounded
 	^self
@@ -205,7 +279,7 @@ tinyBenchmarks
 	^(n1 * 500000 * 1000 // t1) printString , ' bytecodes/sec; '
 		, (r * 1000 // t2) printString , ' sends/sec'
 !
-(reader addMethod: 'converting')
+(reader addMethod: 'truncation and round off')
 !
 truncated
 	^self

@@ -5,7 +5,6 @@ package st.gravel.support.compiler.jvm;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
@@ -46,6 +45,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 
 		public JVMDefinedObjectType charBuffer() {
 			return this.className_("java/nio/CharBuffer");
+		}
+
+		public JVMDefinedObjectType classCastException() {
+			return this.className_("java/lang/ClassCastException");
 		}
 
 		public JVMDefinedObjectType className_(final String _aString) {
@@ -115,6 +118,10 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 
 	static public JVMDefinedObjectType _charBuffer(Object receiver) {
 		return factory.charBuffer();
+	}
+
+	static public JVMDefinedObjectType _classCastException(Object receiver) {
+		return factory.classCastException();
 	}
 
 	static public JVMDefinedObjectType _className_(Object receiver, final String _aString) {

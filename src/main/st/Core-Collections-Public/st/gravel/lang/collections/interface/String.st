@@ -253,3 +253,11 @@ with: ch1 with: ch2 with: ch3 with: ch4 with: ch5 with: ch6 with: ch7 with: ch8 
 		nextPut: ch10;
 		contents
 !
+(reader addClassMethod: 'instance creation')
+!
+withAll: aCollection
+	| stream |
+	stream := WriteStream on: String new.
+	aCollection do: [:each | stream nextPut: each].
+	^stream contents
+!

@@ -9,7 +9,7 @@ import st.gravel.support.jvm.runtime.MethodTools;
 public class ReadWriteStreamFactoryTest {
 	@Before
 	public void setUp() {
-		ImageBootstrapper.bootstrap();
+		st.gravel.support.compiler.testtools.TestBootstrap.getSingleton();
 	}
 	@Test
 	public void test_with_() throws Throwable {

@@ -92,7 +92,7 @@ instVarTypes {^[Array[VariableDeclarationNode]]}
 !
 (reader addClassMethod: 'instance creation')
 !
-selector: aString {String} arguments: anArray {Array[VariableDeclarationNode]} body: aSequenceNode {^Instance}
+selector: aString {String} arguments: anArray {Array[VariableDeclarationNode]} body: aSequenceNode {SequenceNode} {^Instance}
 	^self
 		selector: aString
 		arguments: anArray

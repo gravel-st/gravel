@@ -70,8 +70,16 @@ public class LargeIntegerExtensions {
 		return BigInteger.valueOf(argument).multiply(receiver);
 	}
 
+	public static BigInteger multiply_(BigInteger receiver, BigInteger argument) {
+		return argument.multiply(receiver);
+	}
+
 	public static BigInteger plus_(BigInteger receiver, int argument) {
 		return BigInteger.valueOf(argument).add(receiver);
+	}
+
+	public static BigInteger plus_(BigInteger receiver, BigInteger argument) {
+		return argument.add(receiver);
 	}
 
 	public static String printBase_(BigInteger receiver, int radix) {

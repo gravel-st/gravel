@@ -55,14 +55,23 @@ asFraction
 (reader addMethod: 'converting')
 !
 asScaledDecimal: scaleIn
-	<squeak>
 	^ScaledDecimal newFromNumber: fraction scale: scaleIn
 !
 (reader addMethod: 'private-arithmetic')
 !
+differenceFromInteger: anInteger
+	^ScaledDecimal newFromNumber: anInteger - fraction scale: scale
+!
+(reader addMethod: 'private-arithmetic')
+!
 differenceFromScaledDecimal: operand
-	^ScaledDecimal newFromNumber: operand fraction - fraction
+	^ScaledDecimal newFromNumber: operand asFraction - fraction
 		scale: (operand scale max: scale)
+!
+(reader addMethod: 'truncation and round off')
+!
+floor
+	^fraction floor
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -83,18 +92,19 @@ lessFromFraction: aFraction
 !
 (reader addMethod: 'private-arithmetic')
 !
-lessFromLargeInteger: aSmallInteger
-	^fraction lessFromLargeInteger: aSmallInteger
+lessFromInteger: anInteger
+	^anInteger < fraction
 !
 (reader addMethod: 'private-arithmetic')
 !
 lessFromScaledDecimal: aScaledDecimal
 	^aScaledDecimal asFraction < fraction
 !
-(reader addMethod: 'private-arithmetic')
+(reader addMethod: 'mathematical functions')
 !
-lessFromSmallInteger: aSmallInteger
-	^fraction lessFromSmallInteger: aSmallInteger
+ln
+	<squeak>
+	^self asFraction ln
 !
 (reader addMethod: 'arithmetic')
 !
@@ -110,13 +120,11 @@ negative
 (reader addMethod: 'printing')
 !
 printFractionAsDecimalOn: stream
-	<squeak>
 	fraction printTruncatedOn: stream showingDecimalPlaces: scale
 !
 (reader addMethod: 'printing')
 !
 printOn: stream
-	<squeak>
 	self
 		printFractionAsDecimalOn: stream;
 		printScaleOn: stream
@@ -124,34 +132,40 @@ printOn: stream
 (reader addMethod: 'printing')
 !
 printScaleOn: stream
-	<squeak>
 	stream nextPut: $s.
 	scale printOn: stream
 !
-(reader addMethod: 'printing')
+(reader addMethod: 'private-arithmetic')
 !
-printString
- <squeak>| tempStream |
-	tempStream := (WriteStream on: (String new: 10)).
-	self printOn: tempStream.
-	^(tempStream contents)
+productFromInteger: anInteger
+	^ScaledDecimal newFromNumber: anInteger * fraction scale: scale
 !
 (reader addMethod: 'private-arithmetic')
 !
 productFromScaledDecimal: operand
-	^ScaledDecimal newFromNumber: operand fraction * fraction
+	^ScaledDecimal newFromNumber: operand asFraction * fraction
 		scale: (operand scale max: self scale)
 !
 (reader addMethod: 'private-arithmetic')
 !
+quotientFromInteger: anInteger
+	^ScaledDecimal newFromNumber: anInteger / fraction scale: scale
+!
+(reader addMethod: 'private-arithmetic')
+!
 quotientFromScaledDecimal: operand
-	^ScaledDecimal newFromNumber: operand fraction / fraction
+	^ScaledDecimal newFromNumber: operand asFraction / fraction
 		scale: (operand scale max: scale)
 !
 (reader addMethod: 'mathematical functions')
 !
 raisedToInteger: aNumber
 	^self class newFromNumber: (fraction raisedToInteger: aNumber) scale: scale
+!
+(reader addMethod: 'private-arithmetic')
+!
+raising: aNumber
+	^aNumber raisedToScaledDecimal: self
 !
 (reader addMethod: 'arithmetic')
 !
@@ -187,8 +201,13 @@ squared
 !
 (reader addMethod: 'private-arithmetic')
 !
+sumFromInteger: anInteger
+	^ScaledDecimal newFromNumber: anInteger + fraction scale: scale
+!
+(reader addMethod: 'private-arithmetic')
+!
 sumFromScaledDecimal: operand
-	^ScaledDecimal newFromNumber: operand fraction + fraction
+	^ScaledDecimal newFromNumber: operand asFraction + fraction
 		scale: (operand scale max: scale)
 !
 (reader addMethod: 'truncation and round off')
@@ -196,6 +215,11 @@ sumFromScaledDecimal: operand
 truncated
 	<squeak>
 	^fraction truncated
+!
+(reader addMethod: 'arithmetic')
+!
+\\ operand
+	^ScaledDecimal newFromNumber: fraction \\ operand scale: scale
 !
 (reader addClassMethod: 'instance creation')
 !

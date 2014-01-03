@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.Formatter;
@@ -175,7 +174,12 @@ public class DiskClassWriter extends Object implements Cloneable {
 	}
 
 	public DiskClassWriter writeMethod_on_(final Node _aNode, final StringBuilder _aWriteStream) {
-		_aWriteStream.append(_formatter.format_(_aNode));
+		String _sourceOrNil;
+		_sourceOrNil = _aNode.getDiskSource();
+		if (_sourceOrNil == null) {
+			_sourceOrNil = _formatter.format_(_aNode);
+		}
+		_aWriteStream.append(_sourceOrNil);
 		_aWriteStream.append('\n');
 		_aWriteStream.append('!');
 		_aWriteStream.append('\n');

@@ -5,7 +5,6 @@ package st.gravel.support.compiler.jvm;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMNode;
@@ -186,7 +185,7 @@ abstract public class JVMType extends JVMNode implements Cloneable {
 	}
 
 	public CastTo newCastInstructionFromDefinedObject_(final JVMDefinedObjectType _anObject) {
-		return this.castNotSupported();
+		return this.newCastInstructionFromDynamicObject();
 	}
 
 	public CastTo newCastInstructionFromDynamicObject() {

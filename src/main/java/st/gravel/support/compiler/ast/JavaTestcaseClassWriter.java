@@ -5,7 +5,6 @@ package st.gravel.support.compiler.ast;
 	(C) AG5.com
 */
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.SystemNode;
@@ -106,7 +105,7 @@ public class JavaTestcaseClassWriter extends Object implements Cloneable {
 		_wstr[0] = st.gravel.support.jvm.WriteStreamFactory.on_(new String());
 		_wstr[0].append("package st.gravel.systemtests;\n\nimport org.junit.Before;\nimport org.junit.Test;\n\nimport st.gravel.support.jvm.runtime.ImageBootstrapper;\nimport st.gravel.support.jvm.runtime.MethodTools;\n\npublic class ");
 		_wstr[0].append(_className);
-		_wstr[0].append(" {\n\t@Before\n\tpublic void setUp() {\n\t\tImageBootstrapper.bootstrap();\n\t}\n");
+		_wstr[0].append(" {\n\t@Before\n\tpublic void setUp() {\n\t\tst.gravel.support.compiler.testtools.TestBootstrap.getSingleton();\n\t}\n");
 		for (final MethodNode _each : _testMethods) {
 			_wstr[0].append("\t@Test\n\tpublic void ");
 			_wstr[0].append(_each.selector());

@@ -171,7 +171,7 @@ newCastInstructionFromChar {^CastTo}
 (reader addMethod: 'As yet unclassified')
 !
 newCastInstructionFromDefinedObject: anObject {JVMDefinedObjectType} {^CastTo}
-	^self castNotSupported
+	^self newCastInstructionFromDynamicObject
 !
 (reader addMethod: 'As yet unclassified')
 !

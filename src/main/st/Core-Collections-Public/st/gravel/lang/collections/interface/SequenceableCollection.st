@@ -40,6 +40,19 @@ copyEmpty: aSize
 !
 (reader addMethod: 'copying')
 !
+copyReplaceAll: oldSubstring with: newSubstring
+	| value startSearch currentIndex endIndex |
+	value := self.
+	startSearch := 1.
+	[(currentIndex := value indexOfSubCollection: oldSubstring startingAt: startSearch) > 0]
+		whileTrue: 
+			[endIndex := currentIndex + oldSubstring size - 1.
+			value := value copyReplaceFrom: currentIndex to: endIndex with: newSubstring.
+			startSearch := currentIndex + newSubstring size].
+	^value
+!
+(reader addMethod: 'copying')
+!
 copyReplaceFrom: start to: stop with: replacementCollection
 	| newSequenceableCollection newSize endReplacement |
 	newSize := self size - (stop - start + 1) + replacementCollection size.
@@ -68,6 +81,11 @@ copyReplaceFrom: start to: stop with: replacementCollection
 				startingAt: stop + 1].
 	^newSequenceableCollection
 !
+(reader addMethod: 'copying')
+!
+copyReplacing: sourceElement withObject: destElement
+	^self copy replaceAll: sourceElement with: destElement
+!
 (reader addMethod: 'gravel')
 !
 copySpecies
@@ -82,7 +100,7 @@ copyTo: stop
 !
 copyWith: newElement
 	| newIC |
-	newIC := self copySpecies withSize: self size + 1.
+	newIC := self copySpecies ofSize: self size + 1.
 	newIC
 		replaceFrom: 1
 		to: self size
@@ -96,7 +114,7 @@ copyWith: newElement
 copyWithAll: aColl
 	| newIC totalSize |
 	totalSize := self size + aColl size.
-	newIC := self copySpecies withSize: totalSize.
+	newIC := self copySpecies ofSize: totalSize.
 	newIC
 		replaceFrom: 1
 		to: self size
@@ -131,6 +149,26 @@ hash
 	hash := self species hash.
 	1 to: self size do: [:i | hash := (hash + (self at: i) hash) hashMultiply].
 	^hash
+!
+(reader addMethod: 'converting')
+!
+readWriteStream
+	^ReadWriteStreamImpl collection: self
+!
+(reader addMethod: 'accessing')
+!
+replaceAll: oldObject with: newObject
+	| index |
+	index := self
+				indexOf: oldObject
+				startingAt: 1
+				ifAbsent: [0].
+	[index = 0] whileFalse: 
+			[self at: index put: newObject.
+			index := self
+						indexOf: oldObject
+						startingAt: index + 1
+						ifAbsent: [0]]
 !
 (reader addMethod: 'gravel')
 !
@@ -178,6 +216,15 @@ reversed
 	src := n + 1.
 	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
 	^result
+!
+(reader addMethod: 'accessing')
+!
+select: aBlock
+	| aStream |
+	aStream := WriteStream on: (self species new: self size).
+	1 to: self size
+		do: [:index | (aBlock value: (self at: index)) ifTrue: [aStream nextPut: (self at: index)]].
+	^aStream contents
 !
 (reader addMethod: 'enumerating')
 !

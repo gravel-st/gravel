@@ -12,6 +12,11 @@ contents
 	<primitive: 'toString'>
 	
 !
+(reader addMethod: 'positioning')
+!
+flush
+	
+!
 (reader addMethod: '')
 !
 nextPut: aCharacter
