@@ -19,14 +19,33 @@ public class LargeIntegerExtensions {
 		return IntegerExtensions.objectFromBigInteger(operand.and(receiver));
 	}
 
+	public static int bitAndFromPositiveSmallInteger_(BigInteger receiver,
+			int operand) {
+		return operand & receiver.intValue();
+	}
+	
 	public static Number bitAndFromSmallInteger_(BigInteger receiver,
 			int operand) {
 		return bitAndFromLargeInteger_(receiver, BigInteger.valueOf(operand));
 	}
 
-	public static int bitAndFromPositiveSmallInteger_(BigInteger receiver,
-			int operand) {
-		return operand & receiver.intValue();
+	public static int bitAt_(BigInteger receiver, int operand) {
+		return (receiver.testBit(operand)) ? 1 : 0;
+	}
+
+	public static Number bitAt_put_(BigInteger receiver, int bitIndex, int bitValue) {
+		if (bitValue == 1) {
+			return IntegerExtensions.objectFromBigInteger(receiver.setBit(bitIndex)); 
+		} else if (bitValue == 0) {
+			return IntegerExtensions.objectFromBigInteger(receiver.clearBit(bitIndex));
+		}
+		else {
+			throw new RuntimeException();
+		}				
+	}
+
+	public static BigInteger bitInvert(BigInteger receiver) {
+		return receiver.not();
 	}
 
 	public static BigInteger bitOrFromLargeInteger_(BigInteger receiver,
@@ -40,17 +59,20 @@ public class LargeIntegerExtensions {
 	}
 
 	public static Number bitShift_(BigInteger receiver, int operand) {
-		return IntegerExtensions.objectFromBigInteger(receiver.shiftLeft(operand));
+		return IntegerExtensions.objectFromBigInteger(receiver
+				.shiftLeft(operand));
 	}
 
-	public static Number bitXorFromLargeInteger_(BigInteger receiver, BigInteger operand) {
+	public static Number bitXorFromLargeInteger_(BigInteger receiver,
+			BigInteger operand) {
 		return IntegerExtensions.objectFromBigInteger(operand.xor(receiver));
 	}
-
-	public static Number bitXorFromSmallInteger_(BigInteger receiver, int operand) {
+	
+	public static Number bitXorFromSmallInteger_(BigInteger receiver,
+			int operand) {
 		return bitXorFromLargeInteger_(receiver, BigInteger.valueOf(operand));
 	}
-
+	
 	public static Object compressed(BigInteger integer) {
 		return Factory.fromValue(integer);
 	}
@@ -99,6 +121,12 @@ public class LargeIntegerExtensions {
 
 	public static Number gcdFromSmallInteger_(BigInteger receiver, int argument) {
 		return gcdFromLargeInteger_(receiver, BigInteger.valueOf(argument));
+	}
+
+	public static int highBit(BigInteger receiver) {
+		if (receiver.signum() == -1)
+			throw new RuntimeException("should be positive");
+		return receiver.bitLength();
 	}
 
 	public static Number integerQuotientFromLargeInteger_(BigInteger y,

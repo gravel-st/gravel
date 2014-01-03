@@ -44,6 +44,10 @@ public class IntegerTest {
 		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_bitShift_");
 	}
 	@Test
+	public void test_bitShift_2() throws Throwable {
+		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_bitShift_2");
+	}
+	@Test
 	public void test_bitXor_() throws Throwable {
 		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_bitXor_");
 	}
@@ -62,6 +66,26 @@ public class IntegerTest {
 	@Test
 	public void test_highBit() throws Throwable {
 		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_highBit");
+	}
+	@Test
+	public void test_highBit0() throws Throwable {
+		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_highBit0");
+	}
+	@Test
+	public void test_highBit2() throws Throwable {
+		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_highBit2");
+	}
+	@Test
+	public void test_highBit536870911() throws Throwable {
+		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_highBit536870911");
+	}
+	@Test
+	public void test_highBit536870912() throws Throwable {
+		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_highBit536870912");
+	}
+	@Test
+	public void test_highBit53687091200() throws Throwable {
+		MethodTools.debugTest("st.gravel.ansitests.IntegerTest", "test_highBit53687091200");
 	}
 	@Test
 	public void test_lcm_() throws Throwable {

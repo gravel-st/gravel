@@ -89,12 +89,16 @@ public class IntegerExtensions {
 		return receiver & other;
 	}
 
+	public static int bitInvert(int receiver) {
+		return ~receiver;
+	}
+
 	public static int bitOr_(int receiver, int other) {
 		return receiver | other;
 	}
 
-	public static int bitShiftFromSmallInteger_(int receiver, int other) {
-		return receiver << other;
+	public static Number bitShift_(int receiver, int operand) {		
+		return LargeIntegerExtensions.bitShift_(BigInteger.valueOf(receiver), operand);
 	}
 
 	public static int bitXor_(int receiver, int other) {
@@ -111,6 +115,15 @@ public class IntegerExtensions {
 		return objectFromLong(((long) (argument)) - receiver);
 	}
 
+	public static double doubleDivFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return (argument.doubleValue() / receiver);
+	}
+
+	public static double doubleDivFromSmallInteger_(int receiver, int argument) {
+		return (double) argument / receiver;
+	}
+
 	public static boolean equals_(int receiver, int other) {
 		return receiver == other;
 	}
@@ -125,6 +138,15 @@ public class IntegerExtensions {
 
 	public static boolean equals_(Integer receiver, Integer other) {
 		throw new UnsupportedOperationException("Not Implemented Yet");
+	}
+
+	public static float floatDivFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return (float) (argument.doubleValue() / receiver);
+	}
+
+	public static float floatDivFromSmallInteger_(int receiver, int argument) {
+		return (float) (argument / receiver);
 	}
 
 	private static int gcd(int a, int b) {
@@ -273,25 +295,5 @@ public class IntegerExtensions {
 	public static Number sumFromSmallInteger_(int receiver, int argument) {
 		return objectFromLong(((long) (argument)) + receiver);
 	}
-	
-	public static double doubleDivFromLargeInteger_(int receiver,
-			BigInteger argument) {
-		return  (argument.doubleValue() / receiver);
-	}
-
-	public static double doubleDivFromSmallInteger_(int receiver, int argument) {
-		return (double) argument / receiver;
-	}
-
-	public static float floatDivFromLargeInteger_(int receiver,
-			BigInteger argument) {
-		return (float) (argument.doubleValue() / receiver);
-	}
-
-	public static float floatDivFromSmallInteger_(int receiver, int argument) {
-		return (float) (argument / receiver);
-	}
-
-
 
 }
