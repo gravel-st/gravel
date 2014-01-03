@@ -5,11 +5,24 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 
 public class FloatExtensions {
+	public static double asDouble(float receiver) {
+		return receiver;
+	}
+
 	public static Number ceiling(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.CEILING);
 	}
 
 	public static float differenceFromFloat_(float receiver, float argument) {
+		return argument - receiver;
+	}
+
+	public static float differenceFromLargeInteger_(float receiver,
+			BigInteger argument) {
+		return argument.floatValue() - receiver;
+	}
+
+	public static float differenceFromSmallInteger_(float receiver, int argument) {
 		return argument - receiver;
 	}
 
@@ -21,11 +34,15 @@ public class FloatExtensions {
 		return Float.NaN;
 	}
 
-	public static boolean lessFromFloat_(float receiver, float argument) {
-		return argument < receiver;
+	public static Object javaNegativeInfinity() {
+		return Float.NEGATIVE_INFINITY;
 	}
 
-	public static boolean lessFromSmallInteger_(float receiver, int argument) {
+	public static Object javaPositiveInfinity() {
+		return Float.POSITIVE_INFINITY;
+	}
+	
+	public static boolean lessFromFloat_(float receiver, float argument) {
 		return argument < receiver;
 	}
 
@@ -34,19 +51,43 @@ public class FloatExtensions {
 		return new BigDecimal(argument).compareTo(BigDecimal.valueOf(receiver)) == -1;
 	}
 
-	public static Object javaNegativeInfinity() {
-		return Float.NEGATIVE_INFINITY;
+	public static boolean lessFromSmallInteger_(float receiver, int argument) {
+		return argument < receiver;
 	}
 
-	public static Object javaPositiveInfinity() {
-		return Float.POSITIVE_INFINITY;
+	public static float ln(float receiver) {
+		return (float)Math.log(receiver);
+	}
+
+	public static String printBase_(float receiver, int radix) {
+		if (radix == 10)
+			return Float.toString(receiver);
+		throw new UnsupportedOperationException("Unsupported radix: " + radix);
 	}
 
 	public static float productFromFloat_(float receiver, float argument) {
 		return argument * receiver;
 	}
 
+	public static float productFromLargeInteger_(float receiver,
+			BigInteger argument) {
+		return argument.floatValue() * receiver;
+	}
+
+	public static float productFromSmallInteger_(float receiver, int argument) {
+		return argument * receiver;
+	}
+
 	public static float quotientFromFloat_(float receiver, float argument) {
+		return argument / receiver;
+	}
+
+	public static float quotientFromLargeInteger_(float receiver,
+			BigInteger argument) {
+		return argument.floatValue() / receiver;
+	}
+
+	public static float quotientFromSmallInteger_(float receiver, int argument) {
 		return argument / receiver;
 	}
 
@@ -61,60 +102,23 @@ public class FloatExtensions {
 		return IntegerExtensions.objectFromBigInteger(rounded.toBigInteger());
 	}
 
+	public static float sqrt(float receiver) {
+		return (float) Math.sqrt(receiver);
+	}
+
 	public static float sumFromFloat_(float receiver, float argument) {
 		return argument + receiver;
-	}
-
-	public static float sumFromSmallInteger_(float receiver, int argument) {
-		return argument + receiver;
-	}
-
-	public static float productFromSmallInteger_(float receiver, int argument) {
-		return argument * receiver;
-	}
-
-	public static float differenceFromSmallInteger_(float receiver, int argument) {
-		return argument - receiver;
-	}
-
-	public static float quotientFromSmallInteger_(float receiver, int argument) {
-		return argument / receiver;
 	}
 
 	public static float sumFromLargeInteger_(float receiver, BigInteger argument) {
 		return argument.floatValue() + receiver;
 	}
 
-	public static float productFromLargeInteger_(float receiver,
-			BigInteger argument) {
-		return argument.floatValue() * receiver;
-	}
-
-	public static float differenceFromLargeInteger_(float receiver,
-			BigInteger argument) {
-		return argument.floatValue() - receiver;
-	}
-
-	public static float quotientFromLargeInteger_(float receiver,
-			BigInteger argument) {
-		return argument.floatValue() / receiver;
+	public static float sumFromSmallInteger_(float receiver, int argument) {
+		return argument + receiver;
 	}
 
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
-	}
-
-	public static double asDouble(float receiver) {
-		return receiver;
-	}
-
-	public static float sqrt(float receiver) {
-		return (float) Math.sqrt(receiver);
-	}
-
-	public static String printBase_(float receiver, int radix) {
-		if (radix == 10)
-			return Float.toString(receiver);
-		throw new UnsupportedOperationException("Unsupported radix: " + radix);
 	}
 }
