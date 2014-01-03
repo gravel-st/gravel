@@ -93,7 +93,7 @@ public class IntegerExtensions {
 		return receiver | other;
 	}
 
-	public static int bitShift_(int receiver, int other) {
+	public static int bitShiftFromSmallInteger_(int receiver, int other) {
 		return receiver << other;
 	}
 
