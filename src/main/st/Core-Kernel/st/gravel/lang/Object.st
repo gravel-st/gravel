@@ -96,7 +96,17 @@ initialize
 !
 (reader addMethod: 'testing')
 !
+isBehavior
+	^false
+!
+(reader addMethod: 'testing')
+!
 isException
+	^false
+!
+(reader addMethod: 'testing')
+!
+isExceptionBuilder
 	^false
 !
 (reader addMethod: 'class membership')
@@ -108,6 +118,16 @@ isKindOf: aClass
 !
 isMemberOf: aClass
 	^self class == aClass
+!
+(reader addMethod: 'testing')
+!
+isMonadicBlock
+	^false
+!
+(reader addMethod: 'testing')
+!
+isMonadicValuable
+	^false
 !
 (reader addMethod: 'gravel')
 !

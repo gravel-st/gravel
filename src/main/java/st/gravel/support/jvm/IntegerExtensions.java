@@ -97,8 +97,9 @@ public class IntegerExtensions {
 		return receiver | other;
 	}
 
-	public static Number bitShift_(int receiver, int operand) {		
-		return LargeIntegerExtensions.bitShift_(BigInteger.valueOf(receiver), operand);
+	public static Number bitShift_(int receiver, int operand) {
+		return LargeIntegerExtensions.bitShift_(BigInteger.valueOf(receiver),
+				operand);
 	}
 
 	public static int bitXor_(int receiver, int other) {
@@ -146,7 +147,7 @@ public class IntegerExtensions {
 	}
 
 	public static float floatDivFromSmallInteger_(int receiver, int argument) {
-		return (float) (argument / receiver);
+		return (float) argument / receiver;
 	}
 
 	private static int gcd(int a, int b) {

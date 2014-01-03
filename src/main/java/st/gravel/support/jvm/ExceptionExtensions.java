@@ -24,6 +24,10 @@ public class ExceptionExtensions {
 			ExceptionStack.removeHandler(handler);
 		}
 	}
+	public static Object warningNoHandler_(Object receiver, Object messageText) {
+		System.err.println(messageText);
+		return receiver;
+	}
 
 	public static Object ifCurtailed_(Block0<Object> receiver,
 			Object ifCurtailedBlock) throws Throwable {

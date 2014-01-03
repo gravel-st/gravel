@@ -8,6 +8,11 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Addable class')
 !
+(reader addMethod: 'testing')
+!
+isSortedCollection
+	^true
+!
 (reader addMethod: 'gravel')
 !
 reSort

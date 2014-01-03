@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaByteArray' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Array')
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.ByteArray')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Array class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ByteArray class')
 !
 (reader propertyAt: 'javaClass' put: 'byte[]')
 !
@@ -11,6 +11,12 @@
 at: index
 	<primitive: #('st.gravel.support.jvm.ByteArrayExtensions' 'at_')>
 	
+!
+(reader addMethod: 'accessing')
+!
+at: index ifAbsent: aBlock
+	(index < 0 or: [index > self size]) ifTrue: [^aBlock value].
+	^self at: index
 !
 (reader addMethod: 'accessing')
 !
@@ -27,16 +33,11 @@ size
 (reader addClassMethod: 'gravel')
 !
 basicNew
-	^#()
-!
-(reader addClassMethod: 'instance creation')
-!
-newImpl
-	^self newImpl: 0
+	^#[]
 !
 (reader addClassMethod: 'instance creation')
 !
 newImpl: size
-	<primitive: #('st.gravel.support.jvm.ArrayExtensions' 'newInstance_')>
+	<primitive: #('st.gravel.support.jvm.ByteArrayExtensions' 'newInstance_')>
 	
 !

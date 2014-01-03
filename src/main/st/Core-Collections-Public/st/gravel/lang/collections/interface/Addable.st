@@ -11,11 +11,16 @@ addAll: aCollection
 	aCollection do: [:each | self add: each].
 	^aCollection
 !
+(reader addClassMethod: 'private-instance creation')
+!
+newWithCapacity: size
+	^self new: size
+!
 (reader addClassMethod: 'instance creation')
 !
 with: anObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 1.
 	newCollection add: anObject.
 	^newCollection
 !
@@ -23,7 +28,7 @@ with: anObject
 !
 with: firstObject with: secondObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 2.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	^newCollection
@@ -32,7 +37,7 @@ with: firstObject with: secondObject
 !
 with: firstObject with: secondObject with: thirdObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 3.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	newCollection add: thirdObject.
@@ -42,7 +47,7 @@ with: firstObject with: secondObject with: thirdObject
 !
 with: firstObject with: secondObject with: thirdObject with: fourthObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 4.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	newCollection add: thirdObject.
@@ -53,7 +58,7 @@ with: firstObject with: secondObject with: thirdObject with: fourthObject
 !
 with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 5.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	newCollection add: thirdObject.
@@ -65,7 +70,7 @@ with: firstObject with: secondObject with: thirdObject with: fourthObject with: 
 !
 with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject with: sixthObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 6.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	newCollection add: thirdObject.
@@ -78,7 +83,7 @@ with: firstObject with: secondObject with: thirdObject with: fourthObject with: 
 !
 with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject with: sixthObject with: seventhObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 7.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	newCollection add: thirdObject.
@@ -92,7 +97,7 @@ with: firstObject with: secondObject with: thirdObject with: fourthObject with: 
 !
 with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject with: sixthObject with: seventhObject with: eighthObject
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: 8.
 	newCollection add: firstObject.
 	newCollection add: secondObject.
 	newCollection add: thirdObject.
@@ -107,7 +112,7 @@ with: firstObject with: secondObject with: thirdObject with: fourthObject with: 
 !
 withAll: aCollection
 	| newCollection |
-	newCollection := self new.
+	newCollection := self newWithCapacity: aCollection size.
 	newCollection addAll: aCollection.
 	^newCollection
 !

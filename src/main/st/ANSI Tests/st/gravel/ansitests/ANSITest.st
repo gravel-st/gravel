@@ -95,7 +95,7 @@ valueIsKindOfBoolean: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfByteArray: aValue
-	^aValue class = ByteArray
+	^aValue isByteArray
 !
 (reader addMethod: 'tests')
 !
@@ -318,12 +318,12 @@ valueIsKindOfMessageNotUnderstoodSelector: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfMonadicBlock: aValue
-	^aValue class = BlockClosure
+	^aValue isMonadicBlock
 !
 (reader addMethod: 'tests')
 !
 valueIsKindOfMonadicValuable: aValue
-	^aValue class = BlockClosure
+	^aValue isMonadicValuable
 !
 (reader addMethod: 'tests')
 !
@@ -368,7 +368,7 @@ valueIsKindOfObjectClass: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfOrderedCollection: aValue
-	^aValue class = OrderedCollection
+	^aValue isOrderedCollection
 !
 (reader addMethod: 'tests')
 !
@@ -463,7 +463,7 @@ valueIsKindOfSignaledException: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfSortedCollection: aValue
-	^aValue class = SortedCollection
+	^aValue isSortedCollection
 !
 (reader addMethod: 'tests')
 !

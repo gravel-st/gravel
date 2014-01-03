@@ -4,6 +4,11 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ArrayedCollection class')
 !
+(reader addMethod: 'testing')
+!
+isByteArray
+	^true
+!
 (reader addClassMethod: 'As yet unclassified')
 !
 defaultImplementation

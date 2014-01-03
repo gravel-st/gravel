@@ -8,6 +8,6 @@ defaultAction
 (reader addMethod: 'accessing')
 !
 pvtDefaultAction: aString
-	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'warningNoHandler')>
+	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'warningNoHandler_')>
 	
 !

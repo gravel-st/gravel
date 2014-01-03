@@ -23,7 +23,7 @@ public class LargeIntegerExtensions {
 			int operand) {
 		return operand & receiver.intValue();
 	}
-	
+
 	public static Number bitAndFromSmallInteger_(BigInteger receiver,
 			int operand) {
 		return bitAndFromLargeInteger_(receiver, BigInteger.valueOf(operand));
@@ -33,15 +33,17 @@ public class LargeIntegerExtensions {
 		return (receiver.testBit(operand)) ? 1 : 0;
 	}
 
-	public static Number bitAt_put_(BigInteger receiver, int bitIndex, int bitValue) {
+	public static Number bitAt_put_(BigInteger receiver, int bitIndex,
+			int bitValue) {
 		if (bitValue == 1) {
-			return IntegerExtensions.objectFromBigInteger(receiver.setBit(bitIndex)); 
+			return IntegerExtensions.objectFromBigInteger(receiver
+					.setBit(bitIndex));
 		} else if (bitValue == 0) {
-			return IntegerExtensions.objectFromBigInteger(receiver.clearBit(bitIndex));
-		}
-		else {
+			return IntegerExtensions.objectFromBigInteger(receiver
+					.clearBit(bitIndex));
+		} else {
 			throw new RuntimeException();
-		}				
+		}
 	}
 
 	public static BigInteger bitInvert(BigInteger receiver) {
@@ -67,12 +69,12 @@ public class LargeIntegerExtensions {
 			BigInteger operand) {
 		return IntegerExtensions.objectFromBigInteger(operand.xor(receiver));
 	}
-	
+
 	public static Number bitXorFromSmallInteger_(BigInteger receiver,
 			int operand) {
 		return bitXorFromLargeInteger_(receiver, BigInteger.valueOf(operand));
 	}
-	
+
 	public static Object compressed(BigInteger integer) {
 		return Factory.fromValue(integer);
 	}
@@ -111,7 +113,7 @@ public class LargeIntegerExtensions {
 
 	public static float floatDivFromSmallInteger_(BigInteger receiver,
 			int argument) {
-		return (float) (argument / receiver.doubleValue());
+		return (float) ((double) argument / receiver.doubleValue());
 	}
 
 	public static Number gcdFromLargeInteger_(BigInteger receiver,

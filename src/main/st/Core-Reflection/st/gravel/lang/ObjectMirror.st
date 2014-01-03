@@ -8,3 +8,9 @@ classMirror
 	<primitive: 'getClassMirror'>
 	
 !
+(reader addMethod: '')
+!
+instanceRespondsTo: aSymbol
+	<primitive: 'instanceRespondsTo_'>
+	
+!

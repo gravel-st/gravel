@@ -1,5 +1,7 @@
 package st.gravel.support.jvm;
 
+import st.gravel.core.Symbol;
+
 
 public class ObjectMirror {
 	public ObjectMirror(Object object) {
@@ -13,5 +15,10 @@ public class ObjectMirror {
 		Class<? extends Object> aClass = object.getClass();
 		return ReflectionExtensions.getClassMirror(aClass);
 	}
+	public boolean instanceRespondsTo_(Symbol selector) {
+		return getClassMirror().canUnderstand_(selector);
+	}
 
+	
+	
 }
