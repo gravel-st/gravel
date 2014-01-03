@@ -25,6 +25,7 @@ public class ExceptionExtensions {
 		}
 	}
 	public static Object warningNoHandler_(Object receiver, Object messageText) {
+		System.err.println(messageText);
 		return receiver;
 	}
 
