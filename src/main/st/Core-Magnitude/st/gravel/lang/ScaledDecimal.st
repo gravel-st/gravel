@@ -113,7 +113,6 @@ lessFromScaledDecimal: aScaledDecimal
 (reader addMethod: 'mathematical functions')
 !
 ln
-	<squeak>
 	^self asFraction ln
 !
 (reader addMethod: 'arithmetic')
@@ -199,14 +198,15 @@ setFraction: fractionIn scale: scaleIn
 (reader addMethod: 'mathematical functions')
 !
 sqrt
- <squeak>| squareRoot |
-	squareRoot := ((self asFraction) sqrt).
-	^((squareRoot isFloat) ifTrue: [ squareRoot] ifFalse: [ squareRoot asScaledDecimal: scale])
+	| squareRoot |
+	squareRoot := self asFraction sqrt.
+	^squareRoot isLimitedPrecisionReal
+		ifTrue: [squareRoot]
+		ifFalse: [squareRoot asScaledDecimal: scale]
 !
 (reader addMethod: 'mathematical functions')
 !
 squared
-	<squeak>
 	^ScaledDecimal newFromNumber: fraction squared scale: scale
 !
 (reader addMethod: 'private-arithmetic')

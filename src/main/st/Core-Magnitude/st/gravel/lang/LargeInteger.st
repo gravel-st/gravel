@@ -50,6 +50,81 @@ asFloat
 	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'asFloat')>
 	
 !
+(reader addMethod: 'bit - manipulation')
+!
+bitAnd: anInteger
+	^anInteger bitAndFromLargeInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitAndFromLargeInteger: aLargeInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitAndFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitAndFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitAndFromSmallInteger_')>
+	
+!
+(reader addMethod: 'bit manipulation')
+!
+bitAt: anInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitAt_')>
+	
+!
+(reader addMethod: 'bit manipulation')
+!
+bitAt: anInteger put: value
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitAt_put_')>
+	
+!
+(reader addMethod: 'bit manipulation')
+!
+bitInvert
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitInvert')>
+	
+!
+(reader addMethod: 'bit manipulation')
+!
+bitOr: anInteger
+	^anInteger bitOrFromLargeInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitOrFromLargeInteger: aLargeInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitOrFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitOrFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitOrFromSmallInteger_')>
+	
+!
+(reader addMethod: 'bit - manipulation')
+!
+bitShift: anInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitShift_')>
+	
+!
+(reader addMethod: 'bit manipulation')
+!
+bitXor: anInteger
+	^anInteger bitXorFromLargeInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitXorFromLargeInteger: aLargeInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitXorFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitXorFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'bitXorFromSmallInteger_')>
+	
+!
 (reader addMethod: '')
 !
 compressed
@@ -121,6 +196,12 @@ gcdFromLargeInteger: anObject
 !
 gcdFromSmallInteger: anObject
 	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'gcdFromSmallInteger_')>
+	
+!
+(reader addMethod: 'bit manipulation')
+!
+highBit
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'highBit')>
 	
 !
 (reader addMethod: 'private-arithmetic')

@@ -4,6 +4,11 @@
 !
 (reader addMethod: 'As yet unclassified')
 !
+parameterNewElement
+	^#z
+!
+(reader addMethod: 'As yet unclassified')
+!
 parameterOperand
 	^#(#d #e #f)
 !

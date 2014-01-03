@@ -61,6 +61,10 @@ public class ExceptionExtensions {
 		return exception;
 	}
 
+	public static Object noHandler(Object exception) {
+		throw new UnhandledException(exception);
+	}
+
 	public static Object return_(Object exception, Object value)
 			throws Throwable {
 		return ExceptionStack.handleReturn(exception, value);

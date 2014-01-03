@@ -14,12 +14,6 @@ at: index
 !
 (reader addMethod: 'accessing')
 !
-at: index ifAbsent: aBlock
-	(index < 0 or: [index > self size]) ifTrue: [^aBlock value].
-	^self at: index
-!
-(reader addMethod: 'accessing')
-!
 at: index put: aByte
 	<primitive: #('st.gravel.support.jvm.ByteArrayExtensions' 'at_put_')>
 	

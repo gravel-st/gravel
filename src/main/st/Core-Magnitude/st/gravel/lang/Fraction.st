@@ -223,6 +223,11 @@ reduced
 	denom = 1 ifTrue: [^numer].
 	^Fraction numerator: numer denominator: denom
 !
+(reader addMethod: 'mathematical functions')
+!
+squared
+	^Fraction numerator: numerator squared denominator: denominator squared
+!
 (reader addMethod: 'private-arithmetic')
 !
 sumFromFraction: aFraction

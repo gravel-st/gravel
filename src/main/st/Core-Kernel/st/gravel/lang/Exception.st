@@ -6,17 +6,19 @@
 !
 (reader addInstVar: 'messageText')
 !
+(reader addInstVar: 'initialHandler')
+!
 (reader addMethod: 'gravel')
 !
 creator
 	^self class
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
 !
 currentHandler
 	^currentHandler
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
 !
 currentHandler: anObject
 	currentHandler := anObject
@@ -30,6 +32,22 @@ defaultAction
 !
 defaultResumeValue
 	^nil
+!
+(reader addMethod: 'accessing')
+!
+description
+	messageText isNil ifTrue: [^self class name].
+	^messageText
+!
+(reader addMethod: 'accessing')
+!
+initialHandler
+	^initialHandler
+!
+(reader addMethod: 'accessing')
+!
+initialHandler: anObject
+	initialHandler := anObject
 !
 (reader addMethod: 'testing')
 !
@@ -51,23 +69,23 @@ isResumable
 isSignalledException
 	^true
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
 !
 messageText
-	^messageText
+	^messageText == nil ifTrue: [''] ifFalse: [messageText asString]
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'accessing')
 !
 messageText: anObject
 	messageText := anObject
 !
-(reader addMethod: '')
+(reader addMethod: 'actions')
 !
 pass
 	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'pass')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'actions')
 !
 raise
 	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'raise')>
@@ -78,11 +96,16 @@ raise
 resume
 	^resume == true
 !
-(reader addMethod: '')
+(reader addMethod: 'actions')
 !
 return: aValue
 	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'return_')>
 	
+!
+(reader addMethod: 'accessing')
+!
+tag
+	^messageText
 !
 (reader addClassMethod: 'gravel')
 !

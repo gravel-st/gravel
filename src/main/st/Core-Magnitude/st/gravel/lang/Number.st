@@ -30,6 +30,21 @@
 abs
 	^self negative ifTrue: [self negated] ifFalse: [self]
 !
+(reader addMethod: 'mathematical functions')
+!
+arcCos
+	^self asDouble arcCos
+!
+(reader addMethod: 'mathematical functions')
+!
+arcSin
+	^self asDouble arcSin
+!
+(reader addMethod: 'mathematical functions')
+!
+arcTan
+	^self asDouble arcTan
+!
 (reader addMethod: 'converting')
 !
 asDouble
@@ -67,6 +82,11 @@ asInteger
 !
 (reader addMethod: 'converting')
 !
+asLimitedPrecisionReal
+	^self asFloat
+!
+(reader addMethod: 'converting')
+!
 asScaledDecimal: scale
 	^ScaledDecimal newFromNumber: self scale: scale
 !
@@ -77,6 +97,16 @@ ceiling
 	truncation := self truncated.
 	self <= 0 ifTrue: [^truncation].
 	self = truncation ifTrue: [^truncation] ifFalse: [^truncation + 1]
+!
+(reader addMethod: 'mathematical functions')
+!
+cos
+	^self asDouble cos
+!
+(reader addMethod: 'converting')
+!
+degreesToRadians
+	^self asLimitedPrecisionReal degreesToRadians
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -107,6 +137,11 @@ differenceFromSmallInteger: aSmallInteger
 !
 even
 	^self \\ 2 = 0
+!
+(reader addMethod: 'mathematical functions')
+!
+exp
+	^self asDouble exp
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -220,6 +255,11 @@ negative
 !
 (reader addMethod: 'testing')
 !
+odd
+	^self even not
+!
+(reader addMethod: 'testing')
+!
 positive
 	^self >= 0
 !
@@ -303,6 +343,11 @@ quotientFromScaledDecimal: operand
 quotientFromSmallInteger: anInteger
 	^self quotientFromInteger: anInteger
 !
+(reader addMethod: 'converting')
+!
+radiansToDegrees
+	^self asLimitedPrecisionReal radiansToDegrees
+!
 (reader addMethod: 'arithmetic')
 !
 raisedTo: aNumber
@@ -362,19 +407,24 @@ rounded
 roundTo: aNumber
 	^(self / aNumber) rounded * aNumber
 !
-(reader addMethod: 'testing')
+(reader addMethod: 'mathematical functions')
 !
 sign
-	self strictlyPositive ifTrue: [^1].
-	self negative ifTrue: [^-1].
+	self > 0 ifTrue: [^1].
+	self < 0 ifTrue: [^-1].
 	^0
+!
+(reader addMethod: 'mathematical functions')
+!
+sin
+	^self asDouble sin
 !
 (reader addMethod: 'mathematical functions')
 !
 sqrt
 	^self asFloat sqrt
 !
-(reader addMethod: 'arithmetic')
+(reader addMethod: 'mathematical functions')
 !
 squared
 	^self * self
@@ -408,6 +458,11 @@ sumFromScaledDecimal: operand
 !
 sumFromSmallInteger: aSmallInteger
 	^self sumFromInteger: aSmallInteger
+!
+(reader addMethod: 'mathematical functions')
+!
+tan
+	^self asDouble tan
 !
 (reader addMethod: 'gravel')
 !

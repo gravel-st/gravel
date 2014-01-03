@@ -17,6 +17,11 @@ isInteger
 !
 (reader addMethod: 'testing')
 !
+isLimitedPrecisionReal
+	^true
+!
+(reader addMethod: 'testing')
+!
 isNumber
 	^false
 !

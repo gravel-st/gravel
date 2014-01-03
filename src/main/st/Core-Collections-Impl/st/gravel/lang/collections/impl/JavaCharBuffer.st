@@ -18,6 +18,11 @@ contents
 	<primitive: #('st.gravel.support.jvm.ReadStreamExtensions' 'contents')>
 	
 !
+(reader addMethod: 'As yet unclassified')
+!
+contentsSpecies
+	^String
+!
 (reader addMethod: '')
 !
 next

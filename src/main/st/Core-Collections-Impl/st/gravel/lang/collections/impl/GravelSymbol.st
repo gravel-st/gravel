@@ -4,12 +4,14 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Symbol class')
 !
+(reader addInstVar: '____str_Gravel_st_gravel_lang_collections_interface_String__Gravel_st_gravel_lang_collections_impl_GravelSymbol___')
+!
 (reader propertyAt: 'javaClass' put: 'st.gravel.core.Symbol')
 !
-(reader addMethod: 'gravel')
+(reader addMethod: '')
 !
 < anObject
-	^self asString < anObject asString
+	^anObject lessFromGravelSymbol: self
 !
 (reader addMethod: 'gravel')
 !
@@ -51,6 +53,18 @@ isLiteralSymbol
 	parser := Parser source: self asString.
 	[res := parser parseSymbolNoHash: parser parseIdentifier] on: Error do: [:ex | ^false].
 	^parser atEnd and: [res isSymbolLiteralNode]
+!
+(reader addMethod: 'private-comparing')
+!
+lessFromGravelSymbol: aSymbol
+	<primitive: #('st.gravel.support.jvm.SymbolExtensions' 'lessFromGravelSymbol_')>
+	
+!
+(reader addMethod: 'private-comparing')
+!
+lessFromJavaString: aString
+	<primitive: #('st.gravel.support.jvm.SymbolExtensions' 'lessFromJavaString_')>
+	
 !
 (reader addMethod: 'gravel')
 !

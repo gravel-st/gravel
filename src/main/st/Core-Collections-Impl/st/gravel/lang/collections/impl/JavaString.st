@@ -4,6 +4,8 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.String class')
 !
+(reader addInstVar: '____str_Gravel_st_gravel_lang_collections_interface_String__Gravel_st_gravel_lang_collections_impl_JavaString___')
+!
 (reader propertyAt: 'javaClass' put: 'java.lang.String')
 !
 (reader addMethod: '')
@@ -15,8 +17,7 @@
 (reader addMethod: '')
 !
 < anObject
-	<primitive: #('st.gravel.support.jvm.StringExtensions' 'sortsLowerThan_')>
-	
+	^anObject lessFromJavaString: self
 !
 (reader addMethod: '')
 !
@@ -53,11 +54,9 @@ copyFrom: start to: stop
 !
 (reader addMethod: 'copying')
 !
-copyReplacing: sourceElement withObject: destElement
-	| str |
-	str := WriteStream on: String new.
-	self do: [:ch | str nextPut: (ch = sourceElement ifTrue: [destElement] ifFalse: [ch])].
-	^str contents
+copyWith: aCharacter
+	<primitive: #('st.gravel.support.jvm.StringExtensions' 'copyWith_')>
+	
 !
 (reader addMethod: 'gravel')
 !
@@ -68,6 +67,17 @@ do: aBlock
 !
 isString
 	^true
+!
+(reader addMethod: 'private-comparing')
+!
+lessFromGravelSymbol: aSymbol
+	^aSymbol asString < self
+!
+(reader addMethod: 'private-comparing')
+!
+lessFromJavaString: aString
+	<primitive: #('st.gravel.support.jvm.StringExtensions' 'lessFromJavaString_')>
+	
 !
 (reader addMethod: 'gravel')
 !

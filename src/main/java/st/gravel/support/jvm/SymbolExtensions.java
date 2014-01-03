@@ -26,6 +26,13 @@ public class SymbolExtensions {
 	public static HashSet<String> allStrings(Object receiver) {
 		return Symbol.allStrings();
 	}
-	
-	
+
+	public static boolean lessFromJavaString_(Symbol receiver, String argument) {
+		return argument.compareTo(receiver.asString()) < 0;
+	}
+
+	public static boolean lessFromGravelSymbol_(Symbol receiver, Symbol argument) {
+		return argument.asString().compareTo(receiver.asString()) < 0;
+	}
+
 }

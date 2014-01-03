@@ -1,21 +1,75 @@
 (reader defineTrait: 'String' superclass: nil)
 !
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
+!
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.SequencedReadable')
+!
 (reader addSimpleTrait: 'st.gravel.lang.Comparable')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.SequenceableCollection')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.IndexedCollection')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SequencedReadable class')
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.Comparable class')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SequenceableCollection class')
+(reader addMethod: 'converting')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.IndexedCollection class')
+asLowercase
+	| str |
+	str := WriteStream on: String new.
+	self do: [:ch | str nextPut: ch asLowercase].
+	^str contents
+!
+(reader addMethod: 'converting')
+!
+asString
+	^self traitRequirement
 !
 (reader addMethod: 'As yet unclassified')
 !
 asSymbol {^Sym}
 	^self traitRequirement
+!
+(reader addMethod: 'converting')
+!
+asUppercase
+	| str |
+	str := WriteStream on: String new.
+	self do: [:ch | str nextPut: ch asUppercase].
+	^str contents
+!
+(reader addMethod: 'copying')
+!
+copyReplaceFrom: start to: stop with: replacementCollection
+	| str |
+	str := WriteStream on: String new.
+	1 to: start - 1 do: [:i | str nextPut: (self at: i)].
+	1 to: stop - start + 1 do: [:i | str nextPut: (replacementCollection at: i)].
+	stop + 1 to: self size do: [:i | str nextPut: (self at: i)].
+	^str contents
+!
+(reader addMethod: 'copying')
+!
+copyReplaceFrom: start to: stop withObject: replacementElement
+	| str |
+	str := WriteStream on: String new.
+	1 to: start - 1 do: [:i | str nextPut: (self at: i)].
+	1 to: stop - start + 1 do: [:i | str nextPut: replacementElement].
+	stop + 1 to: self size do: [:i | str nextPut: (self at: i)].
+	^str contents
+!
+(reader addMethod: 'copying')
+!
+copyReplacing: sourceElement withObject: destElement
+	| str |
+	str := WriteStream on: String new.
+	self do: [:ch | str nextPut: (ch = sourceElement ifTrue: [destElement] ifFalse: [ch])].
+	^str contents
+!
+(reader addMethod: 'copying')
+!
+copySpecies
+	^String
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -108,6 +162,30 @@ padded: leftOrRight to: length with: char
 	leftOrRight = #right
 		ifTrue: [^self , (String new: (length - self size max: 0) withAll: char)]
 !
+(reader addMethod: 'copying')
+!
+reverse
+	| wstr |
+	wstr := WriteStream on: String new.
+	self reverseDo: [:ch | wstr nextPut: ch].
+	^wstr contents
+!
+(reader addMethod: 'comparing')
+!
+sameAs: aString
+	self size = aString size ifFalse: [^false].
+	self with: aString
+		do: [:a :b | a = b ifFalse: [a asLowercase = b asLowercase ifFalse: [^false]]].
+	^true
+!
+(reader addMethod: 'iterating')
+!
+select: aBlock
+	| str |
+	str := WriteStream on: String new.
+	self do: [:ch | (aBlock value: ch) ifTrue: [str nextPut: ch]].
+	^str contents
+!
 (reader addMethod: 'As yet unclassified')
 !
 storeOn: aStream
@@ -124,6 +202,18 @@ stringStoreOn: aStream
 			ch := self at: i.
 			ch = $' ifTrue: [aStream nextPutAll: ''''''] ifFalse: [aStream nextPut: ch]].
 	aStream nextPut: $'
+!
+(reader addMethod: 'converting')
+!
+subStrings: aString
+	| str tokens |
+	str := self readStream.
+	tokens := OrderedCollection new.
+	[str atEnd] whileFalse: [tokens addLast: (str upToAny: aString)].
+	(aString includes: (str
+				skip: -1;
+				next)) ifTrue: [tokens addLast: ''].
+	^tokens
 !
 (reader addClassMethod: 'As yet unclassified')
 !

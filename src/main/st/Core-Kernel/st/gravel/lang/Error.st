@@ -3,8 +3,11 @@
 (reader addMethod: 'accessing')
 !
 defaultAction
-	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'noHandler')>
-	
+	^(UnhandledException new)
+		unhandledException: self;
+		messageText: messageText;
+		initialHandler: initialHandler;
+		raise
 !
 (reader addMethod: 'gravel')
 !

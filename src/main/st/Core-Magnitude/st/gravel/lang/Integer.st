@@ -10,6 +10,16 @@
 abs
 	^self < 0 ifTrue: [0 - self] ifFalse: [self]
 !
+(reader addMethod: 'bit manipulation')
+!
+allMask: mask
+	^mask = (self bitAnd: mask)
+!
+(reader addMethod: 'bit manipulation')
+!
+anyMask: mask
+	^0 ~= (self bitAnd: mask)
+!
 (reader addMethod: 'converting')
 !
 asFraction
@@ -52,6 +62,46 @@ benchmark
 									k := k + prime].
 							count := count + 1]]].
 	^count
+!
+(reader addMethod: 'bit manipulation')
+!
+bitAnd: anObject
+	self subclassResponsibility
+!
+(reader addMethod: 'bit manipulation')
+!
+bitAt: anInteger
+	^(self bitShift: 1 - anInteger) bitAnd: 1
+!
+(reader addMethod: 'bit manipulation')
+!
+bitAt: anInteger put: value
+	| b |
+	b := self bitAt: anInteger.
+	b = value ifTrue: [^self].
+	0 = value ifTrue: [^self bitAnd: (1 bitShift: anInteger - 1) bitInvert].
+	1 = value ifTrue: [^self bitOr: (1 bitShift: anInteger - 1)].
+	self error: 'bit value should be 0 or 1'
+!
+(reader addMethod: 'bit manipulation')
+!
+bitInvert
+	self subclassResponsibility
+!
+(reader addMethod: 'bit manipulation')
+!
+bitOr: anObject
+	self subclassResponsibility
+!
+(reader addMethod: 'bit manipulation')
+!
+bitShift: anObject
+	self subclassResponsibility
+!
+(reader addMethod: 'bit manipulation')
+!
+bitXor: anObject
+	self subclassResponsibility
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -143,6 +193,11 @@ isLarge
 isZero
 	^self = 0
 !
+(reader addMethod: 'arithmetic')
+!
+lcm: n
+	^self // (self gcd: n) * n
+!
 (reader addMethod: 'comparing')
 !
 lessFromFraction: aFraction
@@ -153,6 +208,11 @@ lessFromFraction: aFraction
 ln
 	self > 0 ifTrue: [^super ln].
 	^DomainError signal: 'ln is only defined for x > 0'
+!
+(reader addMethod: 'bit manipulation')
+!
+noMask: mask
+	^0 = (self bitAnd: mask)
 !
 (reader addMethod: 'printing')
 !
@@ -210,6 +270,15 @@ printOn: stream base: base length: minimumLength padded: padWithZeroes
 !
 (reader addMethod: 'printing')
 !
+printOn: aWriteStream base: anInteger showRadix: aBoolean
+	aBoolean
+		ifTrue: 
+			[anInteger printOn: aWriteStream.
+			aWriteStream nextPut: $r].
+	self printOn: aWriteStream base: anInteger
+!
+(reader addMethod: 'printing')
+!
 printOn: aStream paddedTo: anInteger
 	self printOn: aStream paddedWith: $0 to: anInteger
 !
@@ -231,6 +300,11 @@ printOn: aStream paddedWith: aCharacter to: anInteger base: aRadix
 	digits := digitStream contents.
 	anInteger - digits size timesRepeat: [aStream nextPut: aCharacter].
 	aStream nextPutAll: digits
+!
+(reader addMethod: 'printing')
+!
+printStringRadix: radix
+	^self printBase: radix
 !
 (reader addMethod: 'printing')
 !

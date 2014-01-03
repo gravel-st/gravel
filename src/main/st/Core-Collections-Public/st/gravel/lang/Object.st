@@ -32,6 +32,11 @@ isDictionary
 !
 (reader addMethod: 'testing')
 !
+isIdentityDictionary
+	^false
+!
+(reader addMethod: 'testing')
+!
 isInterval
 	^false
 !
@@ -63,6 +68,11 @@ isSet
 (reader addMethod: 'testing')
 !
 isSortedCollection
+	^false
+!
+(reader addMethod: 'testing')
+!
+isSymbol
 	^false
 !
 (reader addMethod: 'testing')

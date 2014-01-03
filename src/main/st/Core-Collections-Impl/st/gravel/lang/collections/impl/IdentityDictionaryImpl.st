@@ -1,5 +1,9 @@
 (reader defineClass: 'IdentityDictionaryImpl' superclass: 'st.gravel.lang.collections.impl.DictionaryImpl')
 !
+(reader addSimpleTrait: 'st.gravel.lang.collections.interface.IdentityDictionary')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.IdentityDictionary class')
+!
 (reader addMethod: 'accessing')
 !
 keyAtValue: value ifAbsent: exceptionBlock

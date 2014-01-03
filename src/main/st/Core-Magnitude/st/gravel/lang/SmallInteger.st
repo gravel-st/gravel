@@ -50,27 +50,63 @@ asFloat
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'asFloat')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'bit manipulation')
 !
 bitAnd: anObject
+	^anObject bitAndFromSmallInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitAndFromLargeInteger: aLargeInteger
+	^aLargeInteger bitAndFromSmallInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitAndFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitAnd_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'bit manipulation')
+!
+bitInvert
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitInvert')>
+	
+!
+(reader addMethod: 'bit manipulation')
 !
 bitOr: anObject
+	^anObject bitOrFromSmallInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitOrFromLargeInteger: aLargeInteger
+	^aLargeInteger bitOrFromSmallInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitOrFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitOr_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'bit manipulation')
 !
 bitShift: anInteger
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitShift_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'bit manipulation')
 !
 bitXor: anObject
+	^anObject bitXorFromSmallInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitXorFromLargeInteger: aLargeInteger
+	^aLargeInteger bitXorFromSmallInteger: self
+!
+(reader addMethod: 'private - bit manipulation')
+!
+bitXorFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'bitXor_')>
 	
 !
@@ -107,6 +143,11 @@ doubleDivFromLargeInteger: anObject
 doubleDivFromSmallInteger: anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'doubleDivFromSmallInteger_')>
 	
+!
+(reader addMethod: 'testing')
+!
+even
+	^(self bitAnd: 1) = 0
 !
 (reader addMethod: 'arithmetic')
 !
@@ -238,6 +279,11 @@ moduloQuotientFromSmallInteger: anObject
 	<
 	primitive: #('st.gravel.support.jvm.IntegerExtensions' 'moduloQuotientFromSmallInteger_')>
 	
+!
+(reader addMethod: 'testing')
+!
+odd
+	^(self bitAnd: 1) = 1
 !
 (reader addMethod: '')
 !

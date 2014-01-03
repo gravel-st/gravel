@@ -266,7 +266,7 @@ valueIsKindOfGettableStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfIdentityDictionary: aValue
-	^aValue class = IdentityDictionary
+	^aValue isIdentityDictionary
 !
 (reader addMethod: 'tests')
 !

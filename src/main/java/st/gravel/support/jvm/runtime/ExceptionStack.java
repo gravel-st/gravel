@@ -54,7 +54,7 @@ public class ExceptionStack {
 		}
 
 		public void handle(Object exception) throws Throwable {
-			MethodTools.perform(exception, "currentHandler:", this);
+			setCurrentHandler(exception, this);
 			Object value = MethodTools.perform(exBlock, "value:", exception);
 			boolean resume = MethodTools.perform(exception, "resume") == Boolean.TRUE;
 			if (!resume) {
@@ -82,13 +82,21 @@ public class ExceptionStack {
 	}
 
 	private void pvtHandle(Object exception) throws Throwable {
-		ExceptionHandler handler = current;
-		if (current == null) {
-			throw new UnhandledException(exception);
+		ExceptionHandler handler = initialHandler(exception);
+		if (handler == null)
+			handler = current;
+		if (handler == null) {
+			executeDefaultAction(exception);
+			return;
 		}
-		current = current.previous();
+		setInitialHandler(exception, handler);
+		current = handler.previous();
 		handleFrom(exception, handler);
 		current = handler;
+	}
+
+	private void executeDefaultAction(Object exception) {
+		MethodTools.safePerform(exception, "defaultAction");
 	}
 
 	public void handleFrom(Object exception, ExceptionHandler handler)
@@ -100,7 +108,7 @@ public class ExceptionStack {
 			}
 			handler = handler.previous();
 		}
-		throw new UnhandledException(exception);
+		executeDefaultAction(exception);
 	}
 
 	private void pvtHandlePass(Object exception) throws Throwable {
@@ -111,8 +119,24 @@ public class ExceptionStack {
 		throw new NonLocalReturn(value, currentHandler(exception).marker());
 	}
 
-	private ExceptionHandler currentHandler(Object exception) {
-		return (ExceptionHandler) MethodTools.safePerform(exception, "currentHandler");
+	private static ExceptionHandler currentHandler(Object exception) {
+		return (ExceptionHandler) MethodTools.safePerform(exception,
+				"currentHandler");
+	}
+
+	private static void setCurrentHandler(Object exception,
+			ExceptionHandler value) {
+		MethodTools.safePerform(exception, "currentHandler:", value);
+	}
+
+	private static ExceptionHandler initialHandler(Object exception) {
+		return (ExceptionHandler) MethodTools.safePerform(exception,
+				"initialHandler");
+	}
+
+	private static void setInitialHandler(Object exception,
+			ExceptionHandler value) {
+		MethodTools.safePerform(exception, "initialHandler:", value);
 	}
 
 	private void pvtRemoveHandler(ExceptionHandler handler) {

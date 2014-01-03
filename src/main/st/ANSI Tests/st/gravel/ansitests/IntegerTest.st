@@ -111,6 +111,13 @@ test_bitShift_
 !
 (reader addMethod: 'tests')
 !
+test_bitShift_2
+	self assert: (65536 bitShift: -16) = 1.
+	self assert: (65537 bitShift: -16) = 1.
+	self assert: (65532 bitShift: -16) = 0
+!
+(reader addMethod: 'tests')
+!
 test_bitXor_
 	self valuesDo: 
 			[:testValue |
@@ -153,6 +160,31 @@ test_highBit
 					[| res |
 					res := testValue highBit.
 					self assert: (self valueIsKindOfInteger: res)]]
+!
+(reader addMethod: 'tests')
+!
+test_highBit0
+	self assert: 0 highBit = 0
+!
+(reader addMethod: 'tests')
+!
+test_highBit2
+	self assert: 2 highBit = 2
+!
+(reader addMethod: 'tests')
+!
+test_highBit536870911
+	self assert: 536870911 highBit = 29
+!
+(reader addMethod: 'tests')
+!
+test_highBit536870912
+	self assert: 536870912 highBit = 30
+!
+(reader addMethod: 'tests')
+!
+test_highBit53687091200
+	self assert: 53687091200 highBit = 36
 !
 (reader addMethod: 'tests')
 !

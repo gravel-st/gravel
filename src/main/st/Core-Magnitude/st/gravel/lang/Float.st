@@ -6,6 +6,10 @@
 !
 (reader defineSharedVariable: 'NegativeInfinity' init: nil)
 !
+(reader defineSharedVariable: 'Pi' init: nil)
+!
+(reader defineSharedVariable: 'RadiansPerDegree' init: nil)
+!
 (reader propertyAt: 'javaClass' put: 'java.lang.Float')
 !
 (reader addMethod: 'arithmetic')
@@ -70,6 +74,11 @@ asTrueFraction
 ceiling
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'ceiling')>
 	
+!
+(reader addMethod: 'converting')
+!
+degreesToRadians
+	^self * RadiansPerDegree
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -233,6 +242,11 @@ quotientFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'quotientFromSmallInteger_')>
 	
 !
+(reader addMethod: 'converting')
+!
+radiansToDegrees
+	^self / RadiansPerDegree
+!
 (reader addMethod: 'private-arithmetic')
 !
 raising: aNumber
@@ -289,7 +303,9 @@ truncated
 initialize
 	Infinity := self javaPositiveInfinity.
 	NegativeInfinity := self javaNegativeInfinity.
-	NaN := self javaNaN
+	NaN := self javaNaN.
+	Pi := 3.1415927.
+	RadiansPerDegree := 0.017453292
 !
 (reader addClassMethod: 'private-initialization')
 !

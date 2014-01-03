@@ -40,24 +40,11 @@ copyEmpty: aSize
 !
 (reader addMethod: 'copying')
 !
-copyReplaceAll: oldSubstring with: newSubstring
-	| value startSearch currentIndex endIndex |
-	value := self.
-	startSearch := 1.
-	[(currentIndex := value indexOfSubCollection: oldSubstring startingAt: startSearch) > 0]
-		whileTrue: 
-			[endIndex := currentIndex + oldSubstring size - 1.
-			value := value copyReplaceFrom: currentIndex to: endIndex with: newSubstring.
-			startSearch := currentIndex + newSubstring size].
-	^value
-!
-(reader addMethod: 'copying')
-!
 copyReplaceFrom: start to: stop with: replacementCollection
 	| newSequenceableCollection newSize endReplacement |
 	newSize := self size - (stop - start + 1) + replacementCollection size.
 	endReplacement := start - 1 + replacementCollection size.
-	newSequenceableCollection := self species new: newSize.
+	newSequenceableCollection := self copySpecies ofSize: newSize.
 	start > 1
 		ifTrue: 
 			[newSequenceableCollection
@@ -83,6 +70,30 @@ copyReplaceFrom: start to: stop with: replacementCollection
 !
 (reader addMethod: 'copying')
 !
+copyReplaceFrom: start to: stop withObject: replacementElement
+	| newSequenceableCollection newSize replacementCollection |
+	newSize := self size.
+	replacementCollection := Array new: stop - start + 1 withAll: replacementElement.
+	newSequenceableCollection := self copySpecies ofSize: newSize.
+	newSequenceableCollection
+		replaceFrom: 1
+		to: start - 1
+		with: self
+		startingAt: 1.
+	newSequenceableCollection
+		replaceFrom: start
+		to: stop
+		with: replacementCollection
+		startingAt: 1.
+	newSequenceableCollection
+		replaceFrom: stop + 1
+		to: newSize
+		with: self
+		startingAt: stop + 1.
+	^newSequenceableCollection
+!
+(reader addMethod: 'copying')
+!
 copyReplacing: sourceElement withObject: destElement
 	^self copy replaceAll: sourceElement with: destElement
 !
@@ -94,6 +105,7 @@ copySpecies
 (reader addMethod: 'copying')
 !
 copyTo: stop
+	self size > stop ifFalse: [^self].
 	^self copyFrom: 1 to: stop
 !
 (reader addMethod: 'gravel')
@@ -130,7 +142,7 @@ copyWithAll: aColl
 (reader addMethod: 'gravel')
 !
 copyWithFirst: anObject
-	^(self copySpecies new: self size + 1)
+	^(self copySpecies ofSize: self size + 1)
 		replaceFrom: 2
 			to: self size + 1
 			with: self;
@@ -205,11 +217,6 @@ replaceFrom: start to: stop with: replacement startingAt: repStart
 (reader addMethod: 'converting')
 !
 reverse
-	^self reversed
-!
-(reader addMethod: 'converting')
-!
-reversed
 	| n result src |
 	n := self size.
 	result := self species ofSize: n.
@@ -230,15 +237,6 @@ select: aBlock
 !
 species
 	^OrderedCollection
-!
-(reader addMethod: 'gravel')
-!
-startingAt: repStart replaceElementsIn: collection from: start to: stop
-	^collection
-		replaceElementsFrom: start
-		to: stop
-		withSequenceableCollection: self
-		startingAt: repStart
 !
 (reader addMethod: 'converting')
 !

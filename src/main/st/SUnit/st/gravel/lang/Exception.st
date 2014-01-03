@@ -6,6 +6,8 @@
 !
 (reader addInstVar: 'messageText')
 !
+(reader addInstVar: 'initialHandler')
+!
 (reader addMethod: 'gravel')
 !
 sunitExitWith: aValue

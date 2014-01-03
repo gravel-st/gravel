@@ -18,7 +18,8 @@ at: index
 (reader addMethod: 'accessing')
 !
 at: index ifAbsent: aBlock
-	^self traitRequirement
+	(index isInteger not or: [index < 0 or: [index > self size]]) ifTrue: [^aBlock value].
+	^self at: index
 !
 (reader addMethod: 'accessing')
 !
@@ -30,7 +31,7 @@ before: anObject
 copyFrom: start to: stop
 	| newSize |
 	newSize := stop - start + 1.
-	^(self copySpecies new: newSize)
+	^(self copySpecies ofSize: newSize)
 		replaceFrom: 1
 		to: newSize
 		with: self
@@ -39,7 +40,17 @@ copyFrom: start to: stop
 (reader addMethod: 'copying')
 !
 copyReplaceAll: oldSubCollection with: newSubCollection
-	^self traitRequirement
+	| value startSearch currentIndex endIndex |
+	value := self.
+	startSearch := 1.
+	
+	[(currentIndex := value indexOfSubCollection: oldSubCollection startingAt: startSearch)
+		> 0]
+			whileTrue: 
+				[endIndex := currentIndex + oldSubCollection size - 1.
+				value := value copyReplaceFrom: currentIndex to: endIndex with: newSubCollection.
+				startSearch := currentIndex + newSubCollection size].
+	^value
 !
 (reader addMethod: 'copying')
 !
@@ -49,26 +60,7 @@ copyReplaceFrom: start to: stop with: replacementCollection
 (reader addMethod: 'copying')
 !
 copyReplaceFrom: start to: stop withObject: replacementElement
-	| newSequenceableCollection newSize replacementCollection |
-	newSize := self size.
-	replacementCollection := Array new: stop - start + 1 withAll: replacementElement.
-	newSequenceableCollection := self copySpecies ofSize: newSize.
-	newSequenceableCollection
-		replaceFrom: 1
-		to: start - 1
-		with: self
-		startingAt: 1.
-	newSequenceableCollection
-		replaceFrom: start
-		to: stop
-		with: replacementCollection
-		startingAt: 1.
-	newSequenceableCollection
-		replaceFrom: stop + 1
-		to: newSize
-		with: self
-		startingAt: stop + 1.
-	^newSequenceableCollection
+	^self traitRequirement
 !
 (reader addMethod: 'copying')
 !
@@ -198,6 +190,12 @@ keysAndValuesDo: aBlock
 last
 	^self at: self size
 !
+(reader addMethod: 'accessing')
+!
+nextIndexOf: anElement from: startIndex to: stopIndex
+	startIndex to: stopIndex do: [:i | (self at: i) = anElement ifTrue: [^i]].
+	^nil
+!
 (reader addMethod: 'converting')
 !
 readStream
@@ -234,6 +232,15 @@ sixth
 !
 size
 	^self traitRequirement
+!
+(reader addMethod: 'gravel')
+!
+startingAt: repStart replaceElementsIn: collection from: start to: stop
+	^collection
+		replaceElementsFrom: start
+		to: stop
+		withSequenceableCollection: self
+		startingAt: repStart
 !
 (reader addMethod: 'accessing')
 !

@@ -17,6 +17,11 @@ add: newObject
 	list add: newObject beforeIndex: nextIndex.
 	^newObject
 !
+(reader addMethod: 'accessing')
+!
+at: index
+	^list at: index
+!
 (reader addMethod: 'gravel')
 !
 do: aBlock
@@ -46,6 +51,11 @@ initialize: initialCapacity
 isEmpty
 	^list isEmpty
 !
+(reader addMethod: 'copying')
+!
+postCopy
+	list := list copy
+!
 (reader addMethod: 'gravel')
 !
 reSort
@@ -58,6 +68,11 @@ reSort
 !
 size
 	^list size
+!
+(reader addMethod: 'gravel')
+!
+sortBlock
+	^sortBlock
 !
 (reader addMethod: 'gravel')
 !

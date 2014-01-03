@@ -36,6 +36,19 @@ do: aBlock
 	1 to: array size
 		do: [:index | (array at: index) ifNotNil: [:element | aBlock value: element]]
 !
+(reader addMethod: 'accessing')
+!
+fixCollisionsFrom: start
+	| element index |
+	index := start.
+	[(element := array at: (index := index \\ array size + 1)) == nil] whileFalse: 
+			[| newIndex |
+			(newIndex := self scanFor: element) = index
+				ifFalse: 
+					[array
+						at: newIndex put: element;
+						at: index put: nil]]
+!
 (reader addMethod: 'testing')
 !
 includes: anObject
@@ -54,6 +67,17 @@ noCheckNoGrowFillFrom: anArray
 !
 occurrencesOf: anObject
 	^(self includes: anObject) ifTrue: [1] ifFalse: [0]
+!
+(reader addMethod: 'accessing')
+!
+remove: oldObject ifAbsent: aBlock
+	| index |
+	index := self scanFor: oldObject.
+	(array at: index) ifNil: [^aBlock value].
+	array at: index put: nil.
+	tally := tally - 1.
+	self fixCollisionsFrom: index.
+	^oldObject
 !
 (reader addMethod: 'private')
 !

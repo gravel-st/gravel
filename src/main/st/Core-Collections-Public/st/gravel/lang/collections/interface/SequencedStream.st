@@ -15,6 +15,11 @@ close
 contents
 	^self traitRequirement
 !
+(reader addMethod: 'As yet unclassified')
+!
+contentsSpecies
+	^Array
+!
 (reader addMethod: 'testing')
 !
 isEmpty

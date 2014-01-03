@@ -37,8 +37,8 @@ public class StringExtensions {
 		return receiver.length();
 	}
 
-	public static boolean sortsLowerThan_(String receiver, String other) {
-		return receiver.compareTo(other) < 0;
+	public static boolean lessFromJavaString_(String receiver, String argument) {
+		return argument.compareTo(receiver) < 0;
 	}
 
 	public static String newInstance(Object receiver) {
@@ -47,7 +47,7 @@ public class StringExtensions {
 
 	public static String newInstance_(Object receiver, int size) {
 		final StringBuffer stringBuffer = new StringBuffer(size);
-		for (int i= 0; i < size ; i++) {
+		for (int i = 0; i < size; i++) {
 			stringBuffer.appendCodePoint(0);
 		}
 		return stringBuffer.toString();
@@ -130,11 +130,14 @@ public class StringExtensions {
 		return (receiver == null && other == null)
 				|| (receiver != null && other != null && receiver.equals(other));
 	}
-	
+
 	public static String copyFrom_to_(String receiver, int start, int stop) {
 		return receiver.substring(start - 1, stop);
 	}
-	
+
+	public static String copyWith_(String receiver, char ch) {
+		return receiver + ch;
+	}
 
 	public static void writeToFile_(String receiver, File file) {
 		throw new UnsupportedOperationException("Not Implemented Yet");
@@ -143,7 +146,7 @@ public class StringExtensions {
 	public static File asFilename(String pathname) {
 		return new File(pathname);
 	}
-	
+
 	public static Float parseFloat(String _valueString) {
 		return Float.valueOf(_valueString);
 	}
