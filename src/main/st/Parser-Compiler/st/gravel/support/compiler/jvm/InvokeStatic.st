@@ -8,7 +8,7 @@ accept: visitor {JVMInstructionVisitor[X def]} {^X}
 (reader addMethod: 'As yet unclassified')
 !
 effectStack: aJVMStack {JVMStack} {^JVMInstruction}
-	signature arguments reverseDo: [:each {JVMType} | self assert: aJVMStack pop = each].
+	signature arguments reverseDo: [:each {JVMType} | aJVMStack popType: each].
 	signature returnType isVoidType ifFalse: [aJVMStack push: signature returnType].
 	^self
 !

@@ -32,23 +32,28 @@ abs
 !
 (reader addMethod: 'converting')
 !
+asDouble
+	^self subclassResponsibility
+!
+(reader addMethod: 'converting')
+!
 asFloat
 	^self subclassResponsibility
 !
 (reader addMethod: 'converting')
 !
 asFloatD
-	^self subclassResponsibility
+	^self asDouble
 !
 (reader addMethod: 'converting')
 !
 asFloatE
-	^self subclassResponsibility
+	^self asFloat
 !
 (reader addMethod: 'converting')
 !
 asFloatQ
-	^self subclassResponsibility
+	^self asDouble
 !
 (reader addMethod: 'converting')
 !
@@ -68,7 +73,10 @@ asScaledDecimal: scale
 (reader addMethod: 'truncation and round off')
 !
 ceiling
-	^self subclassResponsibility
+	| truncation |
+	truncation := self truncated.
+	self <= 0 ifTrue: [^truncation].
+	self = truncation ifTrue: [^truncation] ifFalse: [^truncation + 1]
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -110,10 +118,10 @@ floor
 floorLog: radix
 	^(self log: radix) floor
 !
-(reader addMethod: 'truncation and round off')
+(reader addMethod: 'arithmetic')
 !
 fractionPart
-	^self subclassResponsibility
+	^self asFloat fractionPart
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -347,7 +355,7 @@ remFromSmallInteger: anObject
 (reader addMethod: 'truncation and round off')
 !
 rounded
-	^self subclassResponsibility
+	^(self + (self sign / 2)) truncated
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -361,10 +369,10 @@ sign
 	self negative ifTrue: [^-1].
 	^0
 !
-(reader addMethod: 'arithmetic')
+(reader addMethod: 'mathematical functions')
 !
 sqrt
-	^self subclassResponsibility
+	^self asFloat sqrt
 !
 (reader addMethod: 'arithmetic')
 !

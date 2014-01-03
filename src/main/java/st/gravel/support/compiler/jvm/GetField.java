@@ -58,7 +58,7 @@ public class GetField extends JVMInstruction implements Cloneable {
 
 	@Override
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.ObjectExtensions.equals_(_aJVMStack.pop(), _ownerType));
+		_aJVMStack.popType_(_ownerType);
 		_aJVMStack.push_(this.type());
 		return this;
 	}

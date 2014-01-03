@@ -65,6 +65,9 @@ public class JVMStack extends Object implements Cloneable {
 	public JVMType pop() {
 		final JVMType _last;
 		_last = _elements[_elements.length - 1];
+		if (_last.isWide()) {
+			throw new RuntimeException("Cannot pop a wide element");
+		}
 		_elements = st.gravel.support.jvm.ArrayExtensions.copyWithoutLast(_elements);
 		return _last;
 	}
@@ -72,6 +75,23 @@ public class JVMStack extends Object implements Cloneable {
 	public JVMType popLast() {
 		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.IntegerExtensions.equals_(this.size(), 1));
 		return this.pop();
+	}
+
+	public JVMStack popType_(final JVMType _aJVMType) {
+		final JVMType _last;
+		_last = _aJVMType.isWide() ? this.popWide() : this.pop();
+		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.ObjectExtensions.equals_(_last, _aJVMType));
+		return this;
+	}
+
+	public JVMType popWide() {
+		final JVMType _last;
+		_last = _elements[_elements.length - 1];
+		if (!_last.isWide()) {
+			throw new RuntimeException("Cannot pop a small element");
+		}
+		_elements = st.gravel.support.jvm.ArrayExtensions.copyWithoutLast(_elements);
+		return _last;
 	}
 
 	public JVMStack postCopy() {

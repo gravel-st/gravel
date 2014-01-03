@@ -14,7 +14,7 @@ accept: visitor {JVMInstructionVisitor[X def]} {^X}
 (reader addMethod: 'As yet unclassified')
 !
 effectStack: aJVMStack {JVMStack} {^JVMInstruction}
-	self assert: aJVMStack pop = ownerType.
+	aJVMStack popType: ownerType.
 	aJVMStack push: self type.
 	^self
 !

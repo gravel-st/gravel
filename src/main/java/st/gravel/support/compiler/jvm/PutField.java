@@ -59,7 +59,7 @@ public class PutField extends JVMInstruction implements Cloneable {
 	@Override
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
 		_aJVMStack.pop();
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.ObjectExtensions.equals_(_aJVMStack.pop(), _ownerType));
+		_aJVMStack.popType_(_ownerType);
 		return this;
 	}
 

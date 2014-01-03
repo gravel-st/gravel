@@ -32,8 +32,18 @@ visitJVMDefinedObjectType: anObject {JVMDefinedObjectType} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitJVMDoubleType: anObject {JVMDoubleType} {^X}
+	^self visitJVMPrimitiveType: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitJVMDynamicObjectType: anObject {JVMDynamicObjectType} {^X}
 	^self visitJVMType: anObject
+!
+(reader addMethod: 'visiting')
+!
+visitJVMFloatType: anObject {JVMFloatType} {^X}
+	^self visitJVMPrimitiveType: anObject
 !
 (reader addMethod: 'visiting')
 !

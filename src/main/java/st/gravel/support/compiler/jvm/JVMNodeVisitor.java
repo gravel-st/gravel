@@ -13,7 +13,9 @@ import st.gravel.support.compiler.jvm.JVMBottomType;
 import st.gravel.support.compiler.jvm.JVMByteType;
 import st.gravel.support.compiler.jvm.JVMCharType;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import st.gravel.support.compiler.jvm.JVMDoubleType;
 import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
+import st.gravel.support.compiler.jvm.JVMFloatType;
 import st.gravel.support.compiler.jvm.JVMIntType;
 import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
 import st.gravel.support.compiler.jvm.JVMLongType;
@@ -84,8 +86,16 @@ public class JVMNodeVisitor<X> extends Object implements Cloneable {
 		return this.visitJVMType_(_anObject);
 	}
 
+	public X visitJVMDoubleType_(final JVMDoubleType _anObject) {
+		return this.visitJVMPrimitiveType_(_anObject);
+	}
+
 	public X visitJVMDynamicObjectType_(final JVMDynamicObjectType _anObject) {
 		return this.visitJVMType_(_anObject);
+	}
+
+	public X visitJVMFloatType_(final JVMFloatType _anObject) {
+		return this.visitJVMPrimitiveType_(_anObject);
 	}
 
 	public X visitJVMIntType_(final JVMIntType _anObject) {

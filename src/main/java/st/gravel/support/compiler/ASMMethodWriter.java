@@ -17,6 +17,7 @@ import st.gravel.support.compiler.jvm.CastBooleanToObject;
 import st.gravel.support.compiler.jvm.CastByteToObject;
 import st.gravel.support.compiler.jvm.CastCharToObject;
 import st.gravel.support.compiler.jvm.CastDefinedToObject;
+import st.gravel.support.compiler.jvm.CastDoubleToObject;
 import st.gravel.support.compiler.jvm.CastFloatToObject;
 import st.gravel.support.compiler.jvm.CastIntToObject;
 import st.gravel.support.compiler.jvm.CastLongToObject;
@@ -25,6 +26,7 @@ import st.gravel.support.compiler.jvm.CastObjectToBoolean;
 import st.gravel.support.compiler.jvm.CastObjectToByte;
 import st.gravel.support.compiler.jvm.CastObjectToChar;
 import st.gravel.support.compiler.jvm.CastObjectToDefined;
+import st.gravel.support.compiler.jvm.CastObjectToDouble;
 import st.gravel.support.compiler.jvm.CastObjectToFloat;
 import st.gravel.support.compiler.jvm.CastObjectToInt;
 import st.gravel.support.compiler.jvm.CastObjectToLong;
@@ -96,8 +98,8 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		throw new UnsupportedOperationException("Not Implemented Yet");
 	}
 
-	public Integer fromage(byte x) {
-		return (int)x;
+	public double fromage(Object x) {
+		return (Double)x;
 	}
 
 	public void logToErr(final String string) {
@@ -255,6 +257,12 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
+	public Void visitCastDoubleToObject_(CastDoubleToObject node) {
+		mv.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+		return null;
+	}
+
+	@Override
 	public Void visitCastFloatToObject_(CastFloatToObject node) {
 		mv.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf", "(F)Ljava/lang/Float;");
 		return null;
@@ -314,6 +322,13 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitTypeInsn(CHECKCAST, "java/lang/Float");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Float", "floatValue",
 				"()F");
+		return null;
+	}
+
+	@Override
+	public Void visitCastObjectToDouble_(CastObjectToDouble node) {
+		mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D");
 		return null;
 	}
 

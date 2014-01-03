@@ -42,6 +42,11 @@
 !
 (reader addMethod: 'converting')
 !
+asDouble
+	^fraction asDouble
+!
+(reader addMethod: 'converting')
+!
 asFloat
 	<squeak>
 	^fraction asFloat
@@ -84,6 +89,11 @@ fractionPart
 integerPart
 	<squeak>
 	^ScaledDecimal newFromNumber: fraction integerPart scale: scale
+!
+(reader addMethod: 'testing')
+!
+isScaledDecimal
+	^true
 !
 (reader addMethod: 'private-arithmetic')
 !

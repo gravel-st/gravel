@@ -17,6 +17,7 @@ import st.gravel.support.compiler.jvm.JVMBooleanType;
 import st.gravel.support.compiler.jvm.JVMByteType;
 import st.gravel.support.compiler.jvm.JVMCharType;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import st.gravel.support.compiler.jvm.JVMDoubleType;
 import st.gravel.support.compiler.jvm.JVMFloatType;
 import st.gravel.support.compiler.jvm.JVMIntType;
 import st.gravel.support.compiler.jvm.JVMLongType;
@@ -59,6 +60,10 @@ abstract public class JVMType extends JVMNode implements Cloneable {
 	}
 
 	public JVMType commonSuperTypeWithDefined_(final JVMDefinedObjectType _aJVMDefinedObjectType) {
+		return JVMDynamicObjectType.factory.basicNew();
+	}
+
+	public JVMType commonSuperTypeWithDouble_(final JVMDoubleType _aJVMDoubleType) {
 		return JVMDynamicObjectType.factory.basicNew();
 	}
 
@@ -144,6 +149,10 @@ abstract public class JVMType extends JVMNode implements Cloneable {
 		return false;
 	}
 
+	public boolean isDoubleType() {
+		return false;
+	}
+
 	public boolean isDynamicObjectType() {
 		return false;
 	}
@@ -168,6 +177,10 @@ abstract public class JVMType extends JVMNode implements Cloneable {
 		return false;
 	}
 
+	public boolean isWide() {
+		return false;
+	}
+
 	public CastTo newCastInstructionFromArray_(final JVMArrayType _aJVMArrayType) {
 		return this.castNotSupported();
 	}
@@ -186,6 +199,10 @@ abstract public class JVMType extends JVMNode implements Cloneable {
 
 	public CastTo newCastInstructionFromDefinedObject_(final JVMDefinedObjectType _anObject) {
 		return this.newCastInstructionFromDynamicObject();
+	}
+
+	public CastTo newCastInstructionFromDouble() {
+		return this.castNotSupported();
 	}
 
 	public CastTo newCastInstructionFromDynamicObject() {

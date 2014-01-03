@@ -20,3 +20,8 @@ isInteger
 isNumber
 	^false
 !
+(reader addMethod: 'testing')
+!
+isScaledDecimal
+	^false
+!

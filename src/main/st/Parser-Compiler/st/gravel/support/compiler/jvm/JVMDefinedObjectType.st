@@ -140,6 +140,16 @@ dottedClassName: aString {Str} {^JVMDefinedObjectType}
 !
 (reader addClassMethod: 'As yet unclassified')
 !
+double {^JVMDefinedObjectType}
+	^self className: 'java/lang/Double'
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+float {^JVMDefinedObjectType}
+	^self className: 'java/lang/Float'
+!
+(reader addClassMethod: 'As yet unclassified')
+!
 hashMap {^JVMDefinedObjectType}
 	^self className: 'java/util/HashMap'
 !

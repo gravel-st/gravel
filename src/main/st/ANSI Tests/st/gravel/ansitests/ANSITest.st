@@ -293,7 +293,7 @@ valueIsKindOfInteger: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfInterval: aValue
-	^aValue class = Interval
+	^aValue isInterval
 !
 (reader addMethod: 'tests')
 !
@@ -418,7 +418,7 @@ valueIsKindOfReadWriteStreamFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfScaledDecimal: aValue
-	^aValue class = FixedPoint
+	^aValue isScaledDecimal
 !
 (reader addMethod: 'tests')
 !

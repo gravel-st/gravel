@@ -46,6 +46,11 @@
 !
 (reader addMethod: 'converting')
 !
+asDouble
+	^numerator doubleDiv: denominator
+!
+(reader addMethod: 'converting')
+!
 asFloat
 	^numerator floatDiv: denominator
 !

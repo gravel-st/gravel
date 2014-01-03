@@ -47,6 +47,11 @@ commonSuperTypeWithDefined: aJVMDefinedObjectType {JVMDefinedObjectType} {^JVMTy
 !
 (reader addMethod: 'As yet unclassified')
 !
+commonSuperTypeWithDouble: aJVMDoubleType {JVMDoubleType} {^JVMType}
+	^JVMDynamicObjectType new
+!
+(reader addMethod: 'As yet unclassified')
+!
 commonSuperTypeWithFloat: aJVMFloatType {JVMFloatType} {^JVMType}
 	^JVMDynamicObjectType new
 !
@@ -118,6 +123,11 @@ isCoerceableByteType {^Bool}
 isDefinedType {^Bool}
 	^false
 !
+(reader addMethod: 'testing')
+!
+isDoubleType {^Bool}
+	^false
+!
 (reader addMethod: 'As yet unclassified')
 !
 isDynamicObjectType {^Bool}
@@ -148,6 +158,11 @@ isObjectType {^Bool}
 isVoidType {^Bool}
 	^false
 !
+(reader addMethod: 'testing')
+!
+isWide {^Bool}
+	^false
+!
 (reader addMethod: 'As yet unclassified')
 !
 newCastInstructionFromArray: aJVMArrayType {JVMArrayType} {^CastTo}
@@ -172,6 +187,11 @@ newCastInstructionFromChar {^CastTo}
 !
 newCastInstructionFromDefinedObject: anObject {JVMDefinedObjectType} {^CastTo}
 	^self newCastInstructionFromDynamicObject
+!
+(reader addMethod: 'As yet unclassified')
+!
+newCastInstructionFromDouble {^CastTo}
+	^self castNotSupported
 !
 (reader addMethod: 'As yet unclassified')
 !

@@ -1,4 +1,4 @@
-(reader defineClass: 'Float' superclass: 'st.gravel.lang.Number')
+(reader defineClass: 'Float' superclass: 'st.gravel.lang.LimitedPrecisionReal')
 !
 (reader defineSharedVariable: 'Infinity' init: nil)
 !
@@ -42,6 +42,12 @@
 !
 = aMagnitude
 	<primitive: 'equals'>
+	
+!
+(reader addMethod: 'converting')
+!
+asDouble
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'asDouble')>
 	
 !
 (reader addMethod: 'converting')
@@ -236,6 +242,12 @@ raising: aNumber
 !
 rounded
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'rounded')>
+	
+!
+(reader addMethod: 'mathematical functions')
+!
+sqrt
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'sqrt')>
 	
 !
 (reader addMethod: 'private-arithmetic')

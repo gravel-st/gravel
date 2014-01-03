@@ -91,6 +91,14 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 			return this.className_("java/lang/Boolean");
 		}
 
+		public JVMDefinedObjectType r_double() {
+			return this.className_("java/lang/Double");
+		}
+
+		public JVMDefinedObjectType r_float() {
+			return this.className_("java/lang/Float");
+		}
+
 		public JVMDefinedObjectType string() {
 			return this.className_("java/lang/String");
 		}
@@ -162,6 +170,14 @@ public class JVMDefinedObjectType extends JVMNonPrimitiveType implements Cloneab
 
 	static public JVMDefinedObjectType _r_boolean(Object receiver) {
 		return factory.r_boolean();
+	}
+
+	static public JVMDefinedObjectType _r_double(Object receiver) {
+		return factory.r_double();
+	}
+
+	static public JVMDefinedObjectType _r_float(Object receiver) {
+		return factory.r_float();
 	}
 
 	static public JVMDefinedObjectType _string(Object receiver) {

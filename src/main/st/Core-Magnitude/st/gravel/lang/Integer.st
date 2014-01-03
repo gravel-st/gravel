@@ -53,6 +53,11 @@ benchmark
 							count := count + 1]]].
 	^count
 !
+(reader addMethod: 'truncation and round off')
+!
+ceiling
+	^self
+!
 (reader addMethod: 'private-arithmetic')
 !
 compressed
@@ -84,6 +89,11 @@ denominator
 differenceFromFraction: aFraction
 	^(Fraction numerator: aFraction numerator - (aFraction denominator * self)
 		denominator: aFraction denominator) reduced
+!
+(reader addMethod: 'arithmetic')
+!
+doubleDiv: operand
+	^self subclassResponsibility
 !
 (reader addMethod: 'gravel')
 !

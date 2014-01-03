@@ -11,17 +11,17 @@ import st.gravel.support.compiler.jvm.JVMPrimitiveType;
 import st.gravel.support.compiler.jvm.JVMPrimitiveType.JVMPrimitiveType_Factory;
 import st.gravel.support.compiler.jvm.JVMNodeVisitor;
 import st.gravel.support.compiler.jvm.JVMType;
-import st.gravel.support.compiler.jvm.CastObjectToLong;
+import st.gravel.support.compiler.jvm.CastObjectToDouble;
 import st.gravel.support.compiler.jvm.CastTo;
 
-public class JVMLongType extends JVMPrimitiveType implements Cloneable {
+public class JVMDoubleType extends JVMPrimitiveType implements Cloneable {
 
-	public static JVMLongType_Factory factory = new JVMLongType_Factory();
+	public static JVMDoubleType_Factory factory = new JVMDoubleType_Factory();
 
-	public static class JVMLongType_Factory extends JVMPrimitiveType_Factory {
+	public static class JVMDoubleType_Factory extends JVMPrimitiveType_Factory {
 
-		public JVMLongType basicNew() {
-			JVMLongType newInstance = new JVMLongType();
+		public JVMDoubleType basicNew() {
+			JVMDoubleType newInstance = new JVMDoubleType();
 			newInstance.initialize();
 			return newInstance;
 		}
@@ -29,17 +29,22 @@ public class JVMLongType extends JVMPrimitiveType implements Cloneable {
 
 	@Override
 	public <X> X accept_(final JVMNodeVisitor<X> _visitor) {
-		return _visitor.visitJVMLongType_(this);
+		return _visitor.visitJVMDoubleType_(this);
+	}
+
+	@Override
+	public JVMType commonSuperTypeWithDouble_(final JVMDoubleType _aJVMDoubleType) {
+		return this;
 	}
 
 	@Override
 	public JVMType commonSuperTypeWith_(final JVMType _aJVMType) {
-		return _aJVMType.commonSuperTypeWithLong_(this);
+		return _aJVMType.commonSuperTypeWithDouble_(this);
 	}
 
-	public JVMLongType copy() {
+	public JVMDoubleType copy() {
 		try {
-			JVMLongType _temp1 = (JVMLongType) this.clone();
+			JVMDoubleType _temp1 = (JVMDoubleType) this.clone();
 			_temp1.postCopy();
 			return _temp1;
 		} catch (CloneNotSupportedException e) {
@@ -48,17 +53,17 @@ public class JVMLongType extends JVMPrimitiveType implements Cloneable {
 	}
 
 	@Override
-	public JVMLongType descriptorOn_(final StringBuilder _aStream) {
+	public JVMDoubleType descriptorOn_(final StringBuilder _aStream) {
 		this.sourceOn_(_aStream);
 		return this;
 	}
 
-	public JVMLongType_Factory factory() {
+	public JVMDoubleType_Factory factory() {
 		return factory;
 	}
 
 	@Override
-	public boolean isLongType() {
+	public boolean isDoubleType() {
 		return true;
 	}
 
@@ -68,24 +73,24 @@ public class JVMLongType extends JVMPrimitiveType implements Cloneable {
 	}
 
 	@Override
-	public CastObjectToLong newCastInstructionFromDynamicObject() {
-		return CastObjectToLong.factory.basicNew();
+	public CastObjectToDouble newCastInstructionFromDynamicObject() {
+		return CastObjectToDouble.factory.basicNew();
 	}
 
 	@Override
 	public CastTo newCastInstructionTo_(final JVMType _aJVMType) {
-		return _aJVMType.newCastInstructionFromLong();
+		return _aJVMType.newCastInstructionFromDouble();
 	}
 
 	@Override
-	public JVMLongType printOn_(final StringBuilder _aStream) {
+	public JVMDoubleType printOn_(final StringBuilder _aStream) {
 		this.sourceOn_(_aStream);
 		return this;
 	}
 
 	@Override
-	public JVMLongType sourceOn_(final StringBuilder _aStream) {
-		_aStream.append('J');
+	public JVMDoubleType sourceOn_(final StringBuilder _aStream) {
+		_aStream.append('D');
 		return this;
 	}
 }

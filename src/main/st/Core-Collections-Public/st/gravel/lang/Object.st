@@ -27,6 +27,11 @@ isDictionary
 !
 (reader addMethod: 'testing')
 !
+isInterval
+	^false
+!
+(reader addMethod: 'testing')
+!
 isOrderedCollection
 	^false
 !
