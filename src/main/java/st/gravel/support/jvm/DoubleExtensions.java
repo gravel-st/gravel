@@ -25,6 +25,14 @@ public class DoubleExtensions {
 		return Math.tan(receiver);
 	}
 	
+	public static double degreesToRadians(double receiver) {
+		return Math.toRadians(receiver);
+	}
+	
+	public static double radiansToDegrees(double receiver) {
+		return Math.toDegrees(receiver);
+	}
+	
 	public static double arcSin(double receiver) {
 		return Math.asin(receiver);
 	}
@@ -35,5 +43,9 @@ public class DoubleExtensions {
 	
 	public static double arcTan(double receiver) {
 		return Math.atan(receiver);
+	}
+	
+	public static double exp(double receiver) {
+		return Math.exp(receiver);
 	}
 }
