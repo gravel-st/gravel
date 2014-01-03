@@ -40,6 +40,12 @@
 !
 (reader addMethod: 'converting')
 !
+asDouble
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'asDouble')>
+	
+!
+(reader addMethod: 'converting')
+!
 asFloat
 	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'asFloat')>
 	
@@ -66,13 +72,32 @@ differenceFromSmallInteger: anObject
 !
 (reader addMethod: 'arithmetic')
 !
+doubleDiv: operand
+	^operand doubleDivFromLargeInteger: self
+!
+(reader addMethod: 'private-arithmetic')
+!
+doubleDivFromLargeInteger: anObject
+	<
+	primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'doubleDivFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+doubleDivFromSmallInteger: anObject
+	<
+	primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'doubleDivFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
 floatDiv: operand
 	^operand floatDivFromLargeInteger: self
 !
 (reader addMethod: 'private-arithmetic')
 !
 floatDivFromLargeInteger: anObject
-	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'floatDivFromLargeInteger:')>
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'floatDivFromLargeInteger_')>
 	
 !
 (reader addMethod: 'private-arithmetic')

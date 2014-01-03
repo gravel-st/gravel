@@ -4,6 +4,11 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SequenceableCollection class')
 !
+(reader addMethod: 'testing')
+!
+isInterval
+	^true
+!
 (reader addMethod: 'gravel')
 !
 start

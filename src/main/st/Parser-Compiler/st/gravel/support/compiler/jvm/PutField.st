@@ -15,7 +15,7 @@ accept: visitor {JVMInstructionVisitor[X def]} {^X}
 !
 effectStack: aJVMStack {JVMStack} {^JVMInstruction}
 	aJVMStack pop.
-	self assert: aJVMStack pop = ownerType.
+	aJVMStack popType: ownerType.
 	^self
 !
 (reader addMethod: 'initialize-release')

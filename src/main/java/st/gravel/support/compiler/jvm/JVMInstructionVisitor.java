@@ -22,6 +22,7 @@ import st.gravel.support.compiler.jvm.CastBooleanToObject;
 import st.gravel.support.compiler.jvm.CastByteToObject;
 import st.gravel.support.compiler.jvm.CastCharToObject;
 import st.gravel.support.compiler.jvm.CastDefinedToObject;
+import st.gravel.support.compiler.jvm.CastDoubleToObject;
 import st.gravel.support.compiler.jvm.CastFloatToObject;
 import st.gravel.support.compiler.jvm.CastIntToObject;
 import st.gravel.support.compiler.jvm.CastLongToObject;
@@ -30,6 +31,7 @@ import st.gravel.support.compiler.jvm.CastObjectToBoolean;
 import st.gravel.support.compiler.jvm.CastObjectToByte;
 import st.gravel.support.compiler.jvm.CastObjectToChar;
 import st.gravel.support.compiler.jvm.CastObjectToDefined;
+import st.gravel.support.compiler.jvm.CastObjectToDouble;
 import st.gravel.support.compiler.jvm.CastObjectToFloat;
 import st.gravel.support.compiler.jvm.CastObjectToInt;
 import st.gravel.support.compiler.jvm.CastObjectToLong;
@@ -179,6 +181,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 		return this.visitCastTo_(_anObject);
 	}
 
+	public X visitCastDoubleToObject_(final CastDoubleToObject _anObject) {
+		return this.visitCastTo_(_anObject);
+	}
+
 	public X visitCastFloatToObject_(final CastFloatToObject _anObject) {
 		return this.visitCastTo_(_anObject);
 	}
@@ -208,6 +214,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 	}
 
 	public X visitCastObjectToDefined_(final CastObjectToDefined _anObject) {
+		return this.visitCastTo_(_anObject);
+	}
+
+	public X visitCastObjectToDouble_(final CastObjectToDouble _anObject) {
 		return this.visitCastTo_(_anObject);
 	}
 

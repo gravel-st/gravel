@@ -79,6 +79,11 @@ newCastInstructionFromDefinedObject: anObject {JVMDefinedObjectType} {^CastTo}
 !
 (reader addMethod: 'As yet unclassified')
 !
+newCastInstructionFromDouble {^CastDoubleToObject}
+	^CastDoubleToObject new
+!
+(reader addMethod: 'As yet unclassified')
+!
 newCastInstructionFromFloat {^CastFloatToObject}
 	^CastFloatToObject new
 !

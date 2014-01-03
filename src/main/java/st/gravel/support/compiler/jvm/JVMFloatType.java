@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMPrimitiveType;
 import st.gravel.support.compiler.jvm.JVMPrimitiveType.JVMPrimitiveType_Factory;
+import st.gravel.support.compiler.jvm.JVMNodeVisitor;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.CastObjectToFloat;
 import st.gravel.support.compiler.jvm.CastTo;
@@ -24,6 +25,16 @@ public class JVMFloatType extends JVMPrimitiveType implements Cloneable {
 			newInstance.initialize();
 			return newInstance;
 		}
+	}
+
+	@Override
+	public <X> X accept_(final JVMNodeVisitor<X> _visitor) {
+		return _visitor.visitJVMFloatType_(this);
+	}
+
+	@Override
+	public JVMType commonSuperTypeWithFloat_(final JVMFloatType _aJVMFloatType) {
+		return this;
 	}
 
 	@Override

@@ -36,6 +36,39 @@ public class IntegerExtensions {
 	public static final BigInteger MAX_LONG_VALUE = BigInteger
 			.valueOf(Long.MAX_VALUE);
 
+	public static double asDouble(int receiver) {
+		return receiver;
+	}
+
+	public static float asFloat(int receiver) {
+		return receiver;
+	}
+
+	public static int asInt(BigInteger integer) {
+		if ((integer.compareTo(IntegerExtensions.MAX_INT_VALUE) == 1)
+				|| (integer.compareTo(IntegerExtensions.MIN_INT_VALUE) == -1)) {
+			throw new RuntimeException("Integer out of range");
+		} else {
+			return (integer.intValue());
+		}
+	}
+
+	public static long asLong(BigInteger integer) {
+		if ((integer.compareTo(IntegerExtensions.MAX_LONG_VALUE) == 1)
+				|| (integer.compareTo(IntegerExtensions.MIN_LONG_VALUE) == -1))
+			throw new RuntimeException("Long out of range");
+		return integer.longValue();
+	}
+
+	public static long asLong(Object argument) {
+		if (argument instanceof Integer)
+			return (int) argument;
+		if (argument instanceof BigInteger) {
+			return asLong((BigInteger) argument);
+		}
+		throw new IllegalArgumentException();
+	}
+
 	public static BigInteger bigIntegerRaisedToInteger_(int ibase, int iexp) {
 		// From:
 		// http://stackoverflow.com/questions/101439/the-most-efficient-way-to-implement-an-integer-based-power-function-powint-int
@@ -52,10 +85,6 @@ public class IntegerExtensions {
 		return result;
 	}
 
-	public static float asFloat(int receiver) {
-		return receiver;
-	}
-
 	public static int bitAnd_(int receiver, int other) {
 		return receiver & other;
 	}
@@ -64,12 +93,12 @@ public class IntegerExtensions {
 		return receiver | other;
 	}
 
-	public static int bitXor_(int receiver, int other) {
-		return receiver ^ other;
-	}
-
 	public static int bitShift_(int receiver, int other) {
 		return receiver << other;
+	}
+
+	public static int bitXor_(int receiver, int other) {
+		return receiver ^ other;
 	}
 
 	public static Number differenceFromLargeInteger_(int receiver,
@@ -98,6 +127,14 @@ public class IntegerExtensions {
 		throw new UnsupportedOperationException("Not Implemented Yet");
 	}
 
+	private static int gcd(int a, int b) {
+		// http://en.wikipedia.org/wiki/Euclidean_algorithm
+		if (b == 0)
+			return a;
+		else
+			return gcd(b, a % b);
+	}
+
 	public static Number gcdFromLargeInteger_(int receiver, BigInteger argument) {
 		return LargeIntegerExtensions.gcdFromLargeInteger_(
 				BigInteger.valueOf(receiver), argument);
@@ -105,14 +142,6 @@ public class IntegerExtensions {
 
 	public static int gcdFromSmallInteger_(int a, int b) {
 		return gcd(Math.abs(b), Math.abs(a));
-	}
-
-	private static int gcd(int a, int b) {
-		// http://en.wikipedia.org/wiki/Euclidean_algorithm
-		if (b == 0)
-			return a;
-		else
-			return gcd(b, a % b);
 	}
 
 	public static int hashMultiply(int receiver) {
@@ -140,12 +169,14 @@ public class IntegerExtensions {
 		return q;
 	}
 
-	public static boolean lessFromSmallInteger_(Integer receiver, Integer argument) {
-		return argument < receiver;
+	public static boolean lessFromLargeInteger_(Integer receiver,
+			BigInteger argument) {
+		return argument.compareTo(BigInteger.valueOf((int) receiver)) == -1;
 	}
 
-	public static boolean lessFromLargeInteger_(Integer receiver, BigInteger argument) {
-		return argument.compareTo(BigInteger.valueOf((int)receiver)) == -1;
+	public static boolean lessFromSmallInteger_(Integer receiver,
+			Integer argument) {
+		return argument < receiver;
 	}
 
 	public static Number moduloQuotientFromLargeInteger_(int receiver,
@@ -239,41 +270,28 @@ public class IntegerExtensions {
 		return objectFromBigInteger(argument.add(BigInteger.valueOf(receiver)));
 	}
 
-	public static float floatDivFromSmallInteger_(int receiver, int argument) {
-		return (float) argument / receiver;
-	}
-
-	public static float floatDivFromLargeInteger_(int receiver, BigInteger argument) {
-		return (float) (argument.doubleValue() / receiver);
-	}
-
 	public static Number sumFromSmallInteger_(int receiver, int argument) {
 		return objectFromLong(((long) (argument)) + receiver);
 	}
-
-	public static long asLong(Object argument) {
-		if (argument instanceof Integer)
-			return (int) argument;
-		if (argument instanceof BigInteger) {
-			return asLong((BigInteger) argument);
-		}
-		throw new IllegalArgumentException();
+	
+	public static double doubleDivFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return  (argument.doubleValue() / receiver);
 	}
 
-	public static long asLong(BigInteger integer) {
-		if ((integer.compareTo(IntegerExtensions.MAX_LONG_VALUE) == 1)
-				|| (integer.compareTo(IntegerExtensions.MIN_LONG_VALUE) == -1))
-			throw new RuntimeException("Long out of range");
-		return integer.longValue();
+	public static double doubleDivFromSmallInteger_(int receiver, int argument) {
+		return (double) argument / receiver;
 	}
 
-	public static int asInt(BigInteger integer) {
-		if ((integer.compareTo(IntegerExtensions.MAX_INT_VALUE) == 1)
-				|| (integer.compareTo(IntegerExtensions.MIN_INT_VALUE) == -1)) {
-			throw new RuntimeException("Integer out of range");
-		} else {
-			return (integer.intValue());
-		}
+	public static float floatDivFromLargeInteger_(int receiver,
+			BigInteger argument) {
+		return (float) (argument.doubleValue() / receiver);
 	}
+
+	public static float floatDivFromSmallInteger_(int receiver, int argument) {
+		return (float) (argument / receiver);
+	}
+
+
 
 }

@@ -15,14 +15,14 @@ import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 
-public class CastLongToObject extends CastTo implements Cloneable {
+public class CastDoubleToObject extends CastTo implements Cloneable {
 
-	public static CastLongToObject_Factory factory = new CastLongToObject_Factory();
+	public static CastDoubleToObject_Factory factory = new CastDoubleToObject_Factory();
 
-	public static class CastLongToObject_Factory extends CastTo_Factory {
+	public static class CastDoubleToObject_Factory extends CastTo_Factory {
 
-		public CastLongToObject basicNew() {
-			CastLongToObject newInstance = new CastLongToObject();
+		public CastDoubleToObject basicNew() {
+			CastDoubleToObject newInstance = new CastDoubleToObject();
 			newInstance.initialize();
 			return newInstance;
 		}
@@ -30,12 +30,12 @@ public class CastLongToObject extends CastTo implements Cloneable {
 
 	@Override
 	public <X> X accept_(final JVMInstructionVisitor<X> _visitor) {
-		return _visitor.visitCastLongToObject_(this);
+		return _visitor.visitCastDoubleToObject_(this);
 	}
 
-	public CastLongToObject copy() {
+	public CastDoubleToObject copy() {
 		try {
-			CastLongToObject _temp1 = (CastLongToObject) this.clone();
+			CastDoubleToObject _temp1 = (CastDoubleToObject) this.clone();
 			_temp1.postCopy();
 			return _temp1;
 		} catch (CloneNotSupportedException e) {
@@ -45,17 +45,17 @@ public class CastLongToObject extends CastTo implements Cloneable {
 
 	@Override
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, _aJVMStack.popWide().isLongType());
+		st.gravel.support.jvm.ObjectExtensions.assert_(this, _aJVMStack.popWide().isDoubleType());
 		_aJVMStack.push_(this.type());
 		return this;
 	}
 
-	public CastLongToObject_Factory factory() {
+	public CastDoubleToObject_Factory factory() {
 		return factory;
 	}
 
 	@Override
-	public CastLongToObject printOn_(final StringBuilder _aStream) {
+	public CastDoubleToObject printOn_(final StringBuilder _aStream) {
 		final String _title;
 		_title = this.factory().toString();
 		_aStream.append(st.gravel.support.jvm.CharacterExtensions.isVowel(_title.charAt(0)) ? "an " : "a ");
@@ -67,7 +67,7 @@ public class CastLongToObject extends CastTo implements Cloneable {
 	}
 
 	@Override
-	public CastLongToObject sourceOn_(final StringBuilder _aStream) {
+	public CastDoubleToObject sourceOn_(final StringBuilder _aStream) {
 		return this;
 	}
 
@@ -77,9 +77,9 @@ public class CastLongToObject extends CastTo implements Cloneable {
 	}
 
 	@Override
-	public CastLongToObject withReturnType_(final JVMType _aType) {
+	public CastDoubleToObject withReturnType_(final JVMType _aType) {
 		if (st.gravel.support.jvm.ObjectExtensions.equals_(this.type(), _aType)) {
-			return CastLongToObject.this;
+			return CastDoubleToObject.this;
 		}
 		throw new RuntimeException("niy");
 	}

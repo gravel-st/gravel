@@ -72,6 +72,11 @@ visitCastDefinedToObject: anObject {CastDefinedToObject} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitCastDoubleToObject: anObject {CastDoubleToObject} {^X}
+	^self visitCastTo: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitCastFloatToObject: anObject {CastFloatToObject} {^X}
 	^self visitCastTo: anObject
 !
@@ -108,6 +113,11 @@ visitCastObjectToChar: anObject {CastObjectToChar} {^X}
 (reader addMethod: 'visiting')
 !
 visitCastObjectToDefined: anObject {CastObjectToDefined} {^X}
+	^self visitCastTo: anObject
+!
+(reader addMethod: 'visiting')
+!
+visitCastObjectToDouble: anObject {CastObjectToDouble} {^X}
 	^self visitCastTo: anObject
 !
 (reader addMethod: 'visiting')

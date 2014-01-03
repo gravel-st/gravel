@@ -57,7 +57,7 @@ public class InvokeInterface extends Invoke implements Cloneable {
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
 		for (int _temp1 = 0; _temp1 < _signature.arguments().length; _temp1++) {
 			final JVMType _each = _signature.arguments()[(_signature.arguments().length - _temp1) - 1];
-			st.gravel.support.jvm.ObjectExtensions.assert_(InvokeInterface.this, st.gravel.support.jvm.ObjectExtensions.equals_(_aJVMStack.pop(), _each));
+			_aJVMStack.popType_(_each);
 		}
 		_aJVMStack.pop();
 		if (!_signature.returnType().isVoidType()) {

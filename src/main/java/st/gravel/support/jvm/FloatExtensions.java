@@ -20,7 +20,7 @@ public class FloatExtensions {
 	public static Object javaNaN() {
 		return Float.NaN;
 	}
-	
+
 	public static boolean lessFromFloat_(float receiver, float argument) {
 		return argument < receiver;
 	}
@@ -85,24 +85,36 @@ public class FloatExtensions {
 		return argument.floatValue() + receiver;
 	}
 
-	public static float productFromLargeInteger_(float receiver, BigInteger argument) {
+	public static float productFromLargeInteger_(float receiver,
+			BigInteger argument) {
 		return argument.floatValue() * receiver;
 	}
 
-	public static float differenceFromLargeInteger_(float receiver, BigInteger argument) {
+	public static float differenceFromLargeInteger_(float receiver,
+			BigInteger argument) {
 		return argument.floatValue() - receiver;
 	}
 
-	public static float quotientFromLargeInteger_(float receiver, BigInteger argument) {
+	public static float quotientFromLargeInteger_(float receiver,
+			BigInteger argument) {
 		return argument.floatValue() / receiver;
 	}
 
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
 	}
+
+	public static double asDouble(float receiver) {
+		return receiver;
+	}
+
+	public static float sqrt(float receiver) {
+		return (float) Math.sqrt(receiver);
+	}
+
 	public static String printBase_(float receiver, int radix) {
-		if (radix == 10 )
+		if (radix == 10)
 			return Float.toString(receiver);
-		throw new UnsupportedOperationException("Unsupported radix: "+radix);
+		throw new UnsupportedOperationException("Unsupported radix: " + radix);
 	}
 }

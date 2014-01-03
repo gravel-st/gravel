@@ -1,9 +1,19 @@
 (reader defineClass: 'JVMFloatType' superclass: 'st.gravel.support.compiler.jvm.JVMPrimitiveType')
 !
+(reader addMethod: 'visitor')
+!
+accept: visitor {JVMNodeVisitor[X def]} {^X}
+	^visitor visitJVMFloatType: self
+!
 (reader addMethod: 'As yet unclassified')
 !
 commonSuperTypeWith: aJVMType {JVMType} {^JVMType}
 	^aJVMType commonSuperTypeWithFloat: self
+!
+(reader addMethod: 'As yet unclassified')
+!
+commonSuperTypeWithFloat: aJVMFloatType {JVMFloatType} {^JVMType}
+	^self
 !
 (reader addMethod: 'As yet unclassified')
 !

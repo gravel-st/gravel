@@ -26,6 +26,7 @@ import st.gravel.support.compiler.jvm.JVMByteType;
 import st.gravel.support.compiler.jvm.JVMCharType;
 import st.gravel.support.compiler.jvm.JVMClass;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import st.gravel.support.compiler.jvm.JVMDoubleType;
 import st.gravel.support.compiler.jvm.JVMFloatType;
 import st.gravel.support.compiler.jvm.JVMIntType;
 import st.gravel.support.compiler.jvm.JVMLongType;
@@ -209,6 +210,8 @@ public final class JavaSystemMappingCompilerTools extends
 				return JVMBooleanType.factory.basicNew();
 			if (_aClass == float.class)
 				return JVMFloatType.factory.basicNew();
+			if (_aClass == double.class)
+				return JVMDoubleType.factory.basicNew();
 			throw new RuntimeException("niy: " + _aClass);
 		}
 		if (_aClass.isArray()) {

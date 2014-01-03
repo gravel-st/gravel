@@ -10,6 +10,10 @@ public class LargeIntegerExtensions {
 		return receiver.floatValue();
 	}
 
+	public static double asDouble(BigInteger receiver) {
+		return receiver.doubleValue();
+	}
+
 	public static Object compressed(BigInteger integer) {
 		return Factory.fromValue(integer);
 	}
@@ -125,6 +129,24 @@ public class LargeIntegerExtensions {
 
 	public static boolean lessFromLargeInteger_(BigInteger receiver, BigInteger argument) {
 		return argument.compareTo(receiver) == -1;
+	}
+
+	public static double doubleDivFromLargeInteger_(BigInteger receiver,
+			BigInteger argument) {
+		return  (argument.doubleValue() / receiver.doubleValue());
+	}
+
+	public static double doubleDivFromSmallInteger_(BigInteger receiver, int argument) {
+		return (double) argument / receiver.doubleValue();
+	}
+
+	public static float floatDivFromLargeInteger_(BigInteger receiver,
+			BigInteger argument) {
+		return (float) (argument.doubleValue() / receiver.doubleValue());
+	}
+
+	public static float floatDivFromSmallInteger_(BigInteger receiver, int argument) {
+		return (float) (argument / receiver.doubleValue());
 	}
 
 

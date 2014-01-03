@@ -15,6 +15,11 @@ commonSuperTypeWith: aJVMType {JVMType} {^JVMType}
 isLongType {^Bool}
 	^true
 !
+(reader addMethod: 'testing')
+!
+isWide {^Bool}
+	^true
+!
 (reader addMethod: 'As yet unclassified')
 !
 newCastInstructionFromDynamicObject {^CastObjectToLong}

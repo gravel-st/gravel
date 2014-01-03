@@ -32,6 +32,7 @@ peek: anInteger {Int} {^JVMType}
 pop {^JVMType}
 	| last {JVMType} |
 	last := elements last.
+	last isWide ifTrue: [self error: 'Cannot pop a wide element'].
 	elements := elements allButLast.
 	^last
 !
@@ -40,6 +41,22 @@ pop {^JVMType}
 popLast {^JVMType}
 	self assert: self size = 1.
 	^self pop
+!
+(reader addMethod: 'As yet unclassified')
+!
+popType: aJVMType {JVMType} {^Self}
+	| last {JVMType} |
+	last := aJVMType isWide ifTrue: [self popWide] ifFalse: [self pop].
+	self assert: last = aJVMType
+!
+(reader addMethod: 'As yet unclassified')
+!
+popWide {^JVMType}
+	| last {JVMType} |
+	last := elements last.
+	last isWide ifFalse: [self error: 'Cannot pop a small element'].
+	elements := elements allButLast.
+	^last
 !
 (reader addMethod: 'As yet unclassified')
 !
