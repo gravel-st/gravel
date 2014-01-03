@@ -12,3 +12,12 @@ numArgs
 value: arg1 value: arg2 value: arg3
 	^self subclassResponsibility
 !
+(reader addMethod: 'evaluating')
+!
+valueWithArguments: args
+	args size = 1 ifFalse: [^self raiseInvalidArgumentCount].
+	^self
+		value: args first
+		value: args second
+		value: args third
+!

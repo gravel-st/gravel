@@ -75,3 +75,9 @@ on: anExceptionSelector do: handlerBlock
 value
 	^self subclassResponsibility
 !
+(reader addMethod: 'gravel')
+!
+valueWithArguments: args
+	args size = 0 ifFalse: [^self raiseInvalidArgumentCount].
+	^self value
+!

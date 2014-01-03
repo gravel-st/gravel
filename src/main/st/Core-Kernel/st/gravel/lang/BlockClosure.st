@@ -12,3 +12,8 @@ argumentCount
 numArgs
 	^self subclassResponsibility
 !
+(reader addMethod: 'evaluating')
+!
+raiseInvalidArgumentCount
+	^self error: 'Invalid argument count'
+!
