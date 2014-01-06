@@ -352,6 +352,11 @@ visitPushConstant: anObject {PushConstant} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitPushDouble: anObject {PushDouble} {^X}
+	^self visitPushConstant: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitPushFalse: anObject {PushFalse} {^X}
 	^self visitPushBoolean: anObject
 !

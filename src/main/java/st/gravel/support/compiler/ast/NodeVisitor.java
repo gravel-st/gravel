@@ -32,6 +32,7 @@ import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.ClassTypeNode;
 import st.gravel.support.compiler.ast.CompositeTraitUsageNode;
 import st.gravel.support.compiler.ast.CreateHolderNode;
+import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.EmptyTraitUsageNode;
 import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.FieldReadNode;
@@ -232,6 +233,10 @@ public class NodeVisitor<X> extends Object implements Cloneable {
 
 	public X visitCreateHolderNode_(final CreateHolderNode _anObject) {
 		return this.visitIntermediateNode_(_anObject);
+	}
+
+	public X visitDoubleLiteralNode_(final DoubleLiteralNode _anObject) {
+		return this.visitLiteralNode_(_anObject);
 	}
 
 	public X visitEmptyTraitUsageNode_(final EmptyTraitUsageNode _anObject) {

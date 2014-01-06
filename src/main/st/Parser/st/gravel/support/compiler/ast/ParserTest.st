@@ -134,6 +134,28 @@ testParseChar
 	self assert: '$a' equals: node prettySourceString.
 	self assert: node value = $a
 !
+(reader addMethod: 'tests')
+!
+testParseDouble
+	| node {DoubleLiteralNode | Nil} |
+	node := (Parser source: '123412341345145145123412341234.003213123123d') parseExpression.
+	self assert: DoubleLiteralNode equals: node class.
+	self
+		assert: 123412341345145145123412341234.003213123123d
+		equals: node value
+		delta: 0.000000001
+!
+(reader addMethod: 'tests')
+!
+testParseDouble2
+	| node {DoubleLiteralNode | Nil} |
+	node := (Parser source: '3.0d.') parseExpression.
+	self assert: DoubleLiteralNode equals: node class.
+	self
+		assert: 3.0d
+		equals: node value
+		delta: 0.000000001
+!
 (reader addMethod: 'tests blocks')
 !
 testParseEmptyBlock

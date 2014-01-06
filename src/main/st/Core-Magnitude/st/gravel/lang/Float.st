@@ -61,16 +61,6 @@ asDouble
 asFloat
 	^self
 !
-(reader addMethod: 'converting')
-!
-asFraction
-	^self asTrueFraction
-!
-(reader addMethod: 'converting')
-!
-asTrueFraction
-	^(self * 100000000.0) truncated / 100000000
-!
 (reader addMethod: 'truncation and round off')
 !
 ceiling

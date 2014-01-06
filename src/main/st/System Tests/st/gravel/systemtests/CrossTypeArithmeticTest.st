@@ -14,8 +14,8 @@ test_big_backslashbackslash_big
 !
 test_big_backslashbackslash_double
 	| value |
-	value := 251172765292171600923361522612285166173 \\ 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 251172765292171600923361522612285166173 \\ 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
@@ -57,11 +57,9 @@ test_big_minus_big
 !
 test_big_minus_double
 	| value |
-	value := 251172765292171600923361522612285166173 - 7.50000000001 d.
-	self
-		assert: value
-		equals: 2.5117276529217 d38
-		delta: 3.24899e24
+	value := 251172765292171600923361522612285166173 - 7.50000000001d.
+	self assert: value equals: 2.5117276529217d.
+	38 delta: 3.24899e24
 !
 (reader addMethod: 'tests')
 !
@@ -110,11 +108,9 @@ test_big_plus_big
 !
 test_big_plus_double
 	| value |
-	value := 251172765292171600923361522612285166173 + 7.50000000001 d.
-	self
-		assert: value
-		equals: 2.5117276529217 d38
-		delta: 3.24899e24
+	value := 251172765292171600923361522612285166173 + 7.50000000001d.
+	self assert: value equals: 2.5117276529217d.
+	38 delta: 3.24899e24
 !
 (reader addMethod: 'tests')
 !
@@ -163,7 +159,7 @@ test_big_quo__big
 !
 test_big_quo__double
 	| value |
-	value := 251172765292171600923361522612285166173 quo: 7.50000000001 d.
+	value := 251172765292171600923361522612285166173 quo: 7.50000000001d.
 	self assert: value equals: 33489702038911600231068330190811693056
 !
 (reader addMethod: 'tests')
@@ -206,8 +202,8 @@ test_big_rem__big
 !
 test_big_rem__double
 	| value |
-	value := 251172765292171600923361522612285166173 rem: 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 251172765292171600923361522612285166173 rem: 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
@@ -249,7 +245,7 @@ test_big_slashslash_big
 !
 test_big_slashslash_double
 	| value |
-	value := 251172765292171600923361522612285166173 // 7.50000000001 d.
+	value := 251172765292171600923361522612285166173 // 7.50000000001d.
 	self assert: value equals: 33489702038911600231068330190811693056
 !
 (reader addMethod: 'tests')
@@ -293,11 +289,9 @@ test_big_times_big
 !
 test_big_times_double
 	| value |
-	value := 251172765292171600923361522612285166173 * 7.50000000001 d.
-	self
-		assert: value
-		equals: 1.8837957396938 d39
-		delta: 7.85802e24
+	value := 251172765292171600923361522612285166173 * 7.50000000001d.
+	self assert: value equals: 1.8837957396938d.
+	39 delta: 7.85802e24
 !
 (reader addMethod: 'tests')
 !
@@ -331,403 +325,334 @@ test_big_times_zero
 !
 test_double_backslashbackslash_big
 	| value |
-	value := 7.50000000001 d \\ 251172765292171600923361522612285166173.
-	self
-		assert: value
-		equals: 7.50000000001 d
-		delta: 1.95399e-14
+	value := 7.50000000001d \\ 251172765292171600923361522612285166173.
+	self assert: value equals: 7.50000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_backslashbackslash_double
 	| value |
-	value := 7.50000000001 d \\ 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 7.50000000001d \\ 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
 test_double_backslashbackslash_fixed
 	| value |
-	value := 7.50000000001 d \\ 2.5s.
+	value := 7.50000000001d \\ 2.5s.
 	self
 		assert: value
-		equals: 9.990230864787 d - 12
+		equals: 9.990230864787d - 12
 		delta: 1.9387e-26
 !
 (reader addMethod: 'tests')
 !
 test_double_backslashbackslash_float
 	| value |
-	value := 7.50000000001 d \\ 7.5.
+	value := 7.50000000001d \\ 7.5.
 	self
 		assert: value
-		equals: 9.990230864787 d - 12
+		equals: 9.990230864787d - 12
 		delta: 1.9387e-26
 !
 (reader addMethod: 'tests')
 !
 test_double_backslashbackslash_fraction
 	| value |
-	value := 7.50000000001 d \\ (2 / 3).
-	self
-		assert: value
-		equals: 0.16666666667666 d
-		delta: 5.60663e-15
+	value := 7.50000000001d \\ (2 / 3).
+	self assert: value equals: 0.16666666667666d delta: 5.60663e-15
 !
 (reader addMethod: 'tests')
 !
 test_double_backslashbackslash_int
 	| value |
-	value := 7.50000000001 d \\ 7.
-	self
-		assert: value
-		equals: 0.50000000000999 d
-		delta: 4.44089e-16
+	value := 7.50000000001d \\ 7.
+	self assert: value equals: 0.50000000000999d delta: 4.44089e-16
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_big
 	| value |
-	value := 7.50000000001 d - 251172765292171600923361522612285166173.
-	self
-		assert: value
-		equals: -2.5117276529217 d38
-		delta: 3.24899e24
+	value := 7.50000000001d - 251172765292171600923361522612285166173.
+	self assert: value equals: -2.5117276529217d.
+	38 delta: 3.24899e24
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_double
 	| value |
-	value := 7.50000000001 d - 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 7.50000000001d - 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_fixed
 	| value |
-	value := 7.50000000001 d - 2.5s.
-	self
-		assert: value
-		equals: 5.00000000001 d
-		delta: 1.95399e-14
+	value := 7.50000000001d - 2.5s.
+	self assert: value equals: 5.00000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_float
 	| value |
-	value := 7.50000000001 d - 7.5.
+	value := 7.50000000001d - 7.5.
 	self
 		assert: value
-		equals: 9.990230864787 d - 12
+		equals: 9.990230864787d - 12
 		delta: 1.9387e-26
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_fraction
 	| value |
-	value := 7.50000000001 d - (2 / 3).
-	self
-		assert: value
-		equals: 6.8333333333433 d
-		delta: 4.61853e-14
+	value := 7.50000000001d - (2 / 3).
+	self assert: value equals: 6.8333333333433d delta: 4.61853e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_int
 	| value |
-	value := 7.50000000001 d - 7.
-	self
-		assert: value
-		equals: 0.50000000000999 d
-		delta: 4.44089e-16
+	value := 7.50000000001d - 7.
+	self assert: value equals: 0.50000000000999d delta: 4.44089e-16
 !
 (reader addMethod: 'tests')
 !
 test_double_minus_zero
 	| value |
-	value := 7.50000000001 d - 0.
-	self
-		assert: value
-		equals: 7.50000000001 d
-		delta: 1.95399e-14
+	value := 7.50000000001d - 0.
+	self assert: value equals: 7.50000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_big
 	| value |
-	value := 7.50000000001 d + 251172765292171600923361522612285166173.
-	self
-		assert: value
-		equals: 2.5117276529217 d38
-		delta: 3.24899e24
+	value := 7.50000000001d + 251172765292171600923361522612285166173.
+	self assert: value equals: 2.5117276529217d.
+	38 delta: 3.24899e24
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_double
 	| value |
-	value := 7.50000000001 d + 7.50000000001 d.
-	self
-		assert: value
-		equals: 15.00000000002 d
-		delta: 3.90799e-14
+	value := 7.50000000001d + 7.50000000001d.
+	self assert: value equals: 15.00000000002d delta: 3.90799e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_fixed
 	| value |
-	value := 7.50000000001 d + 2.5s.
-	self
-		assert: value
-		equals: 10.00000000001 d
-		delta: 1.77636e-14
+	value := 7.50000000001d + 2.5s.
+	self assert: value equals: 10.00000000001d delta: 1.77636e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_float
 	| value |
-	value := 7.50000000001 d + 7.5.
-	self
-		assert: value
-		equals: 15.00000000001 d
-		delta: 1.77636e-14
+	value := 7.50000000001d + 7.5.
+	self assert: value equals: 15.00000000001d delta: 1.77636e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_fraction
 	| value |
-	value := 7.50000000001 d + (2 / 3).
-	self
-		assert: value
-		equals: 8.1666666666767 d
-		delta: 8.88178e-14
+	value := 7.50000000001d + (2 / 3).
+	self assert: value equals: 8.1666666666767d delta: 8.88178e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_int
 	| value |
-	value := 7.50000000001 d + 7.
-	self
-		assert: value
-		equals: 14.50000000001 d
-		delta: 1.77636e-14
+	value := 7.50000000001d + 7.
+	self assert: value equals: 14.50000000001d delta: 1.77636e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_plus_zero
 	| value |
-	value := 7.50000000001 d + 0.
-	self
-		assert: value
-		equals: 7.50000000001 d
-		delta: 1.95399e-14
+	value := 7.50000000001d + 0.
+	self assert: value equals: 7.50000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_quo__big
 	| value |
-	value := 7.50000000001 d quo: 251172765292171600923361522612285166173.
+	value := 7.50000000001d quo: 251172765292171600923361522612285166173.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_quo__double
 	| value |
-	value := 7.50000000001 d quo: 7.50000000001 d.
+	value := 7.50000000001d quo: 7.50000000001d.
 	self assert: value equals: 1
 !
 (reader addMethod: 'tests')
 !
 test_double_quo__fixed
 	| value |
-	value := 7.50000000001 d quo: 2.5s.
+	value := 7.50000000001d quo: 2.5s.
 	self assert: value equals: 3
 !
 (reader addMethod: 'tests')
 !
 test_double_quo__float
 	| value |
-	value := 7.50000000001 d quo: 7.5.
+	value := 7.50000000001d quo: 7.5.
 	self assert: value equals: 1
 !
 (reader addMethod: 'tests')
 !
 test_double_quo__fraction
 	| value |
-	value := 7.50000000001 d quo: 2 / 3.
+	value := 7.50000000001d quo: 2 / 3.
 	self assert: value equals: 11
 !
 (reader addMethod: 'tests')
 !
 test_double_quo__int
 	| value |
-	value := 7.50000000001 d quo: 7.
+	value := 7.50000000001d quo: 7.
 	self assert: value equals: 1
 !
 (reader addMethod: 'tests')
 !
 test_double_rem__big
 	| value |
-	value := 7.50000000001 d rem: 251172765292171600923361522612285166173.
-	self
-		assert: value
-		equals: 7.50000000001 d
-		delta: 1.95399e-14
+	value := 7.50000000001d rem: 251172765292171600923361522612285166173.
+	self assert: value equals: 7.50000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_rem__double
 	| value |
-	value := 7.50000000001 d rem: 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 7.50000000001d rem: 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
 test_double_rem__fixed
 	| value |
-	value := 7.50000000001 d rem: 2.5s.
+	value := 7.50000000001d rem: 2.5s.
 	self
 		assert: value
-		equals: 9.990230864787 d - 12
+		equals: 9.990230864787d - 12
 		delta: 1.9387e-26
 !
 (reader addMethod: 'tests')
 !
 test_double_rem__float
 	| value |
-	value := 7.50000000001 d rem: 7.5.
+	value := 7.50000000001d rem: 7.5.
 	self
 		assert: value
-		equals: 9.990230864787 d - 12
+		equals: 9.990230864787d - 12
 		delta: 1.9387e-26
 !
 (reader addMethod: 'tests')
 !
 test_double_rem__fraction
 	| value |
-	value := 7.50000000001 d rem: 2 / 3.
-	self
-		assert: value
-		equals: 0.16666666667666 d
-		delta: 5.60663e-15
+	value := 7.50000000001d rem: 2 / 3.
+	self assert: value equals: 0.16666666667666d delta: 5.60663e-15
 !
 (reader addMethod: 'tests')
 !
 test_double_rem__int
 	| value |
-	value := 7.50000000001 d rem: 7.
-	self
-		assert: value
-		equals: 0.50000000000999 d
-		delta: 4.44089e-16
+	value := 7.50000000001d rem: 7.
+	self assert: value equals: 0.50000000000999d delta: 4.44089e-16
 !
 (reader addMethod: 'tests')
 !
 test_double_slashslash_big
 	| value |
-	value := 7.50000000001 d // 251172765292171600923361522612285166173.
+	value := 7.50000000001d // 251172765292171600923361522612285166173.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_slashslash_double
 	| value |
-	value := 7.50000000001 d // 7.50000000001 d.
+	value := 7.50000000001d // 7.50000000001d.
 	self assert: value equals: 1
 !
 (reader addMethod: 'tests')
 !
 test_double_slashslash_fixed
 	| value |
-	value := 7.50000000001 d // 2.5s.
+	value := 7.50000000001d // 2.5s.
 	self assert: value equals: 3
 !
 (reader addMethod: 'tests')
 !
 test_double_slashslash_float
 	| value |
-	value := 7.50000000001 d // 7.5.
+	value := 7.50000000001d // 7.5.
 	self assert: value equals: 1
 !
 (reader addMethod: 'tests')
 !
 test_double_slashslash_fraction
 	| value |
-	value := 7.50000000001 d // (2 / 3).
+	value := 7.50000000001d // (2 / 3).
 	self assert: value equals: 11
 !
 (reader addMethod: 'tests')
 !
 test_double_slashslash_int
 	| value |
-	value := 7.50000000001 d // 7.
+	value := 7.50000000001d // 7.
 	self assert: value equals: 1
 !
 (reader addMethod: 'tests')
 !
 test_double_times_big
 	| value |
-	value := 7.50000000001 d * 251172765292171600923361522612285166173.
-	self
-		assert: value
-		equals: 1.8837957396938 d39
-		delta: 7.85802e24
+	value := 7.50000000001d * 251172765292171600923361522612285166173.
+	self assert: value equals: 1.8837957396938d.
+	39 delta: 7.85802e24
 !
 (reader addMethod: 'tests')
 !
 test_double_times_double
 	| value |
-	value := 7.50000000001 d * 7.50000000001 d.
-	self
-		assert: value
-		equals: 56.25000000015 d
-		delta: 2.98428e-13
+	value := 7.50000000001d * 7.50000000001d.
+	self assert: value equals: 56.25000000015d delta: 2.98428e-13
 !
 (reader addMethod: 'tests')
 !
 test_double_times_fixed
 	| value |
-	value := 7.50000000001 d * 2.5s.
-	self
-		assert: value
-		equals: 18.750000000025 d
-		delta: 4.9738e-14
+	value := 7.50000000001d * 2.5s.
+	self assert: value equals: 18.750000000025d delta: 4.9738e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_times_float
 	| value |
-	value := 7.50000000001 d * 7.5.
-	self
-		assert: value
-		equals: 56.250000000075 d
-		delta: 1.42109e-13
+	value := 7.50000000001d * 7.5.
+	self assert: value equals: 56.250000000075d delta: 1.42109e-13
 !
 (reader addMethod: 'tests')
 !
 test_double_times_fraction
 	| value |
-	value := 7.50000000001 d * (2 / 3).
-	self
-		assert: value
-		equals: 5.0000000000067 d
-		delta: 8.17124e-14
+	value := 7.50000000001d * (2 / 3).
+	self assert: value equals: 5.0000000000067d delta: 8.17124e-14
 !
 (reader addMethod: 'tests')
 !
 test_double_times_int
 	| value |
-	value := 7.50000000001 d * 7.
-	self
-		assert: value
-		equals: 52.50000000007 d
-		delta: 1.42109e-13
+	value := 7.50000000001d * 7.
+	self assert: value equals: 52.50000000007d delta: 1.42109e-13
 !
 (reader addMethod: 'tests')
 !
 test_double_times_zero
 	| value |
-	value := 7.50000000001 d * 0.
-	self assert: value equals: 0.0 d
+	value := 7.50000000001d * 0.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
@@ -740,8 +665,8 @@ test_fixed_backslashbackslash_big
 !
 test_fixed_backslashbackslash_double
 	| value |
-	value := 2.5s \\ 7.50000000001 d.
-	self assert: value equals: 2.5 d
+	value := 2.5s \\ 7.50000000001d.
+	self assert: value equals: 2.5d
 !
 (reader addMethod: 'tests')
 !
@@ -782,11 +707,8 @@ test_fixed_minus_big
 !
 test_fixed_minus_double
 	| value |
-	value := 2.5s - 7.50000000001 d.
-	self
-		assert: value
-		equals: -5.00000000001 d
-		delta: 1.95399e-14
+	value := 2.5s - 7.50000000001d.
+	self assert: value equals: -5.00000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
@@ -834,11 +756,8 @@ test_fixed_plus_big
 !
 test_fixed_plus_double
 	| value |
-	value := 2.5s + 7.50000000001 d.
-	self
-		assert: value
-		equals: 10.00000000001 d
-		delta: 1.77636e-14
+	value := 2.5s + 7.50000000001d.
+	self assert: value equals: 10.00000000001d delta: 1.77636e-14
 !
 (reader addMethod: 'tests')
 !
@@ -886,7 +805,7 @@ test_fixed_quo__big
 !
 test_fixed_quo__double
 	| value |
-	value := 2.5s quo: 7.50000000001 d.
+	value := 2.5s quo: 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -928,8 +847,8 @@ test_fixed_rem__big
 !
 test_fixed_rem__double
 	| value |
-	value := 2.5s rem: 7.50000000001 d.
-	self assert: value equals: 2.5 d
+	value := 2.5s rem: 7.50000000001d.
+	self assert: value equals: 2.5d
 !
 (reader addMethod: 'tests')
 !
@@ -970,7 +889,7 @@ test_fixed_slashslash_big
 !
 test_fixed_slashslash_double
 	| value |
-	value := 2.5s // 7.50000000001 d.
+	value := 2.5s // 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1012,11 +931,8 @@ test_fixed_times_big
 !
 test_fixed_times_double
 	| value |
-	value := 2.5s * 7.50000000001 d.
-	self
-		assert: value
-		equals: 18.750000000025 d
-		delta: 4.9738e-14
+	value := 2.5s * 7.50000000001d.
+	self assert: value equals: 18.750000000025d delta: 4.9738e-14
 !
 (reader addMethod: 'tests')
 !
@@ -1064,8 +980,8 @@ test_float_backslashbackslash_big
 !
 test_float_backslashbackslash_double
 	| value |
-	value := 7.5 \\ 7.50000000001 d.
-	self assert: value equals: 7.5 d
+	value := 7.5 \\ 7.50000000001d.
+	self assert: value equals: 7.5d
 !
 (reader addMethod: 'tests')
 !
@@ -1106,10 +1022,10 @@ test_float_minus_big
 !
 test_float_minus_double
 	| value |
-	value := 7.5 - 7.50000000001 d.
+	value := 7.5 - 7.50000000001d.
 	self
 		assert: value
-		equals: -9.990230864787 d - 12
+		equals: -9.990230864787d - 12
 		delta: 1.9387e-26
 !
 (reader addMethod: 'tests')
@@ -1158,11 +1074,8 @@ test_float_plus_big
 !
 test_float_plus_double
 	| value |
-	value := 7.5 + 7.50000000001 d.
-	self
-		assert: value
-		equals: 15.00000000001 d
-		delta: 1.77636e-14
+	value := 7.5 + 7.50000000001d.
+	self assert: value equals: 15.00000000001d delta: 1.77636e-14
 !
 (reader addMethod: 'tests')
 !
@@ -1210,7 +1123,7 @@ test_float_quo__big
 !
 test_float_quo__double
 	| value |
-	value := 7.5 quo: 7.50000000001 d.
+	value := 7.5 quo: 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1252,8 +1165,8 @@ test_float_rem__big
 !
 test_float_rem__double
 	| value |
-	value := 7.5 rem: 7.50000000001 d.
-	self assert: value equals: 7.5 d
+	value := 7.5 rem: 7.50000000001d.
+	self assert: value equals: 7.5d
 !
 (reader addMethod: 'tests')
 !
@@ -1294,7 +1207,7 @@ test_float_slashslash_big
 !
 test_float_slashslash_double
 	| value |
-	value := 7.5 // 7.50000000001 d.
+	value := 7.5 // 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1329,11 +1242,8 @@ test_float_slashslash_int
 !
 test_float_times_double
 	| value |
-	value := 7.5 * 7.50000000001 d.
-	self
-		assert: value
-		equals: 56.250000000075 d
-		delta: 1.42109e-13
+	value := 7.5 * 7.50000000001d.
+	self assert: value equals: 56.250000000075d delta: 1.42109e-13
 !
 (reader addMethod: 'tests')
 !
@@ -1381,11 +1291,8 @@ test_fraction_backslashbackslash_big
 !
 test_fraction_backslashbackslash_double
 	| value |
-	value := 2 / 3 \\ 7.50000000001 d.
-	self
-		assert: value
-		equals: 0.66666666666667 d
-		delta: 6.66134e-15
+	value := 2 / 3 \\ 7.50000000001d.
+	self assert: value equals: 0.66666666666667d delta: 6.66134e-15
 !
 (reader addMethod: 'tests')
 !
@@ -1426,11 +1333,8 @@ test_fraction_minus_big
 !
 test_fraction_minus_double
 	| value |
-	value := 2 / 3 - 7.50000000001 d.
-	self
-		assert: value
-		equals: -6.8333333333433 d
-		delta: 4.61853e-14
+	value := 2 / 3 - 7.50000000001d.
+	self assert: value equals: -6.8333333333433d delta: 4.61853e-14
 !
 (reader addMethod: 'tests')
 !
@@ -1478,11 +1382,8 @@ test_fraction_plus_big
 !
 test_fraction_plus_double
 	| value |
-	value := 2 / 3 + 7.50000000001 d.
-	self
-		assert: value
-		equals: 8.1666666666767 d
-		delta: 8.88178e-14
+	value := 2 / 3 + 7.50000000001d.
+	self assert: value equals: 8.1666666666767d delta: 8.88178e-14
 !
 (reader addMethod: 'tests')
 !
@@ -1530,7 +1431,7 @@ test_fraction_quo__big
 !
 test_fraction_quo__double
 	| value |
-	value := 2 / 3 quo: 7.50000000001 d.
+	value := 2 / 3 quo: 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1572,11 +1473,8 @@ test_fraction_rem__big
 !
 test_fraction_rem__double
 	| value |
-	value := 2 / 3 rem: 7.50000000001 d.
-	self
-		assert: value
-		equals: 0.66666666666667 d
-		delta: 6.66134e-15
+	value := 2 / 3 rem: 7.50000000001d.
+	self assert: value equals: 0.66666666666667d delta: 6.66134e-15
 !
 (reader addMethod: 'tests')
 !
@@ -1617,7 +1515,7 @@ test_fraction_slashslash_big
 !
 test_fraction_slashslash_double
 	| value |
-	value := 2 / 3 // 7.50000000001 d.
+	value := 2 / 3 // 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1659,11 +1557,8 @@ test_fraction_times_big
 !
 test_fraction_times_double
 	| value |
-	value := 2 / 3 * 7.50000000001 d.
-	self
-		assert: value
-		equals: 5.0000000000067 d
-		delta: 8.17124e-14
+	value := 2 / 3 * 7.50000000001d.
+	self assert: value equals: 5.0000000000067d delta: 8.17124e-14
 !
 (reader addMethod: 'tests')
 !
@@ -1711,8 +1606,8 @@ test_int_backslashbackslash_big
 !
 test_int_backslashbackslash_double
 	| value |
-	value := 7 \\ 7.50000000001 d.
-	self assert: value equals: 7.0 d
+	value := 7 \\ 7.50000000001d.
+	self assert: value equals: 7.0d
 !
 (reader addMethod: 'tests')
 !
@@ -1753,11 +1648,8 @@ test_int_minus_big
 !
 test_int_minus_double
 	| value |
-	value := 7 - 7.50000000001 d.
-	self
-		assert: value
-		equals: -0.50000000000999 d
-		delta: 4.44089e-16
+	value := 7 - 7.50000000001d.
+	self assert: value equals: -0.50000000000999d delta: 4.44089e-16
 !
 (reader addMethod: 'tests')
 !
@@ -1805,11 +1697,8 @@ test_int_plus_big
 !
 test_int_plus_double
 	| value |
-	value := 7 + 7.50000000001 d.
-	self
-		assert: value
-		equals: 14.50000000001 d
-		delta: 1.77636e-14
+	value := 7 + 7.50000000001d.
+	self assert: value equals: 14.50000000001d delta: 1.77636e-14
 !
 (reader addMethod: 'tests')
 !
@@ -1857,7 +1746,7 @@ test_int_quo__big
 !
 test_int_quo__double
 	| value |
-	value := 7 quo: 7.50000000001 d.
+	value := 7 quo: 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1899,8 +1788,8 @@ test_int_rem__big
 !
 test_int_rem__double
 	| value |
-	value := 7 rem: 7.50000000001 d.
-	self assert: value equals: 7.0 d
+	value := 7 rem: 7.50000000001d.
+	self assert: value equals: 7.0d
 !
 (reader addMethod: 'tests')
 !
@@ -1941,7 +1830,7 @@ test_int_slashslash_big
 !
 test_int_slashslash_double
 	| value |
-	value := 7 // 7.50000000001 d.
+	value := 7 // 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -1983,11 +1872,8 @@ test_int_times_big
 !
 test_int_times_double
 	| value |
-	value := 7 * 7.50000000001 d.
-	self
-		assert: value
-		equals: 52.50000000007 d
-		delta: 1.42109e-13
+	value := 7 * 7.50000000001d.
+	self assert: value equals: 52.50000000007d delta: 1.42109e-13
 !
 (reader addMethod: 'tests')
 !
@@ -2035,8 +1921,8 @@ test_zero_backslashbackslash_big
 !
 test_zero_backslashbackslash_double
 	| value |
-	value := 0 \\ 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 0 \\ 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
@@ -2077,11 +1963,8 @@ test_zero_minus_big
 !
 test_zero_minus_double
 	| value |
-	value := 0 - 7.50000000001 d.
-	self
-		assert: value
-		equals: -7.50000000001 d
-		delta: 1.95399e-14
+	value := 0 - 7.50000000001d.
+	self assert: value equals: -7.50000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
@@ -2129,11 +2012,8 @@ test_zero_plus_big
 !
 test_zero_plus_double
 	| value |
-	value := 0 + 7.50000000001 d.
-	self
-		assert: value
-		equals: 7.50000000001 d
-		delta: 1.95399e-14
+	value := 0 + 7.50000000001d.
+	self assert: value equals: 7.50000000001d delta: 1.95399e-14
 !
 (reader addMethod: 'tests')
 !
@@ -2181,7 +2061,7 @@ test_zero_quo__big
 !
 test_zero_quo__double
 	| value |
-	value := 0 quo: 7.50000000001 d.
+	value := 0 quo: 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -2223,8 +2103,8 @@ test_zero_rem__big
 !
 test_zero_rem__double
 	| value |
-	value := 0 rem: 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 0 rem: 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
@@ -2265,7 +2145,7 @@ test_zero_slashslash_big
 !
 test_zero_slashslash_double
 	| value |
-	value := 0 // 7.50000000001 d.
+	value := 0 // 7.50000000001d.
 	self assert: value equals: 0
 !
 (reader addMethod: 'tests')
@@ -2307,8 +2187,8 @@ test_zero_times_big
 !
 test_zero_times_double
 	| value |
-	value := 0 * 7.50000000001 d.
-	self assert: value equals: 0.0 d
+	value := 0 * 7.50000000001d.
+	self assert: value equals: 0.0d
 !
 (reader addMethod: 'tests')
 !
@@ -2351,7 +2231,7 @@ generate
 	| values |
 	values := (Core.Dictionary new)
 				at: #float put: 7.5;
-				at: #double put: 7.50000000000999 d;
+				at: #double put: 7.50000000000999d;
 				at: #fixed put: 2.5s;
 				at: #fraction put: 2 / 3;
 				at: #int put: 7;

@@ -14,20 +14,20 @@ import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.SourcePrinter;
 import st.gravel.support.compiler.ast.SourcePosition;
 
-public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements Cloneable {
+public class DoubleLiteralNode extends LimitedPrecisionRealLiteralNode implements Cloneable {
 
-	public static FloatLiteralNode_Factory factory = new FloatLiteralNode_Factory();
+	public static DoubleLiteralNode_Factory factory = new DoubleLiteralNode_Factory();
 
-	public static class FloatLiteralNode_Factory extends LimitedPrecisionRealLiteralNode_Factory {
+	public static class DoubleLiteralNode_Factory extends LimitedPrecisionRealLiteralNode_Factory {
 
-		public FloatLiteralNode basicNew() {
-			FloatLiteralNode newInstance = new FloatLiteralNode();
+		public DoubleLiteralNode basicNew() {
+			DoubleLiteralNode newInstance = new DoubleLiteralNode();
 			newInstance.initialize();
 			return newInstance;
 		}
 
 		@Override
-		public FloatLiteralNode integer_fractionString_exponent_(final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
+		public DoubleLiteralNode integer_fractionString_exponent_(final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
 			final StringBuilder _wstr;
 			_wstr = st.gravel.support.jvm.WriteStreamFactory.on_(new String());
 			_wstr.append(_anInteger.toString());
@@ -40,32 +40,40 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 				_wstr.append(_exp.toString());
 			}
 			if (this.postfixCharacter() != null) {
-				_wstr.append(FloatLiteralNode_Factory.this.postfixCharacter());
+				_wstr.append(DoubleLiteralNode_Factory.this.postfixCharacter());
 			}
-			return ((FloatLiteralNode) this.valueString_(_wstr.toString()));
+			return ((DoubleLiteralNode) this.valueString_(_wstr.toString()));
+		}
+
+		public Character postfixCharacter() {
+			return 'd';
 		}
 
 		@Override
-		public FloatLiteralNode valueString_(final String _aString) {
-			return ((FloatLiteralNode) this.basicNew().initializeValueString_(_aString));
+		public DoubleLiteralNode valueString_(final String _aString) {
+			return ((DoubleLiteralNode) this.basicNew().initializeValueString_(_aString));
 		}
 	}
 
-	static public FloatLiteralNode _integer_fractionString_exponent_(Object receiver, final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
+	static public DoubleLiteralNode _integer_fractionString_exponent_(Object receiver, final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
 		return factory.integer_fractionString_exponent_(_anInteger, _fractionString, _exp);
 	}
 
-	static public FloatLiteralNode _valueString_(Object receiver, final String _aString) {
+	static public Character _postfixCharacter(Object receiver) {
+		return factory.postfixCharacter();
+	}
+
+	static public DoubleLiteralNode _valueString_(Object receiver, final String _aString) {
 		return factory.valueString_(_aString);
 	}
 
 	@Override
 	public <X> X accept_(final NodeVisitor<X> _visitor) {
-		return _visitor.visitFloatLiteralNode_(this);
+		return _visitor.visitDoubleLiteralNode_(this);
 	}
 
 	@Override
-	public FloatLiteralNode allNodesDo_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock) {
+	public DoubleLiteralNode allNodesDo_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock) {
 		this.nodesDo_(new st.gravel.support.jvm.Block1<Object, Node>() {
 
 			@Override
@@ -77,7 +85,7 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 	}
 
 	@Override
-	public FloatLiteralNode allNodesDo_pruneWhere_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock, final st.gravel.support.jvm.Block1<Boolean, Node> _pruneBlock) {
+	public DoubleLiteralNode allNodesDo_pruneWhere_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock, final st.gravel.support.jvm.Block1<Boolean, Node> _pruneBlock) {
 		this.nodesDo_(new st.gravel.support.jvm.Block1<Object, Node>() {
 
 			@Override
@@ -85,15 +93,15 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 				if (!_pruneBlock.value_(_each)) {
 					return _each.withAllNodesDo_pruneWhere_(_aBlock, _pruneBlock);
 				}
-				return FloatLiteralNode.this;
+				return DoubleLiteralNode.this;
 			}
 		});
 		return this;
 	}
 
-	public FloatLiteralNode copy() {
+	public DoubleLiteralNode copy() {
 		try {
-			FloatLiteralNode _temp1 = (FloatLiteralNode) this.clone();
+			DoubleLiteralNode _temp1 = (DoubleLiteralNode) this.clone();
 			_temp1.postCopy();
 			return _temp1;
 		} catch (CloneNotSupportedException e) {
@@ -101,44 +109,44 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 		}
 	}
 
-	public FloatLiteralNode_Factory factory() {
+	public DoubleLiteralNode_Factory factory() {
 		return factory;
 	}
 
 	@Override
-	public FloatLiteralNode initializeValueString_(final String _aString) {
+	public DoubleLiteralNode initializeValueString_(final String _aString) {
 		_valueString = _aString;
 		this.initialize();
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode innerSourceOn_(final StringBuilder _aStream) {
+	public DoubleLiteralNode innerSourceOn_(final StringBuilder _aStream) {
 		_aStream.append(_valueString);
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode localVarNamesDo_(final st.gravel.support.jvm.Block1<Object, String> _aBlock) {
+	public DoubleLiteralNode localVarNamesDo_(final st.gravel.support.jvm.Block1<Object, String> _aBlock) {
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode negated() {
+	public DoubleLiteralNode negated() {
 		if (st.gravel.support.jvm.CharacterExtensions.equals_(_valueString.charAt(0), '-')) {
-			return FloatLiteralNode.factory.valueString_(_valueString.substring(1));
+			return DoubleLiteralNode.factory.valueString_(_valueString.substring(1));
 		}
-		return FloatLiteralNode.factory.valueString_("-" + _valueString);
+		return DoubleLiteralNode.factory.valueString_("-" + _valueString);
 	}
 
 	@Override
-	public FloatLiteralNode prettySourceOn_(final StringBuilder _aStream) {
+	public DoubleLiteralNode prettySourceOn_(final StringBuilder _aStream) {
 		SourcePrinter.factory.on_(_aStream).visit_(this);
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode printOn_(final StringBuilder _aStream) {
+	public DoubleLiteralNode printOn_(final StringBuilder _aStream) {
 		final String _title;
 		_title = this.factory().toString();
 		_aStream.append(st.gravel.support.jvm.CharacterExtensions.isVowel(_title.charAt(0)) ? "an " : "a ");
@@ -150,15 +158,15 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 	}
 
 	@Override
-	public FloatLiteralNode pvtSetSourcePosition_(final SourcePosition _aSourcePosition) {
+	public DoubleLiteralNode pvtSetSourcePosition_(final SourcePosition _aSourcePosition) {
 		_sourcePosition = _aSourcePosition;
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode sourceOn_(final StringBuilder _aStream) {
+	public DoubleLiteralNode sourceOn_(final StringBuilder _aStream) {
 		if (!this.needsBrackets()) {
-			return FloatLiteralNode.this.innerSourceOn_(_aStream);
+			return DoubleLiteralNode.this.innerSourceOn_(_aStream);
 		}
 		_aStream.append('(');
 		this.innerSourceOn_(_aStream);
@@ -168,27 +176,27 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 
 	@Override
 	public Object value() {
-		return st.gravel.support.jvm.StringExtensions.parseFloat(_valueString);
+		return st.gravel.support.jvm.StringExtensions.parseDouble(_valueString);
 	}
 
 	@Override
-	public FloatLiteralNode withAllNodesDo_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock) {
+	public DoubleLiteralNode withAllNodesDo_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock) {
 		_aBlock.value_(this);
 		this.allNodesDo_(_aBlock);
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode withAllNodesDo_pruneWhere_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock, final st.gravel.support.jvm.Block1<Boolean, Node> _pruneBlock) {
+	public DoubleLiteralNode withAllNodesDo_pruneWhere_(final st.gravel.support.jvm.Block1<Object, Node> _aBlock, final st.gravel.support.jvm.Block1<Boolean, Node> _pruneBlock) {
 		_aBlock.value_(this);
 		this.allNodesDo_pruneWhere_(_aBlock, _pruneBlock);
 		return this;
 	}
 
 	@Override
-	public FloatLiteralNode withSourcePosition_(final SourcePosition _aSourcePosition) {
+	public DoubleLiteralNode withSourcePosition_(final SourcePosition _aSourcePosition) {
 		if (_sourcePosition == _aSourcePosition) {
-			return FloatLiteralNode.this;
+			return DoubleLiteralNode.this;
 		}
 		return this.copy().pvtSetSourcePosition_(_aSourcePosition);
 	}

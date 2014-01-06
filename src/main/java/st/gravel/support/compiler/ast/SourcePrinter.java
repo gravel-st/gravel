@@ -28,6 +28,7 @@ import st.gravel.support.compiler.ast.BottomTypeNode;
 import st.gravel.support.compiler.ast.ByteArrayLiteralNode;
 import st.gravel.support.compiler.ast.CharacterLiteralNode;
 import st.gravel.support.compiler.ast.ClassTypeNode;
+import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.FixedPointLiteralNode;
 import st.gravel.support.compiler.ast.FloatLiteralNode;
 import st.gravel.support.compiler.ast.GenericTypeVariableNode;
@@ -481,6 +482,12 @@ public class SourcePrinter<X> extends NodeVisitor<Object> implements Cloneable {
 	public SourcePrinter visitClassTypeNode_(final ClassTypeNode _anObject) {
 		this.visit_(_anObject.node());
 		_stream.append(" class");
+		return this;
+	}
+
+	@Override
+	public SourcePrinter visitDoubleLiteralNode_(final DoubleLiteralNode _anObject) {
+		_stream.append(_anObject.valueString());
 		return this;
 	}
 

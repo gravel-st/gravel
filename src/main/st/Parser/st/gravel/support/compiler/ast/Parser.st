@@ -471,7 +471,10 @@ parseNumber {^NumberLiteralNode}
 					^FixedPointLiteralNode integer: value fractionString: fractionString scale: scale]].
 	^fractionString isNil
 		ifTrue: [IntegerLiteralNode integer: value]
-		ifFalse: [FloatLiteralNode integer: value fractionString: fractionString exponent: nil]
+		ifFalse: 
+			[(stream peekFor: $d)
+				ifFalse: [FloatLiteralNode integer: value fractionString: fractionString exponent: nil]
+				ifTrue: [DoubleLiteralNode integer: value fractionString: fractionString exponent: nil]]
 !
 (reader addMethod: 'As yet unclassified')
 !

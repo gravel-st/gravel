@@ -64,6 +64,7 @@ import st.gravel.support.compiler.jvm.NewArray;
 import st.gravel.support.compiler.jvm.JVMByteType;
 import st.gravel.support.compiler.jvm.ByteArrayStore;
 import st.gravel.support.compiler.jvm.PushChar;
+import st.gravel.support.compiler.jvm.PushDouble;
 import st.gravel.support.compiler.jvm.PushFloat;
 import st.gravel.support.compiler.jvm.PushInt;
 import st.gravel.support.compiler.jvm.PushNull;
@@ -90,6 +91,7 @@ import st.gravel.support.compiler.ast.ByteArrayLiteralNode;
 import st.gravel.support.compiler.ast.CascadeNode;
 import st.gravel.support.compiler.ast.CharacterLiteralNode;
 import st.gravel.support.compiler.ast.CreateHolderNode;
+import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.FieldReadNode;
 import st.gravel.support.compiler.jvm.DynamicFieldRead;
 import st.gravel.support.compiler.ast.FieldWriteNode;
@@ -647,6 +649,11 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		return this.emit_(PushChar.factory.value_(((char) _anObject)));
 	}
 
+	public JVMMethodCompiler pushDouble_(final double _aDouble) {
+		this.emit_(PushDouble.factory.value_(_aDouble));
+		return this;
+	}
+
 	public JVMMethodCompiler pushFloat_(final float _aFloat) {
 		this.emit_(PushFloat.factory.value_(_aFloat));
 		return this;
@@ -920,6 +927,12 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	public JVMMethodCompiler visitCreateHolderNode_(final CreateHolderNode _aNode) {
 		this.pushInt_(1);
 		this.emit_(NewArray.factory.elementType_(JVMDynamicObjectType.factory.basicNew()));
+		return this;
+	}
+
+	@Override
+	public JVMMethodCompiler visitDoubleLiteralNode_(final DoubleLiteralNode _anObject) {
+		this.pushDouble_(((double) _anObject.value()));
 		return this;
 	}
 
