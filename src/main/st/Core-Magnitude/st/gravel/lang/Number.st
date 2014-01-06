@@ -153,15 +153,15 @@ floor
 floorLog: radix
 	^(self log: radix) floor
 !
-(reader addMethod: 'arithmetic')
+(reader addMethod: 'truncation and round off')
 !
 fractionPart
-	^self asFloat fractionPart
+	^self - self integerPart
 !
 (reader addMethod: 'truncation and round off')
 !
 integerPart
-	^self - self fractionPart
+	^self truncated
 !
 (reader addMethod: 'private-arithmetic')
 !

@@ -22,14 +22,25 @@ contents
 	collection size = position ifTrue: [^collection].
 	^collection copyTo: position
 !
+(reader addMethod: 'private')
+!
+growCollection
+	| grownCollection oldSize |
+	oldSize := collection size.
+	grownCollection := collection class new: oldSize + ((oldSize max: 20) min: 1000000).
+	collection := grownCollection
+				replaceFrom: 1
+				to: oldSize
+				with: collection
+				startingAt: 1
+!
 (reader addMethod: 'accessing')
 !
 nextPut: anObject
-	^collection size < position
-		ifTrue: [self pastEndPut: anObject]
-		ifFalse: 
-			[position := position + 1.
-			collection at: position put: anObject]
+	position := position + 1.
+	collection size < position ifTrue: [self growCollection].
+	collection at: position put: anObject.
+	^anObject
 !
 (reader addMethod: 'accessing')
 !
@@ -37,20 +48,6 @@ on: aCollection
 	super on: aCollection.
 	readLimit := 0.
 	writeLimit := aCollection size
-!
-(reader addMethod: 'private')
-!
-pastEndPut: anObject
-	| oldSize grownCollection |
-	oldSize := collection size.
-	grownCollection := collection class new: oldSize + ((oldSize max: 20) min: 1000000).
-	collection := grownCollection
-				replaceFrom: 1
-				to: oldSize
-				with: collection
-				startingAt: 1.
-	collection at: (position := position + 1) put: anObject.
-	^anObject
 !
 (reader addMethod: 'accessing')
 !

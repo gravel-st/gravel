@@ -23,6 +23,11 @@ initializeMessage: aMessage receiver: anObject
 message
 	^message
 !
+(reader addMethod: 'accessing')
+!
+parameter
+	^message withReceiver: receiver
+!
 (reader addMethod: 'gravel')
 !
 printOn: aStream
@@ -34,6 +39,11 @@ printOn: aStream
 !
 receiver
 	^receiver
+!
+(reader addMethod: 'accessing')
+!
+selector
+	^message selector
 !
 (reader addClassMethod: 'gravel')
 !

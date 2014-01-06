@@ -1,5 +1,7 @@
 (reader defineClass: 'Float' superclass: 'st.gravel.lang.LimitedPrecisionReal')
 !
+(reader defineSharedVariable: 'E' init: nil)
+!
 (reader defineSharedVariable: 'Infinity' init: nil)
 !
 (reader defineSharedVariable: 'NaN' init: nil)
@@ -120,16 +122,6 @@ floor
 floorLog: radix
 	(radix = 2 and: [self > 0.0 and: [self isFinite]]) ifTrue: [^self exponent].
 	^(self log: radix) floor
-!
-(reader addMethod: 'truncation and round off')
-!
-fractionPart
-	^self - self truncated
-!
-(reader addMethod: 'truncation and round off')
-!
-integerPart
-	^self - self fractionPart
 !
 (reader addMethod: 'testing')
 !
@@ -298,6 +290,52 @@ truncated
 \\ operand
 	^operand moduloQuotientFromFloat: self
 !
+(reader addClassMethod: 'constants')
+!
+e
+	^E
+!
+(reader addClassMethod: 'constants')
+!
+emax
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'emax')>
+	
+!
+(reader addClassMethod: 'constants')
+!
+emin
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'emin')>
+	
+!
+(reader addClassMethod: 'constants')
+!
+epsilon
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'epsilon')>
+	
+!
+(reader addClassMethod: 'constants')
+!
+fmax
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'fmax')>
+	
+!
+(reader addClassMethod: 'constants')
+!
+fmin
+	^self fminDenormalized
+!
+(reader addClassMethod: 'constants')
+!
+fminDenormalized
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'fminDenormalized')>
+	
+!
+(reader addClassMethod: 'constants')
+!
+fminNormalized
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'fminNormalized')>
+	
+!
 (reader addClassMethod: 'class initialization')
 !
 initialize
@@ -305,6 +343,7 @@ initialize
 	NegativeInfinity := self javaNegativeInfinity.
 	NaN := self javaNaN.
 	Pi := 3.1415927.
+	E := 2.7182817.
 	RadiansPerDegree := 0.017453292
 !
 (reader addClassMethod: 'private-initialization')
@@ -333,8 +372,14 @@ one
 !
 (reader addClassMethod: 'constants')
 !
+pi
+	^Pi
+!
+(reader addClassMethod: 'constants')
+!
 precision
-	^24
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'precision')>
+	
 !
 (reader addClassMethod: 'constants')
 !

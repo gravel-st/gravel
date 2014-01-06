@@ -79,6 +79,11 @@ messageText
 messageText: anObject
 	messageText := anObject
 !
+(reader addMethod: 'accessing')
+!
+parameter
+	^self subclassResponsibility
+!
 (reader addMethod: 'actions')
 !
 pass
@@ -101,6 +106,11 @@ resume
 return: aValue
 	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'return_')>
 	
+!
+(reader addMethod: 'actions')
+!
+signal
+	^self raise
 !
 (reader addMethod: 'accessing')
 !

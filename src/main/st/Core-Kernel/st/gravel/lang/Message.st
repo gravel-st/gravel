@@ -39,6 +39,11 @@ selector
 sentTo: receiver
 	^receiver perform: selector withArguments: args
 !
+(reader addMethod: 'As yet unclassified')
+!
+withReceiver: receiver
+	^MessageSend receiver: receiver selector: selector arguments: args
+!
 (reader addClassMethod: 'gravel')
 !
 selector: aSymbol arguments: anArray

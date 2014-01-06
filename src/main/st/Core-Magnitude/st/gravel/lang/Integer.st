@@ -163,6 +163,11 @@ floatDiv: operand
 floor
 	^self
 !
+(reader addMethod: 'truncation and round off')
+!
+fractionPart
+	^0
+!
 (reader addMethod: 'arithmetic')
 !
 gcd: operand

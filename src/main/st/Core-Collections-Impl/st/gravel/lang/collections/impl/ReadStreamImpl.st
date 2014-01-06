@@ -21,6 +21,20 @@ contents
 !
 (reader addMethod: 'accessing')
 !
+next
+	position >= readLimit ifTrue: [^nil] ifFalse: [^collection at: (position := position + 1)]
+!
+(reader addMethod: 'accessing')
+!
+peek
+	| nextObject |
+	self atEnd ifTrue: [^nil].
+	nextObject := self next.
+	position := position - 1.
+	^nextObject
+!
+(reader addMethod: 'accessing')
+!
 position
 	^position
 !
