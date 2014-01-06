@@ -1,8 +1,8 @@
 (reader defineClass: 'BagImpl' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Bag')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Bag')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Bag class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Bag class')
 !
 (reader addInstVar: 'contents')
 !

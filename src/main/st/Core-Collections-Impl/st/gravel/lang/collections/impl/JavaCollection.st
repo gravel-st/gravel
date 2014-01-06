@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaCollection' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Collection')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Collection class')
 !
 (reader addMethod: 'gravel')
 !

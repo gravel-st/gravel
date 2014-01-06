@@ -343,8 +343,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 
 	@Override
 	public Void visitCastObjectToLong_(CastObjectToLong _anObject) {
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Long");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J");
+		mv.visitMethodInsn(INVOKESTATIC, "st/gravel/support/jvm/IntegerExtensions", "asLong", "(Ljava/lang/Object;)J");
 		return null;
 	}
 

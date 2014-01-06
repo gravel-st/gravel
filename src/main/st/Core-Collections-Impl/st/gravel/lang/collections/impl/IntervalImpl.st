@@ -1,8 +1,8 @@
 (reader defineClass: 'IntervalImpl' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Interval')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Interval')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Interval class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Interval class')
 !
 (reader addInstVar: 'start')
 !

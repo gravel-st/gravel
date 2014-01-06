@@ -1,8 +1,8 @@
 (reader defineClass: 'GravelSymbol' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Symbol')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Symbol')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Symbol class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Symbol class')
 !
 (reader addInstVar: '____str_Gravel_st_gravel_lang_collections_interface_String__Gravel_st_gravel_lang_collections_impl_GravelSymbol___')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaArray' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Array')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Array')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Array class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Array class')
 !
 (reader propertyAt: 'javaClass' put: '[Ljava.lang.Object;')
 !

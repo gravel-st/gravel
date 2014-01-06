@@ -135,7 +135,7 @@ valueIsKindOfCollectionStream: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfDateAndTime: aValue
-	^aValue class = Timestamp
+	^aValue isTimestamp
 !
 (reader addMethod: 'tests')
 !

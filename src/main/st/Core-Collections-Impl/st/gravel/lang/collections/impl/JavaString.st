@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaString' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.String')
+(reader addSimpleTrait: 'st.gravel.lang.collections.String')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.String class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.String class')
 !
 (reader addInstVar: '____str_Gravel_st_gravel_lang_collections_interface_String__Gravel_st_gravel_lang_collections_impl_JavaString___')
 !

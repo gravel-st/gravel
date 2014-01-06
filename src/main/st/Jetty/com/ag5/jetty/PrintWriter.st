@@ -1,8 +1,8 @@
 (reader defineClass: 'PrintWriter' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.WriteStream')
+(reader addSimpleTrait: 'st.gravel.lang.collections.WriteStream')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.WriteStream class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.WriteStream class')
 !
 (reader propertyAt: 'javaClass' put: 'java.io.PrintWriter')
 !

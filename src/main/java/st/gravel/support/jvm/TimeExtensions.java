@@ -1,6 +1,7 @@
 package st.gravel.support.jvm;
 
 import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.TimeZone;
 
 public class TimeExtensions {
@@ -25,8 +26,17 @@ public class TimeExtensions {
 		return prec;
 	}
 
-	public static long timezoneOffsetMS_(Object millisecondsSince1970) {
-		return TimeZone.getDefault().getOffset(IntegerExtensions.asLong(millisecondsSince1970));
+	public static TimeZone defaultTimeZone() {
+		return TimeZone.getDefault();
+	}
+	public static TimeZone getTimeZoneNamed_(String name) {
+		return TimeZone.getTimeZone(name);
+	}
+	
+	public static Calendar newCalendar_timeZone_(long millis, TimeZone timeZone) {
+		Calendar calendar = Calendar.getInstance(timeZone);
+		calendar.setTimeInMillis(millis);
+		return calendar;
 	}
 
 	private static long calculateNanoOffset() {

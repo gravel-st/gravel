@@ -1,8 +1,8 @@
 (reader defineClass: 'OrderedCollectionImpl' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.OrderedCollection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.OrderedCollection')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.OrderedCollection class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.OrderedCollection class')
 !
 (reader addInstVar: 'array')
 !

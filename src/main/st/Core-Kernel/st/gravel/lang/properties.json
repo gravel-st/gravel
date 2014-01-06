@@ -1,5 +1,5 @@
 {
 	"sharedVariables": {"Transcript": "(TextCollector new)"},
 	"privateImports": [],
-	"publicImports": ["st.gravel.lang.collections.interface","st.gravel.lang.chronology"]
+	"publicImports": ["st.gravel.lang.collections","st.gravel.lang.chronology"]
 }

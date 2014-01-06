@@ -112,6 +112,7 @@ test_bitShift_
 (reader addMethod: 'tests')
 !
 test_bitShift_2
+	self assert: (65536 bitShift: 16) = 4294967296.
 	self assert: (65536 bitShift: -16) = 1.
 	self assert: (65537 bitShift: -16) = 1.
 	self assert: (65532 bitShift: -16) = 0
