@@ -16,6 +16,7 @@ import st.gravel.support.compiler.ast.BinaryMethodNode;
 import st.gravel.support.compiler.ast.ByteArrayLiteralNode;
 import st.gravel.support.compiler.ast.CascadeNode;
 import st.gravel.support.compiler.ast.CharacterLiteralNode;
+import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.FixedPointLiteralNode;
 import st.gravel.support.compiler.ast.FloatLiteralNode;
 import st.gravel.support.compiler.ast.IntegerLiteralNode;
@@ -148,6 +149,22 @@ public class ParserTest {
 		assertTrue(st.gravel.support.jvm.ObjectExtensions.equals_(_node.factory(), CharacterLiteralNode.factory));
 		assertEquals((String) "$a", (String) _node.prettySourceString());
 		assertTrue(st.gravel.support.jvm.CharacterExtensions.equals_(_node.value(), 'a'));
+	}
+
+	@Test
+	public void testParseDouble() {
+		final DoubleLiteralNode _node;
+		_node = ((DoubleLiteralNode) Parser.factory.source_("123412341345145145123412341234.003213123123d").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) DoubleLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((double) 123412341345145145123412341234.003213123123d, (double) _node.value(), (double) 0.000000001f);
+	}
+
+	@Test
+	public void testParseDouble2() {
+		final DoubleLiteralNode _node;
+		_node = ((DoubleLiteralNode) Parser.factory.source_("3.0d.").parseExpression());
+		assertEquals((st.gravel.support.jvm.SmalltalkFactory) DoubleLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
+		assertEquals((double) 3.0d, (double) _node.value(), (double) 0.000000001f);
 	}
 
 	@Test

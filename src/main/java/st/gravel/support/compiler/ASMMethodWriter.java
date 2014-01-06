@@ -67,6 +67,7 @@ import st.gravel.support.compiler.jvm.ObjectArrayStore;
 import st.gravel.support.compiler.jvm.OrThenElse;
 import st.gravel.support.compiler.jvm.Pop;
 import st.gravel.support.compiler.jvm.PushChar;
+import st.gravel.support.compiler.jvm.PushDouble;
 import st.gravel.support.compiler.jvm.PushFalse;
 import st.gravel.support.compiler.jvm.PushFloat;
 import st.gravel.support.compiler.jvm.PushInt;
@@ -117,6 +118,19 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 					local.type().descriptorString()
 					, null, startLabel, varLabel, local.index());
 		}
+	}
+
+	private void pushDouble(double value) {
+		if (value == 0.0d) {
+			mv.visitInsn(DCONST_0);
+			return;
+		}
+		if (value == 1.0d) {
+			mv.visitInsn(DCONST_1);
+			return;
+		}
+		mv.visitLdcInsn(value);
+		return;
 	}
 
 	public void pushFloat(float value) {
@@ -319,17 +333,17 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
-	public Void visitCastObjectToFloat_(CastObjectToFloat _anObject) {
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Float");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Float", "floatValue",
-				"()F");
+	public Void visitCastObjectToDouble_(CastObjectToDouble node) {
+		mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D");
 		return null;
 	}
 
 	@Override
-	public Void visitCastObjectToDouble_(CastObjectToDouble node) {
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D");
+	public Void visitCastObjectToFloat_(CastObjectToFloat _anObject) {
+		mv.visitTypeInsn(CHECKCAST, "java/lang/Float");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Float", "floatValue",
+				"()F");
 		return null;
 	}
 
@@ -611,6 +625,12 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
+	public Void visitPushDouble_(PushDouble node) {
+		pushDouble(node.value());
+		return null;
+	}
+
+	@Override
 	public Void visitPushFalse_(PushFalse node) {
 		mv.visitInsn(ICONST_0);
 		return null;
@@ -709,7 +729,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
+	
 	@Override
 	public Void visitWhileGreaterThanLoop_(WhileGreaterThanLoop node) {
 		Label testLabel = new Label();
@@ -722,7 +742,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-	
+
+
+
 	@Override
 	public Void visitWhileLessThanLoop_(WhileLessThanLoop node) {
 		Label testLabel = new Label();
@@ -735,8 +757,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
-
 
 	@Override
 	public Void visitWhileTrueLoop_(WhileTrueLoop node) {

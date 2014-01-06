@@ -43,6 +43,7 @@ import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.TraitUsageNode;
 import st.gravel.support.compiler.ast.ClassTypeNode;
 import st.gravel.support.compiler.ast.CreateHolderNode;
+import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.FieldReadNode;
 import st.gravel.support.compiler.ast.FieldWriteNode;
 import st.gravel.support.compiler.ast.FixedPointLiteralNode;
@@ -293,6 +294,11 @@ public class NodeCopier extends NodeVisitor<Node> implements Cloneable {
 	@Override
 	public CreateHolderNode visitCreateHolderNode_(final CreateHolderNode _anObject) {
 		return CreateHolderNode.factory.basicNew();
+	}
+
+	@Override
+	public DoubleLiteralNode visitDoubleLiteralNode_(final DoubleLiteralNode _anObject) {
+		return DoubleLiteralNode.factory.valueString_(_anObject.valueString());
 	}
 
 	@Override
