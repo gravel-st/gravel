@@ -33,6 +33,25 @@ public class DoubleExtensions {
 		return Math.toRadians(receiver);
 	}
 
+	public static double differenceFromFloat_(double receiver, float argument) {
+		return argument - receiver;
+	}
+	
+	public static double differenceFromLargeInteger_(double receiver,
+			BigInteger argument) {
+		return argument.doubleValue() - receiver;
+	}
+	
+	public static String printBase_(double receiver, int radix) {
+		if (radix == 10)
+			return Double.toString(receiver);
+		throw new UnsupportedOperationException("Unsupported radix: " + radix);
+	}
+	
+	public static double differenceFromSmallInteger_(double receiver, int argument) {
+		return argument - receiver;
+	}
+	
 	public static double differenceFromDouble_(double receiver, double argument) {
 		return argument - receiver;
 	}

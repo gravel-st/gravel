@@ -61,6 +61,10 @@ public class FloatExtensions {
 	public static boolean lessFromDouble_(float receiver, double argument) {
 		return argument < receiver;
 	}
+	
+	public static boolean lessFromFloat_(float receiver, float argument) {
+		return argument < receiver;
+	}
 
 	public static boolean lessFromLargeInteger_(float receiver,
 			BigInteger argument) {
@@ -119,7 +123,11 @@ public class FloatExtensions {
 	public static float quotientFromFloat_(float receiver, float argument) {
 		return argument / receiver;
 	}
-
+	
+	public static double quotientFromDouble_(float receiver, double argument) {
+		return argument / receiver;
+	}
+	
 	public static float quotientFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return argument.floatValue() / receiver;
@@ -145,6 +153,10 @@ public class FloatExtensions {
 	}
 
 	public static double sumFromDouble_(float receiver, double argument) {
+		return argument + receiver;
+	}
+	
+	public static float sumFromFloat_(float receiver, float argument) {
 		return argument + receiver;
 	}
 
