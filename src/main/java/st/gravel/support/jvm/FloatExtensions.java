@@ -8,26 +8,50 @@ public class FloatExtensions {
 	public static double asDouble(float receiver) {
 		return receiver;
 	}
-
-	public static Number ceiling(float receiver) {
-		return roundToRoundingMode(receiver, RoundingMode.CEILING);
-	}
-
+	
 	public static float differenceFromFloat_(float receiver, float argument) {
 		return argument - receiver;
 	}
-
+	
 	public static float differenceFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return argument.floatValue() - receiver;
 	}
-
+	
 	public static float differenceFromSmallInteger_(float receiver, int argument) {
 		return argument - receiver;
 	}
 
+	public static int emax() {
+		return Float.MAX_EXPONENT;
+	}
+	
+	public static int emin() {
+		return Float.MIN_EXPONENT;
+	}
+	
+	public static float epsilon() {
+		return Math.ulp(1.0f);
+	}
+
 	public static Number floor(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
+	}
+	
+	public static Number ceiling(float receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
+	}
+
+	public static float fmax() {	
+		return Float.MAX_VALUE;
+	}
+	
+	public static float fminDenormalized() {
+		return Float.MIN_VALUE;
+	}
+
+	public static float fminNormalized() {
+		return Float.MIN_NORMAL;
 	}
 
 	public static Object javaNaN() {
@@ -41,11 +65,11 @@ public class FloatExtensions {
 	public static Object javaPositiveInfinity() {
 		return Float.POSITIVE_INFINITY;
 	}
-	
+
 	public static boolean lessFromFloat_(float receiver, float argument) {
 		return argument < receiver;
 	}
-
+	
 	public static boolean lessFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return new BigDecimal(argument).compareTo(BigDecimal.valueOf(receiver)) == -1;
@@ -57,6 +81,10 @@ public class FloatExtensions {
 
 	public static float ln(float receiver) {
 		return (float)Math.log(receiver);
+	}
+
+	public static int precision() {
+		return 32;
 	}
 
 	public static String printBase_(float receiver, int radix) {
