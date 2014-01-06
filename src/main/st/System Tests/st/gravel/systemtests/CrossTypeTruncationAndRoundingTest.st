@@ -64,7 +64,7 @@ test_double_fractionPart
 	self
 		assert: t1
 		equals: 0.50000000000999 d
-		delta: 1.19209e-7
+		delta: 4.44089e-16
 !
 (reader addMethod: 'tests')
 !
@@ -74,7 +74,7 @@ test_double_integerPart
 	self
 		assert: t1
 		equals: 7.0 d
-		delta: 1.19209e-7
+		delta: 0.0
 !
 (reader addMethod: 'tests')
 !
@@ -151,14 +151,14 @@ test_float_floor
 test_float_fractionPart
 	| t1 |
 	t1 := 7.5 fractionPart.
-	self assert: t1 equals: 0.5 delta: 1.19209e-7
+	self assert: t1 equals: 0.5 delta: 0.0
 !
 (reader addMethod: 'tests')
 !
 test_float_integerPart
 	| t1 |
 	t1 := 7.5 integerPart.
-	self assert: t1 equals: 7.0 delta: 1.19209e-7
+	self assert: t1 equals: 7.0 delta: 0.0
 !
 (reader addMethod: 'tests')
 !
@@ -327,7 +327,8 @@ generateTest: nameSymbol value: valueString selector: selector
 	| resultValue renamedSelector delta testSelector |
 	resultValue := valueString perform: selector.
 	delta := (resultValue isZero not and: [resultValue isKindOf: Core.LimitedPrecisionReal])
-				ifTrue: [Core.Float epsilon]
+				ifTrue: 
+					[((Smalltalk.Compiler evaluate: resultValue printString) - resultValue) abs asFloat * 2]
 				ifFalse: [0].
 	renamedSelector := (SP.SelectorConverter selectorAsFunctionName: selector)
 				reject: [:e | e = $$].

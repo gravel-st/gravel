@@ -4,6 +4,8 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.Symbol class')
 !
+(reader addInstVar: '____str_Gravel_st_gravel_lang_collections_interface_String__Gravel_st_gravel_lang_collections_impl_GravelSymbol___')
+!
 (reader propertyAt: 'javaClass' put: 'st.gravel.core.Symbol')
 !
 (reader addMethod: '')

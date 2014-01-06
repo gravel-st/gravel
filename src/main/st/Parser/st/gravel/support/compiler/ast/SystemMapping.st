@@ -16,6 +16,8 @@
 !
 (reader addInstVar: 'systemDefinitionNode')
 !
+(reader addInstVar: 'subclassMappingsCache')
+!
 (reader addMethod: 'As yet unclassified')
 !
 addClassMapping: aClassMapping {ClassMapping} {^Self}
@@ -25,7 +27,8 @@ addClassMapping: aClassMapping {ClassMapping} {^Self}
 		ifTrue: [nilClassMapping := aClassMapping]
 		ifFalse: [classMappingsByJavaClass at: identityClass put: aClassMapping].
 	classMappingsByReference at: aClassMapping classNode reference put: aClassMapping.
-	systemNode := systemNode withClassDescriptionNode: aClassMapping classNode
+	systemNode := systemNode withClassDescriptionNode: aClassMapping classNode.
+	self resetCache
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -51,6 +54,16 @@ bestClassMappingFor: receiverClass {JavaClass} {^ClassMapping}
 							[(compilerTools isAssignable: best identityClass from: cm identityClass)
 								ifTrue: [best := cm]]]].
 	^best
+!
+(reader addMethod: 'As yet unclassified')
+!
+buildSubclassMappingsCache {^Self}
+	subclassMappingsCache := Dictionary new.
+	classMappingsByReference do: 
+			[:each {ClassMapping} |
+			| scr {Reference} |
+			scr := each superclassReference.
+			scr isNil ifFalse: [(subclassMappingsCache at: scr ifAbsentPut: [Set new]) add: each]]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -318,18 +331,21 @@ newClassMappingForJavaClass: receiverClass {JavaClass} {^ClassMapping}
 	compilerTools methodNamesIn: receiverClass
 		do: 
 			[:methodName {Str} :numArgs {Int} |
-			| sel {Sym} methodHandle {JavaMethodHandle} |
+			| sel {Sym} |
 			sel := selectorConverter functionNameAsSelector: methodName.
 			(sel numArgs = numArgs and: [allSelectors includes: sel])
 				ifTrue: 
-					[methodHandle := compilerTools
+					[| methodHandle {JavaMethodHandle} |
+					methodHandle := compilerTools
 								methodHandleAt: methodName
 								numArgs: sel numArgs
 								in: receiverClass
 								identityClass: receiverClass
 								isStatic: false.
-					methodMappings at: sel
-						put: (AnonymousMethodMapping methodHandle: methodHandle definingClass: receiverClass)]].
+					methodHandle isNil
+						ifFalse: 
+							[methodMappings at: sel
+								put: (AnonymousMethodMapping methodHandle: methodHandle definingClass: receiverClass)]]].
 	classNode := ClassNode
 				name: superMapping classNode name
 				superclassPath: superMapping reference printString
@@ -370,6 +386,11 @@ obsoleteClassNodeAt: aReference {Reference} ifAbsent: absentBlock {[^ClassDescri
 !
 packageNames {^Arr[Sym]}
 	^systemDefinitionNode packageNames
+!
+(reader addMethod: 'As yet unclassified')
+!
+resetCache {^Self}
+	subclassMappingsCache := nil
 !
 (reader addMethod: 'accessing')
 !
@@ -431,8 +452,11 @@ singletonAtReferenceString: aString {Str} {^Object}
 (reader addMethod: 'As yet unclassified')
 !
 subclassMappingsFor: aReference {Reference} do: aBlock {[ClassMapping, ^Object]} {^Self}
-	classMappingsByReference
-		do: [:each {ClassMapping} | each superclassReference = aReference ifTrue: [aBlock value: each]]
+	| c {Set[ClassMapping] | Nil} |
+	subclassMappingsCache isNil ifTrue: [self buildSubclassMappingsCache].
+	c := subclassMappingsCache at: aReference ifAbsent: [nil].
+	c isNil ifTrue: [^nil].
+	c do: aBlock
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -461,12 +485,13 @@ updateTo: newSystemDefinitionNode {SystemDefinitionNode} {^Self}
 	newSystemNode := (PackageNodeMerger systemDefinitionNode: newSystemDefinitionNode) load.
 	self log: 'Calculating diff' while: [diff := systemNode diffTo: newSystemNode].
 	self log: 'Applying diff' while: [self applyDiff: diff].
-	systemDefinitionNode := newSystemDefinitionNode
+	systemDefinitionNode := newSystemDefinitionNode.
+	self resetCache
 !
 (reader addClassMethod: 'pegon')
 !
-instVarTypes {^[SystemNode, SystemMappingCompilerTools, Dict[JavaClass, ClassMapping], Dict[Reference, ClassMapping], Dict[AbsoluteReference, AlmostFinalValue], SelectorConverter, ClassMapping, SystemDefinitionNode]}
-	^#('systemNode' 'compilerTools' 'classMappingsByJavaClass' 'classMappingsByReference' 'singletonHolders' 'selectorConverter' 'nilClassMapping' 'systemDefinitionNode')
+instVarTypes {^[SystemNode, SystemMappingCompilerTools, Dict[JavaClass, ClassMapping], Dict[Reference, ClassMapping], Dict[AbsoluteReference, AlmostFinalValue], SelectorConverter, ClassMapping, SystemDefinitionNode, Dict[Reference, Set[ClassMapping]]]}
+	^#('systemNode' 'compilerTools' 'classMappingsByJavaClass' 'classMappingsByReference' 'singletonHolders' 'selectorConverter' 'nilClassMapping' 'systemDefinitionNode' 'subclassMappingsCache')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -25,6 +25,16 @@ accepts: anExceptionCreator
 !
 (reader addMethod: 'gravel')
 !
+add: aHandler
+	handlers add: aHandler
+!
+(reader addMethod: 'gravel')
+!
+do: aBlock
+	handlers do: aBlock
+!
+(reader addMethod: 'gravel')
+!
 handles: anException
 	self do: [:exp | (exp handles: anException) ifTrue: [^true]].
 	^false
