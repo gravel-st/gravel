@@ -4,8 +4,6 @@
 !
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.String class')
 !
-(reader addInstVar: '____str_Gravel_st_gravel_lang_collections_interface_String__Gravel_st_gravel_lang_collections_interface_Symbol___')
-!
 (reader addMethod: 'copying')
 !
 copyWith: aCharacter

@@ -87,7 +87,7 @@ days
 !
 differenceFromTimestamp: aTimestamp
 	^Timestamp millisecondsSince1970: aTimestamp millisecondsSince1970 - self asMilliseconds
-		offsetMS: aTimestamp offsetMS
+		timezone: aTimestamp timezone
 !
 (reader addMethod: 'comparing')
 !
@@ -188,7 +188,7 @@ storeOn: aStream
 !
 sumFromTimestamp: aTimestamp
 	^Timestamp millisecondsSince1970: aTimestamp millisecondsSince1970 + self asMilliseconds
-		offsetMS: aTimestamp offsetMS
+		timezone: aTimestamp timezone
 !
 (reader addMethod: 'printing')
 !

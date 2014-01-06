@@ -133,12 +133,26 @@ public class LargeIntegerExtensions {
 
 	public static Number integerQuotientFromLargeInteger_(BigInteger y,
 			BigInteger x) {
+		return  IntegerExtensions.objectFromBigInteger(divRoundToNegInfinity(x, y));
+	}
+
+	private static BigInteger divRoundToNegInfinity(BigInteger x, BigInteger y) {
 		// http://www.microhowto.info/howto/round_towards_minus_infinity_when_dividing_integers_in_java.html
-		BigInteger q = x.divide(y);
-		if (x.signum() != y.signum())
-			return IntegerExtensions.objectFromBigInteger(q
-					.subtract(BigInteger.ONE));
-		return IntegerExtensions.objectFromBigInteger(q);
+		if (y.signum() >= 0) {
+			if (x.signum() >= 0) {
+				return x.divide(y);
+			} else {
+				return ((x.add(BigInteger.ONE)).divide(y)).subtract(BigInteger.ONE);
+			}
+		} else {
+			if (x.signum() == 1) {
+				//return -1-((1-x)/y);
+				 return BigInteger.ONE.negate().subtract(((BigInteger.ONE.subtract(x)).divide(y)));
+			} else {
+				return x.divide(y);
+			}
+			
+		}
 	}
 
 	public static Number integerQuotientFromSmallInteger_(BigInteger receiver,

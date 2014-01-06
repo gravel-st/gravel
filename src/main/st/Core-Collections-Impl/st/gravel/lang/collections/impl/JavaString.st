@@ -69,11 +69,6 @@ copyWithAll: aString
 do: aBlock
 	1 to: self size do: [:i | aBlock value: (self at: i)]
 !
-(reader addMethod: 'gravel')
-!
-isString
-	^true
-!
 (reader addMethod: 'private-comparing')
 !
 lessFromGravelSymbol: aSymbol

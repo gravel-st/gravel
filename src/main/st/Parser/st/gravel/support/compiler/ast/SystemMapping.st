@@ -317,10 +317,10 @@ newClassMappingForJavaClass: receiverClass {JavaClass} {^ClassMapping}
 	methodMappings := Dictionary new.
 	compilerTools methodNamesIn: receiverClass
 		do: 
-			[:methodName {Str} |
+			[:methodName {Str} :numArgs {Int} |
 			| sel {Sym} methodHandle {JavaMethodHandle} |
 			sel := selectorConverter functionNameAsSelector: methodName.
-			(allSelectors includes: sel)
+			(sel numArgs = numArgs and: [allSelectors includes: sel])
 				ifTrue: 
 					[methodHandle := compilerTools
 								methodHandleAt: methodName

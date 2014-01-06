@@ -115,7 +115,7 @@ compiledMethodNodesIn: superclassReference {Reference} do: aBlock {[MethodNode, 
 	sc := superMapping identityClass.
 	compilerTools methodNamesIn: sc
 		do: 
-			[:methodName {Str} |
+			[:methodName {Str} :numArgs {Int} |
 			| sel {Sym} |
 			sel := selectorConverter functionNameAsSelector: methodName.
 			(allSelectors includes: sel)

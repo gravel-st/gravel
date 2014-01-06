@@ -190,10 +190,10 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		_superMapping[0] = _systemMapping.classMappingAtReference_(_superclassReference);
 		_allSelectors[0] = _superMapping[0].allSelectorsIn_(_systemMapping);
 		_sc = _superMapping[0].identityClass();
-		_compilerTools.methodNamesIn_do_(_sc, new st.gravel.support.jvm.Block1<Object, String>() {
+		_compilerTools.methodNamesIn_do_(_sc, new st.gravel.support.jvm.Block2<Object, String, Integer>() {
 
 			@Override
-			public Object value_(final String _methodName) {
+			public Object value_value_(final String _methodName, final Integer _numArgs) {
 				final st.gravel.core.Symbol _sel;
 				_sel = _selectorConverter.functionNameAsSelector_(_methodName);
 				if (_allSelectors[0].contains(_sel)) {

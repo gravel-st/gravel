@@ -5,12 +5,17 @@
 (reader addMethod: 'As yet unclassified')
 !
 parameterOffset
-	^30 minutes
+	^60 minutes
 !
 (reader addMethod: 'tests')
 !
 parameterOperand
 	^Timestamp readFrom: '12/26/2013 8:11:02.038' readStream
+!
+(reader addMethod: 'tests')
+!
+parameterPlusOperand
+	^1000 seconds
 !
 (reader addMethod: 'tests')
 !
@@ -215,7 +220,7 @@ test_plus
 	self valuesDo: 
 			[:testValue |
 			| res |
-			res := testValue + self parameterOperand.
+			res := testValue + self parameterPlusOperand.
 			self assert: (self valueIsKindOfDateAndTime: res)]
 !
 (reader addMethod: 'tests')

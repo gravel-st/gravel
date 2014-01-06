@@ -76,6 +76,11 @@ copySpecies
 copyWithAll: aString
 	^self traitRequirement
 !
+(reader addMethod: 'testing')
+!
+isString
+	^true
+!
 (reader addMethod: 'As yet unclassified')
 !
 keywords

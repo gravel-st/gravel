@@ -16,15 +16,23 @@ cr
 !
 (reader addMethod: 'character writing')
 !
+crlf
+	self
+		cr;
+		lf
+!
+(reader addMethod: 'character writing')
+!
 crtab
-	self nextPut: Character cr.
-	self nextPut: Character tab
+	self
+		cr;
+		tab
 !
 (reader addMethod: 'character writing')
 !
 crtab: anInteger
-	self nextPut: Character cr.
-	anInteger timesRepeat: [self nextPut: Character tab]
+	self cr.
+	anInteger timesRepeat: [self tab]
 !
 (reader addMethod: 'testing')
 !

@@ -36,6 +36,7 @@ import st.gravel.support.compiler.jvm.JVMVoidType;
 import st.gravel.support.jvm.ArrayExtensions;
 import st.gravel.support.jvm.Block0;
 import st.gravel.support.jvm.Block1;
+import st.gravel.support.jvm.Block2;
 import st.gravel.support.jvm.ObjectClass;
 
 public final class JavaSystemMappingCompilerTools extends
@@ -259,11 +260,11 @@ public final class JavaSystemMappingCompilerTools extends
 
 	@Override
 	public SystemMappingCompilerTools methodNamesIn_do_(Class javaClass,
-			Block1<Object, String> block) {
+			Block2<Object, String, Integer> block) {
 		for (Method m : javaClass.getMethods()) {
 			if (!Modifier.isStatic(m.getModifiers())
 					&& m.getDeclaringClass() == javaClass)
-				block.value_(m.getName());
+				block.value_value_(m.getName(), m.getParameterTypes().length);
 		}
 		return this;
 	}
