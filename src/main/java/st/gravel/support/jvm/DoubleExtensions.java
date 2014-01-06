@@ -64,6 +64,18 @@ public class DoubleExtensions {
 		return 64;
 	}
 	
+	public static double naN() {
+		return Double.NaN;
+	}
+
+	public static double negativeInfinity() {
+		return Double.NEGATIVE_INFINITY;
+	}
+
+	public static double positiveInfinity() {
+		return Double.POSITIVE_INFINITY;
+	}
+	
 	public static double radiansToDegrees(double receiver) {
 		return Math.toDegrees(receiver);
 	}
@@ -78,6 +90,10 @@ public class DoubleExtensions {
 	
 	public static double tan(double receiver) {
 		return Math.tan(receiver);
+	}
+	
+	public static Number rounded(float receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.HALF_UP);
 	}
 	
 	private static Number roundToRoundingMode(double receiver,

@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaByteArray' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.ByteArray')
+(reader addSimpleTrait: 'st.gravel.lang.collections.ByteArray')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ByteArray class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.ByteArray class')
 !
 (reader propertyAt: 'javaClass' put: 'byte[]')
 !

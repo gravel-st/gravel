@@ -87,7 +87,7 @@ days
 !
 differenceFromTimestamp: aTimestamp
 	^Timestamp millisecondsSince1970: aTimestamp millisecondsSince1970 - self asMilliseconds
-		offsetMS: aTimestamp offsetMS
+		timezone: aTimestamp timezone
 !
 (reader addMethod: 'comparing')
 !
@@ -188,7 +188,7 @@ storeOn: aStream
 !
 sumFromTimestamp: aTimestamp
 	^Timestamp millisecondsSince1970: aTimestamp millisecondsSince1970 + self asMilliseconds
-		offsetMS: aTimestamp offsetMS
+		timezone: aTimestamp timezone
 !
 (reader addMethod: 'printing')
 !
@@ -263,7 +263,15 @@ initialize
 	NanosInMillisecond := 10 raisedTo: 6.
 	DayNames := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
 	MonthNames := #(#January #February #March #April #May #June #July #August #September #October #November #December).
-	DaysInMonth := #(31 28 31 30 31 30 31 31 30 31 30 31)
+	DaysInMonth := #(31 28 31 30 31 30 31 31 30 31 30 31).
+	MillisecondsSinceJulianDay := (Timestamp
+				julianDayDuration: 1970
+				month: 1
+				day: 1
+				hour: 0
+				minute: 0
+				second: 0
+				nanoSecond: 0) asMilliseconds
 !
 (reader addClassMethod: 'As yet unclassified')
 !

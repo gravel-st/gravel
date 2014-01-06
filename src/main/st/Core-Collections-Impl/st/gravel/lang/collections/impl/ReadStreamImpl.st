@@ -1,8 +1,8 @@
 (reader defineClass: 'ReadStreamImpl' superclass: 'st.gravel.lang.collections.impl.PositionableStreamImpl')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.ReadStream')
+(reader addSimpleTrait: 'st.gravel.lang.collections.ReadStream')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ReadStream class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.ReadStream class')
 !
 (reader addMethod: 'testing')
 !
@@ -23,15 +23,6 @@ contents
 !
 next
 	position >= readLimit ifTrue: [^nil] ifFalse: [^collection at: (position := position + 1)]
-!
-(reader addMethod: 'accessing')
-!
-peek
-	| nextObject |
-	self atEnd ifTrue: [^nil].
-	nextObject := self next.
-	position := position - 1.
-	^nextObject
 !
 (reader addMethod: 'accessing')
 !

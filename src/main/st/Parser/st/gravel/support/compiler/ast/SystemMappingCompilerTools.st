@@ -52,7 +52,7 @@ methodHandleAt: aString {Str} numArgs: numArgs {Int} in: aJavaClass {JavaClass} 
 !
 (reader addMethod: 'As yet unclassified')
 !
-methodNamesIn: receiverClass {JavaClass} do: aBlock {[Str, ^Object]} {^Self}
+methodNamesIn: receiverClass {JavaClass} do: aBlock {[Str, Int, ^Object]} {^Self}
 	^self subclassResponsibility
 !
 (reader addMethod: 'As yet unclassified')

@@ -1,16 +1,16 @@
 (reader defineClass: 'JavaArrayList' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.SequenceableCollection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.SequenceableCollection')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Addable')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Addable')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Removable')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Removable')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SequenceableCollection class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.SequenceableCollection class')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Addable class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Addable class')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Removable class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Removable class')
 !
 (reader propertyAt: 'javaClass' put: 'java.util.ArrayList')
 !

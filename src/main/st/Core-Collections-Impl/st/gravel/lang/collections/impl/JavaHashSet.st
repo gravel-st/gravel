@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaHashSet' superclass: 'st.gravel.lang.collections.impl.JavaCollection')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Set')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Set')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Set class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Set class')
 !
 (reader propertyAt: 'javaClass' put: 'java.util.HashSet')
 !

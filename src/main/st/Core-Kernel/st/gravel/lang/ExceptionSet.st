@@ -1,12 +1,12 @@
 (reader defineClass: 'ExceptionSet' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Addable')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Addable')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Collection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Collection')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Addable class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Addable class')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Collection class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Collection class')
 !
 (reader addInstVar: 'handlers')
 !
@@ -22,16 +22,6 @@
 accepts: anExceptionCreator
 	self do: [:exp | (exp accepts: anExceptionCreator) ifTrue: [^true]].
 	^false
-!
-(reader addMethod: 'gravel')
-!
-add: aHandler
-	handlers add: aHandler
-!
-(reader addMethod: 'gravel')
-!
-do: aBlock
-	handlers do: aBlock
 !
 (reader addMethod: 'gravel')
 !

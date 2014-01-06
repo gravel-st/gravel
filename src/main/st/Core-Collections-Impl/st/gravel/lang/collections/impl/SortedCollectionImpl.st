@@ -1,8 +1,8 @@
 (reader defineClass: 'SortedCollectionImpl' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.SortedCollection')
+(reader addSimpleTrait: 'st.gravel.lang.collections.SortedCollection')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.SortedCollection class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.SortedCollection class')
 !
 (reader addInstVar: 'sortBlock')
 !

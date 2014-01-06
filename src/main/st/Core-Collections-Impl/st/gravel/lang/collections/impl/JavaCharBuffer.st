@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaCharBuffer' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.ReadStream')
+(reader addSimpleTrait: 'st.gravel.lang.collections.ReadStream')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.ReadStream class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.ReadStream class')
 !
 (reader propertyAt: 'javaClass' put: 'java.nio.CharBuffer')
 !

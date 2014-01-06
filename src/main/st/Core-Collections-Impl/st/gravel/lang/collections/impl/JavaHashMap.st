@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaHashMap' superclass: 'st.gravel.lang.collections.impl.JavaCollection')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Dictionary')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Dictionary')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Dictionary class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Dictionary class')
 !
 (reader propertyAt: 'javaClass' put: 'java.util.HashMap')
 !

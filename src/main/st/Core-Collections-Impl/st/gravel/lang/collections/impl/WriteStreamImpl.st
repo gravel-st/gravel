@@ -1,8 +1,8 @@
 (reader defineClass: 'WriteStreamImpl' superclass: 'st.gravel.lang.collections.impl.PositionableStreamImpl')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.WriteStream')
+(reader addSimpleTrait: 'st.gravel.lang.collections.WriteStream')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.WriteStream class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.WriteStream class')
 !
 (reader addInstVar: 'writeLimit')
 !

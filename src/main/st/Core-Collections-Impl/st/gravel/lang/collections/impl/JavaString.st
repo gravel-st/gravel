@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaString' superclass: 'st.gravel.lang.Object')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.String')
+(reader addSimpleTrait: 'st.gravel.lang.collections.String')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.String class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.String class')
 !
 (reader propertyAt: 'javaClass' put: 'java.lang.String')
 !
@@ -66,11 +66,6 @@ copyWithAll: aString
 !
 do: aBlock
 	1 to: self size do: [:i | aBlock value: (self at: i)]
-!
-(reader addMethod: 'gravel')
-!
-isString
-	^true
 !
 (reader addMethod: 'private-comparing')
 !

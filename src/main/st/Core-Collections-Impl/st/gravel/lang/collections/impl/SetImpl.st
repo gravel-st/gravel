@@ -1,8 +1,8 @@
 (reader defineClass: 'SetImpl' superclass: 'st.gravel.lang.collections.impl.HashedCollection')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.Set')
+(reader addSimpleTrait: 'st.gravel.lang.collections.Set')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.Set class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.Set class')
 !
 (reader addMethod: 'comparing')
 !

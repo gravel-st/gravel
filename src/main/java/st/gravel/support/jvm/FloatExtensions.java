@@ -54,15 +54,15 @@ public class FloatExtensions {
 		return Float.MIN_NORMAL;
 	}
 
-	public static Object javaNaN() {
+	public static float naN() {
 		return Float.NaN;
 	}
 
-	public static Object javaNegativeInfinity() {
+	public static float negativeInfinity() {
 		return Float.NEGATIVE_INFINITY;
 	}
 
-	public static Object javaPositiveInfinity() {
+	public static float positiveInfinity() {
 		return Float.POSITIVE_INFINITY;
 	}
 

@@ -26,7 +26,11 @@ currentHandler: anObject
 (reader addMethod: 'accessing')
 !
 defaultAction
-	self subclassResponsibility
+	^(UnhandledException new)
+		unhandledException: self;
+		messageText: messageText;
+		initialHandler: initialHandler;
+		raise
 !
 (reader addMethod: 'accessing')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'IdentityDictionaryImpl' superclass: 'st.gravel.lang.collections.impl.DictionaryImpl')
 !
-(reader addSimpleTrait: 'st.gravel.lang.collections.interface.IdentityDictionary')
+(reader addSimpleTrait: 'st.gravel.lang.collections.IdentityDictionary')
 !
-(reader addSimpleClassTrait: 'st.gravel.lang.collections.interface.IdentityDictionary class')
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.IdentityDictionary class')
 !
 (reader addMethod: 'accessing')
 !

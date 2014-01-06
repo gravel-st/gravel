@@ -17,16 +17,23 @@ integerPart
 !
 (reader addMethod: 'testing')
 !
+isFinite
+	^self - self = 0.0
+!
+(reader addMethod: 'testing')
+!
 isLimitedPrecisionReal
 	^true
 !
 (reader addClassMethod: 'constants')
 !
 denormalized
-	^true
+	<primitive: #('st.gravel.support.jvm.LimitedPrecisionRealExtensions' 'denormalized')>
+	
 !
 (reader addClassMethod: 'constants')
 !
 radix
-	^2
+	<primitive: #('st.gravel.support.jvm.LimitedPrecisionRealExtensions' 'radix')>
+	
 !
