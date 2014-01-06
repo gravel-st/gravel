@@ -12,6 +12,18 @@ public class DoubleExtensions {
 		return Math.asin(receiver);
 	}
 	
+	public static double quotientFromDouble_(double receiver, double argument) {
+		return argument / receiver;
+	}
+	
+	public static double differenceFromDouble_(double receiver, double argument) {
+		return argument - receiver;
+	}
+	
+	public static double productFromDouble_(double receiver, double argument) {
+		return argument * receiver;
+	}
+	
 	public static double arcTan(double receiver) {
 		return Math.atan(receiver);
 	}
@@ -92,8 +104,20 @@ public class DoubleExtensions {
 		return Math.tan(receiver);
 	}
 	
-	public static Number rounded(float receiver) {
+	public static Number rounded(double receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.HALF_UP);
+	}
+	
+	public static Number truncated(double receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.DOWN);
+	}
+	
+	public static Number floor(double receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
+	}
+	
+	public static Number ceiling(double receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
 	}
 	
 	private static Number roundToRoundingMode(double receiver,
