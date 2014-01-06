@@ -1,5 +1,8 @@
 package st.gravel.support.jvm;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class DoubleExtensions {
 	public static double arcCos(double receiver) {
 		return Math.acos(receiver);
@@ -75,5 +78,12 @@ public class DoubleExtensions {
 	
 	public static double tan(double receiver) {
 		return Math.tan(receiver);
+	}
+	
+	private static Number roundToRoundingMode(double receiver,
+			RoundingMode roundingMode) {
+		BigDecimal bigDecimal = new BigDecimal(receiver);
+		BigDecimal rounded = bigDecimal.setScale(0, roundingMode);
+		return IntegerExtensions.objectFromBigInteger(rounded.toBigInteger());
 	}
 }
