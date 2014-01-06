@@ -37,6 +37,7 @@ import st.gravel.support.compiler.ast.TypeCast;
 import st.gravel.support.compiler.ast.IntegerLiteralNode;
 import st.gravel.support.compiler.ast.FloatLiteralNode;
 import st.gravel.support.compiler.ast.FixedPointLiteralNode;
+import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.ReferenceLiteralNode;
 import st.gravel.support.compiler.ast.Statement;
 import st.gravel.support.compiler.ast.ReturnNode;
@@ -703,7 +704,7 @@ public class Parser extends Object implements Cloneable {
 				return FixedPointLiteralNode.factory.integer_fractionString_scale_(_value, _fractionString, _scale);
 			}
 		}
-		return _fractionString == null ? IntegerLiteralNode.factory.integer_(_value) : FloatLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, null);
+		return _fractionString == null ? IntegerLiteralNode.factory.integer_(_value) : st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 'd') ? DoubleLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, null) : FloatLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, null);
 	}
 
 	public Expression parseOperand() {

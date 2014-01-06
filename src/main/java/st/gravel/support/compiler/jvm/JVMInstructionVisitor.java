@@ -77,6 +77,7 @@ import st.gravel.support.compiler.jvm.Pop;
 import st.gravel.support.compiler.jvm.PushBoolean;
 import st.gravel.support.compiler.jvm.PushChar;
 import st.gravel.support.compiler.jvm.PushConstant;
+import st.gravel.support.compiler.jvm.PushDouble;
 import st.gravel.support.compiler.jvm.PushFalse;
 import st.gravel.support.compiler.jvm.PushFloat;
 import st.gravel.support.compiler.jvm.PushInt;
@@ -403,6 +404,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 
 	public X visitPushConstant_(final PushConstant _anObject) {
 		return this.visitJVMInstruction_(_anObject);
+	}
+
+	public X visitPushDouble_(final PushDouble _anObject) {
+		return this.visitPushConstant_(_anObject);
 	}
 
 	public X visitPushFalse_(final PushFalse _anObject) {
