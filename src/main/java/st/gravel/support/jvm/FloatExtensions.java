@@ -37,6 +37,10 @@ public class FloatExtensions {
 	public static Number floor(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
 	}
+	
+	public static Number ceiling(float receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
+	}
 
 	public static float fmax() {	
 		return Float.MAX_VALUE;
