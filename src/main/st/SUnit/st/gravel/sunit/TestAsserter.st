@@ -37,7 +37,7 @@ assert: anObject equals: anotherObject
 (reader addMethod: 'gravel')
 !
 assert: aNumber {Number} equals: otherNumber {Number} delta: aDelta {Number} {^Self}
-	self assert: (aNumber - otherNumber) abs < aDelta
+	self assert: (aNumber - otherNumber) abs <= aDelta
 !
 (reader addMethod: 'gravel')
 !

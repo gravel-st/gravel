@@ -16,6 +16,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_equals_big");
 	}
 	@Test
+	public void test_big_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_equals_double");
+	}
+	@Test
 	public void test_big_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_equals_fixed");
 	}
@@ -34,6 +38,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_big_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_equals_negbig");
+	}
+	@Test
+	public void test_big_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_equals_negdouble");
 	}
 	@Test
 	public void test_big_equals_negfixed() throws Throwable {
@@ -64,6 +72,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_less_big");
 	}
 	@Test
+	public void test_big_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_less_double");
+	}
+	@Test
 	public void test_big_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_less_fixed");
 	}
@@ -82,6 +94,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_big_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_less_negbig");
+	}
+	@Test
+	public void test_big_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_less_negdouble");
 	}
 	@Test
 	public void test_big_less_negfixed() throws Throwable {
@@ -112,6 +128,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_more_big");
 	}
 	@Test
+	public void test_big_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_more_double");
+	}
+	@Test
 	public void test_big_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_more_fixed");
 	}
@@ -130,6 +150,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_big_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_more_negbig");
+	}
+	@Test
+	public void test_big_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_more_negdouble");
 	}
 	@Test
 	public void test_big_more_negfixed() throws Throwable {
@@ -156,8 +180,180 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_big_more_zero");
 	}
 	@Test
+	public void test_double_equals_big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_big");
+	}
+	@Test
+	public void test_double_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_double");
+	}
+	@Test
+	public void test_double_equals_fixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_fixed");
+	}
+	@Test
+	public void test_double_equals_float() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_float");
+	}
+	@Test
+	public void test_double_equals_fraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_fraction");
+	}
+	@Test
+	public void test_double_equals_int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_int");
+	}
+	@Test
+	public void test_double_equals_negbig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negbig");
+	}
+	@Test
+	public void test_double_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negdouble");
+	}
+	@Test
+	public void test_double_equals_negfixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negfixed");
+	}
+	@Test
+	public void test_double_equals_negfloat() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negfloat");
+	}
+	@Test
+	public void test_double_equals_negfraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negfraction");
+	}
+	@Test
+	public void test_double_equals_negint() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negint");
+	}
+	@Test
+	public void test_double_equals_negzero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_negzero");
+	}
+	@Test
+	public void test_double_equals_zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_equals_zero");
+	}
+	@Test
+	public void test_double_less_big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_big");
+	}
+	@Test
+	public void test_double_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_double");
+	}
+	@Test
+	public void test_double_less_fixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_fixed");
+	}
+	@Test
+	public void test_double_less_float() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_float");
+	}
+	@Test
+	public void test_double_less_fraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_fraction");
+	}
+	@Test
+	public void test_double_less_int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_int");
+	}
+	@Test
+	public void test_double_less_negbig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negbig");
+	}
+	@Test
+	public void test_double_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negdouble");
+	}
+	@Test
+	public void test_double_less_negfixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negfixed");
+	}
+	@Test
+	public void test_double_less_negfloat() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negfloat");
+	}
+	@Test
+	public void test_double_less_negfraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negfraction");
+	}
+	@Test
+	public void test_double_less_negint() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negint");
+	}
+	@Test
+	public void test_double_less_negzero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_negzero");
+	}
+	@Test
+	public void test_double_less_zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_less_zero");
+	}
+	@Test
+	public void test_double_more_big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_big");
+	}
+	@Test
+	public void test_double_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_double");
+	}
+	@Test
+	public void test_double_more_fixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_fixed");
+	}
+	@Test
+	public void test_double_more_float() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_float");
+	}
+	@Test
+	public void test_double_more_fraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_fraction");
+	}
+	@Test
+	public void test_double_more_int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_int");
+	}
+	@Test
+	public void test_double_more_negbig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negbig");
+	}
+	@Test
+	public void test_double_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negdouble");
+	}
+	@Test
+	public void test_double_more_negfixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negfixed");
+	}
+	@Test
+	public void test_double_more_negfloat() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negfloat");
+	}
+	@Test
+	public void test_double_more_negfraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negfraction");
+	}
+	@Test
+	public void test_double_more_negint() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negint");
+	}
+	@Test
+	public void test_double_more_negzero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_negzero");
+	}
+	@Test
+	public void test_double_more_zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_double_more_zero");
+	}
+	@Test
 	public void test_fixed_equals_big() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_equals_big");
+	}
+	@Test
+	public void test_fixed_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_equals_double");
 	}
 	@Test
 	public void test_fixed_equals_fixed() throws Throwable {
@@ -178,6 +374,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_fixed_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_equals_negbig");
+	}
+	@Test
+	public void test_fixed_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_equals_negdouble");
 	}
 	@Test
 	public void test_fixed_equals_negfixed() throws Throwable {
@@ -208,6 +408,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_less_big");
 	}
 	@Test
+	public void test_fixed_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_less_double");
+	}
+	@Test
 	public void test_fixed_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_less_fixed");
 	}
@@ -226,6 +430,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_fixed_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_less_negbig");
+	}
+	@Test
+	public void test_fixed_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_less_negdouble");
 	}
 	@Test
 	public void test_fixed_less_negfixed() throws Throwable {
@@ -256,6 +464,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_more_big");
 	}
 	@Test
+	public void test_fixed_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_more_double");
+	}
+	@Test
 	public void test_fixed_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_more_fixed");
 	}
@@ -274,6 +486,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_fixed_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_more_negbig");
+	}
+	@Test
+	public void test_fixed_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fixed_more_negdouble");
 	}
 	@Test
 	public void test_fixed_more_negfixed() throws Throwable {
@@ -304,6 +520,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_equals_big");
 	}
 	@Test
+	public void test_float_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_equals_double");
+	}
+	@Test
 	public void test_float_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_equals_fixed");
 	}
@@ -322,6 +542,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_float_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_equals_negbig");
+	}
+	@Test
+	public void test_float_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_equals_negdouble");
 	}
 	@Test
 	public void test_float_equals_negfixed() throws Throwable {
@@ -352,6 +576,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_less_big");
 	}
 	@Test
+	public void test_float_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_less_double");
+	}
+	@Test
 	public void test_float_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_less_fixed");
 	}
@@ -370,6 +598,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_float_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_less_negbig");
+	}
+	@Test
+	public void test_float_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_less_negdouble");
 	}
 	@Test
 	public void test_float_less_negfixed() throws Throwable {
@@ -400,6 +632,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_more_big");
 	}
 	@Test
+	public void test_float_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_more_double");
+	}
+	@Test
 	public void test_float_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_more_fixed");
 	}
@@ -418,6 +654,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_float_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_more_negbig");
+	}
+	@Test
+	public void test_float_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_float_more_negdouble");
 	}
 	@Test
 	public void test_float_more_negfixed() throws Throwable {
@@ -448,6 +688,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_equals_big");
 	}
 	@Test
+	public void test_fraction_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_equals_double");
+	}
+	@Test
 	public void test_fraction_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_equals_fixed");
 	}
@@ -466,6 +710,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_fraction_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_equals_negbig");
+	}
+	@Test
+	public void test_fraction_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_equals_negdouble");
 	}
 	@Test
 	public void test_fraction_equals_negfixed() throws Throwable {
@@ -496,6 +744,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_less_big");
 	}
 	@Test
+	public void test_fraction_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_less_double");
+	}
+	@Test
 	public void test_fraction_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_less_fixed");
 	}
@@ -514,6 +766,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_fraction_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_less_negbig");
+	}
+	@Test
+	public void test_fraction_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_less_negdouble");
 	}
 	@Test
 	public void test_fraction_less_negfixed() throws Throwable {
@@ -544,6 +800,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_more_big");
 	}
 	@Test
+	public void test_fraction_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_more_double");
+	}
+	@Test
 	public void test_fraction_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_more_fixed");
 	}
@@ -562,6 +822,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_fraction_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_more_negbig");
+	}
+	@Test
+	public void test_fraction_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_fraction_more_negdouble");
 	}
 	@Test
 	public void test_fraction_more_negfixed() throws Throwable {
@@ -592,6 +856,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_equals_big");
 	}
 	@Test
+	public void test_int_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_equals_double");
+	}
+	@Test
 	public void test_int_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_equals_fixed");
 	}
@@ -610,6 +878,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_int_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_equals_negbig");
+	}
+	@Test
+	public void test_int_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_equals_negdouble");
 	}
 	@Test
 	public void test_int_equals_negfixed() throws Throwable {
@@ -640,6 +912,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_less_big");
 	}
 	@Test
+	public void test_int_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_less_double");
+	}
+	@Test
 	public void test_int_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_less_fixed");
 	}
@@ -658,6 +934,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_int_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_less_negbig");
+	}
+	@Test
+	public void test_int_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_less_negdouble");
 	}
 	@Test
 	public void test_int_less_negfixed() throws Throwable {
@@ -688,6 +968,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_more_big");
 	}
 	@Test
+	public void test_int_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_more_double");
+	}
+	@Test
 	public void test_int_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_more_fixed");
 	}
@@ -706,6 +990,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_int_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_more_negbig");
+	}
+	@Test
+	public void test_int_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_int_more_negdouble");
 	}
 	@Test
 	public void test_int_more_negfixed() throws Throwable {
@@ -736,6 +1024,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_equals_big");
 	}
 	@Test
+	public void test_negbig_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_equals_double");
+	}
+	@Test
 	public void test_negbig_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_equals_fixed");
 	}
@@ -754,6 +1046,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negbig_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_equals_negbig");
+	}
+	@Test
+	public void test_negbig_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_equals_negdouble");
 	}
 	@Test
 	public void test_negbig_equals_negfixed() throws Throwable {
@@ -784,6 +1080,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_less_big");
 	}
 	@Test
+	public void test_negbig_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_less_double");
+	}
+	@Test
 	public void test_negbig_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_less_fixed");
 	}
@@ -802,6 +1102,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negbig_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_less_negbig");
+	}
+	@Test
+	public void test_negbig_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_less_negdouble");
 	}
 	@Test
 	public void test_negbig_less_negfixed() throws Throwable {
@@ -832,6 +1136,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_more_big");
 	}
 	@Test
+	public void test_negbig_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_more_double");
+	}
+	@Test
 	public void test_negbig_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_more_fixed");
 	}
@@ -850,6 +1158,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negbig_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_more_negbig");
+	}
+	@Test
+	public void test_negbig_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_more_negdouble");
 	}
 	@Test
 	public void test_negbig_more_negfixed() throws Throwable {
@@ -876,8 +1188,180 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negbig_more_zero");
 	}
 	@Test
+	public void test_negdouble_equals_big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_big");
+	}
+	@Test
+	public void test_negdouble_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_double");
+	}
+	@Test
+	public void test_negdouble_equals_fixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_fixed");
+	}
+	@Test
+	public void test_negdouble_equals_float() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_float");
+	}
+	@Test
+	public void test_negdouble_equals_fraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_fraction");
+	}
+	@Test
+	public void test_negdouble_equals_int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_int");
+	}
+	@Test
+	public void test_negdouble_equals_negbig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negbig");
+	}
+	@Test
+	public void test_negdouble_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negdouble");
+	}
+	@Test
+	public void test_negdouble_equals_negfixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negfixed");
+	}
+	@Test
+	public void test_negdouble_equals_negfloat() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negfloat");
+	}
+	@Test
+	public void test_negdouble_equals_negfraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negfraction");
+	}
+	@Test
+	public void test_negdouble_equals_negint() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negint");
+	}
+	@Test
+	public void test_negdouble_equals_negzero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_negzero");
+	}
+	@Test
+	public void test_negdouble_equals_zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_equals_zero");
+	}
+	@Test
+	public void test_negdouble_less_big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_big");
+	}
+	@Test
+	public void test_negdouble_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_double");
+	}
+	@Test
+	public void test_negdouble_less_fixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_fixed");
+	}
+	@Test
+	public void test_negdouble_less_float() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_float");
+	}
+	@Test
+	public void test_negdouble_less_fraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_fraction");
+	}
+	@Test
+	public void test_negdouble_less_int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_int");
+	}
+	@Test
+	public void test_negdouble_less_negbig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negbig");
+	}
+	@Test
+	public void test_negdouble_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negdouble");
+	}
+	@Test
+	public void test_negdouble_less_negfixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negfixed");
+	}
+	@Test
+	public void test_negdouble_less_negfloat() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negfloat");
+	}
+	@Test
+	public void test_negdouble_less_negfraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negfraction");
+	}
+	@Test
+	public void test_negdouble_less_negint() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negint");
+	}
+	@Test
+	public void test_negdouble_less_negzero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_negzero");
+	}
+	@Test
+	public void test_negdouble_less_zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_less_zero");
+	}
+	@Test
+	public void test_negdouble_more_big() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_big");
+	}
+	@Test
+	public void test_negdouble_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_double");
+	}
+	@Test
+	public void test_negdouble_more_fixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_fixed");
+	}
+	@Test
+	public void test_negdouble_more_float() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_float");
+	}
+	@Test
+	public void test_negdouble_more_fraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_fraction");
+	}
+	@Test
+	public void test_negdouble_more_int() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_int");
+	}
+	@Test
+	public void test_negdouble_more_negbig() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negbig");
+	}
+	@Test
+	public void test_negdouble_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negdouble");
+	}
+	@Test
+	public void test_negdouble_more_negfixed() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negfixed");
+	}
+	@Test
+	public void test_negdouble_more_negfloat() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negfloat");
+	}
+	@Test
+	public void test_negdouble_more_negfraction() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negfraction");
+	}
+	@Test
+	public void test_negdouble_more_negint() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negint");
+	}
+	@Test
+	public void test_negdouble_more_negzero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_negzero");
+	}
+	@Test
+	public void test_negdouble_more_zero() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negdouble_more_zero");
+	}
+	@Test
 	public void test_negfixed_equals_big() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_equals_big");
+	}
+	@Test
+	public void test_negfixed_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_equals_double");
 	}
 	@Test
 	public void test_negfixed_equals_fixed() throws Throwable {
@@ -898,6 +1382,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfixed_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_equals_negbig");
+	}
+	@Test
+	public void test_negfixed_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_equals_negdouble");
 	}
 	@Test
 	public void test_negfixed_equals_negfixed() throws Throwable {
@@ -928,6 +1416,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_less_big");
 	}
 	@Test
+	public void test_negfixed_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_less_double");
+	}
+	@Test
 	public void test_negfixed_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_less_fixed");
 	}
@@ -946,6 +1438,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfixed_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_less_negbig");
+	}
+	@Test
+	public void test_negfixed_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_less_negdouble");
 	}
 	@Test
 	public void test_negfixed_less_negfixed() throws Throwable {
@@ -976,6 +1472,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_more_big");
 	}
 	@Test
+	public void test_negfixed_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_more_double");
+	}
+	@Test
 	public void test_negfixed_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_more_fixed");
 	}
@@ -994,6 +1494,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfixed_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_more_negbig");
+	}
+	@Test
+	public void test_negfixed_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfixed_more_negdouble");
 	}
 	@Test
 	public void test_negfixed_more_negfixed() throws Throwable {
@@ -1024,6 +1528,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_equals_big");
 	}
 	@Test
+	public void test_negfloat_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_equals_double");
+	}
+	@Test
 	public void test_negfloat_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_equals_fixed");
 	}
@@ -1042,6 +1550,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfloat_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_equals_negbig");
+	}
+	@Test
+	public void test_negfloat_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_equals_negdouble");
 	}
 	@Test
 	public void test_negfloat_equals_negfixed() throws Throwable {
@@ -1072,6 +1584,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_less_big");
 	}
 	@Test
+	public void test_negfloat_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_less_double");
+	}
+	@Test
 	public void test_negfloat_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_less_fixed");
 	}
@@ -1090,6 +1606,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfloat_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_less_negbig");
+	}
+	@Test
+	public void test_negfloat_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_less_negdouble");
 	}
 	@Test
 	public void test_negfloat_less_negfixed() throws Throwable {
@@ -1120,6 +1640,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_more_big");
 	}
 	@Test
+	public void test_negfloat_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_more_double");
+	}
+	@Test
 	public void test_negfloat_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_more_fixed");
 	}
@@ -1138,6 +1662,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfloat_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_more_negbig");
+	}
+	@Test
+	public void test_negfloat_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfloat_more_negdouble");
 	}
 	@Test
 	public void test_negfloat_more_negfixed() throws Throwable {
@@ -1168,6 +1696,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_equals_big");
 	}
 	@Test
+	public void test_negfraction_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_equals_double");
+	}
+	@Test
 	public void test_negfraction_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_equals_fixed");
 	}
@@ -1186,6 +1718,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfraction_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_equals_negbig");
+	}
+	@Test
+	public void test_negfraction_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_equals_negdouble");
 	}
 	@Test
 	public void test_negfraction_equals_negfixed() throws Throwable {
@@ -1216,6 +1752,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_less_big");
 	}
 	@Test
+	public void test_negfraction_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_less_double");
+	}
+	@Test
 	public void test_negfraction_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_less_fixed");
 	}
@@ -1234,6 +1774,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfraction_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_less_negbig");
+	}
+	@Test
+	public void test_negfraction_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_less_negdouble");
 	}
 	@Test
 	public void test_negfraction_less_negfixed() throws Throwable {
@@ -1264,6 +1808,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_more_big");
 	}
 	@Test
+	public void test_negfraction_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_more_double");
+	}
+	@Test
 	public void test_negfraction_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_more_fixed");
 	}
@@ -1282,6 +1830,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negfraction_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_more_negbig");
+	}
+	@Test
+	public void test_negfraction_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negfraction_more_negdouble");
 	}
 	@Test
 	public void test_negfraction_more_negfixed() throws Throwable {
@@ -1312,6 +1864,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_equals_big");
 	}
 	@Test
+	public void test_negint_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_equals_double");
+	}
+	@Test
 	public void test_negint_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_equals_fixed");
 	}
@@ -1330,6 +1886,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negint_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_equals_negbig");
+	}
+	@Test
+	public void test_negint_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_equals_negdouble");
 	}
 	@Test
 	public void test_negint_equals_negfixed() throws Throwable {
@@ -1360,6 +1920,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_less_big");
 	}
 	@Test
+	public void test_negint_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_less_double");
+	}
+	@Test
 	public void test_negint_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_less_fixed");
 	}
@@ -1378,6 +1942,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negint_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_less_negbig");
+	}
+	@Test
+	public void test_negint_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_less_negdouble");
 	}
 	@Test
 	public void test_negint_less_negfixed() throws Throwable {
@@ -1408,6 +1976,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_more_big");
 	}
 	@Test
+	public void test_negint_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_more_double");
+	}
+	@Test
 	public void test_negint_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_more_fixed");
 	}
@@ -1426,6 +1998,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negint_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_more_negbig");
+	}
+	@Test
+	public void test_negint_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negint_more_negdouble");
 	}
 	@Test
 	public void test_negint_more_negfixed() throws Throwable {
@@ -1456,6 +2032,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_equals_big");
 	}
 	@Test
+	public void test_negzero_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_equals_double");
+	}
+	@Test
 	public void test_negzero_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_equals_fixed");
 	}
@@ -1474,6 +2054,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negzero_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_equals_negbig");
+	}
+	@Test
+	public void test_negzero_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_equals_negdouble");
 	}
 	@Test
 	public void test_negzero_equals_negfixed() throws Throwable {
@@ -1504,6 +2088,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_less_big");
 	}
 	@Test
+	public void test_negzero_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_less_double");
+	}
+	@Test
 	public void test_negzero_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_less_fixed");
 	}
@@ -1522,6 +2110,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negzero_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_less_negbig");
+	}
+	@Test
+	public void test_negzero_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_less_negdouble");
 	}
 	@Test
 	public void test_negzero_less_negfixed() throws Throwable {
@@ -1552,6 +2144,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_more_big");
 	}
 	@Test
+	public void test_negzero_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_more_double");
+	}
+	@Test
 	public void test_negzero_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_more_fixed");
 	}
@@ -1570,6 +2166,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_negzero_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_more_negbig");
+	}
+	@Test
+	public void test_negzero_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_negzero_more_negdouble");
 	}
 	@Test
 	public void test_negzero_more_negfixed() throws Throwable {
@@ -1600,6 +2200,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_equals_big");
 	}
 	@Test
+	public void test_zero_equals_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_equals_double");
+	}
+	@Test
 	public void test_zero_equals_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_equals_fixed");
 	}
@@ -1618,6 +2222,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_zero_equals_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_equals_negbig");
+	}
+	@Test
+	public void test_zero_equals_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_equals_negdouble");
 	}
 	@Test
 	public void test_zero_equals_negfixed() throws Throwable {
@@ -1648,6 +2256,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_less_big");
 	}
 	@Test
+	public void test_zero_less_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_less_double");
+	}
+	@Test
 	public void test_zero_less_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_less_fixed");
 	}
@@ -1666,6 +2278,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_zero_less_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_less_negbig");
+	}
+	@Test
+	public void test_zero_less_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_less_negdouble");
 	}
 	@Test
 	public void test_zero_less_negfixed() throws Throwable {
@@ -1696,6 +2312,10 @@ public class CrossTypeComparisonTest {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_more_big");
 	}
 	@Test
+	public void test_zero_more_double() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_more_double");
+	}
+	@Test
 	public void test_zero_more_fixed() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_more_fixed");
 	}
@@ -1714,6 +2334,10 @@ public class CrossTypeComparisonTest {
 	@Test
 	public void test_zero_more_negbig() throws Throwable {
 		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_more_negbig");
+	}
+	@Test
+	public void test_zero_more_negdouble() throws Throwable {
+		MethodTools.debugTest("st.gravel.systemtests.CrossTypeComparisonTest", "test_zero_more_negdouble");
 	}
 	@Test
 	public void test_zero_more_negfixed() throws Throwable {
