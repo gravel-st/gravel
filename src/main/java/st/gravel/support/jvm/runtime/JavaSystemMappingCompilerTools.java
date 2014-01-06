@@ -254,7 +254,7 @@ public final class JavaSystemMappingCompilerTools extends
 								MethodTools.asMethodType(method));
 			}
 		} catch (NoSuchMethodException | IllegalAccessException e) {
-			throw new RuntimeException(e);
+			return null;
 		}
 	}
 

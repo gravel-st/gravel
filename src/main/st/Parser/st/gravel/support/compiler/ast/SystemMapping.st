@@ -331,18 +331,21 @@ newClassMappingForJavaClass: receiverClass {JavaClass} {^ClassMapping}
 	compilerTools methodNamesIn: receiverClass
 		do: 
 			[:methodName {Str} :numArgs {Int} |
-			| sel {Sym} methodHandle {JavaMethodHandle} |
+			| sel {Sym} |
 			sel := selectorConverter functionNameAsSelector: methodName.
 			(sel numArgs = numArgs and: [allSelectors includes: sel])
 				ifTrue: 
-					[methodHandle := compilerTools
+					[| methodHandle {JavaMethodHandle} |
+					methodHandle := compilerTools
 								methodHandleAt: methodName
 								numArgs: sel numArgs
 								in: receiverClass
 								identityClass: receiverClass
 								isStatic: false.
-					methodMappings at: sel
-						put: (AnonymousMethodMapping methodHandle: methodHandle definingClass: receiverClass)]].
+					methodHandle isNil
+						ifFalse: 
+							[methodMappings at: sel
+								put: (AnonymousMethodMapping methodHandle: methodHandle definingClass: receiverClass)]]].
 	classNode := ClassNode
 				name: superMapping classNode name
 				superclassPath: superMapping reference printString

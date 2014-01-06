@@ -93,7 +93,8 @@ classOrSubclassesIsInPackage: aClass
 (reader addMethod: 'gravel')
 !
 classString: aClass
-	^isMeta ifTrue: [aClass meta name] ifFalse: [aClass name]
+	^(isMeta ifTrue: [aClass meta name] ifFalse: [aClass name])
+		, (aClass isTrait ifTrue: [' (trait)'] ifFalse: [''])
 !
 (reader addMethod: 'gravel')
 !
@@ -581,6 +582,7 @@ toggleToolPanel
 !
 traitsInCurrentPackage
 	^(self selectedPackage ifNil: [^#()]) definedTraits
+		asSortedCollection: [:a :b | a name < b name]
 !
 (reader addMethod: 'gravel')
 !

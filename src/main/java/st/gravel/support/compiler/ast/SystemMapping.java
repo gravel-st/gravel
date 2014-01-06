@@ -552,11 +552,13 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			@Override
 			public Object value_value_(final String _methodName, final Integer _numArgs) {
 				final st.gravel.core.Symbol _sel;
-				java.lang.invoke.MethodHandle _methodHandle;
 				_sel = _selectorConverter.functionNameAsSelector_(_methodName);
 				if (st.gravel.support.jvm.IntegerExtensions.equals_(_sel.numArgs(), _numArgs) && _allSelectors[0].contains(_sel)) {
+					final java.lang.invoke.MethodHandle _methodHandle;
 					_methodHandle = _compilerTools.methodHandleAt_numArgs_in_identityClass_isStatic_(_methodName, _sel.numArgs(), _receiverClass, _receiverClass, false);
-					return _methodMappings[0].put(_sel, AnonymousMethodMapping.factory.methodHandle_definingClass_(_methodHandle, _receiverClass));
+					if (_methodHandle != null) {
+						return _methodMappings[0].put(_sel, AnonymousMethodMapping.factory.methodHandle_definingClass_(_methodHandle, _receiverClass));
+					}
 				}
 				return SystemMapping.this;
 			}
