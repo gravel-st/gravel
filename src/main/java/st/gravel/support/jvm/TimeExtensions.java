@@ -1,6 +1,10 @@
 package st.gravel.support.jvm;
 
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class TimeExtensions {
@@ -14,7 +18,7 @@ public class TimeExtensions {
 	public static long clockPrecisionNS() {
 		long sample = System.nanoTime();
 		long prec = Long.MAX_VALUE;
-		for (int samples =0 ; samples < 10; ) {
+		for (int samples = 0; samples < 10;) {
 			long diff = System.nanoTime() - sample;
 			if (diff > 0) {
 				prec = Math.min(diff, prec);
@@ -25,10 +29,58 @@ public class TimeExtensions {
 		return prec;
 	}
 
-	public static long timezoneOffsetMS_(Object millisecondsSince1970) {
-		return TimeZone.getDefault().getOffset(IntegerExtensions.asLong(millisecondsSince1970));
+	public static TimeZone defaultTimeZone() {
+		return TimeZone.getDefault();
 	}
 
+	public static TimeZone getTimeZoneNamed_(String name) {
+		return TimeZone.getTimeZone(name);
+	}
+
+	public static TimeZone getTimeZoneForOffsetMS_(int ms) {
+		String[] availableIDs = TimeZone.getAvailableIDs(ms);
+		if (availableIDs.length == 0)
+			throw new RuntimeException("No timezone for offset: " + ms);
+		return getTimeZoneNamed_(availableIDs[0]);
+	}
+
+	public static Calendar newCalendar_timeZone_(long millis, TimeZone timeZone) {
+		Calendar calendar = Calendar.getInstance(timeZone);
+		calendar.setTimeInMillis(millis);
+		return calendar;
+	}
+
+	public static Calendar newCalendarFromString_(String str) throws ParseException {
+		Calendar cal = Calendar.getInstance();
+	    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+	    cal.setTime(sdf.parse(str));
+		return cal;
+	}
+
+	public static int year(Calendar cal) {
+		return cal.get(Calendar.YEAR);
+	}
+	public static int monthIndex(Calendar cal) {
+		return cal.get(Calendar.MONTH)+1;
+	}
+	public static int dayOfMonth(Calendar cal) {
+		return cal.get(Calendar.DAY_OF_MONTH);
+	}
+	public static int dayOfYear(Calendar cal) {
+		return cal.get(Calendar.DAY_OF_YEAR);
+	}
+	public static int hour(Calendar cal) {
+		return cal.get(Calendar.HOUR_OF_DAY);
+	}
+	public static int minute(Calendar cal) {
+		return cal.get(Calendar.MINUTE);
+	}
+	public static int second(Calendar cal) {
+		return cal.get(Calendar.SECOND);
+	}
+	public static boolean isLeapYear(Calendar cal) {
+		return new GregorianCalendar().isLeapYear(year(cal)); 
+	}
 	private static long calculateNanoOffset() {
 		long currentTimeMillis = System.currentTimeMillis();
 		long nanoTime = System.nanoTime();

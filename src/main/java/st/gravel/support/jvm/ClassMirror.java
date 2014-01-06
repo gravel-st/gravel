@@ -25,8 +25,7 @@ public class ClassMirror extends ClassDescriptionMirror {
 	}
 
 	public ClassDescriptionMirror meta() {
-		Reference metaReference = definitionClassNode().reference().meta();
-		return ClassDescriptionMirror.forReference(metaReference);
+		return ClassDescriptionMirror.forReference(reference().meta());
 	}
 
 }

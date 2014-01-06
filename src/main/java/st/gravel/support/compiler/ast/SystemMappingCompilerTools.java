@@ -65,7 +65,7 @@ abstract public class SystemMappingCompilerTools extends Object implements Clone
 
 	public abstract java.lang.invoke.MethodHandle methodHandleAt_numArgs_in_identityClass_isStatic_(final String _aString, final int _numArgs, final Class _aJavaClass, final Class _identityClass, final boolean _aBoolean);
 
-	public abstract SystemMappingCompilerTools methodNamesIn_do_(final Class _receiverClass, final st.gravel.support.jvm.Block1<Object, String> _aBlock);
+	public abstract SystemMappingCompilerTools methodNamesIn_do_(final Class _receiverClass, final st.gravel.support.jvm.Block2<Object, String, Integer> _aBlock);
 
 	public abstract st.gravel.support.jvm.runtime.AlmostFinalValue newSingletonHolder_value_(final AbsoluteReference _reference, final Object _value);
 

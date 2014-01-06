@@ -15,18 +15,22 @@ import st.gravel.support.jvm.runtime.MethodTools;
 import st.gravel.support.jvm.runtime.UnhandledException;
 
 public class ExceptionTest {
-	private Class testExceptionAClass;
-	private Class testExceptionBClass;
+	private static Class testExceptionAClass;
+	private static Class testExceptionBClass;
 
 	@Before
 	public void setUp() {
 		TestBootstrap.getSingleton();
-		testExceptionAClass = new ClassBuilder("TestExceptionA")
-		.superclassName("st.gravel.lang.Exception")
-		.method("testValue ^7").build();
-		testExceptionBClass = new ClassBuilder("TestExceptionB")
-		.superclassName("st.gravel.lang.Exception")
-		.method("testValue ^11").build();
+		if (testExceptionAClass == null) {
+			testExceptionAClass = new ClassBuilder("TestExceptionA")
+					.superclassName("st.gravel.lang.Exception")
+					.method("testValue ^7").build();
+		}
+		if (testExceptionBClass == null) {
+			testExceptionBClass = new ClassBuilder("TestExceptionB")
+					.superclassName("st.gravel.lang.Exception")
+					.method("testValue ^11").build();
+		}
 	}
 
 	@Test

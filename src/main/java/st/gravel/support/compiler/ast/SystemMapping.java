@@ -17,9 +17,12 @@ import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.AbsoluteReference;
 import st.gravel.support.compiler.ast.SelectorConverter;
 import st.gravel.support.compiler.ast.SystemDefinitionNode;
+import java.util.Set;
 import st.gravel.support.compiler.ast.SystemDiff;
 import st.gravel.support.compiler.ast.SystemMappingUpdater;
 import st.gravel.support.compiler.ast.ClassDiff;
+import java.util.HashMap;
+import java.util.HashSet;
 import st.gravel.support.compiler.ast.SharedDeclarationNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.jvm.JVMClass;
@@ -36,14 +39,12 @@ import st.gravel.support.compiler.ast.Parser;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.Expression;
-import java.util.HashMap;
 import java.util.Date;
 import st.gravel.support.compiler.ast.AbstractMethodMapping;
 import st.gravel.support.compiler.ast.MethodMapping;
 import st.gravel.support.compiler.ast.NamespaceNode;
 import java.util.Map;
 import java.util.Map.*;
-import java.util.Set;
 import st.gravel.support.compiler.ast.AnonymousMethodMapping;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
 import st.gravel.support.compiler.ast.MethodNode;
@@ -68,6 +69,8 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	SelectorConverter _selectorConverter;
 
 	Map<AbsoluteReference, st.gravel.support.jvm.runtime.AlmostFinalValue> _singletonHolders;
+
+	Map<Reference, java.util.Set<ClassMapping>> _subclassMappingsCache;
 
 	SystemDefinitionNode _systemDefinitionNode;
 
@@ -100,6 +103,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		}
 		_classMappingsByReference.put(_aClassMapping.classNode().reference(), _aClassMapping);
 		_systemNode = _systemNode.withClassDescriptionNode_(_aClassMapping.classNode());
+		this.resetCache();
 		return this;
 	}
 
@@ -131,6 +135,24 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			}
 		}
 		return _best[0];
+	}
+
+	public SystemMapping buildSubclassMappingsCache() {
+		_subclassMappingsCache = new java.util.HashMap<Reference, java.util.Set<ClassMapping>>();
+		for (final ClassMapping _each : _classMappingsByReference.values()) {
+			final Reference _scr;
+			_scr = _each.superclassReference();
+			if (_scr != null) {
+				java.util.Set<ClassMapping> _temp1 = _subclassMappingsCache.get(_scr);
+				if (_temp1 == null) {
+					java.util.Set<ClassMapping> _temp2 = new java.util.HashSet();
+					_subclassMappingsCache.put(_scr, _temp2);
+					_temp1 = _temp2;
+				}
+				_temp1.add(_each);
+			}
+		}
+		return this;
 	}
 
 	public ClassMapping classMappingAtJavaClass_ifAbsent_(final Class _aClass, final st.gravel.support.jvm.Block0<ClassMapping> _absentBlock) {
@@ -525,16 +547,18 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		_superMapping = this.bestClassMappingFor_(_receiverClass);
 		_allSelectors[0] = _superMapping.allSelectorsIn_(this);
 		_methodMappings[0] = new java.util.HashMap<st.gravel.core.Symbol, AbstractMethodMapping>();
-		_compilerTools.methodNamesIn_do_(_receiverClass, new st.gravel.support.jvm.Block1<Object, String>() {
+		_compilerTools.methodNamesIn_do_(_receiverClass, new st.gravel.support.jvm.Block2<Object, String, Integer>() {
 
 			@Override
-			public Object value_(final String _methodName) {
+			public Object value_value_(final String _methodName, final Integer _numArgs) {
 				final st.gravel.core.Symbol _sel;
-				java.lang.invoke.MethodHandle _methodHandle;
 				_sel = _selectorConverter.functionNameAsSelector_(_methodName);
-				if (_allSelectors[0].contains(_sel)) {
+				if (st.gravel.support.jvm.IntegerExtensions.equals_(_sel.numArgs(), _numArgs) && _allSelectors[0].contains(_sel)) {
+					final java.lang.invoke.MethodHandle _methodHandle;
 					_methodHandle = _compilerTools.methodHandleAt_numArgs_in_identityClass_isStatic_(_methodName, _sel.numArgs(), _receiverClass, _receiverClass, false);
-					return _methodMappings[0].put(_sel, AnonymousMethodMapping.factory.methodHandle_definingClass_(_methodHandle, _receiverClass));
+					if (_methodHandle != null) {
+						return _methodMappings[0].put(_sel, AnonymousMethodMapping.factory.methodHandle_definingClass_(_methodHandle, _receiverClass));
+					}
 				}
 				return SystemMapping.this;
 			}
@@ -572,6 +596,11 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	public st.gravel.core.Symbol[] packageNames() {
 		return _systemDefinitionNode.packageNames();
+	}
+
+	public SystemMapping resetCache() {
+		_subclassMappingsCache = null;
+		return this;
 	}
 
 	public st.gravel.support.jvm.runtime.AlmostFinalValue resolveSingletonHolder_(final AbsoluteReference _reference) {
@@ -663,10 +692,17 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	}
 
 	public SystemMapping subclassMappingsFor_do_(final Reference _aReference, final st.gravel.support.jvm.Block1<Object, ClassMapping> _aBlock) {
-		for (final ClassMapping _each : _classMappingsByReference.values()) {
-			if (st.gravel.support.jvm.ObjectExtensions.equals_(_each.superclassReference(), _aReference)) {
-				_aBlock.value_(_each);
-			}
+		final java.util.Set<ClassMapping> _c;
+		if (_subclassMappingsCache == null) {
+			SystemMapping.this.buildSubclassMappingsCache();
+		}
+		java.util.Set<ClassMapping> _temp1 = _subclassMappingsCache.get(_aReference);
+		_c = ((java.util.Set<ClassMapping>) _temp1);
+		if (_c == null) {
+			return null;
+		}
+		for (final ClassMapping _temp2 : _c) {
+			_aBlock.value_(_temp2);
 		}
 		return this;
 	}
@@ -713,6 +749,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			}
 		});
 		_systemDefinitionNode = _newSystemDefinitionNode;
+		this.resetCache();
 		return this;
 	}
 }
