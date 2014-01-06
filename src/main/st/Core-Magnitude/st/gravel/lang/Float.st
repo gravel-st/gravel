@@ -125,11 +125,6 @@ floorLog: radix
 !
 (reader addMethod: 'testing')
 !
-isFinite
-	^self - self = 0.0
-!
-(reader addMethod: 'testing')
-!
 isFloat
 	^true
 !
@@ -349,19 +344,19 @@ initialize
 (reader addClassMethod: 'private-initialization')
 !
 javaNaN
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'javaNaN')>
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'naN')>
 	
 !
 (reader addClassMethod: 'private-initialization')
 !
 javaNegativeInfinity
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'javaNegativeInfinity')>
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'negativeInfinity')>
 	
 !
 (reader addClassMethod: 'private-initialization')
 !
 javaPositiveInfinity
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'javaPositiveInfinity')>
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'positiveInfinity')>
 	
 !
 (reader addClassMethod: 'constants')

@@ -1,6 +1,6 @@
 (reader defineClass: 'FileStreamFactoryTest' superclass: 'st.gravel.ansitests.ANSITest')
 !
-(reader propertyAt: 'isSystemTest' put: 'Ja')
+(reader propertyAt: 'isSystemTest' put: 'false')
 !
 (reader addMethod: 'tests')
 !

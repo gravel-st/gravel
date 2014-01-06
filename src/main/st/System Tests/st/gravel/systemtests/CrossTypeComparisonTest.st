@@ -11,6 +11,11 @@ test_big_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_big_equals_double
+	self assert: 251172765292171600923361522612285166173 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_big_equals_fixed
 	self assert: 251172765292171600923361522612285166173 = 2.5s equals: false
 !
@@ -35,6 +40,11 @@ test_big_equals_negbig
 	self
 		assert: 251172765292171600923361522612285166173 = -251172765292171600923361522612285166173
 		equals: false
+!
+(reader addMethod: 'tests')
+!
+test_big_equals_negdouble
+	self assert: 251172765292171600923361522612285166173 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -75,6 +85,11 @@ test_big_less_big
 !
 (reader addMethod: 'tests')
 !
+test_big_less_double
+	self assert: 251172765292171600923361522612285166173 < 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_big_less_fixed
 	self assert: 251172765292171600923361522612285166173 < 2.5s equals: false
 !
@@ -99,6 +114,11 @@ test_big_less_negbig
 	self
 		assert: 251172765292171600923361522612285166173 < -251172765292171600923361522612285166173
 		equals: false
+!
+(reader addMethod: 'tests')
+!
+test_big_less_negdouble
+	self assert: 251172765292171600923361522612285166173 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -139,6 +159,11 @@ test_big_more_big
 !
 (reader addMethod: 'tests')
 !
+test_big_more_double
+	self assert: 251172765292171600923361522612285166173 > 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_big_more_fixed
 	self assert: 251172765292171600923361522612285166173 > 2.5s equals: true
 !
@@ -163,6 +188,11 @@ test_big_more_negbig
 	self
 		assert: 251172765292171600923361522612285166173 > -251172765292171600923361522612285166173
 		equals: true
+!
+(reader addMethod: 'tests')
+!
+test_big_more_negdouble
+	self assert: 251172765292171600923361522612285166173 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -196,8 +226,223 @@ test_big_more_zero
 !
 (reader addMethod: 'tests')
 !
+test_double_equals_big
+	self assert: 7.5 d = 251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_double
+	self assert: 7.5 d = 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_fixed
+	self assert: 7.5 d = 2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_float
+	self assert: 7.5 d = 7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_fraction
+	self assert: 7.5 d = (2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_int
+	self assert: 7.5 d = 7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negbig
+	self assert: 7.5 d = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negdouble
+	self assert: 7.5 d = -7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negfixed
+	self assert: 7.5 d = -2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negfloat
+	self assert: 7.5 d = -7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negfraction
+	self assert: 7.5 d = (-2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negint
+	self assert: 7.5 d = -7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_negzero
+	self assert: 7.5 d = 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_equals_zero
+	self assert: 7.5 d = 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_big
+	self assert: 7.5 d < 251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_less_double
+	self assert: 7.5 d < 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_fixed
+	self assert: 7.5 d < 2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_float
+	self assert: 7.5 d < 7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_fraction
+	self assert: 7.5 d < (2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_int
+	self assert: 7.5 d < 7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negbig
+	self assert: 7.5 d < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negdouble
+	self assert: 7.5 d < -7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negfixed
+	self assert: 7.5 d < -2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negfloat
+	self assert: 7.5 d < -7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negfraction
+	self assert: 7.5 d < (-2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negint
+	self assert: 7.5 d < -7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_negzero
+	self assert: 7.5 d < 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_less_zero
+	self assert: 7.5 d < 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_more_big
+	self assert: 7.5 d > 251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_more_double
+	self assert: 7.5 d > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_double_more_fixed
+	self assert: 7.5 d > 2.5s equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_float
+	self assert: 7.5 d > 7.5 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_fraction
+	self assert: 7.5 d > (2 / 3) equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_int
+	self assert: 7.5 d > 7 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negbig
+	self assert: 7.5 d > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negdouble
+	self assert: 7.5 d > -7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negfixed
+	self assert: 7.5 d > -2.5s equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negfloat
+	self assert: 7.5 d > -7.5 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negfraction
+	self assert: 7.5 d > (-2 / 3) equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negint
+	self assert: 7.5 d > -7 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_negzero
+	self assert: 7.5 d > 0 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_double_more_zero
+	self assert: 7.5 d > 0 equals: true
+!
+(reader addMethod: 'tests')
+!
 test_fixed_equals_big
 	self assert: 2.5s = 251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_fixed_equals_double
+	self assert: 2.5s = 7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -223,6 +468,11 @@ test_fixed_equals_int
 !
 test_fixed_equals_negbig
 	self assert: 2.5s = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_fixed_equals_negdouble
+	self assert: 2.5s = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -261,6 +511,11 @@ test_fixed_less_big
 !
 (reader addMethod: 'tests')
 !
+test_fixed_less_double
+	self assert: 2.5s < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_fixed_less_fixed
 	self assert: 2.5s < 2.5s equals: false
 !
@@ -283,6 +538,11 @@ test_fixed_less_int
 !
 test_fixed_less_negbig
 	self assert: 2.5s < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_fixed_less_negdouble
+	self assert: 2.5s < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -321,6 +581,11 @@ test_fixed_more_big
 !
 (reader addMethod: 'tests')
 !
+test_fixed_more_double
+	self assert: 2.5s > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_fixed_more_fixed
 	self assert: 2.5s > 2.5s equals: false
 !
@@ -343,6 +608,11 @@ test_fixed_more_int
 !
 test_fixed_more_negbig
 	self assert: 2.5s > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_fixed_more_negdouble
+	self assert: 2.5s > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -381,6 +651,11 @@ test_float_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_float_equals_double
+	self assert: 7.5 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_float_equals_fixed
 	self assert: 7.5 = 2.5s equals: false
 !
@@ -403,6 +678,11 @@ test_float_equals_int
 !
 test_float_equals_negbig
 	self assert: 7.5 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_float_equals_negdouble
+	self assert: 7.5 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -441,6 +721,11 @@ test_float_less_big
 !
 (reader addMethod: 'tests')
 !
+test_float_less_double
+	self assert: 7.5 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_float_less_fixed
 	self assert: 7.5 < 2.5s equals: false
 !
@@ -463,6 +748,11 @@ test_float_less_int
 !
 test_float_less_negbig
 	self assert: 7.5 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_float_less_negdouble
+	self assert: 7.5 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -501,6 +791,11 @@ test_float_more_big
 !
 (reader addMethod: 'tests')
 !
+test_float_more_double
+	self assert: 7.5 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_float_more_fixed
 	self assert: 7.5 > 2.5s equals: true
 !
@@ -523,6 +818,11 @@ test_float_more_int
 !
 test_float_more_negbig
 	self assert: 7.5 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_float_more_negdouble
+	self assert: 7.5 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -561,6 +861,11 @@ test_fraction_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_fraction_equals_double
+	self assert: 2 / 3 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_fraction_equals_fixed
 	self assert: 2 / 3 = 2.5s equals: false
 !
@@ -583,6 +888,11 @@ test_fraction_equals_int
 !
 test_fraction_equals_negbig
 	self assert: 2 / 3 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_fraction_equals_negdouble
+	self assert: 2 / 3 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -621,6 +931,11 @@ test_fraction_less_big
 !
 (reader addMethod: 'tests')
 !
+test_fraction_less_double
+	self assert: 2 / 3 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_fraction_less_fixed
 	self assert: 2 / 3 < 2.5s equals: true
 !
@@ -643,6 +958,11 @@ test_fraction_less_int
 !
 test_fraction_less_negbig
 	self assert: 2 / 3 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_fraction_less_negdouble
+	self assert: 2 / 3 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -681,6 +1001,11 @@ test_fraction_more_big
 !
 (reader addMethod: 'tests')
 !
+test_fraction_more_double
+	self assert: 2 / 3 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_fraction_more_fixed
 	self assert: 2 / 3 > 2.5s equals: false
 !
@@ -703,6 +1028,11 @@ test_fraction_more_int
 !
 test_fraction_more_negbig
 	self assert: 2 / 3 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_fraction_more_negdouble
+	self assert: 2 / 3 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -741,6 +1071,11 @@ test_int_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_int_equals_double
+	self assert: 7 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_int_equals_fixed
 	self assert: 7 = 2.5s equals: false
 !
@@ -763,6 +1098,11 @@ test_int_equals_int
 !
 test_int_equals_negbig
 	self assert: 7 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_int_equals_negdouble
+	self assert: 7 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -801,6 +1141,11 @@ test_int_less_big
 !
 (reader addMethod: 'tests')
 !
+test_int_less_double
+	self assert: 7 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_int_less_fixed
 	self assert: 7 < 2.5s equals: false
 !
@@ -823,6 +1168,11 @@ test_int_less_int
 !
 test_int_less_negbig
 	self assert: 7 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_int_less_negdouble
+	self assert: 7 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -861,6 +1211,11 @@ test_int_more_big
 !
 (reader addMethod: 'tests')
 !
+test_int_more_double
+	self assert: 7 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_int_more_fixed
 	self assert: 7 > 2.5s equals: true
 !
@@ -883,6 +1238,11 @@ test_int_more_int
 !
 test_int_more_negbig
 	self assert: 7 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_int_more_negdouble
+	self assert: 7 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -923,6 +1283,11 @@ test_negbig_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_negbig_equals_double
+	self assert: -251172765292171600923361522612285166173 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negbig_equals_fixed
 	self assert: -251172765292171600923361522612285166173 = 2.5s equals: false
 !
@@ -947,6 +1312,11 @@ test_negbig_equals_negbig
 	self assert: -251172765292171600923361522612285166173
 				= -251172765292171600923361522612285166173
 		equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negbig_equals_negdouble
+	self assert: -251172765292171600923361522612285166173 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -987,6 +1357,11 @@ test_negbig_less_big
 !
 (reader addMethod: 'tests')
 !
+test_negbig_less_double
+	self assert: -251172765292171600923361522612285166173 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_negbig_less_fixed
 	self assert: -251172765292171600923361522612285166173 < 2.5s equals: true
 !
@@ -1011,6 +1386,11 @@ test_negbig_less_negbig
 	self assert: -251172765292171600923361522612285166173
 				< -251172765292171600923361522612285166173
 		equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negbig_less_negdouble
+	self assert: -251172765292171600923361522612285166173 < -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -1051,6 +1431,11 @@ test_negbig_more_big
 !
 (reader addMethod: 'tests')
 !
+test_negbig_more_double
+	self assert: -251172765292171600923361522612285166173 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negbig_more_fixed
 	self assert: -251172765292171600923361522612285166173 > 2.5s equals: false
 !
@@ -1075,6 +1460,11 @@ test_negbig_more_negbig
 	self assert: -251172765292171600923361522612285166173
 				> -251172765292171600923361522612285166173
 		equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negbig_more_negdouble
+	self assert: -251172765292171600923361522612285166173 > -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1108,8 +1498,223 @@ test_negbig_more_zero
 !
 (reader addMethod: 'tests')
 !
+test_negdouble_equals_big
+	self assert: -7.5 d = 251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_double
+	self assert: -7.5 d = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_fixed
+	self assert: -7.5 d = 2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_float
+	self assert: -7.5 d = 7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_fraction
+	self assert: -7.5 d = (2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_int
+	self assert: -7.5 d = 7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negbig
+	self assert: -7.5 d = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negdouble
+	self assert: -7.5 d = -7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negfixed
+	self assert: -7.5 d = -2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negfloat
+	self assert: -7.5 d = -7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negfraction
+	self assert: -7.5 d = (-2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negint
+	self assert: -7.5 d = -7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_negzero
+	self assert: -7.5 d = 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_equals_zero
+	self assert: -7.5 d = 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_big
+	self assert: -7.5 d < 251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_double
+	self assert: -7.5 d < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_fixed
+	self assert: -7.5 d < 2.5s equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_float
+	self assert: -7.5 d < 7.5 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_fraction
+	self assert: -7.5 d < (2 / 3) equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_int
+	self assert: -7.5 d < 7 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negbig
+	self assert: -7.5 d < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negdouble
+	self assert: -7.5 d < -7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negfixed
+	self assert: -7.5 d < -2.5s equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negfloat
+	self assert: -7.5 d < -7.5 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negfraction
+	self assert: -7.5 d < (-2 / 3) equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negint
+	self assert: -7.5 d < -7 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_negzero
+	self assert: -7.5 d < 0 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_less_zero
+	self assert: -7.5 d < 0 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_big
+	self assert: -7.5 d > 251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_double
+	self assert: -7.5 d > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_fixed
+	self assert: -7.5 d > 2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_float
+	self assert: -7.5 d > 7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_fraction
+	self assert: -7.5 d > (2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_int
+	self assert: -7.5 d > 7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negbig
+	self assert: -7.5 d > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negdouble
+	self assert: -7.5 d > -7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negfixed
+	self assert: -7.5 d > -2.5s equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negfloat
+	self assert: -7.5 d > -7.5 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negfraction
+	self assert: -7.5 d > (-2 / 3) equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negint
+	self assert: -7.5 d > -7 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_negzero
+	self assert: -7.5 d > 0 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negdouble_more_zero
+	self assert: -7.5 d > 0 equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negfixed_equals_big
 	self assert: -2.5s = 251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfixed_equals_double
+	self assert: -2.5s = 7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1135,6 +1740,11 @@ test_negfixed_equals_int
 !
 test_negfixed_equals_negbig
 	self assert: -2.5s = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfixed_equals_negdouble
+	self assert: -2.5s = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1173,6 +1783,11 @@ test_negfixed_less_big
 !
 (reader addMethod: 'tests')
 !
+test_negfixed_less_double
+	self assert: -2.5s < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_negfixed_less_fixed
 	self assert: -2.5s < 2.5s equals: true
 !
@@ -1195,6 +1810,11 @@ test_negfixed_less_int
 !
 test_negfixed_less_negbig
 	self assert: -2.5s < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfixed_less_negdouble
+	self assert: -2.5s < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1233,6 +1853,11 @@ test_negfixed_more_big
 !
 (reader addMethod: 'tests')
 !
+test_negfixed_more_double
+	self assert: -2.5s > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negfixed_more_fixed
 	self assert: -2.5s > 2.5s equals: false
 !
@@ -1255,6 +1880,11 @@ test_negfixed_more_int
 !
 test_negfixed_more_negbig
 	self assert: -2.5s > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negfixed_more_negdouble
+	self assert: -2.5s > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -1293,6 +1923,11 @@ test_negfloat_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_negfloat_equals_double
+	self assert: -7.5 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negfloat_equals_fixed
 	self assert: -7.5 = 2.5s equals: false
 !
@@ -1315,6 +1950,11 @@ test_negfloat_equals_int
 !
 test_negfloat_equals_negbig
 	self assert: -7.5 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfloat_equals_negdouble
+	self assert: -7.5 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1353,6 +1993,11 @@ test_negfloat_less_big
 !
 (reader addMethod: 'tests')
 !
+test_negfloat_less_double
+	self assert: -7.5 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_negfloat_less_fixed
 	self assert: -7.5 < 2.5s equals: true
 !
@@ -1375,6 +2020,11 @@ test_negfloat_less_int
 !
 test_negfloat_less_negbig
 	self assert: -7.5 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfloat_less_negdouble
+	self assert: -7.5 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1413,6 +2063,11 @@ test_negfloat_more_big
 !
 (reader addMethod: 'tests')
 !
+test_negfloat_more_double
+	self assert: -7.5 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negfloat_more_fixed
 	self assert: -7.5 > 2.5s equals: false
 !
@@ -1435,6 +2090,11 @@ test_negfloat_more_int
 !
 test_negfloat_more_negbig
 	self assert: -7.5 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negfloat_more_negdouble
+	self assert: -7.5 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -1473,6 +2133,11 @@ test_negfraction_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_negfraction_equals_double
+	self assert: -2 / 3 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negfraction_equals_fixed
 	self assert: -2 / 3 = 2.5s equals: false
 !
@@ -1495,6 +2160,11 @@ test_negfraction_equals_int
 !
 test_negfraction_equals_negbig
 	self assert: -2 / 3 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfraction_equals_negdouble
+	self assert: -2 / 3 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1533,6 +2203,11 @@ test_negfraction_less_big
 !
 (reader addMethod: 'tests')
 !
+test_negfraction_less_double
+	self assert: -2 / 3 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_negfraction_less_fixed
 	self assert: -2 / 3 < 2.5s equals: true
 !
@@ -1555,6 +2230,11 @@ test_negfraction_less_int
 !
 test_negfraction_less_negbig
 	self assert: -2 / 3 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negfraction_less_negdouble
+	self assert: -2 / 3 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1593,6 +2273,11 @@ test_negfraction_more_big
 !
 (reader addMethod: 'tests')
 !
+test_negfraction_more_double
+	self assert: -2 / 3 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negfraction_more_fixed
 	self assert: -2 / 3 > 2.5s equals: false
 !
@@ -1615,6 +2300,11 @@ test_negfraction_more_int
 !
 test_negfraction_more_negbig
 	self assert: -2 / 3 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negfraction_more_negdouble
+	self assert: -2 / 3 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -1653,6 +2343,11 @@ test_negint_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_negint_equals_double
+	self assert: -7 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negint_equals_fixed
 	self assert: -7 = 2.5s equals: false
 !
@@ -1675,6 +2370,11 @@ test_negint_equals_int
 !
 test_negint_equals_negbig
 	self assert: -7 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negint_equals_negdouble
+	self assert: -7 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1713,6 +2413,11 @@ test_negint_less_big
 !
 (reader addMethod: 'tests')
 !
+test_negint_less_double
+	self assert: -7 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_negint_less_fixed
 	self assert: -7 < 2.5s equals: true
 !
@@ -1735,6 +2440,11 @@ test_negint_less_int
 !
 test_negint_less_negbig
 	self assert: -7 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negint_less_negdouble
+	self assert: -7 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1773,6 +2483,11 @@ test_negint_more_big
 !
 (reader addMethod: 'tests')
 !
+test_negint_more_double
+	self assert: -7 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negint_more_fixed
 	self assert: -7 > 2.5s equals: false
 !
@@ -1795,6 +2510,11 @@ test_negint_more_int
 !
 test_negint_more_negbig
 	self assert: -7 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negint_more_negdouble
+	self assert: -7 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -1833,6 +2553,11 @@ test_negzero_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_negzero_equals_double
+	self assert: 0 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negzero_equals_fixed
 	self assert: 0 = 2.5s equals: false
 !
@@ -1855,6 +2580,11 @@ test_negzero_equals_int
 !
 test_negzero_equals_negbig
 	self assert: 0 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negzero_equals_negdouble
+	self assert: 0 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1893,6 +2623,11 @@ test_negzero_less_big
 !
 (reader addMethod: 'tests')
 !
+test_negzero_less_double
+	self assert: 0 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_negzero_less_fixed
 	self assert: 0 < 2.5s equals: true
 !
@@ -1915,6 +2650,11 @@ test_negzero_less_int
 !
 test_negzero_less_negbig
 	self assert: 0 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_negzero_less_negdouble
+	self assert: 0 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -1953,6 +2693,11 @@ test_negzero_more_big
 !
 (reader addMethod: 'tests')
 !
+test_negzero_more_double
+	self assert: 0 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_negzero_more_fixed
 	self assert: 0 > 2.5s equals: false
 !
@@ -1975,6 +2720,11 @@ test_negzero_more_int
 !
 test_negzero_more_negbig
 	self assert: 0 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_negzero_more_negdouble
+	self assert: 0 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -2013,6 +2763,11 @@ test_zero_equals_big
 !
 (reader addMethod: 'tests')
 !
+test_zero_equals_double
+	self assert: 0 = 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_zero_equals_fixed
 	self assert: 0 = 2.5s equals: false
 !
@@ -2035,6 +2790,11 @@ test_zero_equals_int
 !
 test_zero_equals_negbig
 	self assert: 0 = -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_zero_equals_negdouble
+	self assert: 0 = -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -2073,6 +2833,11 @@ test_zero_less_big
 !
 (reader addMethod: 'tests')
 !
+test_zero_less_double
+	self assert: 0 < 7.5 d equals: true
+!
+(reader addMethod: 'tests')
+!
 test_zero_less_fixed
 	self assert: 0 < 2.5s equals: true
 !
@@ -2095,6 +2860,11 @@ test_zero_less_int
 !
 test_zero_less_negbig
 	self assert: 0 < -251172765292171600923361522612285166173 equals: false
+!
+(reader addMethod: 'tests')
+!
+test_zero_less_negdouble
+	self assert: 0 < -7.5 d equals: false
 !
 (reader addMethod: 'tests')
 !
@@ -2133,6 +2903,11 @@ test_zero_more_big
 !
 (reader addMethod: 'tests')
 !
+test_zero_more_double
+	self assert: 0 > 7.5 d equals: false
+!
+(reader addMethod: 'tests')
+!
 test_zero_more_fixed
 	self assert: 0 > 2.5s equals: false
 !
@@ -2155,6 +2930,11 @@ test_zero_more_int
 !
 test_zero_more_negbig
 	self assert: 0 > -251172765292171600923361522612285166173 equals: true
+!
+(reader addMethod: 'tests')
+!
+test_zero_more_negdouble
+	self assert: 0 > -7.5 d equals: true
 !
 (reader addMethod: 'tests')
 !
@@ -2189,8 +2969,9 @@ test_zero_more_zero
 (reader addClassMethod: 'As yet unclassified')
 !
 basicNamesAndValuesDo: aBlock
-	#(#float #fixed #fraction #int #big #zero) with: (Core.Array
+	#(#float #double #fixed #fraction #int #big #zero) with: (Core.Array
 				with: 7.5
+				with: 7.50000000000001 d
 				with: 2.5s
 				with: 2 / 3
 				with: 7

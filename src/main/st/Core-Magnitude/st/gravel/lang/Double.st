@@ -2,6 +2,12 @@
 !
 (reader defineSharedVariable: 'E' init: nil)
 !
+(reader defineSharedVariable: 'Infinity' init: nil)
+!
+(reader defineSharedVariable: 'NaN' init: nil)
+!
+(reader defineSharedVariable: 'NegativeInfinity' init: nil)
+!
 (reader defineSharedVariable: 'Pi' init: nil)
 !
 (reader propertyAt: 'javaClass' put: 'java.lang.Double')
@@ -70,6 +76,11 @@ exponent
 floor
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'floor')>
 	
+!
+(reader addMethod: 'testing')
+!
+isInfinite
+	^self = Infinity or: [self = NegativeInfinity]
 !
 (reader addMethod: 'mathematical functions')
 !
@@ -162,8 +173,29 @@ fminNormalized
 (reader addClassMethod: 'class initialization')
 !
 initialize
+	Infinity := self javaPositiveInfinity.
+	NegativeInfinity := self javaNegativeInfinity.
+	NaN := self javaNaN.
 	Pi := 3.141592653589793.
 	E := 2.718281828459045
+!
+(reader addClassMethod: 'private-initialization')
+!
+javaNaN
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'naN')>
+	
+!
+(reader addClassMethod: 'private-initialization')
+!
+javaNegativeInfinity
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'negativeInfinity')>
+	
+!
+(reader addClassMethod: 'private-initialization')
+!
+javaPositiveInfinity
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'positiveInfinity')>
+	
 !
 (reader addClassMethod: 'constants')
 !
