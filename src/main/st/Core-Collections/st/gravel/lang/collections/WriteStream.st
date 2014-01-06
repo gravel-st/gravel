@@ -2,24 +2,16 @@
 !
 (reader addSimpleTrait: 'st.gravel.lang.collections.SequencedStream')
 !
+(reader addSimpleTrait: 'st.gravel.lang.collections.CharacterWriteable')
+!
 (reader addSimpleClassTrait: 'st.gravel.lang.collections.SequencedStream class')
+!
+(reader addSimpleClassTrait: 'st.gravel.lang.collections.CharacterWriteable class')
 !
 (reader addMethod: 'accessing')
 !
 contents
 	self traitRequirement
-!
-(reader addMethod: 'character writing')
-!
-cr
-	self nextPut: Character cr
-!
-(reader addMethod: 'character writing')
-!
-crlf
-	self
-		cr;
-		lf
 !
 (reader addMethod: 'character writing')
 !
@@ -38,11 +30,6 @@ crtab: anInteger
 !
 isWriteStream
 	^true
-!
-(reader addMethod: 'character writing')
-!
-lf
-	self nextPut: Character lf
 !
 (reader addMethod: 'accessing')
 !
@@ -65,25 +52,10 @@ nextPutAll: aCollection
 position
 	^self traitRequirement
 !
-(reader addMethod: 'printing')
-!
-print: anObject
-	anObject printOn: self
-!
-(reader addMethod: 'character writing')
-!
-space
-	self nextPut: Character space
-!
 (reader addMethod: 'character writing')
 !
 space: anInteger
 	anInteger timesRepeat: [self space]
-!
-(reader addMethod: 'character writing')
-!
-tab
-	self nextPut: Character tab
 !
 (reader addMethod: 'character writing')
 !

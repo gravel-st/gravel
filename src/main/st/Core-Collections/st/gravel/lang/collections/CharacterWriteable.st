@@ -19,6 +19,16 @@ lf
 !
 (reader addMethod: 'gravel')
 !
+nextPut: aCharacter
+	^self traitRequirement
+!
+(reader addMethod: 'gravel')
+!
+nextPutAll: aString
+	^self traitRequirement
+!
+(reader addMethod: 'gravel')
+!
 nextPutAllEscaped: aString
 	aString isNil ifTrue: [^self].
 	aString do: [:c | self nextPutEscapedChar: c]
