@@ -41,6 +41,10 @@ public class FloatExtensions {
 	public static float fmax() {	
 		return Float.MAX_VALUE;
 	}
+	
+	public static float fminDenormalized() {
+		return Float.MIN_VALUE;
+	}
 
 	public static float fminNormalized() {
 		return Float.MIN_NORMAL;

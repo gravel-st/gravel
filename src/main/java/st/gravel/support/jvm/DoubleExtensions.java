@@ -46,7 +46,6 @@ public class DoubleExtensions {
 	}
 	
 	public static double fminDenormalized() {
-		// denormalized
 		return Double.MIN_VALUE;
 	}
 	
