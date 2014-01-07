@@ -226,8 +226,7 @@ isLarge
 (reader addMethod: 'testing')
 !
 isZero
-	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'isZero')>
-	
+	^false
 !
 (reader addMethod: 'private-arithmetic')
 !
