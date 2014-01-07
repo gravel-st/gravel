@@ -163,6 +163,10 @@ public class FloatExtensions {
 		BigDecimal rounded = bigDecimal.setScale(0, roundingMode);
 		return IntegerExtensions.objectFromBigInteger(rounded.toBigInteger());
 	}
+	
+	public static int exponent(float receiver) {
+		return StrictMath.getExponent(receiver);
+	}
 
 	public static float sqrt(float receiver) {
 		return (float) Math.sqrt(receiver);
@@ -186,5 +190,9 @@ public class FloatExtensions {
 	
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
+	}
+	
+	public static double raisedToFloat_(float receiver, float operand) {
+		return Math.pow(receiver, operand);
 	}
 }
