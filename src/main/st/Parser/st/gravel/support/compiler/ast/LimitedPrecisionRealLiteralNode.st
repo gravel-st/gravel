@@ -46,9 +46,8 @@ integer: anInteger {LargeInteger} fractionString: fractionString {Str | Nil} exp
 				nextPutAll: fractionString].
 	(exp isNil and: [self exponentCharacterIsMandatory not])
 		ifFalse: 
-			[wstr
-				nextPut: self exponentCharacter;
-				nextPutAll: exp printString].
+			[wstr nextPut: self exponentCharacter.
+			(exp isNil or: [exp isZero]) ifFalse: [wstr nextPutAll: exp printString]].
 	^self valueString: wstr contents
 !
 (reader addClassMethod: 'instance creation')

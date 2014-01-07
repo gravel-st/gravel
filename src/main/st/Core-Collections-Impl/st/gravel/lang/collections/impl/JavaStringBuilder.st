@@ -20,13 +20,25 @@ flush
 (reader addMethod: '')
 !
 nextPut: aCharacter
-	<primitive: #('st.gravel.support.jvm.WriteStreamExtensions' 'nextPut_')>
-	
+	aCharacter putOnStringBuilder: self
 !
 (reader addMethod: '')
 !
 nextPutAll: aString
 	<primitive: #('st.gravel.support.jvm.WriteStreamExtensions' 'nextPutAll_')>
+	
+!
+(reader addMethod: '')
+!
+nextPutJavaCharacter: aCharacter
+	<primitive: #('st.gravel.support.jvm.WriteStreamExtensions' 'nextPut_')>
+	
+!
+(reader addMethod: '')
+!
+nextPutSurrogatePairCharacters: characters
+	<
+	primitive: #('st.gravel.support.jvm.WriteStreamExtensions' 'nextPutSurrogatePairCharacters_')>
 	
 !
 (reader addMethod: '')

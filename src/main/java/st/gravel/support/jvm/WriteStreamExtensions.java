@@ -8,6 +8,12 @@ public class WriteStreamExtensions {
 		stringBuilder.append(ch);
 		return stringBuilder;
 	}
+	
+	public static StringBuilder nextPutSurrogatePairCharacters_(StringBuilder stringBuilder,
+			char[] ch) {
+		stringBuilder.append(ch);
+		return stringBuilder;
+	}
 
 	public static StringBuilder nextPutAll_(StringBuilder stringBuilder,
 			Object aString) {

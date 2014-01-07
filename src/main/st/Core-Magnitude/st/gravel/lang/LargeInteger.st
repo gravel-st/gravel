@@ -223,6 +223,11 @@ integerQuotientFromSmallInteger: anObject
 isLarge
 	^true
 !
+(reader addMethod: 'testing')
+!
+isZero
+	^false
+!
 (reader addMethod: 'private-arithmetic')
 !
 lessFromLargeInteger: aSmallInteger

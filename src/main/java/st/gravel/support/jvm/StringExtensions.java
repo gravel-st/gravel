@@ -24,6 +24,19 @@ public class StringExtensions {
 		return new File(pathname);
 	}
 
+	public static int codePointAtCodePointIndex_(String receiver, int i) {
+		int length = receiver.length();
+		int idx = 0;
+		for (int offset = 0; offset < length; ) {
+			   final int codepoint = receiver.codePointAt(offset);
+			   idx++;
+			   if (idx == i) return codepoint;
+
+			   offset += Character.charCount(codepoint);
+			}
+		return -1;
+	}
+
 	public static char at_(String receiver, int i) {
 		return receiver.charAt(i - 1);
 	}
@@ -146,6 +159,10 @@ public class StringExtensions {
 
 	public static int size(String receiver) {
 		return receiver.length();
+	}
+
+	public static int codePointsSize(String receiver) {
+		return receiver.codePointCount(0, receiver.length());
 	}
 
 	public static String[] tokensBasedOn_(String receiver, char ch) {
