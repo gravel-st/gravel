@@ -2,6 +2,7 @@ package st.gravel.support.jvm;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -132,7 +133,11 @@ public class StringExtensions {
 	}
 
 	public static Double parseDouble(String _valueString) {
-		return Double.valueOf(_valueString);
+		CharBuffer str = CharBuffer.wrap(_valueString);
+		String first = ReadStreamExtensions.upTo_(str, 'd');
+		String second = ReadStreamExtensions.upToEnd(str);
+		if (second.length() == 0) return Double.valueOf(_valueString);
+		return Double.valueOf(first+"e"+second+"d");
 	}
 
 	public static Float parseFloat(String _valueString) {

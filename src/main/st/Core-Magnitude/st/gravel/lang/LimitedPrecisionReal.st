@@ -1,5 +1,10 @@
 (reader defineClass: 'LimitedPrecisionReal' superclass: 'st.gravel.lang.Number')
 !
+(reader addMethod: 'arithmetic')
+!
+// operand
+	^(self / operand) floor
+!
 (reader addMethod: 'converting')
 !
 asFraction
@@ -34,6 +39,11 @@ isFinite
 !
 isLimitedPrecisionReal
 	^true
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromFraction: aFraction
+	^aFraction < self asFraction
 !
 (reader addClassMethod: 'constants')
 !

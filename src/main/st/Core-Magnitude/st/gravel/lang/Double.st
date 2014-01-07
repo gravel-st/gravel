@@ -12,6 +12,37 @@
 !
 (reader propertyAt: 'javaClass' put: 'java.lang.Double')
 !
+(reader addMethod: 'arithmetic')
+!
+* operand
+	^operand productFromDouble: self
+!
+(reader addMethod: 'arithmetic')
+!
++ operand
+	^operand sumFromDouble: self
+!
+(reader addMethod: 'arithmetic')
+!
+- operand
+	^operand differenceFromDouble: self
+!
+(reader addMethod: 'arithmetic')
+!
+/ operand
+	^operand quotientFromDouble: self
+!
+(reader addMethod: 'comparing')
+!
+< operand
+	^operand lessFromDouble: self
+!
+(reader addMethod: 'comparing')
+!
+= aMagnitude
+	<primitive: 'equals'>
+	
+!
 (reader addMethod: 'mathematical functions')
 !
 arcCos
@@ -59,6 +90,35 @@ degreesToRadians
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'degreesToRadians')>
 	
 !
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'differenceFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'differenceFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'differenceFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromScaledDecimal: operand
+	^operand asDouble - self
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'differenceFromSmallInteger_')>
+	
+!
 (reader addMethod: 'mathematical functions')
 !
 exp
@@ -82,10 +142,103 @@ floor
 isInfinite
 	^self = Infinity or: [self = NegativeInfinity]
 !
+(reader addMethod: 'private-arithmetic')
+!
+lessFromDouble: aFloat
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'lessFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'lessFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'lessFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+lessFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'lessFromSmallInteger_')>
+	
+!
 (reader addMethod: 'mathematical functions')
 !
 ln
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'ln')>
+	
+!
+(reader addMethod: 'printing')
+!
+printBase: base
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'printBase_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'productFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'productFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromFraction: aFraction
+	^aFraction asDouble * self
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'productFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromScaledDecimal: operand
+	^operand asDouble * self
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'productFromSmallInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'quotientFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'quotientFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromLargeInteger: anInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'quotientFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromScaledDecimal: operand
+	^operand asDouble / self
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'quotientFromSmallInteger_')>
 	
 !
 (reader addMethod: 'converting')
@@ -93,6 +246,11 @@ ln
 radiansToDegrees
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'radiansToDegrees')>
 	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raising: aNumber
+	^aNumber raisedToDouble: self
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -112,6 +270,35 @@ sqrt
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'sqrt')>
 	
 !
+(reader addMethod: 'private-arithmetic')
+!
+sumFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'sumFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'sumFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromLargeInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'sumFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromScaledDecimal: operand
+	^operand asDouble + self
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromSmallInteger: aSmallInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'sumFromSmallInteger_')>
+	
+!
 (reader addMethod: 'mathematical functions')
 !
 tan
@@ -123,6 +310,11 @@ tan
 truncated
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'truncated')>
 	
+!
+(reader addMethod: 'arithmetic')
+!
+\\ operand
+	^operand moduloQuotientFromDouble: self
 !
 (reader addClassMethod: 'constants')
 !

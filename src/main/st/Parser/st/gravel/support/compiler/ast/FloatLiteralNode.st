@@ -16,3 +16,13 @@ negated {^FloatLiteralNode}
 value {^Object}
 	^valueString parseFloat
 !
+(reader addClassMethod: 'constants')
+!
+exponentCharacter {^Char | Nil}
+	^$e
+!
+(reader addClassMethod: 'constants')
+!
+exponentCharacterIsMandatory {^Bool}
+	^false
+!

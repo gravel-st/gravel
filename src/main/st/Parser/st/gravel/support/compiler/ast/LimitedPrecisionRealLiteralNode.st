@@ -18,6 +18,16 @@ innerSourceOn: aStream {WStream[Char]} {^Self}
 valueString {^Str}
 	^valueString
 !
+(reader addClassMethod: 'constants')
+!
+exponentCharacter {^Char | Nil}
+	^self subclassResponsibility
+!
+(reader addClassMethod: 'constants')
+!
+exponentCharacterIsMandatory {^Bool}
+	^self subclassResponsibility
+!
 (reader addClassMethod: 'pegon')
 !
 instVarTypes {^[Str]}
@@ -34,18 +44,12 @@ integer: anInteger {LargeInteger} fractionString: fractionString {Str | Nil} exp
 			[wstr
 				nextPut: $.;
 				nextPutAll: fractionString].
-	exp isNil
+	(exp isNil and: [self exponentCharacterIsMandatory not])
 		ifFalse: 
 			[wstr
-				nextPut: $e;
+				nextPut: self exponentCharacter;
 				nextPutAll: exp printString].
-	self postfixCharacter isNil ifFalse: [wstr nextPut: self postfixCharacter].
 	^self valueString: wstr contents
-!
-(reader addClassMethod: 'constants')
-!
-postfixCharacter {^Char | Nil}
-	^nil
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -110,6 +110,11 @@ degreesToRadians
 !
 (reader addMethod: 'private-arithmetic')
 !
+differenceFromDouble: aDouble
+	^aDouble - self asDouble
+!
+(reader addMethod: 'private-arithmetic')
+!
 differenceFromFloat: aFloat
 	^aFloat - self asFloat
 !
@@ -185,6 +190,11 @@ isNumber
 !
 (reader addMethod: 'private-arithmetic')
 !
+lessFromDouble: aDouble
+	^aDouble < self asDouble
+!
+(reader addMethod: 'private-arithmetic')
+!
 lessFromFloat: aFloat
 	^aFloat < self asFloat
 !
@@ -212,6 +222,11 @@ ln
 !
 log: aNumber
 	^self ln / aNumber ln
+!
+(reader addMethod: 'private-arithmetic')
+!
+moduloQuotientFromDouble: aDouble
+	^self moduloQuotientFromNumber: aDouble
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -275,6 +290,11 @@ printOn: aStream base: base
 !
 (reader addMethod: 'private-arithmetic')
 !
+productFromDouble: aDouble
+	^self asDouble productFromDouble: aDouble
+!
+(reader addMethod: 'private-arithmetic')
+!
 productFromFloat: aFloat
 	^self asFloat productFromFloat: aFloat
 !
@@ -317,6 +337,11 @@ quoFromLargeInteger: anInteger
 !
 quoFromSmallInteger: anInteger
 	^self quoFromInteger: anInteger
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromDouble: aDouble
+	^aDouble / self asDouble
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -433,6 +458,11 @@ squared
 !
 strictlyPositive
 	^self > 0
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromDouble: aDouble
+	^aDouble + self asDouble
 !
 (reader addMethod: 'private-arithmetic')
 !

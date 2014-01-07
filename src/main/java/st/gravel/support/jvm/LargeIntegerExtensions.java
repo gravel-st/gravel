@@ -263,4 +263,8 @@ public class LargeIntegerExtensions {
 				argument).add(receiver));
 	}
 
+	public static boolean isZero(BigInteger receiver) {
+		return receiver.equals(BigInteger.ZERO);
+	}
+
 }

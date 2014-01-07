@@ -141,7 +141,7 @@ testParseDouble
 	node := (Parser source: '123412341345145145123412341234.003213123123d') parseExpression.
 	self assert: DoubleLiteralNode equals: node class.
 	self
-		assert: 123412341345145145123412341234.003213123123d
+		assert: 123412341345145145123412341234.003213123123d0
 		equals: node value
 		delta: 0.000000001
 !
@@ -152,7 +152,40 @@ testParseDouble2
 	node := (Parser source: '3.0d.') parseExpression.
 	self assert: DoubleLiteralNode equals: node class.
 	self
-		assert: 3.0d
+		assert: 3.0d0
+		equals: node value
+		delta: 0.000000001
+!
+(reader addMethod: 'tests')
+!
+testParseDoubleWithExponent
+	| node {DoubleLiteralNode | Nil} |
+	node := (Parser source: '1.23412d29') parseExpression.
+	self assert: DoubleLiteralNode equals: node class.
+	self
+		assert: 1.23412d29
+		equals: node value
+		delta: 0.000000001
+!
+(reader addMethod: 'tests')
+!
+testParseDoubleWithExponent2
+	| node {DoubleLiteralNode | Nil} |
+	node := (Parser source: '1d10') parseExpression.
+	self assert: DoubleLiteralNode equals: node class.
+	self
+		assert: 1d10
+		equals: node value
+		delta: 0.000000001
+!
+(reader addMethod: 'tests')
+!
+testParseDoubleWithExponent3
+	| node {DoubleLiteralNode | Nil} |
+	node := (Parser source: '1d-10') parseExpression.
+	self assert: DoubleLiteralNode equals: node class.
+	self
+		assert: 1d-10
 		equals: node value
 		delta: 0.000000001
 !

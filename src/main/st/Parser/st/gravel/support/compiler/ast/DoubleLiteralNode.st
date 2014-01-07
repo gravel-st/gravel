@@ -19,6 +19,11 @@ value {^Object}
 !
 (reader addClassMethod: 'constants')
 !
-postfixCharacter {^Char}
+exponentCharacter {^Char}
 	^$d
+!
+(reader addClassMethod: 'constants')
+!
+exponentCharacterIsMandatory {^Bool}
+	^true
 !

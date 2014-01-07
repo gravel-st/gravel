@@ -468,13 +468,17 @@ parseNumber {^NumberLiteralNode}
 					scale := (self readInteger: 10) asSmallInteger.
 					fractionString isNil ifTrue: [fractionString := ''].
 					scale := scale max: fractionString size.
-					^FixedPointLiteralNode integer: value fractionString: fractionString scale: scale]].
+					^FixedPointLiteralNode integer: value fractionString: fractionString scale: scale]
+				ifFalse: 
+					[(stream peekFor: $d)
+						ifTrue: 
+							[| exSign {Int} exponent {LargeInteger} |
+							exSign := (stream peekFor: $-) ifTrue: [-1] ifFalse: [1].
+							exponent := (self readInteger: 10) * exSign.
+							^DoubleLiteralNode integer: value fractionString: fractionString exponent: exponent]]].
 	^fractionString isNil
 		ifTrue: [IntegerLiteralNode integer: value]
-		ifFalse: 
-			[(stream peekFor: $d)
-				ifFalse: [FloatLiteralNode integer: value fractionString: fractionString exponent: nil]
-				ifTrue: [DoubleLiteralNode integer: value fractionString: fractionString exponent: nil]]
+		ifFalse: [FloatLiteralNode integer: value fractionString: fractionString exponent: nil]
 !
 (reader addMethod: 'As yet unclassified')
 !

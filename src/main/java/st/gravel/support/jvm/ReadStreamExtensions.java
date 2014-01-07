@@ -54,6 +54,15 @@ public class ReadStreamExtensions {
 		return builder.toString();
 	}
 
+	public static String upToEnd(CharBuffer receiver) {
+		final StringBuilder builder = new StringBuilder();
+		while (!atEnd(receiver)) {
+			final Character next = next(receiver);
+			builder.append(next);
+		}
+		return builder.toString();
+	}
+
 	public static int position(CharBuffer receiver) {
 		return receiver.position();
 	}
