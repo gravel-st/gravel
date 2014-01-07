@@ -1,35 +1,35 @@
-(reader defineClass: 'PushFloat' superclass: 'st.gravel.support.compiler.jvm.PushConstant')
+(reader defineClass: 'PushDouble' superclass: 'st.gravel.support.compiler.jvm.PushConstant')
 !
 (reader addInstVar: 'value')
 !
 (reader addMethod: 'visitor')
 !
 accept: visitor {JVMInstructionVisitor[X def]} {^X}
-	^visitor visitPushFloat: self
+	^visitor visitPushDouble: self
 !
 (reader addMethod: 'initialize-release')
 !
-initializeValue: aFloat {Float} {^Self}
-	value := aFloat.
+initializeValue: aDouble {Double} {^Self}
+	value := aDouble.
 	self initialize
 !
 (reader addMethod: 'accessing')
 !
 type {^JVMType}
-	^JVMFloatType new
+	^JVMDoubleType new
 !
 (reader addMethod: 'accessing')
 !
-value {^Float}
+value {^Double}
 	^value
 !
 (reader addClassMethod: 'pegon')
 !
-instVarTypes {^[Float]}
+instVarTypes {^[Double]}
 	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !
-value: aFloat {Float} {^PushFloat}
+value: aFloat {Double} {^PushDouble}
 	^self new initializeValue: aFloat
 !

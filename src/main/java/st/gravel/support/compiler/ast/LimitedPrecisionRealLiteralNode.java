@@ -43,7 +43,7 @@ abstract public class LimitedPrecisionRealLiteralNode extends NumberLiteralNode 
 			}
 			if (!((_exp == null) && (!this.exponentCharacterIsMandatory()))) {
 				_wstr.append(LimitedPrecisionRealLiteralNode_Factory.this.exponentCharacter());
-				if (!((_exp == null) || st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp))) {
+				if (!st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp)) {
 					_wstr.append(_exp.toString());
 				}
 			}

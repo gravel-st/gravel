@@ -168,6 +168,11 @@ visitCreateHolderNode: anObject {CreateHolderNode} {^CreateHolderNode}
 !
 (reader addMethod: 'visiting')
 !
+visitDoubleLiteralNode: anObject {DoubleLiteralNode} {^DoubleLiteralNode}
+	^DoubleLiteralNode valueString: anObject valueString
+!
+(reader addMethod: 'visiting')
+!
 visitExpression: anObject {Expression} {^Expression}
 	^Expression new
 !

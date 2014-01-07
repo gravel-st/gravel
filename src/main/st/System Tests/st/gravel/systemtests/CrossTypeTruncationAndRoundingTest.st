@@ -46,48 +46,42 @@ test_big_truncated
 !
 test_double_ceiling
 	| t1 |
-	t1 := 7.50000000001 d ceiling.
+	t1 := 7.50100000001d0 ceiling.
 	self assert: t1 equals: 8 delta: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_floor
 	| t1 |
-	t1 := 7.50000000001 d floor.
+	t1 := 7.50100000001d0 floor.
 	self assert: t1 equals: 7 delta: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_fractionPart
 	| t1 |
-	t1 := 7.50000000001 d fractionPart.
-	self
-		assert: t1
-		equals: 0.50000000000999 d
-		delta: 4.44089e-16
+	t1 := 7.50100000001d0 fractionPart.
+	self assert: t1 equals: 0.50100000000999d0 delta: 6.66134e-16
 !
 (reader addMethod: 'tests')
 !
 test_double_integerPart
 	| t1 |
-	t1 := 7.50000000001 d integerPart.
-	self
-		assert: t1
-		equals: 7.0 d
-		delta: 0.0
+	t1 := 7.50100000001d0 integerPart.
+	self assert: t1 equals: 7.0d0 delta: 0.0
 !
 (reader addMethod: 'tests')
 !
 test_double_rounded
 	| t1 |
-	t1 := 7.50000000001 d rounded.
+	t1 := 7.50100000001d0 rounded.
 	self assert: t1 equals: 8 delta: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_truncated
 	| t1 |
-	t1 := 7.50000000001 d truncated.
+	t1 := 7.50100000001d0 truncated.
 	self assert: t1 equals: 7 delta: 0
 !
 (reader addMethod: 'tests')
@@ -310,7 +304,7 @@ generate
 	selectors := #(#ceiling #floor #rounded #truncated #fractionPart #integerPart).
 	values := (Core.Dictionary new)
 				at: #float put: 7.5;
-				at: #double put: 7.50000000000999 d;
+				at: #double put: 7.50100000000999d0;
 				at: #fixed put: 2.5s;
 				at: #fraction put: 2 / 3;
 				at: #int put: 7;

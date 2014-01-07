@@ -127,6 +127,11 @@ visitCreateHolderNode: anObject {CreateHolderNode} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitDoubleLiteralNode: anObject {DoubleLiteralNode} {^X}
+	^self visitLiteralNode: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitEmptyTraitUsageNode: anObject {EmptyTraitUsageNode} {^X}
 	^self visitTraitUsageNode: anObject
 !

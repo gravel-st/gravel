@@ -34,11 +34,6 @@
 / operand
 	^operand quotientFromFloat: self
 !
-(reader addMethod: 'arithmetic')
-!
-// operand
-	^(self / operand) floor
-!
 (reader addMethod: 'comparing')
 !
 < operand
@@ -61,16 +56,6 @@ asDouble
 asFloat
 	^self
 !
-(reader addMethod: 'converting')
-!
-asFraction
-	^self asTrueFraction
-!
-(reader addMethod: 'converting')
-!
-asTrueFraction
-	^(self * 100000000.0) truncated / 100000000
-!
 (reader addMethod: 'truncation and round off')
 !
 ceiling
@@ -81,6 +66,12 @@ ceiling
 !
 degreesToRadians
 	^self * RadiansPerDegree
+!
+(reader addMethod: 'private-arithmetic')
+!
+differenceFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'differenceFromDouble_')>
+	
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -145,14 +136,15 @@ isNaN
 !
 (reader addMethod: 'private-arithmetic')
 !
-lessFromFloat: aFloat
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromFloat_')>
+lessFromDouble: aFloat
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromDouble_')>
 	
 !
 (reader addMethod: 'private-arithmetic')
 !
-lessFromFraction: aFraction
-	^aFraction < self asFraction
+lessFromFloat: aFloat
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'lessFromFloat_')>
+	
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -176,6 +168,12 @@ ln
 !
 printBase: base
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'printBase_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+productFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'productFromDouble_')>
 	
 !
 (reader addMethod: 'private-arithmetic')
@@ -204,6 +202,12 @@ productFromScaledDecimal: operand
 !
 productFromSmallInteger: aSmallInteger
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'productFromSmallInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+quotientFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'quotientFromDouble_')>
 	
 !
 (reader addMethod: 'private-arithmetic')
@@ -249,6 +253,12 @@ rounded
 !
 sqrt
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'sqrt')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+sumFromDouble: aDouble
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'sumFromDouble_')>
 	
 !
 (reader addMethod: 'private-arithmetic')

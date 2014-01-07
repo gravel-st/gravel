@@ -431,6 +431,11 @@ pushChar: anObject {Object} {^JVMMethodCompiler}
 !
 (reader addMethod: 'producing')
 !
+pushDouble: aDouble {Double} {^Self}
+	self emit: (PushDouble value: aDouble)
+!
+(reader addMethod: 'producing')
+!
 pushFloat: aFloat {Float} {^Self}
 	self emit: (PushFloat value: aFloat)
 !
@@ -658,6 +663,11 @@ visitCharacterLiteralNode: literalNode {CharacterLiteralNode} {^Self}
 visitCreateHolderNode: aNode {CreateHolderNode} {^Self}
 	self pushInt: 1.
 	self emit: (NewArray elementType: JVMDynamicObjectType new)
+!
+(reader addMethod: 'visiting')
+!
+visitDoubleLiteralNode: anObject {DoubleLiteralNode} {^Self}
+	self pushDouble: anObject value
 !
 (reader addMethod: 'visiting')
 !
