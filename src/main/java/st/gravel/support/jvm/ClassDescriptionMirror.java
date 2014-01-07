@@ -35,6 +35,12 @@ public abstract class ClassDescriptionMirror {
 				.selector());
 		Symbol targetPackageName = current == null ? definitionClassNode()
 				.packageName() : current.packageName();
+		if (targetPackageName == null) {
+			targetPackageName = definitionClassNode().packageName();
+			if (targetPackageName == null) {
+				targetPackageName = current.packageName();
+			}
+		}
 		SystemDefinitionNode newSystem = ImageBootstrapper.systemMapping
 				.systemDefinitionNode().copyUpdatePackage_do_(
 						targetPackageName,
