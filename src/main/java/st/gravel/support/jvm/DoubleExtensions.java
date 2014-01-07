@@ -33,6 +33,10 @@ public class DoubleExtensions {
 		return Math.toRadians(receiver);
 	}
 
+	public static double differenceFromDouble_(double receiver, double argument) {
+		return argument - receiver;
+	}
+	
 	public static double differenceFromFloat_(double receiver, float argument) {
 		return argument - receiver;
 	}
@@ -42,17 +46,7 @@ public class DoubleExtensions {
 		return argument.doubleValue() - receiver;
 	}
 	
-	public static String printBase_(double receiver, int radix) {
-		if (radix == 10)
-			return Double.toString(receiver);
-		throw new UnsupportedOperationException("Unsupported radix: " + radix);
-	}
-	
 	public static double differenceFromSmallInteger_(double receiver, int argument) {
-		return argument - receiver;
-	}
-	
-	public static double differenceFromDouble_(double receiver, double argument) {
 		return argument - receiver;
 	}
 	
@@ -67,7 +61,7 @@ public class DoubleExtensions {
 	public static double epsilon() {
 		return Math.ulp(1.0d);
 	}
-
+	
 	public static double exp(double receiver) {
 		return Math.exp(receiver);
 	}
@@ -78,11 +72,11 @@ public class DoubleExtensions {
 
 	public static double fmax() {
 		return Double.MAX_VALUE;
-	}	
-	
+	}
+
 	public static double fminDenormalized() {
 		return Double.MIN_VALUE;
-	}
+	}	
 	
 	public static double fminNormalized() {
 		return Double.MIN_NORMAL;
@@ -109,6 +103,22 @@ public class DoubleExtensions {
 		return Math.log(receiver);
 	}
 	
+	public static double moduloQuotientFromDouble_(double receiver, double operand) {
+		return operand % receiver;
+	}
+	
+	public static double moduloQuotientFromFloat_(double receiver, float operand) {
+		return operand % receiver;
+	}
+	
+	public static double moduloQuotientFromLargeInteger_(double receiver, BigInteger operand) {
+		return operand.doubleValue() % receiver;
+	}
+
+	public static double moduloQuotientFromSmallInteger_(double receiver, int operand) {
+		return operand % receiver;
+	}
+
 	public static double naN() {
 		return Double.NaN;
 	}
@@ -116,13 +126,19 @@ public class DoubleExtensions {
 	public static double negativeInfinity() {
 		return Double.NEGATIVE_INFINITY;
 	}
-
+	
 	public static double positiveInfinity() {
 		return Double.POSITIVE_INFINITY;
 	}
-
+	
 	public static int precision() {
 		return 64;
+	}
+	
+	public static String printBase_(double receiver, int radix) {
+		if (radix == 10)
+			return Double.toString(receiver);
+		throw new UnsupportedOperationException("Unsupported radix: " + radix);
 	}
 	
 	public static double productFromDouble_(double receiver, double argument) {
@@ -146,26 +162,26 @@ public class DoubleExtensions {
 		return argument / receiver;
 	}
 	
+	
+	
+	
 	public static double quotientFromFloat_(double receiver, float argument) {
 		return argument / receiver;
 	}
-	
+
 	public static double quotientFromLargeInteger_(double receiver,
 			BigInteger argument) {
 		return argument.doubleValue() / receiver;
 	}
-	
+
 	public static double quotientFromSmallInteger_(double receiver, int argument) {
 		return argument / receiver;
 	}
-	
+
 	public static double radiansToDegrees(double receiver) {
 		return Math.toDegrees(receiver);
 	}
-	
-	
-	
-	
+
 	public static Number rounded(double receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.HALF_UP);
 	}
@@ -176,7 +192,8 @@ public class DoubleExtensions {
 		BigDecimal rounded = bigDecimal.setScale(0, roundingMode);
 		return IntegerExtensions.objectFromBigInteger(rounded.toBigInteger());
 	}
-
+	
+	
 	public static double sin(double receiver) {
 		return Math.sin(receiver);
 	}
@@ -188,20 +205,23 @@ public class DoubleExtensions {
 	public static double sumFromDouble_(double receiver, double argument) {
 		return argument + receiver;
 	}
-
+	
+	public static double sumFromFloat_(double receiver, float argument) {
+		return argument + receiver;
+	}
+	
 	public static double sumFromLargeInteger_(double receiver, BigInteger argument) {
 		return argument.doubleValue() + receiver;
 	}
 	
-	
 	public static double sumFromSmallInteger_(double receiver, int argument) {
 		return argument + receiver;
 	}
-
+	
 	public static double tan(double receiver) {
 		return Math.tan(receiver);
 	}
-
+	
 	public static Number truncated(double receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
 	}
