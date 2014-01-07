@@ -544,53 +544,34 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 					@Override
 					public Object value() {
 						JVMMethodCompiler.this.produceVarRead_(_stopObj);
+						JVMMethodCompiler.this.produceVarRead_(_startObj);
+						JVMMethodCompiler.this.localStore_(_toDoNode.counterName());
 						return JVMMethodCompiler.this.localStore_(_stop);
 					}
 				}, new st.gravel.support.jvm.Block0<Object>() {
 
 					@Override
 					public Object value() {
-						return JVMMethodCompiler.this.try_do_exception_catch_(new st.gravel.support.jvm.Block0<Object>() {
+						final Frame _testFrame;
+						final Frame _doFrame;
+						_testFrame = JVMMethodCompiler.this.newFrame_(new st.gravel.support.jvm.Block0<Object>() {
 
 							@Override
 							public Object value() {
-								JVMMethodCompiler.this.produceVarRead_(_startObj);
-								return JVMMethodCompiler.this.localStore_(_toDoNode.counterName());
-							}
-						}, new st.gravel.support.jvm.Block0<Object>() {
-
-							@Override
-							public Object value() {
-								final Frame _testFrame;
-								final Frame _doFrame;
-								_testFrame = JVMMethodCompiler.this.newFrame_(new st.gravel.support.jvm.Block0<Object>() {
-
-									@Override
-									public Object value() {
-										JVMMethodCompiler.this.produceVarRead_(_toDoNode.counterName());
-										return JVMMethodCompiler.this.produceVarRead_(_stop);
-									}
-								});
-								_doFrame = JVMMethodCompiler.this.newFrame_(new st.gravel.support.jvm.Block0<Object>() {
-
-									@Override
-									public Object value() {
-										JVMMethodCompiler.this.visit_(_toDoNode.doSequence());
-										JVMMethodCompiler.this.trashStack();
-										return JVMMethodCompiler.this.emit_(IncrementLocal.factory.local_increment_(_locals.get(_toDoNode.counterName()), _step));
-									}
-								});
-								return JVMMethodCompiler.this.emit_((_step > 0) ? WhileLessThanLoop.factory.testFrame_doFrame_(_testFrame, _doFrame) : WhileGreaterThanLoop.factory.testFrame_doFrame_(_testFrame, _doFrame));
-							}
-						}, JVMDefinedObjectType.factory.classCastException(), new st.gravel.support.jvm.Block0<Object>() {
-
-							@Override
-							public Object value() {
-								JVMMethodCompiler.this.emit_(Pop.factory.basicNew());
-								JVMMethodCompiler.this.renameLocal_to_(_toDoNode.counterName(), JVMMethodCompiler.this.newTempName());
-								return JVMMethodCompiler.this.produceSafe_to_counterName_step_do_(_startObj, _stopObj, _toDoNode.counterName(), _step, _toDoNode.doSequence());
+								JVMMethodCompiler.this.produceVarRead_(_toDoNode.counterName());
+								return JVMMethodCompiler.this.produceVarRead_(_stop);
 							}
 						});
+						_doFrame = JVMMethodCompiler.this.newFrame_(new st.gravel.support.jvm.Block0<Object>() {
+
+							@Override
+							public Object value() {
+								JVMMethodCompiler.this.visit_(_toDoNode.doSequence());
+								JVMMethodCompiler.this.trashStack();
+								return JVMMethodCompiler.this.emit_(IncrementLocal.factory.local_increment_(_locals.get(_toDoNode.counterName()), _step));
+							}
+						});
+						return JVMMethodCompiler.this.emit_((_step > 0) ? WhileLessThanLoop.factory.testFrame_doFrame_(_testFrame, _doFrame) : WhileGreaterThanLoop.factory.testFrame_doFrame_(_testFrame, _doFrame));
 					}
 				}, JVMDefinedObjectType.factory.classCastException(), new st.gravel.support.jvm.Block0<Object>() {
 

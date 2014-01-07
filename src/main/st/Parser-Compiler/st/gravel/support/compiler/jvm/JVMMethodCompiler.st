@@ -352,34 +352,21 @@ produceToDoNodeConstantStep: toDoNode {ToDoNode} step: step {Int} {^Self}
 					self
 						try: 
 							[self produceVarRead: stopObj.
+							self produceVarRead: startObj.
+							self localStore: toDoNode counterName.
 							self localStore: stop]
 						do: 
-							[self
-								try: 
-									[self produceVarRead: startObj.
-									self localStore: toDoNode counterName]
-								do: 
-									[| testFrame {Frame} doFrame {Frame} |
-									testFrame := self newFrame: 
-													[self produceVarRead: toDoNode counterName.
-													self produceVarRead: stop].
-									doFrame := self newFrame: 
-													[self visit: toDoNode doSequence.
-													self trashStack.
-													self emit: (IncrementLocal local: (locals at: toDoNode counterName) increment: step)].
-									self emit: (step > 0
-												ifTrue: [WhileLessThanLoop testFrame: testFrame doFrame: doFrame]
-												ifFalse: [WhileGreaterThanLoop testFrame: testFrame doFrame: doFrame])]
-								exception: JVMDefinedObjectType classCastException
-								catch: 
-									[self emit: Pop new.
-									self renameLocal: toDoNode counterName to: self newTempName.
-									self
-										produceSafe: startObj
-										to: stopObj
-										counterName: toDoNode counterName
-										step: step
-										do: toDoNode doSequence]]
+							[| testFrame {Frame} doFrame {Frame} |
+							testFrame := self newFrame: 
+											[self produceVarRead: toDoNode counterName.
+											self produceVarRead: stop].
+							doFrame := self newFrame: 
+											[self visit: toDoNode doSequence.
+											self trashStack.
+											self emit: (IncrementLocal local: (locals at: toDoNode counterName) increment: step)].
+							self emit: (step > 0
+										ifTrue: [WhileLessThanLoop testFrame: testFrame doFrame: doFrame]
+										ifFalse: [WhileGreaterThanLoop testFrame: testFrame doFrame: doFrame])]
 						exception: JVMDefinedObjectType classCastException
 						catch: 
 							[self emit: Pop new.
