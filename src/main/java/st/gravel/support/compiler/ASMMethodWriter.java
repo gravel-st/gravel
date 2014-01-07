@@ -122,19 +122,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		}
 	}
 
-	private void pushDouble(double value) {
-		if (value == 0.0d) {
-			mv.visitInsn(DCONST_0);
-			return;
-		}
-		if (value == 1.0d) {
-			mv.visitInsn(DCONST_1);
-			return;
-		}
-		mv.visitLdcInsn(value);
-		return;
-	}
-
 	public void pushFloat(float value) {
 		if (value == 0.0f) {
 			mv.visitInsn(FCONST_0);
