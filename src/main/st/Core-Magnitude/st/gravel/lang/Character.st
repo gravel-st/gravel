@@ -1,47 +1,53 @@
-(reader defineClass: 'Character' superclass: 'st.gravel.lang.Magnitude')
+(reader defineTrait: 'Character' superclass: nil)
 !
-(reader propertyAt: 'javaClass' put: 'java.lang.Character')
+(reader addSimpleTrait: 'st.gravel.lang.Comparable')
 !
-(reader addMethod: '')
+(reader addSimpleClassTrait: 'st.gravel.lang.Comparable class')
+!
+(reader addMethod: 'comparing')
 !
 < aMagnitude
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'isSmallerThan_')>
-	
+	^self traitRequirement
 !
-(reader addMethod: '')
+(reader addMethod: 'comparing')
 !
 == aMagnitude
-	<primitive: 'equals'>
-	
+	^self traitRequirement
 !
-(reader addMethod: '')
+(reader addMethod: 'converting')
 !
 asInteger
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'asInteger')>
-	
+	^self traitRequirement
 !
 (reader addMethod: 'converting')
 !
 asLowercase
-	<primitive: 'toLowerCase'>
-	
+	^self traitRequirement
+!
+(reader addMethod: 'converting')
+!
+asString
+	^String with: self
 !
 (reader addMethod: 'converting')
 !
 asUppercase
-	<primitive: 'toUpperCase'>
-	
+	^self traitRequirement
 !
 (reader addMethod: 'converting')
 !
 codePoint
-	^self digitValue
+	^self traitRequirement
 !
-(reader addMethod: '')
+(reader addMethod: 'accessing')
+!
+codeUnitsSize
+	^self traitRequirement
+!
+(reader addMethod: 'converting')
 !
 digitValue
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'digitValue')>
-	
+	^self traitRequirement
 !
 (reader addMethod: 'testing')
 !
@@ -53,19 +59,17 @@ isAlphaNumeric
 isCharacter
 	^true
 !
-(reader addMethod: '')
+(reader addMethod: 'testing')
 !
 isDigit
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'isDigit')>
-	
+	^self traitRequirement
 !
-(reader addMethod: '')
+(reader addMethod: 'testing')
 !
 isLetter
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'isLetter')>
-	
+	^self traitRequirement
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'testing')
 !
 isLineBreak
 	^self = Character cr or: [self = Character lf]
@@ -73,75 +77,80 @@ isLineBreak
 (reader addMethod: 'testing')
 !
 isLowercase
-	<primitive: 'isLowerCase'>
-	
+	^self traitRequirement
 !
 (reader addMethod: 'testing')
 !
 isUppercase
-	<primitive: 'isUpperCase'>
-	
+	^self traitRequirement
 !
-(reader addMethod: '')
+(reader addMethod: 'testing')
 !
 isVowel
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'isVowel')>
-	
+	^self traitRequirement
 !
-(reader addMethod: '')
+(reader addMethod: 'testing')
 !
 isWhitespace
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'isWhitespace')>
-	
+	^self traitRequirement
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'instance creation')
+!
+codePoint: anInteger
+	^self defaultImplementation codePoint: anInteger
+!
+(reader addClassMethod: 'accessing untypeable characters')
 !
 cr
 	^self value: 13
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'instance creation')
+!
+defaultImplementation
+	^JavaCharacter
+!
+(reader addClassMethod: 'accessing untypeable characters')
 !
 del
 	^self value: 127
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 esc
 	^self value: 27
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 euro
 	^self value: 8364
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 lb
 	^self value: 11
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 lf
 	^self value: 10
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 nbsp
 	^self value: 160
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 space
 	^self value: 32
 !
-(reader addClassMethod: 'gravel')
+(reader addClassMethod: 'accessing untypeable characters')
 !
 tab
 	^self value: 9
 !
-(reader addClassMethod: '')
+(reader addClassMethod: 'instance creation')
 !
 value: anInteger
-	<primitive: #('st.gravel.support.jvm.CharacterExtensions' 'newInstance')>
-	
+	^self codePoint: anInteger
 !

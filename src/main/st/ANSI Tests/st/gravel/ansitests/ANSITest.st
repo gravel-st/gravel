@@ -105,7 +105,7 @@ valueIsKindOfByteArrayFactory: aValue
 (reader addMethod: 'tests')
 !
 valueIsKindOfCharacter: aValue
-	^aValue class = Character
+	^aValue isCharacter
 !
 (reader addMethod: 'tests')
 !

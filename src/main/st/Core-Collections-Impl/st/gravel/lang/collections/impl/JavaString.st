@@ -41,7 +41,24 @@ asSymbol
 (reader addMethod: '')
 !
 at: index
-	<primitive: #('st.gravel.support.jvm.StringExtensions' 'at_')>
+	^Character codePoint: (self codePointAtCodePointIndex: index)
+!
+(reader addMethod: 'private-java')
+!
+codePointAt: codeUnitsIndex
+	<primitive: 'codePointAt'>
+	
+!
+(reader addMethod: 'private-java')
+!
+codePointAtCodePointIndex: index
+	<primitive: #('st.gravel.support.jvm.StringExtensions' 'codePointAtCodePointIndex_')>
+	
+!
+(reader addMethod: 'private-java')
+!
+codeUnitsSize
+	<primitive: 'length'>
 	
 !
 (reader addMethod: '')
@@ -65,7 +82,14 @@ copyWithAll: aString
 (reader addMethod: 'gravel')
 !
 do: aBlock
-	1 to: self size do: [:i | aBlock value: (self at: i)]
+	| codeUnitsSize i |
+	codeUnitsSize := self codeUnitsSize.
+	i := 0.
+	[i < codeUnitsSize] whileTrue: 
+			[| char |
+			char := Character codePoint: (self codePointAt: i).
+			aBlock value: char.
+			i := i + char codeUnitsSize]
 !
 (reader addMethod: 'private-comparing')
 !
@@ -91,7 +115,7 @@ readStream
 (reader addMethod: '')
 !
 size
-	<primitive: #('st.gravel.support.jvm.StringExtensions' 'size')>
+	<primitive: #('st.gravel.support.jvm.StringExtensions' 'codePointsSize')>
 	
 !
 (reader addMethod: 'gravel')

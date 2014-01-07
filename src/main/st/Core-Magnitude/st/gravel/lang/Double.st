@@ -172,6 +172,18 @@ ln
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'ln')>
 	
 !
+(reader addMethod: 'private-arithmetic')
+!
+moduloQuotientFromLargeInteger: anInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'moduloQuotientFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+moduloQuotientFromSmallInteger: anInteger
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'moduloQuotientFromSmallInteger_')>
+	
+!
 (reader addMethod: 'printing')
 !
 printBase: base

@@ -223,6 +223,12 @@ integerQuotientFromSmallInteger: anObject
 isLarge
 	^true
 !
+(reader addMethod: 'testing')
+!
+isZero
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'isZero')>
+	
+!
 (reader addMethod: 'private-arithmetic')
 !
 lessFromLargeInteger: aSmallInteger

@@ -1,5 +1,7 @@
 (reader defineClass: 'StringTest' superclass: 'st.gravel.sunit.TestCase')
 !
+(reader propertyAt: 'isSystemTest' put: 'Ja')
+!
 (reader addMethod: 'gravel')
 !
 testPrintInteger
@@ -13,4 +15,17 @@ testPrintInteger
 !
 testStringEquals
 	self assert: 'abc' = ('ab' , 'c')
+!
+(reader addMethod: 'gravel')
+!
+testUnicodeRange
+	0 to: 1114112
+		do: 
+			[:i |
+			| ch str |
+			ch := Character codePoint: i.
+			str := String with: ch.
+			self assert: str size = 1.
+			self assert: str first = ch.
+			self assert: str first codePoint = i]
 !

@@ -59,8 +59,8 @@ public class CharacterExtensions {
 		return Character.toUpperCase(receiver);
 	}
 
-	public static Integer asInteger(Character receiver) {
-		return Integer.valueOf(receiver.charValue());
+	public static int asInteger(Character receiver) {
+		return receiver.charValue();
 	}
 
 	public static Character newInstance(Object receiver, int value) {
@@ -151,5 +151,27 @@ public class CharacterExtensions {
 		return (receiver == null && other == null)
 				|| (receiver != null && other != null && receiver.equals(other));
 	}
+	
+	public static boolean characters_equals_(char[] characters, char[] other) {
+		int length = characters.length;
+		if (length != other.length)
+			return false;
+		for (int i = 0; i < length; i++) {
+			if (characters[i] != other[i])
+				return false;
+		}
+		return true;
+	}
+	
+	public static int codePointOfCharacters_(char[] characters) {
+		return Character.codePointAt(characters, 0);
+	}
+	
+	public static int codeUnitsSize_(char[] characters) {
+		return characters.length;
+	}
+	
+	
+	
 
 }
