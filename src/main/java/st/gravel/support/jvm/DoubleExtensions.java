@@ -155,7 +155,7 @@ public class DoubleExtensions {
 	
 	public static double productFromLargeInteger_(double receiver,
 			BigInteger argument) {
-		return argument.floatValue() * receiver;
+		return argument.doubleValue() * receiver;
 	}
 	
 	public static double productFromSmallInteger_(double receiver, int argument) {

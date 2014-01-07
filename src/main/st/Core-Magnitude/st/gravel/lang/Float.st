@@ -132,7 +132,7 @@ isLiteral
 (reader addMethod: 'testing')
 !
 isNaN
-	^self ~= self
+	^self = NaN
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -162,18 +162,6 @@ lessFromSmallInteger: aSmallInteger
 !
 ln
 	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'ln')>
-	
-!
-(reader addMethod: 'private-arithmetic')
-!
-moduloQuotientFromLargeInteger: anInteger
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'moduloQuotientFromLargeInteger_')>
-	
-!
-(reader addMethod: 'private-arithmetic')
-!
-moduloQuotientFromSmallInteger: anInteger
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'moduloQuotientFromSmallInteger_')>
 	
 !
 (reader addMethod: 'printing')
@@ -252,8 +240,32 @@ radiansToDegrees
 !
 (reader addMethod: 'private-arithmetic')
 !
-raising: aNumber
-	^aNumber raisedToFloat: self
+raisedFromDouble: anObject
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'raisedFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromFloat: anObject
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'raisedFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'raisedFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'raisedFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
+raisedTo: operand
+	^operand raisedFromFloat: self
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -395,8 +407,7 @@ pi
 (reader addClassMethod: 'constants')
 !
 precision
-	<primitive: #('st.gravel.support.jvm.FloatExtensions' 'precision')>
-	
+	^24
 !
 (reader addClassMethod: 'constants')
 !

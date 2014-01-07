@@ -185,6 +185,11 @@ integerQuotientFromSmallInteger: anObject
 !
 (reader addMethod: 'testing')
 !
+isNaN
+	^false
+!
+(reader addMethod: 'testing')
+!
 isNumber
 	^true
 !
@@ -373,10 +378,35 @@ quotientFromSmallInteger: anInteger
 radiansToDegrees
 	^self asLimitedPrecisionReal radiansToDegrees
 !
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromDouble: anObject
+	^self raisedFromLimitedPrecisionReal: anObject
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromFloat: anObject
+	^self raisedFromLimitedPrecisionReal: anObject
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromInteger: anObject
+	^self raisedFromNumber: anObject
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromLimitedPrecisionReal: anObject
+	^self raisedFromNumber: anObject
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromSmallInteger: anObject
+	^self raisedFromInteger: anObject
+!
 (reader addMethod: 'arithmetic')
 !
-raisedTo: aNumber
-	^aNumber raising: self
+raisedTo: operand
+	^self subclassResponsibility
 !
 (reader addMethod: 'arithmetic')
 !
@@ -391,11 +421,6 @@ raisedToInteger: anInteger
 	bitProbe > 0]
 			whileTrue: [result := result * result].
 	^result
-!
-(reader addMethod: 'private-arithmetic')
-!
-raising: aNumber
-	self subclassResponsibility
 !
 (reader addMethod: 'arithmetic')
 !
@@ -531,8 +556,8 @@ truncateTo: aNumber
 !
 (reader addMethod: 'arithmetic')
 !
-\\ operand
-	^self subclassResponsibility
+\\ aNumber
+	^self - (self // aNumber * aNumber)
 !
 (reader addClassMethod: 'constants')
 !

@@ -195,16 +195,8 @@ quotientFromInteger: anInteger
 !
 (reader addMethod: 'arithmetic')
 !
-raisedToInteger: anInteger
-	anInteger = 0 ifTrue: [^1].
-	anInteger < 0 ifTrue: [^self reciprocal raisedToInteger: anInteger negated].
-	^Fraction numerator: (numerator raisedToInteger: anInteger)
-		denominator: (denominator raisedToInteger: anInteger)
-!
-(reader addMethod: 'private-arithmetic')
-!
-raising: aNumber
-	^aNumber raisedToFraction: self
+raisedTo: operand
+	^operand raisedFromFraction: self
 !
 (reader addMethod: 'arithmetic')
 !

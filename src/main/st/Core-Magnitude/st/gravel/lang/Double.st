@@ -142,6 +142,11 @@ floor
 isInfinite
 	^self = Infinity or: [self = NegativeInfinity]
 !
+(reader addMethod: 'testing')
+!
+isNaN
+	^self = NaN
+!
 (reader addMethod: 'private-arithmetic')
 !
 lessFromDouble: aFloat
@@ -170,18 +175,6 @@ lessFromSmallInteger: aSmallInteger
 !
 ln
 	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'ln')>
-	
-!
-(reader addMethod: 'private-arithmetic')
-!
-moduloQuotientFromLargeInteger: anInteger
-	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'moduloQuotientFromLargeInteger_')>
-	
-!
-(reader addMethod: 'private-arithmetic')
-!
-moduloQuotientFromSmallInteger: anInteger
-	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'moduloQuotientFromSmallInteger_')>
 	
 !
 (reader addMethod: 'printing')
@@ -261,8 +254,32 @@ radiansToDegrees
 !
 (reader addMethod: 'private-arithmetic')
 !
-raising: aNumber
-	^aNumber raisedToDouble: self
+raisedFromDouble: anObject
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'raisedFromDouble_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromFloat: anObject
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'raisedFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'raisedFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'raisedFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
+raisedTo: operand
+	^operand raisedFromDouble: self
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -404,6 +421,5 @@ javaPositiveInfinity
 (reader addClassMethod: 'constants')
 !
 precision
-	<primitive: #('st.gravel.support.jvm.DoubleExtensions' 'precision')>
-	
+	^53
 !

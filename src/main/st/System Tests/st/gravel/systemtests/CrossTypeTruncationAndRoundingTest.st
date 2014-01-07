@@ -2,6 +2,13 @@
 !
 (reader addMethod: 'tests')
 !
+test_big_asFraction
+	| t1 |
+	t1 := 251172765292171600923361522612285166173 asFraction.
+	self assert: t1 equals: 251172765292171600923361522612285166173 delta: 0
+!
+(reader addMethod: 'tests')
+!
 test_big_ceiling
 	| t1 |
 	t1 := 251172765292171600923361522612285166173 ceiling.
@@ -44,45 +51,65 @@ test_big_truncated
 !
 (reader addMethod: 'tests')
 !
+test_double_asFraction
+	| t1 |
+	t1 := 100.5000003d asFraction.
+	self
+		assert: t1
+		equals: 7072058810965855 / 70368744177664
+		delta: 0
+!
+(reader addMethod: 'tests')
+!
 test_double_ceiling
 	| t1 |
-	t1 := 7.50100000001d ceiling.
-	self assert: t1 equals: 8 delta: 0
+	t1 := 100.5000003d ceiling.
+	self assert: t1 equals: 101 delta: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_floor
 	| t1 |
-	t1 := 7.50100000001d floor.
-	self assert: t1 equals: 7 delta: 0
+	t1 := 100.5000003d floor.
+	self assert: t1 equals: 100 delta: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_fractionPart
 	| t1 |
-	t1 := 7.50100000001d fractionPart.
-	self assert: t1 equals: 0.50100000000999d delta: 6.66134e-16
+	t1 := 100.5000003d fractionPart.
+	self assert: t1 equals: 0.5000003d delta: 7.10543e-15
 !
 (reader addMethod: 'tests')
 !
 test_double_integerPart
 	| t1 |
-	t1 := 7.50100000001d integerPart.
-	self assert: t1 equals: 7.0d delta: 0.0
+	t1 := 100.5000003d integerPart.
+	self assert: t1 equals: 100.0d delta: 0.0
 !
 (reader addMethod: 'tests')
 !
 test_double_rounded
 	| t1 |
-	t1 := 7.50100000001d rounded.
-	self assert: t1 equals: 8 delta: 0
+	t1 := 100.5000003d rounded.
+	self assert: t1 equals: 101 delta: 0
 !
 (reader addMethod: 'tests')
 !
 test_double_truncated
 	| t1 |
-	t1 := 7.50100000001d truncated.
-	self assert: t1 equals: 7 delta: 0
+	t1 := 100.5000003d truncated.
+	self assert: t1 equals: 100 delta: 0
+!
+(reader addMethod: 'tests')
+!
+test_fixed_asFraction
+	| t1 |
+	t1 := 2.5s asFraction.
+	self
+		assert: t1
+		equals: 5 / 2
+		delta: 0
 !
 (reader addMethod: 'tests')
 !
@@ -128,6 +155,16 @@ test_fixed_truncated
 !
 (reader addMethod: 'tests')
 !
+test_float_asFraction
+	| t1 |
+	t1 := 7.5 asFraction.
+	self
+		assert: t1
+		equals: 15 / 2
+		delta: 0
+!
+(reader addMethod: 'tests')
+!
 test_float_ceiling
 	| t1 |
 	t1 := 7.5 ceiling.
@@ -167,6 +204,16 @@ test_float_truncated
 	| t1 |
 	t1 := 7.5 truncated.
 	self assert: t1 equals: 7 delta: 0
+!
+(reader addMethod: 'tests')
+!
+test_fraction_asFraction
+	| t1 |
+	t1 := (2 / 3) asFraction.
+	self
+		assert: t1
+		equals: 2 / 3
+		delta: 0
 !
 (reader addMethod: 'tests')
 !
@@ -215,6 +262,13 @@ test_fraction_truncated
 !
 (reader addMethod: 'tests')
 !
+test_int_asFraction
+	| t1 |
+	t1 := 7 asFraction.
+	self assert: t1 equals: 7 delta: 0
+!
+(reader addMethod: 'tests')
+!
 test_int_ceiling
 	| t1 |
 	t1 := 7 ceiling.
@@ -254,6 +308,13 @@ test_int_truncated
 	| t1 |
 	t1 := 7 truncated.
 	self assert: t1 equals: 7 delta: 0
+!
+(reader addMethod: 'tests')
+!
+test_zero_asFraction
+	| t1 |
+	t1 := 0 asFraction.
+	self assert: t1 equals: 0 delta: 0
 !
 (reader addMethod: 'tests')
 !
@@ -301,10 +362,10 @@ test_zero_truncated
 !
 generate
 	| selectors values |
-	selectors := #(#ceiling #floor #rounded #truncated #fractionPart #integerPart).
+	selectors := #(#ceiling #floor #rounded #truncated #fractionPart #integerPart #asFraction).
 	values := (Core.Dictionary new)
 				at: #float put: 7.5;
-				at: #double put: 7.50100000000999d;
+				at: #double put: 100.5000003d;
 				at: #fixed put: 2.5s;
 				at: #fraction put: 2 / 3;
 				at: #int put: 7;
@@ -334,7 +395,7 @@ generateTest: nameSymbol value: valueString selector: selector
 						nextPut: (builder addTemporary assign: (valueString asProgramNode send: selector)).
 					builder nextPut: ('self' asVariable
 								_assert: builder temporary
-								_equals: resultValue
+								_equals: resultValue asProgramNode
 								_delta: delta)])
 		classified: #tests
 !

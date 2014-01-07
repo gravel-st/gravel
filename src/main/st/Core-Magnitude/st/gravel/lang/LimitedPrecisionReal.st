@@ -8,7 +8,10 @@
 (reader addMethod: 'converting')
 !
 asFraction
-	^self asTrueFraction
+	| precision |
+	(self isInfinite or: [self isNaN]) ifTrue: [self shouldNotOccur].
+	precision := self class precision.
+	^(self abs timesTwoPower: precision) truncated * self sign / (2 raisedTo: precision)
 !
 (reader addMethod: 'converting')
 !
@@ -17,8 +20,8 @@ asLimitedPrecisionReal
 !
 (reader addMethod: 'converting')
 !
-asTrueFraction
-	^(self * 100000000.0) truncated / 100000000
+exponent
+	^self subclassResponsibility
 !
 (reader addMethod: 'truncation and round off')
 !
@@ -35,6 +38,11 @@ integerPart
 isFinite
 	^self - self = 0.0
 !
+(reader addMethod: 'converting')
+!
+isInfinite
+	^self subclassResponsibility
+!
 (reader addMethod: 'testing')
 !
 isLimitedPrecisionReal
@@ -44,6 +52,12 @@ isLimitedPrecisionReal
 !
 lessFromFraction: aFraction
 	^aFraction < self asFraction
+!
+(reader addMethod: 'mathematical functions')
+!
+timesTwoPower: anInteger
+	self = 0.0 ifTrue: [^self].
+	^self * (2 raisedTo: anInteger)
 !
 (reader addClassMethod: 'constants')
 !

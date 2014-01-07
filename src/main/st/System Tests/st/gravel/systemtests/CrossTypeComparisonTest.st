@@ -2971,7 +2971,7 @@ test_zero_more_zero
 basicNamesAndValuesDo: aBlock
 	#(#float #double #fixed #fraction #int #big #zero) with: (Core.Array
 				with: 7.5
-				with: 7.50100000000001d
+				with: 100.5000003d
 				with: 2.5s
 				with: 2 / 3
 				with: 7

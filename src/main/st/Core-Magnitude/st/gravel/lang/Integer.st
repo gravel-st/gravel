@@ -337,11 +337,6 @@ quotientFromFraction: aFraction
 quotientFromInteger: anInteger
 	^(Fraction numerator: anInteger denominator: self) reduced
 !
-(reader addMethod: 'private-arithmetic')
-!
-raising: aNumber
-	^aNumber raisedToInteger: self
-!
 (reader addMethod: 'truncation and round off')
 !
 rounded

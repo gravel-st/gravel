@@ -156,7 +156,7 @@ public class ParserTest {
 		final DoubleLiteralNode _node;
 		_node = ((DoubleLiteralNode) Parser.factory.source_("123412341345145145123412341234.003213123123d").parseExpression());
 		assertEquals((st.gravel.support.jvm.SmalltalkFactory) DoubleLiteralNode.factory, (st.gravel.support.jvm.SmalltalkFactory) _node.factory());
-		assertEquals((double) 1.2341234134515e29d, (double) _node.value(), (double) 0.000000001f);
+		assertEquals((double) 1.2341234134515e29d, (double) _node.value(), (double) 1.0e16f);
 	}
 
 	@Test

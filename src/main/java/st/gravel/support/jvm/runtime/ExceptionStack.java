@@ -24,10 +24,7 @@ public class ExceptionStack {
 		public void handle(Object exception) throws Throwable {
 			setCurrentHandler(exception, this);
 			Object value = MethodTools.perform(exBlock, "value:", exception);
-			boolean resume = MethodTools.perform(exception, "resume") == Boolean.TRUE;
-			if (!resume) {
-				throw new NonLocalReturn(value, marker);
-			}
+			throw new NonLocalReturn(value, marker);
 		}
 
 		public boolean handles(Object exception) throws Throwable {
@@ -81,7 +78,8 @@ public class ExceptionStack {
 		return currentStack.get().pvtHandleRetry(exception);
 	}
 
-	public static Object handleRetryUsing_(Object exception, Object value) throws Throwable {
+	public static Object handleRetryUsing_(Object exception, Object value)
+			throws Throwable {
 		return currentStack.get().pvtHandleRetryUsing_(exception, value);
 	}
 
@@ -167,7 +165,8 @@ public class ExceptionStack {
 		return pvtHandleRetryUsing_(exception, handler.protectedBlock);
 	}
 
-	private Object pvtHandleRetryUsing_(Object exception, Object value) throws Throwable {
+	private Object pvtHandleRetryUsing_(Object exception, Object value)
+			throws Throwable {
 		Object result = MethodTools.perform(value, "value");
 		return pvtHandleReturn(exception, result);
 	}

@@ -143,7 +143,7 @@ testParseDouble
 	self
 		assert: 123412341345145145123412341234.003213123123d
 		equals: node value
-		delta: 0.000000001
+		delta: 1.0e16
 !
 (reader addMethod: 'tests')
 !

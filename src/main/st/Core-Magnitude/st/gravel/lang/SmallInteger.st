@@ -285,6 +285,18 @@ moduloQuotientFromSmallInteger: anObject
 odd
 	^(self bitAnd: 1) = 1
 !
+(reader addMethod: 'private-arithmetic')
+!
+positiveRaisedFromLargeInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'raisedFromLargeInteger_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+positiveRaisedFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'raisedFromSmallInteger_')>
+	
+!
 (reader addMethod: '')
 !
 printBase: base
@@ -320,11 +332,39 @@ quoFromSmallInteger: anObject
 	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'quoFromSmallInteger_')>
 	
 !
-(reader addMethod: '')
+(reader addMethod: 'private-arithmetic')
 !
-raisedToInteger: aNumber
-	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'raisedToInteger_')>
+raisedFromDouble: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'raisedFromDouble_')>
 	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromFloat: anObject
+	<primitive: #('st.gravel.support.jvm.IntegerExtensions' 'raisedFromFloat_')>
+	
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromFraction: aFraction
+	^(aFraction numerator raisedTo: self) / (aFraction denominator raisedTo: self)
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromLargeInteger: anObject
+	self > 0 ifTrue: [^self positiveRaisedFromLargeInteger: anObject].
+	^1 / (self abs positiveRaisedFromLargeInteger: anObject)
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromSmallInteger: anObject
+	self > 0 ifTrue: [^self positiveRaisedFromSmallInteger: anObject].
+	^(self abs positiveRaisedFromSmallInteger: anObject) reciprocal
+!
+(reader addMethod: 'arithmetic')
+!
+raisedTo: operand
+	^operand raisedFromSmallInteger: self
 !
 (reader addMethod: '')
 !

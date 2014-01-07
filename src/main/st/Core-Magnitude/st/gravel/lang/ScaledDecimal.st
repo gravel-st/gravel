@@ -142,7 +142,7 @@ printOn: stream
 !
 printScaleOn: stream
 	stream nextPut: $s.
-	scale printOn: stream
+	scale = 1 ifFalse: [scale printOn: stream]
 !
 (reader addMethod: 'private-arithmetic')
 !
@@ -166,15 +166,10 @@ quotientFromScaledDecimal: operand
 	^ScaledDecimal newFromNumber: operand asFraction / fraction
 		scale: (operand scale max: scale)
 !
-(reader addMethod: 'mathematical functions')
+(reader addMethod: 'arithmetic')
 !
-raisedToInteger: aNumber
-	^self class newFromNumber: (fraction raisedToInteger: aNumber) scale: scale
-!
-(reader addMethod: 'private-arithmetic')
-!
-raising: aNumber
-	^aNumber raisedToScaledDecimal: self
+raisedTo: operand
+	^ScaledDecimal newFromNumber: (fraction raisedTo: operand) scale: scale
 !
 (reader addMethod: 'arithmetic')
 !

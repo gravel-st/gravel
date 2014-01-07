@@ -45,7 +45,7 @@ public class DoubleLiteralNode extends LimitedPrecisionRealLiteralNode implement
 			}
 			if (!((_exp == null) && (!this.exponentCharacterIsMandatory()))) {
 				_wstr.append(DoubleLiteralNode_Factory.this.exponentCharacter());
-				if (!st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp)) {
+				if (!((_exp == null) || st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp))) {
 					_wstr.append(_exp.toString());
 				}
 			}

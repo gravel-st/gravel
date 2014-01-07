@@ -298,6 +298,22 @@ quoFromSmallInteger: anObject
 	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'quoFromSmallInteger_')>
 	
 !
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromLargeInteger: anObject
+	self error: 'Number probably computationally too big'
+!
+(reader addMethod: 'private-arithmetic')
+!
+raisedFromSmallInteger: anObject
+	<primitive: #('st.gravel.support.jvm.LargeIntegerExtensions' 'raisedFromSmallInteger_')>
+	
+!
+(reader addMethod: 'arithmetic')
+!
+raisedTo: operand
+	^operand raisedFromLargeInteger: self
+!
 (reader addMethod: '')
 !
 rem: operand
