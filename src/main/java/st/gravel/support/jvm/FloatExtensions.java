@@ -171,4 +171,20 @@ public class FloatExtensions {
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
 	}
+	
+	public static float moduloQuotientFromSmallInteger_(float receiver, int operand) {
+		return operand % receiver;
+	}
+	
+	public static float moduloQuotientFromLargeInteger_(float receiver, BigInteger operand) {
+		return operand.floatValue() % receiver;
+	}
+	
+	public static float moduloQuotientFromFloat_(float receiver, float operand) {
+		return operand % receiver;
+	}
+	
+	public static double moduloQuotientFromDouble_(float receiver, double operand) {
+		return operand % receiver;
+	}
 }

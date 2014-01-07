@@ -205,4 +205,20 @@ public class DoubleExtensions {
 	public static Number truncated(double receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
 	}
+	
+	public static double moduloQuotientFromSmallInteger_(double receiver, int operand) {
+		return operand % receiver;
+	}
+	
+	public static double moduloQuotientFromLargeInteger_(double receiver, BigInteger operand) {
+		return operand.doubleValue() % receiver;
+	}
+	
+	public static double moduloQuotientFromFloat_(double receiver, float operand) {
+		return operand % receiver;
+	}
+	
+	public static double moduloQuotientFromDouble_(double receiver, double operand) {
+		return operand % receiver;
+	}
 }
