@@ -9,10 +9,18 @@ public class FloatExtensions {
 		return receiver;
 	}
 	
-	public static float differenceFromFloat_(float receiver, float argument) {
+	public static Number ceiling(float receiver) {
+		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
+	}
+	
+	public static double differenceFromDouble_(float receiver, double argument) {
 		return argument - receiver;
 	}
 	
+	public static float differenceFromFloat_(float receiver, float argument) {
+		return argument - receiver;
+	}
+
 	public static float differenceFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return argument.floatValue() - receiver;
@@ -21,11 +29,11 @@ public class FloatExtensions {
 	public static float differenceFromSmallInteger_(float receiver, int argument) {
 		return argument - receiver;
 	}
-
+	
 	public static int emax() {
 		return Float.MAX_EXPONENT;
 	}
-	
+
 	public static int emin() {
 		return Float.MIN_EXPONENT;
 	}
@@ -38,14 +46,10 @@ public class FloatExtensions {
 		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
 	}
 	
-	public static Number ceiling(float receiver) {
-		return roundToRoundingMode(receiver, RoundingMode.FLOOR);
-	}
-
 	public static float fmax() {	
 		return Float.MAX_VALUE;
 	}
-	
+
 	public static float fminDenormalized() {
 		return Float.MIN_VALUE;
 	}
@@ -54,10 +58,31 @@ public class FloatExtensions {
 		return Float.MIN_NORMAL;
 	}
 
+	public static boolean lessFromDouble_(float receiver, double argument) {
+		return argument < receiver;
+	}
+	
+	public static boolean lessFromFloat_(float receiver, float argument) {
+		return argument < receiver;
+	}
+
+	public static boolean lessFromLargeInteger_(float receiver,
+			BigInteger argument) {
+		return new BigDecimal(argument).compareTo(BigDecimal.valueOf(receiver)) == -1;
+	}
+	
+	public static boolean lessFromSmallInteger_(float receiver, int argument) {
+		return argument < receiver;
+	}
+	
+	public static float ln(float receiver) {
+		return (float)Math.log(receiver);
+	}
+
 	public static float naN() {
 		return Float.NaN;
 	}
-
+	
 	public static float negativeInfinity() {
 		return Float.NEGATIVE_INFINITY;
 	}
@@ -65,24 +90,9 @@ public class FloatExtensions {
 	public static float positiveInfinity() {
 		return Float.POSITIVE_INFINITY;
 	}
-
-	public static boolean lessFromFloat_(float receiver, float argument) {
-		return argument < receiver;
-	}
 	
-	public static boolean lessFromLargeInteger_(float receiver,
-			BigInteger argument) {
-		return new BigDecimal(argument).compareTo(BigDecimal.valueOf(receiver)) == -1;
-	}
-
-	public static boolean lessFromSmallInteger_(float receiver, int argument) {
-		return argument < receiver;
-	}
-
-	public static float ln(float receiver) {
-		return (float)Math.log(receiver);
-	}
-
+	
+	
 	public static int precision() {
 		return 32;
 	}
@@ -91,6 +101,10 @@ public class FloatExtensions {
 		if (radix == 10)
 			return Float.toString(receiver);
 		throw new UnsupportedOperationException("Unsupported radix: " + radix);
+	}
+
+	public static double productFromDouble_(float receiver, double argument) {
+		return argument * receiver;
 	}
 
 	public static float productFromFloat_(float receiver, float argument) {
@@ -109,7 +123,11 @@ public class FloatExtensions {
 	public static float quotientFromFloat_(float receiver, float argument) {
 		return argument / receiver;
 	}
-
+	
+	public static double quotientFromDouble_(float receiver, double argument) {
+		return argument / receiver;
+	}
+	
 	public static float quotientFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return argument.floatValue() / receiver;
@@ -134,6 +152,10 @@ public class FloatExtensions {
 		return (float) Math.sqrt(receiver);
 	}
 
+	public static double sumFromDouble_(float receiver, double argument) {
+		return argument + receiver;
+	}
+	
 	public static float sumFromFloat_(float receiver, float argument) {
 		return argument + receiver;
 	}

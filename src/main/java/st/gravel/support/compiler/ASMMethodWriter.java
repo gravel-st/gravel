@@ -737,7 +737,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
+	
 	@Override
 	public Void visitWhileGreaterThanLoop_(WhileGreaterThanLoop node) {
 		Label testLabel = new Label();
