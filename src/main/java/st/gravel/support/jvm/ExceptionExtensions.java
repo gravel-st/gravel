@@ -10,8 +10,8 @@ public class ExceptionExtensions {
 	public static Object on_do_(Block0<Object> receiver,
 			Object exceptionSelector, Object exBlock) {
 		Object marker = new Object();
-		ExceptionHandler handler = ExceptionStack.addHandler(exceptionSelector,
-				exBlock, marker);
+		ExceptionHandler handler = ExceptionStack.addHandler(receiver,
+				exceptionSelector, exBlock, marker);
 		try {
 			return receiver.value();
 		} catch (NonLocalReturn nlr) {
@@ -24,6 +24,7 @@ public class ExceptionExtensions {
 			ExceptionStack.removeHandler(handler);
 		}
 	}
+
 	public static Object warningNoHandler_(Object receiver, Object messageText) {
 		System.err.println(messageText);
 		return receiver;
@@ -51,13 +52,28 @@ public class ExceptionExtensions {
 		}
 	}
 
+	public static boolean isNested(Object exception) throws Throwable {
+		return ExceptionStack.isNested(exception);
+	}
+
 	public static Object raise(Object exception) throws Throwable {
-		ExceptionStack.handle(exception);
-		return exception;
+		Object resumeMarker = new Object();
+		try {
+			ExceptionStack.handle(exception, resumeMarker);
+			return exception;
+		} catch (NonLocalReturn r) {
+			if (r.marker == resumeMarker) return r.returnValue;
+			throw r;
+		}
 	}
 
 	public static Object pass(Object exception) throws Throwable {
 		ExceptionStack.handlePass(exception);
+		return exception;
+	}
+
+	public static Object resume_(Object exception, Object returnValue) throws Throwable {
+		ExceptionStack.handleResume_(exception, returnValue);
 		return exception;
 	}
 
@@ -68,6 +84,16 @@ public class ExceptionExtensions {
 	public static Object return_(Object exception, Object value)
 			throws Throwable {
 		return ExceptionStack.handleReturn(exception, value);
+	}
+
+	public static Object retryUsing_(Object exception, Object value)
+			throws Throwable {
+		return ExceptionStack.handleRetryUsing_(exception, value);
+	}
+
+	public static Object retry(Object exception)
+			throws Throwable {
+		return ExceptionStack.handleRetry(exception);
 	}
 
 }

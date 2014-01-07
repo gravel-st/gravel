@@ -2,11 +2,11 @@
 !
 (reader addInstVar: 'currentHandler')
 !
-(reader addInstVar: 'resume')
-!
 (reader addInstVar: 'messageText')
 !
 (reader addInstVar: 'initialHandler')
+!
+(reader addInstVar: 'resumeMarker')
 !
 (reader addMethod: 'gravel')
 !

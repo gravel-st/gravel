@@ -2,11 +2,11 @@
 !
 (reader addInstVar: 'currentHandler')
 !
-(reader addInstVar: 'resume')
-!
 (reader addInstVar: 'messageText')
 !
 (reader addInstVar: 'initialHandler')
+!
+(reader addInstVar: 'resumeMarker')
 !
 (reader addMethod: 'gravel')
 !
@@ -39,6 +39,11 @@ defaultResumeValue
 !
 (reader addMethod: 'accessing')
 !
+defaultReturnValue
+	^nil
+!
+(reader addMethod: 'accessing')
+!
 description
 	messageText isNil ifTrue: [^self class name].
 	^messageText
@@ -63,6 +68,12 @@ isException
 isExceptionBuilder
 	^true
 !
+(reader addMethod: 'actions')
+!
+isNested
+	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'isNested')>
+	
+!
 (reader addMethod: 'testing')
 !
 isResumable
@@ -83,6 +94,11 @@ messageText
 messageText: anObject
 	messageText := anObject
 !
+(reader addMethod: 'actions')
+!
+outer
+	
+!
 (reader addMethod: 'accessing')
 !
 parameter
@@ -100,10 +116,54 @@ raise
 	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'raise')>
 	
 !
-(reader addMethod: 'gravel')
+(reader addMethod: 'actions')
+!
+raiseResumable
+	^self raise
+!
+(reader addMethod: 'actions')
+!
+resignalAs: replacementException
+	replacementException initialHandler: initialHandler.
+	^replacementException signal
+!
+(reader addMethod: 'actions')
 !
 resume
-	^resume == true
+	self resume: self defaultResumeValue
+!
+(reader addMethod: 'actions')
+!
+resume: aValue
+	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'resume_')>
+	
+!
+(reader addMethod: 'accessing')
+!
+resumeMarker
+	^resumeMarker
+!
+(reader addMethod: 'accessing')
+!
+resumeMarker: anObject
+	resumeMarker := anObject
+!
+(reader addMethod: 'actions')
+!
+retry
+	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'retry')>
+	
+!
+(reader addMethod: 'actions')
+!
+retryUsing: alternativeBlock
+	<primitive: #('st.gravel.support.jvm.ExceptionExtensions' 'retryUsing_')>
+	
+!
+(reader addMethod: 'actions')
+!
+return
+	^self return: self defaultReturnValue
 !
 (reader addMethod: 'actions')
 !
@@ -140,6 +200,11 @@ handles: aSignalledException
 !
 raise
 	^self new raise
+!
+(reader addClassMethod: 'gravel')
+!
+raiseResumable
+	^self new raiseResumable
 !
 (reader addClassMethod: 'gravel')
 !
