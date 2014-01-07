@@ -280,6 +280,22 @@ public class IntegerExtensions {
 		return Integer.valueOf((int) result);
 	}
 
+	public static Number raisedFromLargeInteger_(int receiver, BigInteger argument) {
+		return objectFromBigInteger(argument.pow(receiver));
+	}
+
+	public static double raisedFromFloat_(int receiver, float argument) {
+		return Math.pow(argument, receiver);
+	}
+
+	public static double raisedFromDouble_(int receiver, double argument) {
+		return Math.pow(argument, receiver);
+	}
+
+	public static Number raisedFromSmallInteger_(int receiver, int argument) {
+		return raisedFromLargeInteger_(receiver, BigInteger.valueOf(argument));
+	}
+
 	public static Number remFromLargeInteger_(int receiver, BigInteger argument) {
 		return objectFromBigInteger(argument.remainder(BigInteger
 				.valueOf(receiver)));

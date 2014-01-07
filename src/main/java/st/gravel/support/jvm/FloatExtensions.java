@@ -82,7 +82,7 @@ public class FloatExtensions {
 	public static float naN() {
 		return Float.NaN;
 	}
-	
+
 	public static float negativeInfinity() {
 		return Float.NEGATIVE_INFINITY;
 	}
@@ -90,9 +90,7 @@ public class FloatExtensions {
 	public static float positiveInfinity() {
 		return Float.POSITIVE_INFINITY;
 	}
-	
-	
-	
+
 	public static int precision() {
 		return 32;
 	}
@@ -106,11 +104,11 @@ public class FloatExtensions {
 	public static double productFromDouble_(float receiver, double argument) {
 		return argument * receiver;
 	}
-
+	
 	public static float productFromFloat_(float receiver, float argument) {
 		return argument * receiver;
 	}
-
+	
 	public static float productFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return argument.floatValue() * receiver;
@@ -120,14 +118,14 @@ public class FloatExtensions {
 		return argument * receiver;
 	}
 
-	public static float quotientFromFloat_(float receiver, float argument) {
-		return argument / receiver;
-	}
-	
 	public static double quotientFromDouble_(float receiver, double argument) {
 		return argument / receiver;
 	}
-	
+
+	public static float quotientFromFloat_(float receiver, float argument) {
+		return argument / receiver;
+	}
+
 	public static float quotientFromLargeInteger_(float receiver,
 			BigInteger argument) {
 		return argument.floatValue() / receiver;
@@ -136,7 +134,7 @@ public class FloatExtensions {
 	public static float quotientFromSmallInteger_(float receiver, int argument) {
 		return argument / receiver;
 	}
-
+	
 	public static Number rounded(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.HALF_UP);
 	}
@@ -146,6 +144,10 @@ public class FloatExtensions {
 		BigDecimal bigDecimal = new BigDecimal(receiver);
 		BigDecimal rounded = bigDecimal.setScale(0, roundingMode);
 		return IntegerExtensions.objectFromBigInteger(rounded.toBigInteger());
+	}
+	
+	public static int exponent(float receiver) {
+		return StrictMath.getExponent(receiver);
 	}
 
 	public static float sqrt(float receiver) {
@@ -159,15 +161,15 @@ public class FloatExtensions {
 	public static float sumFromFloat_(float receiver, float argument) {
 		return argument + receiver;
 	}
-
+	
 	public static float sumFromLargeInteger_(float receiver, BigInteger argument) {
 		return argument.floatValue() + receiver;
 	}
-
+	
 	public static float sumFromSmallInteger_(float receiver, int argument) {
 		return argument + receiver;
 	}
-
+	
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
 	}
