@@ -25,6 +25,14 @@ abstract public class LimitedPrecisionRealLiteralNode extends NumberLiteralNode 
 			throw new RuntimeException("LimitedPrecisionRealLiteralNode is an abstract class");
 		}
 
+		public Character exponentCharacter() {
+			throw new RuntimeException("subclassResponsibility");
+		}
+
+		public boolean exponentCharacterIsMandatory() {
+			throw new RuntimeException("subclassResponsibility");
+		}
+
 		public LimitedPrecisionRealLiteralNode integer_fractionString_exponent_(final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
 			final StringBuilder _wstr;
 			_wstr = st.gravel.support.jvm.WriteStreamFactory.on_(new String());
@@ -33,18 +41,13 @@ abstract public class LimitedPrecisionRealLiteralNode extends NumberLiteralNode 
 				_wstr.append('.');
 				_wstr.append(_fractionString);
 			}
-			if (_exp != null) {
-				_wstr.append('e');
-				_wstr.append(_exp.toString());
-			}
-			if (this.postfixCharacter() != null) {
-				_wstr.append(LimitedPrecisionRealLiteralNode_Factory.this.postfixCharacter());
+			if (!((_exp == null) && (!this.exponentCharacterIsMandatory()))) {
+				_wstr.append(LimitedPrecisionRealLiteralNode_Factory.this.exponentCharacter());
+				if (!((_exp == null) || st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp))) {
+					_wstr.append(_exp.toString());
+				}
 			}
 			return ((LimitedPrecisionRealLiteralNode) this.valueString_(_wstr.toString()));
-		}
-
-		public Character postfixCharacter() {
-			return null;
 		}
 
 		public LimitedPrecisionRealLiteralNode valueString_(final String _aString) {
@@ -54,10 +57,6 @@ abstract public class LimitedPrecisionRealLiteralNode extends NumberLiteralNode 
 
 	static public LimitedPrecisionRealLiteralNode _integer_fractionString_exponent_(Object receiver, final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
 		return factory.integer_fractionString_exponent_(_anInteger, _fractionString, _exp);
-	}
-
-	static public Character _postfixCharacter(Object receiver) {
-		return factory.postfixCharacter();
 	}
 
 	static public LimitedPrecisionRealLiteralNode _valueString_(Object receiver, final String _aString) {

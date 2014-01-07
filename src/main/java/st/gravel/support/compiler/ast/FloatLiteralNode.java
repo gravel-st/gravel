@@ -26,6 +26,14 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 			return newInstance;
 		}
 
+		public Character exponentCharacter() {
+			return 'e';
+		}
+
+		public boolean exponentCharacterIsMandatory() {
+			return false;
+		}
+
 		@Override
 		public FloatLiteralNode integer_fractionString_exponent_(final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
 			final StringBuilder _wstr;
@@ -35,12 +43,11 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 				_wstr.append('.');
 				_wstr.append(_fractionString);
 			}
-			if (_exp != null) {
-				_wstr.append('e');
-				_wstr.append(_exp.toString());
-			}
-			if (this.postfixCharacter() != null) {
-				_wstr.append(FloatLiteralNode_Factory.this.postfixCharacter());
+			if (!((_exp == null) && (!this.exponentCharacterIsMandatory()))) {
+				_wstr.append(FloatLiteralNode_Factory.this.exponentCharacter());
+				if (!((_exp == null) || st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp))) {
+					_wstr.append(_exp.toString());
+				}
 			}
 			return ((FloatLiteralNode) this.valueString_(_wstr.toString()));
 		}
@@ -49,6 +56,14 @@ public class FloatLiteralNode extends LimitedPrecisionRealLiteralNode implements
 		public FloatLiteralNode valueString_(final String _aString) {
 			return ((FloatLiteralNode) this.basicNew().initializeValueString_(_aString));
 		}
+	}
+
+	static public Character _exponentCharacter(Object receiver) {
+		return factory.exponentCharacter();
+	}
+
+	static public boolean _exponentCharacterIsMandatory(Object receiver) {
+		return factory.exponentCharacterIsMandatory();
 	}
 
 	static public FloatLiteralNode _integer_fractionString_exponent_(Object receiver, final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {

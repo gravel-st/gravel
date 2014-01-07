@@ -23,6 +23,10 @@ public class LargeIntegerExtensions {
 			int operand) {
 		return operand & receiver.intValue();
 	}
+	
+	public static boolean isZero(BigInteger receiver) {
+		return receiver == BigInteger.ZERO;
+	}
 
 	public static Number bitAndFromSmallInteger_(BigInteger receiver,
 			int operand) {

@@ -702,14 +702,15 @@ public class Parser extends Object implements Cloneable {
 				}
 				_scale = java.lang.Math.max(_scale, _fractionString.length());
 				return FixedPointLiteralNode.factory.integer_fractionString_scale_(_value, _fractionString, _scale);
+			} else {
+				if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 'd')) {
+					final int _exSign;
+					final java.math.BigInteger _exponent;
+					_exSign = st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, '-') ? -1 : 1;
+					_exponent = st.gravel.support.jvm.LargeIntegerExtensions.multiply_(Parser.this.readInteger_(10), _exSign);
+					return DoubleLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, _exponent);
+				}
 			}
-		}
-		if (st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, 'd')) {
-			final int _exSign;
-			final java.math.BigInteger _exponent;
-			_exSign = st.gravel.support.jvm.ReadStreamExtensions.peekFor_(_stream, '-') ? -1 : 1;
-			_exponent = st.gravel.support.jvm.LargeIntegerExtensions.multiply_(Parser.this.readInteger_(10), _exSign);
-			return DoubleLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, _exponent);
 		}
 		return _fractionString == null ? IntegerLiteralNode.factory.integer_(_value) : FloatLiteralNode.factory.integer_fractionString_exponent_(_value, _fractionString, null);
 	}

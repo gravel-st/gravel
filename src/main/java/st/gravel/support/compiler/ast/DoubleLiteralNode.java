@@ -26,6 +26,14 @@ public class DoubleLiteralNode extends LimitedPrecisionRealLiteralNode implement
 			return newInstance;
 		}
 
+		public Character exponentCharacter() {
+			return 'd';
+		}
+
+		public boolean exponentCharacterIsMandatory() {
+			return true;
+		}
+
 		@Override
 		public DoubleLiteralNode integer_fractionString_exponent_(final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
 			final StringBuilder _wstr;
@@ -35,18 +43,13 @@ public class DoubleLiteralNode extends LimitedPrecisionRealLiteralNode implement
 				_wstr.append('.');
 				_wstr.append(_fractionString);
 			}
-			if (_exp != null) {
-				_wstr.append('e');
-				_wstr.append(_exp.toString());
-			}
-			if (this.postfixCharacter() != null) {
-				_wstr.append(DoubleLiteralNode_Factory.this.postfixCharacter());
+			if (!((_exp == null) && (!this.exponentCharacterIsMandatory()))) {
+				_wstr.append(DoubleLiteralNode_Factory.this.exponentCharacter());
+				if (!((_exp == null) || st.gravel.support.jvm.LargeIntegerExtensions.isZero(_exp))) {
+					_wstr.append(_exp.toString());
+				}
 			}
 			return ((DoubleLiteralNode) this.valueString_(_wstr.toString()));
-		}
-
-		public Character postfixCharacter() {
-			return 'd';
 		}
 
 		@Override
@@ -55,12 +58,16 @@ public class DoubleLiteralNode extends LimitedPrecisionRealLiteralNode implement
 		}
 	}
 
-	static public DoubleLiteralNode _integer_fractionString_exponent_(Object receiver, final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
-		return factory.integer_fractionString_exponent_(_anInteger, _fractionString, _exp);
+	static public Character _exponentCharacter(Object receiver) {
+		return factory.exponentCharacter();
 	}
 
-	static public Character _postfixCharacter(Object receiver) {
-		return factory.postfixCharacter();
+	static public boolean _exponentCharacterIsMandatory(Object receiver) {
+		return factory.exponentCharacterIsMandatory();
+	}
+
+	static public DoubleLiteralNode _integer_fractionString_exponent_(Object receiver, final java.math.BigInteger _anInteger, final String _fractionString, final java.math.BigInteger _exp) {
+		return factory.integer_fractionString_exponent_(_anInteger, _fractionString, _exp);
 	}
 
 	static public DoubleLiteralNode _valueString_(Object receiver, final String _aString) {
