@@ -17,10 +17,6 @@ public class DoubleExtensions {
 		return Math.atan(receiver);
 	}
 	
-	public static int exponent(double receiver) {
-		return StrictMath.getExponent(receiver);
-	}
-	
 	public static float asFloat(double receiver) {
 		return (float) receiver;
 	}
@@ -36,11 +32,11 @@ public class DoubleExtensions {
 	public static double degreesToRadians(double receiver) {
 		return Math.toRadians(receiver);
 	}
-
+	
 	public static double differenceFromDouble_(double receiver, double argument) {
 		return argument - receiver;
 	}
-	
+
 	public static double differenceFromFloat_(double receiver, float argument) {
 		return argument - receiver;
 	}
@@ -68,6 +64,10 @@ public class DoubleExtensions {
 	
 	public static double exp(double receiver) {
 		return Math.exp(receiver);
+	}
+	
+	public static int exponent(double receiver) {
+		return StrictMath.getExponent(receiver);
 	}
 
 	public static Number floor(double receiver) {
@@ -166,9 +166,6 @@ public class DoubleExtensions {
 		return argument / receiver;
 	}
 	
-	
-	
-	
 	public static double quotientFromFloat_(double receiver, float argument) {
 		return argument / receiver;
 	}
@@ -229,9 +226,4 @@ public class DoubleExtensions {
 	public static Number truncated(double receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
 	}
-	
-	public static double raisedToDouble_(double receiver, double operand) {
-		return Math.pow(receiver, operand);
-	}
-
 }

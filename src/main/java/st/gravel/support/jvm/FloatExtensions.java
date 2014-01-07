@@ -79,24 +79,6 @@ public class FloatExtensions {
 		return (float)Math.log(receiver);
 	}
 
-	public static double moduloQuotientFromDouble_(float receiver, double operand) {
-		return operand % receiver;
-	}
-	
-	public static float moduloQuotientFromFloat_(float receiver, float operand) {
-		return operand % receiver;
-	}
-
-	public static float moduloQuotientFromLargeInteger_(float receiver, BigInteger operand) {
-		return operand.floatValue() % receiver;
-	}
-	
-	
-	
-	public static float moduloQuotientFromSmallInteger_(float receiver, int operand) {
-		return operand % receiver;
-	}
-
 	public static float naN() {
 		return Float.NaN;
 	}
@@ -190,9 +172,5 @@ public class FloatExtensions {
 	
 	public static Number truncated(float receiver) {
 		return roundToRoundingMode(receiver, RoundingMode.DOWN);
-	}
-	
-	public static double raisedToFloat_(float receiver, float operand) {
-		return Math.pow(receiver, operand);
 	}
 }
