@@ -45,6 +45,7 @@ import st.gravel.support.compiler.jvm.DynamicFieldRead;
 import st.gravel.support.compiler.jvm.DynamicFieldWrite;
 import st.gravel.support.compiler.jvm.DynamicGlobalRead;
 import st.gravel.support.compiler.jvm.DynamicGlobalWrite;
+import st.gravel.support.compiler.jvm.DynamicLiteralBlockMessageSend;
 import st.gravel.support.compiler.jvm.DynamicMessageSend;
 import st.gravel.support.compiler.jvm.DynamicSend;
 import st.gravel.support.compiler.jvm.DynamicSuperSend;
@@ -272,6 +273,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 	}
 
 	public X visitDynamicGlobalWrite_(final DynamicGlobalWrite _anObject) {
+		return this.visitJVMInstruction_(_anObject);
+	}
+
+	public X visitDynamicLiteralBlockMessageSend_(final DynamicLiteralBlockMessageSend _anObject) {
 		return this.visitJVMInstruction_(_anObject);
 	}
 

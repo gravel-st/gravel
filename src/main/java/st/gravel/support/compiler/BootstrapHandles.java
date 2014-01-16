@@ -17,6 +17,11 @@ public class BootstrapHandles {
 					.methodType(CallSite.class, MethodHandles.Lookup.class,
 							String.class, MethodType.class)
 					.toMethodDescriptorString());
+	public static final Handle literalBlockSendBootstrap = new Handle(Opcodes.H_INVOKESTATIC,
+			Type.getInternalName(MethodLinker.class), "literalBlockSendBootstrap", MethodType
+					.methodType(CallSite.class, MethodHandles.Lookup.class,
+							String.class, MethodType.class, String.class, String.class)
+					.toMethodDescriptorString());
 	public static final Handle superBootstrap = new Handle(
 			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
 			"superBootstrap", MethodType.methodType(CallSite.class,

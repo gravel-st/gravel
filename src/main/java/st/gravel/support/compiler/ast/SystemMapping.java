@@ -258,6 +258,9 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		for (final JVMClass _jvmClass : _jvmClasses) {
 			_last[0] = _compilerTools.writeClass_(_jvmClass);
 		}
+		for (final JVMClass _jvmClass : _jvmClasses) {
+			_compilerTools.runAstInit_(_jvmClass);
+		}
 		return _last[0];
 	}
 

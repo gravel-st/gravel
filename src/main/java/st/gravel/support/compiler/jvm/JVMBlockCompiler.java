@@ -15,6 +15,7 @@ import st.gravel.support.compiler.jvm.JVMMethod;
 import st.gravel.support.compiler.jvm.JVMField;
 import st.gravel.support.compiler.jvm.JVMMethodCompiler;
 import st.gravel.support.compiler.jvm.JVMVariable;
+import st.gravel.support.compiler.jvm.BlockSendArgument;
 import java.util.List;
 import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.Load;
@@ -73,7 +74,7 @@ public class JVMBlockCompiler extends Object implements Cloneable {
 		_methodCompiler = JVMMethodCompiler.factory.parent_(_parent);
 		_methodCompiler.isStatic_(false);
 		_m = _methodCompiler.buildBlock_copiedVariables_blockType_(_block.blockNode(), _fields, _block.ownerType());
-		_jvmClass = JVMClass.factory.type_superType_fields_methods_(_block.ownerType(), this.superType(), _fields, st.gravel.support.jvm.ArrayFactory.with_with_(_m, this.createInit()));
+		_jvmClass = JVMClass.factory.type_superType_fields_methods_astConstants_(_block.ownerType(), this.superType(), _fields, st.gravel.support.jvm.ArrayFactory.with_with_(_m, this.createInit()), new BlockSendArgument[] {});
 		if (_block.blockNode().sourcePosition() != null) {
 			_jvmClass.source_(_block.blockNode().sourcePosition().sourceFile().name());
 		}

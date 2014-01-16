@@ -2,6 +2,7 @@ package st.gravel.support.jvm.runtime;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -329,5 +330,33 @@ public final class JavaSystemMappingCompilerTools extends
 			jvmClasses.put(key, current);
 		}
 		return current.javaClass;
+	}
+
+	@Override
+	public SystemMappingCompilerTools runAstInit_(JVMClass jvmClass) {
+		JVMDefinedObjectType key = jvmClass.type();
+		CompiledClass current = jvmClasses.get(key);
+
+		Object[] astConstants = jvmClass.astConstants();
+		if (astConstants.length == 0)
+			return this;
+		MethodType type = MethodType.genericMethodType(astConstants.length)
+				.changeReturnType(void.class);
+		MethodHandle findStatic;
+		try {
+			findStatic = MethodHandles.lookup().findStatic(current.javaClass,
+					"_astinit", type);
+			findStatic.invokeWithArguments(astConstants);
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
+		return this;
+	}
+
+	@Override
+	public Class classForName_(String _aString) {
+		CompiledClass compiledClass = jvmClasses.get(JVMDefinedObjectType.factory.dottedClassName_(_aString));
+		if (compiledClass != null) return compiledClass.javaClass;
+		throw new RuntimeException("niy");
 	}
 }

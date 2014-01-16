@@ -10,7 +10,6 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.DynamicSend;
 import st.gravel.support.compiler.jvm.DynamicSend.DynamicSend_Factory;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
-import st.gravel.support.compiler.jvm.JVMMethodType;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class DynamicSuperSend extends DynamicSend implements Cloneable {
@@ -55,22 +54,12 @@ public class DynamicSuperSend extends DynamicSend implements Cloneable {
 		return factory;
 	}
 
-	@Override
-	public String functionName() {
-		return _functionName;
-	}
-
 	public DynamicSuperSend initializeFunctionName_numArgs_superReference_(final String _aString, final int _anInteger, final String _aString2) {
 		_functionName = _aString;
 		_numArgs = _anInteger;
 		_superReference = _aString2;
 		this.initialize();
 		return this;
-	}
-
-	@Override
-	public int numArgs() {
-		return _numArgs;
 	}
 
 	@Override
@@ -97,10 +86,6 @@ public class DynamicSuperSend extends DynamicSend implements Cloneable {
 		return this;
 	}
 
-	public JVMMethodType signature() {
-		return JVMMethodType.factory.dynamic_((_numArgs + 1));
-	}
-
 	@Override
 	public DynamicSuperSend sourceOn_(final StringBuilder _aStream) {
 		_aStream.append(_functionName);
@@ -109,6 +94,13 @@ public class DynamicSuperSend extends DynamicSend implements Cloneable {
 
 	public String superReference() {
 		return _superReference;
+	}
+
+	@Override
+	public DynamicSuperSend withReceiverType_argumentTypes_(final JVMType _aJVMObjectType, final JVMType[] _anArray) {
+		DynamicSuperSend _temp1 = this.copy();
+		_temp1.pvtSetReceiverType_(_aJVMObjectType);
+		return _temp1.pvtSetArgumentTypes_(_anArray);
 	}
 
 	@Override

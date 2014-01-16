@@ -10,10 +10,6 @@ import st.gravel.support.compiler.jvm.JVMType;
 
 public class ArrayExtensions {
 	
-	public static <E> E[] copy(E[] receiver) {
-		return receiver.clone();
-	}
-
 	public static <E> boolean allSatisfy_(E[] receiver, Predicate1<E> predicate) {
 		for (E element : receiver) {
 			if (!predicate.value_(element))
@@ -51,6 +47,10 @@ public class ArrayExtensions {
 			result[i] = aBlock.value_(receiver[i]);
 		}
 		return result;
+	}
+
+	public static <E> E[] copy(E[] receiver) {
+		return receiver.clone();
 	}
 
 	public static <E> E[] copyAt_put_(E[] receiver, int index, E value) {
@@ -245,6 +245,16 @@ public class ArrayExtensions {
 		int length = (stop - start) + 1;
 		System.arraycopy(replacement, repStart - 1, receiver, start - 1, length);
 		return receiver;
+	}
+
+	public static <E> E[] reverse(E[] receiver) {
+		
+		E[] result = receiver.clone();
+		int length = receiver.length;
+		for (int i = 0; i < length; i++) {
+			result[i] = receiver[(length-i)-1];
+		}
+		return result;
 	}
 
 	public static <E> E[] select_(E[] receiver, Predicate1<E> predicate) {

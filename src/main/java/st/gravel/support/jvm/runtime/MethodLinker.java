@@ -11,6 +11,10 @@ import java.lang.reflect.Constructor;
 import st.gravel.core.Symbol;
 import st.gravel.support.compiler.ast.AbsoluteReference;
 import st.gravel.support.compiler.ast.Reference;
+import st.gravel.support.compiler.jvm.BlockSendArgument;
+import st.gravel.support.jvm.ArrayExtensions;
+import st.gravel.support.jvm.Block1;
+import st.gravel.support.jvm.StringExtensions;
 
 
 public class MethodLinker {
@@ -19,6 +23,27 @@ public class MethodLinker {
 			MethodType type) throws Throwable {
 		BaseCallSite site = SmalltalkCallSite.newInstance(lookup, type,
 				selector);
+		return site;
+	}
+	
+	public static CallSite literalBlockSendBootstrap(final Lookup lookup, String selector,
+			MethodType type, String ownerType, String astConstantNames) throws Throwable {
+		
+		final Class<?> ownerClass = ImageBootstrapper.systemMapping.compilerTools().classForName_(ownerType);
+		BlockSendArgument[] astConstants = ArrayExtensions.collect_(StringExtensions.tokensBasedOn_(astConstantNames, ','), new Block1<BlockSendArgument, String>() {
+			
+			@Override
+			public BlockSendArgument value_(String constantName)  {
+				if (constantName.length()==0) return null;
+				try {
+					return (BlockSendArgument) lookup.findStaticGetter(ownerClass, constantName, Object.class).invoke();
+				} catch (Throwable e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
+		BaseCallSite site = LiteralBlockSendCallSite.newInstance(lookup, type, selector, astConstants);
 		return site;
 	}
 

@@ -19,6 +19,7 @@ import st.gravel.support.compiler.jvm.JVMMethod;
 import st.gravel.support.compiler.jvm.JVMField;
 import st.gravel.support.compiler.jvm.JVMClass;
 import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
+import st.gravel.support.compiler.jvm.BlockSendArgument;
 import st.gravel.support.compiler.jvm.JVMMethodType;
 import st.gravel.support.compiler.jvm.JVMInstruction;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 import st.gravel.support.compiler.jvm.DynamicSuperSend;
 import st.gravel.support.compiler.jvm.AReturn;
 import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
+import st.gravel.support.compiler.jvm.JVMType;
+import st.gravel.support.compiler.jvm.ALoad;
+import st.gravel.support.compiler.jvm.PutStatic;
+import st.gravel.support.compiler.jvm.Return;
 import st.gravel.support.compiler.jvm.JVMBlockCompiler;
 import java.util.Set;
 import java.util.HashSet;
@@ -34,9 +39,7 @@ import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
-import st.gravel.support.compiler.jvm.Return;
 import st.gravel.support.compiler.jvm.InvokeSpecial;
-import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMMethodCompiler;
 import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.BlockNode;
@@ -47,6 +50,8 @@ import st.gravel.support.compiler.ast.SourcePosition;
 public class JVMClassCompiler extends Object implements Cloneable {
 
 	public static JVMClassCompiler_Factory factory = new JVMClassCompiler_Factory();
+
+	List<BlockSendArgument> _astConstants;
 
 	ClassDescriptionNode _classDescriptionNode;
 
@@ -95,6 +100,13 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		return factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(_aClassDescriptionNode, _aSystemNode, _aSystemMappingUpdater, _anObject);
 	}
 
+	public String addASTConstant_(final BlockSendArgument _aBlockSendArgument) {
+		final BlockSendArgument _bsa;
+		_bsa = _aBlockSendArgument.withName_(this.newConstantName());
+		_astConstants.add(_bsa);
+		return _bsa.name();
+	}
+
 	public JVMClassCompiler addInvokeSuper_functionName_numArgs_superReference_superSig_(final String _name, final String _functionName, final int _numArgs, final String _superReference, final JVMMethodType _superSig) {
 		final List<JVMInstruction> _instructions;
 		_instructions = new java.util.ArrayList();
@@ -136,6 +148,26 @@ public class JVMClassCompiler extends Object implements Cloneable {
 
 	public ClassDescriptionNode classDescriptionNode() {
 		return _classDescriptionNode;
+	}
+
+	public JVMClassCompiler compileAstInit() {
+		final List<JVMInstruction>[] _instructions;
+		final int[] _i;
+		_i = new int[1];
+		_instructions = new List[1];
+		_instructions[0] = new java.util.ArrayList();
+		_i[0] = 0;
+		for (final BlockSendArgument _each : _astConstants) {
+			final JVMType _type;
+			_type = JVMDynamicObjectType.factory.basicNew();
+			_instructions[0].add(ALoad.factory.index_type_(_i[0], _type));
+			_instructions[0].add(PutStatic.factory.ownerType_name_type_(_ownerType, _each.name(), _type));
+			_i[0] = ((_i[0]) + 1);
+			_fields.add(JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _each.name(), _type, true));
+		}
+		_instructions[0].add(Return.factory.basicNew());
+		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_("_astinit", new JVMLocalDeclaration[] {}, _instructions[0].toArray(new JVMInstruction[_instructions[0].size()]), true, JVMMethodType.factory.voidDynamic_(_astConstants.size())));
+		return this;
 	}
 
 	public JVMClass compileBlockNoAdd_(final BlockInnerClass _aBlockInnerClass) {
@@ -292,7 +324,8 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		this.compileClinit();
 		this.compileInit();
 		this.compileClone();
-		_aClass = JVMClass.factory.type_superType_fields_methods_(_ownerType, _superType, _fields.toArray(new JVMField[_fields.size()]), _jvmMethods.toArray(new JVMMethod[_jvmMethods.size()]));
+		this.compileAstInit();
+		_aClass = JVMClass.factory.type_superType_fields_methods_astConstants_(_ownerType, _superType, _fields.toArray(new JVMField[_fields.size()]), _jvmMethods.toArray(new JVMMethod[_jvmMethods.size()]), _astConstants.toArray(new BlockSendArgument[_astConstants.size()]));
 		if (!((_classDescriptionNode == null) || (_classDescriptionNode.findSourceFile() == null))) {
 			_aClass.source_(_classDescriptionNode.findSourceFile().name());
 		}
@@ -334,6 +367,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		_innerclasses = new java.util.ArrayList();
 		_constantCount = 0;
 		_constants = new java.util.ArrayList();
+		_astConstants = new java.util.ArrayList();
 		_selectorConverter = SelectorConverter.factory.basicNew();
 		_jvmMethods = new java.util.ArrayList();
 		_fields = new java.util.ArrayList();

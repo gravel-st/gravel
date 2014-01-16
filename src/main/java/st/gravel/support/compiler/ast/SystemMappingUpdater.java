@@ -16,8 +16,8 @@ import java.util.List;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.jvm.JVMClassCompiler;
-import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
 import st.gravel.support.compiler.jvm.JVMClass;
+import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
 import st.gravel.support.compiler.ast.IdentityClassPartMapping;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.ClassMapping;
@@ -139,6 +139,7 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 	public Class compileClass_extensionPostfix_isStatic_identityClass_(final ClassDescriptionNode _aClassDescriptionNode, final String _extensionPostfix, final boolean _isStatic, final Class _identityClass) {
 		final JVMClassCompiler _compiler;
 		final Class _extensionClass;
+		final JVMClass _jvmClass;
 		_compiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(_aClassDescriptionNode, _systemMapping.systemNode(), this, _isStatic);
 		if (_extensionPostfix != null) {
 			_compiler.extensionPostfix_(_extensionPostfix);
@@ -146,12 +147,21 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		if (_identityClass != null) {
 			_compiler.selfType_(((JVMNonPrimitiveType) _compilerTools.jvmTypeForClass_(_identityClass)));
 		}
-		_extensionClass = _compilerTools.writeClass_(_compiler.compileClassNode());
+		_jvmClass = _compiler.compileClassNode();
+		_extensionClass = _compilerTools.writeClass_(_jvmClass);
 		_compiler.extraClassesDo_(new st.gravel.support.jvm.Block1<Object, JVMClass>() {
 
 			@Override
 			public Object value_(final JVMClass _each) {
 				return _compilerTools.writeClass_(_each);
+			}
+		});
+		_compilerTools.runAstInit_(_jvmClass);
+		_compiler.extraClassesDo_(new st.gravel.support.jvm.Block1<Object, JVMClass>() {
+
+			@Override
+			public Object value_(final JVMClass _each) {
+				return _compilerTools.runAstInit_(_each);
 			}
 		});
 		return _extensionClass;

@@ -12,6 +12,7 @@ import st.gravel.support.compiler.jvm.JVMInstruction.JVMInstruction_Factory;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
 import st.gravel.support.compiler.jvm.JVMStack;
+import st.gravel.support.compiler.jvm.JVMMethodType;
 import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 
 public class DynamicSend extends JVMInstruction implements Cloneable {
@@ -102,6 +103,10 @@ public class DynamicSend extends JVMInstruction implements Cloneable {
 	public DynamicSend pvtSetReceiverType_(final JVMType _aJVMObjectType) {
 		_receiverType = _aJVMObjectType;
 		return this;
+	}
+
+	public JVMMethodType signature() {
+		return JVMMethodType.factory.returnType_arguments_(this.type(), st.gravel.support.jvm.ArrayExtensions.copyWithFirst_(_argumentTypes, _receiverType));
 	}
 
 	@Override

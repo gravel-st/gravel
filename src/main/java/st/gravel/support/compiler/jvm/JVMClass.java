@@ -10,12 +10,15 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMNode;
 import st.gravel.support.compiler.jvm.JVMNode.JVMNode_Factory;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
-import st.gravel.support.compiler.jvm.JVMField;
 import st.gravel.support.compiler.jvm.JVMMethod;
+import st.gravel.support.compiler.jvm.JVMField;
+import st.gravel.support.compiler.jvm.BlockSendArgument;
 
 public class JVMClass extends JVMNode implements Cloneable {
 
 	public static JVMClass_Factory factory = new JVMClass_Factory();
+
+	BlockSendArgument[] _astConstants;
 
 	JVMField[] _fields;
 
@@ -35,29 +38,25 @@ public class JVMClass extends JVMNode implements Cloneable {
 			return newInstance;
 		}
 
-		public JVMClass type_(final JVMDefinedObjectType _aJVMDefinedObjectType) {
-			return this.type_superType_fields_methods_(_aJVMDefinedObjectType, JVMDefinedObjectType.factory.object(), new JVMField[] {}, new JVMMethod[] {});
-		}
-
 		public JVMClass type_methods_(final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMMethod[] _methods) {
-			return this.type_superType_fields_methods_(_aJVMDefinedObjectType, JVMDefinedObjectType.factory.object(), new JVMField[] {}, _methods);
+			return this.type_superType_fields_methods_astConstants_(_aJVMDefinedObjectType, JVMDefinedObjectType.factory.object(), new JVMField[] {}, _methods, new BlockSendArgument[] {});
 		}
 
-		public JVMClass type_superType_fields_methods_(final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMDefinedObjectType _aJVMDefinedObjectType2, final JVMField[] _anArray, final JVMMethod[] _anArray2) {
-			return this.basicNew().initializeType_superType_fields_methods_(_aJVMDefinedObjectType, _aJVMDefinedObjectType2, _anArray, _anArray2);
+		public JVMClass type_superType_fields_methods_astConstants_(final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMDefinedObjectType _aJVMDefinedObjectType2, final JVMField[] _anArray, final JVMMethod[] _anArray2, final BlockSendArgument[] _astConstants) {
+			return this.basicNew().initializeType_superType_fields_methods_astConstants_(_aJVMDefinedObjectType, _aJVMDefinedObjectType2, _anArray, _anArray2, _astConstants);
 		}
-	}
-
-	static public JVMClass _type_(Object receiver, final JVMDefinedObjectType _aJVMDefinedObjectType) {
-		return factory.type_(_aJVMDefinedObjectType);
 	}
 
 	static public JVMClass _type_methods_(Object receiver, final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMMethod[] _methods) {
 		return factory.type_methods_(_aJVMDefinedObjectType, _methods);
 	}
 
-	static public JVMClass _type_superType_fields_methods_(Object receiver, final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMDefinedObjectType _aJVMDefinedObjectType2, final JVMField[] _anArray, final JVMMethod[] _anArray2) {
-		return factory.type_superType_fields_methods_(_aJVMDefinedObjectType, _aJVMDefinedObjectType2, _anArray, _anArray2);
+	static public JVMClass _type_superType_fields_methods_astConstants_(Object receiver, final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMDefinedObjectType _aJVMDefinedObjectType2, final JVMField[] _anArray, final JVMMethod[] _anArray2, final BlockSendArgument[] _astConstants) {
+		return factory.type_superType_fields_methods_astConstants_(_aJVMDefinedObjectType, _aJVMDefinedObjectType2, _anArray, _anArray2, _astConstants);
+	}
+
+	public BlockSendArgument[] astConstants() {
+		return _astConstants;
 	}
 
 	public JVMClass copy() {
@@ -88,11 +87,12 @@ public class JVMClass extends JVMNode implements Cloneable {
 		return _fields;
 	}
 
-	public JVMClass initializeType_superType_fields_methods_(final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMDefinedObjectType _aJVMDefinedObjectType2, final JVMField[] _anArray, final JVMMethod[] _anArray2) {
+	public JVMClass initializeType_superType_fields_methods_astConstants_(final JVMDefinedObjectType _aJVMDefinedObjectType, final JVMDefinedObjectType _aJVMDefinedObjectType2, final JVMField[] _anArray, final JVMMethod[] _anArray2, final BlockSendArgument[] _anObject) {
 		_type = _aJVMDefinedObjectType;
 		_superType = _aJVMDefinedObjectType2;
 		_fields = _anArray;
 		_methods = _anArray2;
+		_astConstants = _anObject;
 		this.initialize();
 		return this;
 	}

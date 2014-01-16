@@ -39,6 +39,7 @@ import st.gravel.support.compiler.jvm.DynamicFieldRead;
 import st.gravel.support.compiler.jvm.DynamicFieldWrite;
 import st.gravel.support.compiler.jvm.DynamicGlobalRead;
 import st.gravel.support.compiler.jvm.DynamicGlobalWrite;
+import st.gravel.support.compiler.jvm.DynamicLiteralBlockMessageSend;
 import st.gravel.support.compiler.jvm.DynamicMessageSend;
 import st.gravel.support.compiler.jvm.DynamicSuperSend;
 import st.gravel.support.compiler.jvm.Frame;
@@ -84,6 +85,8 @@ import st.gravel.support.compiler.jvm.WhileFalseLoop;
 import st.gravel.support.compiler.jvm.WhileGreaterThanLoop;
 import st.gravel.support.compiler.jvm.WhileLessThanLoop;
 import st.gravel.support.compiler.jvm.WhileTrueLoop;
+import st.gravel.support.jvm.ArrayExtensions;
+import st.gravel.support.jvm.Block1;
 
 public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		Opcodes {
@@ -123,6 +126,19 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		}
 	}
 
+	public void pushDouble(double value) {
+		if (value == 0.0d) {
+			mv.visitInsn(DCONST_0);
+			return;
+		}
+		if (value == 1.0d) {
+			mv.visitInsn(DCONST_1);
+			return;
+		}
+		mv.visitLdcInsn(value);
+		return;
+	}
+
 	public void pushFloat(float value) {
 		if (value == 0.0f) {
 			mv.visitInsn(FCONST_0);
@@ -134,19 +150,6 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		}
 		if (value == 2.0f) {
 			mv.visitInsn(FCONST_2);
-			return;
-		}
-		mv.visitLdcInsn(value);
-		return;
-	}
-
-	public void pushDouble(double value) {
-		if (value == 0.0d) {
-			mv.visitInsn(DCONST_0);
-			return;
-		}
-		if (value == 1.0d) {
-			mv.visitInsn(DCONST_1);
 			return;
 		}
 		mv.visitLdcInsn(value);
@@ -397,6 +400,13 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
+	public Void visitDynamicCreateInstance_(DynamicCreateInstance node) {
+		mv.visitInvokeDynamicInsn("new", node.methodType()
+				.descriptorString(), BootstrapHandles.constructorBootstrap, node.reference());
+		return null;
+	}
+
+	@Override
 	public Void visitDynamicFieldRead_(DynamicFieldRead node) {
 		mv.visitInvokeDynamicInsn(node.name(), node.methodType()
 				.descriptorString(), BootstrapHandles.fieldReadBootstrap);
@@ -428,9 +438,17 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	}
 
 	@Override
-	public Void visitDynamicCreateInstance_(DynamicCreateInstance node) {
-		mv.visitInvokeDynamicInsn("new", node.methodType()
-				.descriptorString(), BootstrapHandles.constructorBootstrap, node.reference());
+	public Void visitDynamicLiteralBlockMessageSend_(
+			DynamicLiteralBlockMessageSend node) {
+		String astConstantsString = ArrayExtensions.join_with_(node.blockSendConstants(), new Block1<String, String>() {
+					
+					@Override
+					public String value_(String arg1) {
+						return arg1 == null ? "" : arg1;
+					}
+				} , ",");
+		mv.visitInvokeDynamicInsn(node.functionName(), node.signature()
+				.descriptorString(), BootstrapHandles.literalBlockSendBootstrap, node.constantOwner().dottedClassName(), astConstantsString);
 		return null;
 	}
 
@@ -728,7 +746,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-
+	
 	@Override
 	public Void visitWhileFalseLoop_(WhileFalseLoop node) {
 		Label topLabel = new Label();
@@ -745,7 +763,7 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitLabel(endLabel);
 		return null;
 	}
-	
+
 	@Override
 	public Void visitWhileGreaterThanLoop_(WhileGreaterThanLoop node) {
 		Label testLabel = new Label();

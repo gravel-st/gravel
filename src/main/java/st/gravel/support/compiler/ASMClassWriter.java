@@ -1,6 +1,9 @@
 package st.gravel.support.compiler;
 
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -8,6 +11,7 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.util.TraceClassVisitor;
 
+import st.gravel.support.compiler.jvm.BlockSendArgument;
 import st.gravel.support.compiler.jvm.JVMClass;
 import st.gravel.support.compiler.jvm.JVMField;
 import st.gravel.support.compiler.jvm.JVMMethod;

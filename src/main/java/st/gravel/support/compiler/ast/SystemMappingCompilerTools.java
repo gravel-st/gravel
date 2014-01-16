@@ -27,6 +27,8 @@ abstract public class SystemMappingCompilerTools extends Object implements Clone
 		}
 	}
 
+	public abstract Class classForName_(final String _aString);
+
 	public SystemMappingCompilerTools copy() {
 		try {
 			SystemMappingCompilerTools _temp1 = (SystemMappingCompilerTools) this.clone();
@@ -80,6 +82,8 @@ abstract public class SystemMappingCompilerTools extends Object implements Clone
 	public abstract String referenceAsClassName_(final Reference _aReference);
 
 	public abstract SystemMappingCompilerTools resetCallsites();
+
+	public abstract SystemMappingCompilerTools runAstInit_(final JVMClass _aJVMClass);
 
 	public abstract Object valueOfSingletonHolder_(final st.gravel.support.jvm.runtime.AlmostFinalValue _holder);
 
