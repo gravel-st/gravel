@@ -109,6 +109,7 @@ import st.gravel.support.compiler.ast.BinaryMessageNode;
 import st.gravel.support.compiler.ast.IfTrueIfFalseNode;
 import st.gravel.support.compiler.jvm.IfThenElse;
 import st.gravel.support.compiler.ast.InstanceCreationNode;
+import st.gravel.support.compiler.jvm.DynamicCreateInstance;
 import st.gravel.support.compiler.ast.IntegerLiteralNode;
 import st.gravel.support.compiler.ast.IsNilNode;
 import st.gravel.support.compiler.jvm.IfObjectIsNullThenElse;
@@ -1000,11 +1001,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 
 	@Override
 	public JVMMethodCompiler visitInstanceCreationNode_(final InstanceCreationNode _node) {
-		final JVMDefinedObjectType _type;
-		_type = JVMDefinedObjectType.factory.dottedClassName_(_node.reference().toString());
-		this.emit_(NewInstance.factory.type_(_type));
-		this.emit_(Dup.factory.basicNew());
-		this.emit_(InvokeSpecial.factory.init_voidArguments_(_type, new JVMType[] {}));
+		this.emit_(DynamicCreateInstance.factory.reference_(_node.reference().toString()));
 		return this;
 	}
 

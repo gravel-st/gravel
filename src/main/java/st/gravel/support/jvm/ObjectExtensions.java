@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import st.gravel.core.Symbol;
+import st.gravel.support.compiler.ast.AbstractClassMapping;
 import st.gravel.support.compiler.ast.ClassMapping;
 import st.gravel.support.jvm.runtime.ImageBootstrapper;
 import st.gravel.support.jvm.runtime.MethodTools;
@@ -36,7 +37,7 @@ public class ObjectExtensions {
 				.classMappingForJavaClass_(receiver.getClass());
 		ClassMapping other = ImageBootstrapper.systemMapping
 				.classMappingForJavaClass_(arg.getClass());
-		ClassMapping sm = cm;
+		AbstractClassMapping sm = cm;
 		while (sm != null) {
 			sm = sm.superclassMappingIn_(ImageBootstrapper.systemMapping);
 			if (sm == other)

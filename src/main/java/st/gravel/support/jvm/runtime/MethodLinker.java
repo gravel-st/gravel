@@ -3,8 +3,10 @@ package st.gravel.support.jvm.runtime;
 import java.lang.invoke.CallSite;
 import java.lang.invoke.ConstantCallSite;
 import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.Constructor;
 
 import st.gravel.core.Symbol;
 import st.gravel.support.compiler.ast.AbsoluteReference;
@@ -18,6 +20,14 @@ public class MethodLinker {
 		BaseCallSite site = SmalltalkCallSite.newInstance(lookup, type,
 				selector);
 		return site;
+	}
+
+	public static CallSite constructorBootstrap(Lookup lookup, String selector,
+			MethodType type, String referenceString) throws Throwable {
+		Reference reference = Reference.factory.value_(referenceString);
+		Constructor constructor = ImageBootstrapper.systemMapping.classMappingAtReference_(reference).identityClass().getConstructor();
+		MethodHandle constructorHandle = lookup.unreflectConstructor(constructor);
+		return new ConstantCallSite(constructorHandle.asType(type));
 	}
 
 	public static CallSite superBootstrap(Lookup lookup, String selector,

@@ -14,6 +14,7 @@ import st.gravel.support.compiler.ast.SystemMappingCompilerTools;
 import java.util.Map;
 import st.gravel.support.compiler.ast.ClassMapping;
 import st.gravel.support.compiler.ast.Reference;
+import st.gravel.support.compiler.ast.AbstractClassMapping;
 import st.gravel.support.compiler.ast.AbsoluteReference;
 import st.gravel.support.compiler.ast.SelectorConverter;
 import st.gravel.support.compiler.ast.SystemDefinitionNode;
@@ -59,7 +60,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	Map<Class, ClassMapping> _classMappingsByJavaClass;
 
-	Map<Reference, ClassMapping> _classMappingsByReference;
+	Map<Reference, AbstractClassMapping> _classMappingsByReference;
 
 	SystemMappingCompilerTools _compilerTools;
 
@@ -69,7 +70,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	Map<AbsoluteReference, st.gravel.support.jvm.runtime.AlmostFinalValue> _singletonHolders;
 
-	Map<Reference, java.util.Set<ClassMapping>> _subclassMappingsCache;
+	Map<Reference, java.util.Set<AbstractClassMapping>> _subclassMappingsCache;
 
 	SystemDefinitionNode _systemDefinitionNode;
 
@@ -92,7 +93,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		return factory.systemNode_compilerTools_(_aSystemNode, _aMockSystemMappingCompilerTools);
 	}
 
-	public SystemMapping addClassMapping_(final ClassMapping _aClassMapping) {
+	public ClassMapping addClassMapping_(final ClassMapping _aClassMapping) {
 		final Class _identityClass;
 		_identityClass = _aClassMapping.identityClass();
 		if (_identityClass == null) {
@@ -104,7 +105,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		_classMappingsByReference.put(_aClassMapping.classNode().reference(), _aClassMapping);
 		_systemNode = _systemNode.withClassDescriptionNode_(_aClassMapping.classNode());
 		this.resetCache();
-		return this;
+		return _aClassMapping;
 	}
 
 	public SystemMapping applyDiff_(final SystemDiff _aSystemDiff) {
@@ -123,29 +124,34 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		final ClassMapping[] _best;
 		_best = new ClassMapping[1];
 		_best[0] = null;
-		for (final ClassMapping _cm : _classMappingsByReference.values()) {
-			if (_compilerTools.isAssignable_from_(_cm.identityClass(), _receiverClass)) {
-				if ((_best[0]) == null) {
-					_best[0] = _cm;
-				} else {
-					if (_compilerTools.isAssignable_from_(_best[0].identityClass(), _cm.identityClass())) {
-						_best[0] = _cm;
+		this.concreteClassMappingsDo_(new st.gravel.support.jvm.Block1<Object, ClassMapping>() {
+
+			@Override
+			public Object value_(final ClassMapping _cm) {
+				if (_compilerTools.isAssignable_from_(_cm.identityClass(), _receiverClass)) {
+					if ((_best[0]) == null) {
+						return _best[0] = _cm;
+					} else {
+						if (_compilerTools.isAssignable_from_(_best[0].identityClass(), _cm.identityClass())) {
+							return _best[0] = _cm;
+						}
 					}
 				}
+				return SystemMapping.this;
 			}
-		}
+		});
 		return _best[0];
 	}
 
 	public SystemMapping buildSubclassMappingsCache() {
-		_subclassMappingsCache = new java.util.HashMap<Reference, java.util.Set<ClassMapping>>();
-		for (final ClassMapping _each : _classMappingsByReference.values()) {
+		_subclassMappingsCache = new java.util.HashMap<Reference, java.util.Set<AbstractClassMapping>>();
+		for (final AbstractClassMapping _each : _classMappingsByReference.values()) {
 			final Reference _scr;
 			_scr = _each.superclassReference();
 			if (_scr != null) {
-				java.util.Set<ClassMapping> _temp1 = _subclassMappingsCache.get(_scr);
+				java.util.Set<AbstractClassMapping> _temp1 = _subclassMappingsCache.get(_scr);
 				if (_temp1 == null) {
-					java.util.Set<ClassMapping> _temp2 = new java.util.HashSet();
+					java.util.Set<AbstractClassMapping> _temp2 = new java.util.HashSet();
 					_subclassMappingsCache.put(_scr, _temp2);
 					_temp1 = _temp2;
 				}
@@ -162,17 +168,17 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		return st.gravel.support.jvm.DictionaryExtensions.at_ifAbsent_(_classMappingsByJavaClass, _aClass, _absentBlock);
 	}
 
-	public ClassMapping classMappingAtReference_(final Reference _aReference) {
-		return this.classMappingAtReference_ifAbsent_(_aReference, ((st.gravel.support.jvm.Block0<ClassMapping>) (new st.gravel.support.jvm.Block0<ClassMapping>() {
+	public AbstractClassMapping classMappingAtReference_(final Reference _aReference) {
+		return this.classMappingAtReference_ifAbsent_(_aReference, ((st.gravel.support.jvm.Block0<AbstractClassMapping>) (new st.gravel.support.jvm.Block0<AbstractClassMapping>() {
 
 			@Override
-			public ClassMapping value() {
+			public AbstractClassMapping value() {
 				throw new RuntimeException("Cannot find: " + _aReference.toString());
 			}
 		})));
 	}
 
-	public ClassMapping classMappingAtReference_ifAbsent_(final Reference _aReference, final st.gravel.support.jvm.Block0<ClassMapping> _absentBlock) {
+	public AbstractClassMapping classMappingAtReference_ifAbsent_(final Reference _aReference, final st.gravel.support.jvm.Block0<AbstractClassMapping> _absentBlock) {
 		return st.gravel.support.jvm.DictionaryExtensions.at_ifAbsent_(_classMappingsByReference, _aReference, _absentBlock);
 	}
 
@@ -189,8 +195,8 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		})));
 	}
 
-	public SystemMapping classMappingsDo_(final st.gravel.support.jvm.Block1<Object, ClassMapping> _aBlock) {
-		for (final ClassMapping _temp1 : _classMappingsByReference.values()) {
+	public SystemMapping classMappingsDo_(final st.gravel.support.jvm.Block1<Object, AbstractClassMapping> _aBlock) {
+		for (final AbstractClassMapping _temp1 : _classMappingsByReference.values()) {
 			_aBlock.value_(_temp1);
 		}
 		return this;
@@ -205,13 +211,13 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 					@Override
 					public st.gravel.support.jvm.runtime.AlmostFinalValue value() {
-						final ClassMapping _cm;
+						final AbstractClassMapping _cm;
 						final AbsoluteReference _superclassReference;
 						final SharedDeclarationNode _sharedVariable;
-						_cm = ((ClassMapping) st.gravel.support.jvm.DictionaryExtensions.at_ifAbsent_(_classMappingsByReference, _reference.namespace(), ((st.gravel.support.jvm.Block0<ClassMapping>) (new st.gravel.support.jvm.Block0<ClassMapping>() {
+						_cm = ((AbstractClassMapping) st.gravel.support.jvm.DictionaryExtensions.at_ifAbsent_(_classMappingsByReference, _reference.namespace(), ((st.gravel.support.jvm.Block0<AbstractClassMapping>) (new st.gravel.support.jvm.Block0<AbstractClassMapping>() {
 
 							@Override
-							public ClassMapping value() {
+							public AbstractClassMapping value() {
 								throw new NonLocalReturn(_aBlock.value(), _temp2);
 							}
 						}))));
@@ -283,6 +289,13 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	public SystemMappingCompilerTools compilerTools() {
 		return _compilerTools;
+	}
+
+	public SystemMapping concreteClassMappingsDo_(final st.gravel.support.jvm.Block1<Object, ClassMapping> _aBlock) {
+		for (final AbstractClassMapping _acm : _classMappingsByReference.values()) {
+			_aBlock.value_(((ClassMapping) _acm));
+		}
+		return this;
 	}
 
 	public SystemMapping copy() {
@@ -362,7 +375,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	@Override
 	public SystemMapping initialize() {
 		_classMappingsByJavaClass = new java.util.HashMap<Class, ClassMapping>();
-		_classMappingsByReference = new java.util.HashMap<Reference, ClassMapping>();
+		_classMappingsByReference = new java.util.HashMap<Reference, AbstractClassMapping>();
 		_singletonHolders = new java.util.HashMap<AbsoluteReference, st.gravel.support.jvm.runtime.AlmostFinalValue>();
 		_selectorConverter = SelectorConverter.factory.basicNew();
 		return this;
@@ -426,7 +439,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 				if (_superclassReference == null) {
 					_mapping = null;
 				} else {
-					_mapping = SystemMapping.this.methodMappingFrom_selector_(SystemMapping.this.classMappingAtReference_(_superclassReference), _sel);
+					_mapping = SystemMapping.this.methodMappingFrom_selector_(((ClassMapping) SystemMapping.this.classMappingAtReference_(_superclassReference)), _sel);
 				}
 				return (AbstractMethodMapping) _mapping;
 			}
@@ -532,10 +545,10 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 	public ClassDescriptionNode obsoleteClassNodeAt_ifAbsent_(final Reference _aReference, final st.gravel.support.jvm.Block0<ClassDescriptionNode> _absentBlock) {
 		final Object _temp1 = new Object();
 		try {
-			return this.classMappingAtReference_ifAbsent_(_aReference, ((st.gravel.support.jvm.Block0<ClassMapping>) (new st.gravel.support.jvm.Block0<ClassMapping>() {
+			return this.classMappingAtReference_ifAbsent_(_aReference, ((st.gravel.support.jvm.Block0<AbstractClassMapping>) (new st.gravel.support.jvm.Block0<AbstractClassMapping>() {
 
 				@Override
-				public ClassMapping value() {
+				public AbstractClassMapping value() {
 					throw new NonLocalReturn(_absentBlock.value(), _temp1);
 				}
 			}))).classNode();
@@ -622,6 +635,16 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		return _compilerTools.valueOfSingletonHolder_(_holder);
 	}
 
+	public st.gravel.support.jvm.runtime.AlmostFinalValue singletonAtReference_ifAbsentInitialize_(final AbsoluteReference _reference, final st.gravel.support.jvm.Block0<Object> _aBlock) {
+		st.gravel.support.jvm.runtime.AlmostFinalValue _temp1 = _singletonHolders.get(_reference);
+		if (_temp1 == null) {
+			st.gravel.support.jvm.runtime.AlmostFinalValue _temp2 = _compilerTools.newSingletonHolder_initializer_(_reference, _aBlock);
+			_singletonHolders.put(_reference, _temp2);
+			_temp1 = _temp2;
+		}
+		return _temp1;
+	}
+
 	public st.gravel.support.jvm.runtime.AlmostFinalValue singletonAtReference_ifAbsentPut_(final AbsoluteReference _reference, final st.gravel.support.jvm.Block0<Object> _aBlock) {
 		st.gravel.support.jvm.runtime.AlmostFinalValue _temp1 = _singletonHolders.get(_reference);
 		if (_temp1 == null) {
@@ -645,17 +668,17 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		});
 	}
 
-	public SystemMapping subclassMappingsFor_do_(final Reference _aReference, final st.gravel.support.jvm.Block1<Object, ClassMapping> _aBlock) {
-		final java.util.Set<ClassMapping> _c;
+	public SystemMapping subclassMappingsFor_do_(final Reference _aReference, final st.gravel.support.jvm.Block1<Object, AbstractClassMapping> _aBlock) {
+		final java.util.Set<AbstractClassMapping> _c;
 		if (_subclassMappingsCache == null) {
 			SystemMapping.this.buildSubclassMappingsCache();
 		}
-		java.util.Set<ClassMapping> _temp1 = _subclassMappingsCache.get(_aReference);
-		_c = ((java.util.Set<ClassMapping>) _temp1);
+		java.util.Set<AbstractClassMapping> _temp1 = _subclassMappingsCache.get(_aReference);
+		_c = ((java.util.Set<AbstractClassMapping>) _temp1);
 		if (_c == null) {
 			return null;
 		}
-		for (final ClassMapping _temp2 : _c) {
+		for (final AbstractClassMapping _temp2 : _c) {
 			_aBlock.value_(_temp2);
 		}
 		return this;
@@ -665,13 +688,13 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		final st.gravel.core.Symbol _sel;
 		final ClassMapping _classMapping;
 		final Reference _superclassReference;
-		_classMapping = this.classMappingAtReference_(_aReference);
+		_classMapping = ((ClassMapping) this.classMappingAtReference_(_aReference));
 		_superclassReference = _classMapping.superclassReference();
 		if (_superclassReference == null) {
 			return null;
 		}
 		_sel = _selectorConverter.functionNameAsSelector_(_methodName);
-		return this.methodMappingFrom_selector_(this.classMappingAtReference_(_superclassReference), _sel);
+		return this.methodMappingFrom_selector_(((ClassMapping) this.classMappingAtReference_(_superclassReference)), _sel);
 	}
 
 	public SystemDefinitionNode systemDefinitionNode() {

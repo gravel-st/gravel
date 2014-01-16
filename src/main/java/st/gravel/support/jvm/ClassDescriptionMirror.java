@@ -3,6 +3,7 @@ package st.gravel.support.jvm;
 import java.util.HashSet;
 
 import st.gravel.core.Symbol;
+import st.gravel.support.compiler.ast.AbstractClassMapping;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.ast.ClassMapping;
 import st.gravel.support.compiler.ast.ClassNode;
@@ -172,10 +173,10 @@ public abstract class ClassDescriptionMirror {
 	public HashSet<ClassDescriptionMirror> subclasses() {
 		final HashSet<ClassDescriptionMirror> set = new HashSet<>();
 		ImageBootstrapper.systemMapping.subclassMappingsFor_do_(reference,
-				new Block1<Object, ClassMapping>() {
+				new Block1<Object, AbstractClassMapping>() {
 
 					@Override
-					public Object value_(ClassMapping arg1) {
+					public Object value_(AbstractClassMapping arg1) {
 						set.add(ClassDescriptionMirror.forReference(arg1
 								.reference()));
 						return null;

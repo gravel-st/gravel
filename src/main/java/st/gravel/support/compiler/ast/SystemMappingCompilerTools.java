@@ -65,6 +65,8 @@ abstract public class SystemMappingCompilerTools extends Object implements Clone
 
 	public abstract SystemMappingCompilerTools methodNamesIn_do_(final Class _receiverClass, final st.gravel.support.jvm.Block2<Object, String, Integer> _aBlock);
 
+	public abstract st.gravel.support.jvm.runtime.AlmostFinalValue newSingletonHolder_initializer_(final AbsoluteReference _reference, final st.gravel.support.jvm.Block0<Object> _block);
+
 	public abstract st.gravel.support.jvm.runtime.AlmostFinalValue newSingletonHolder_value_(final AbsoluteReference _reference, final Object _value);
 
 	public abstract String nextExtensionPostfix();

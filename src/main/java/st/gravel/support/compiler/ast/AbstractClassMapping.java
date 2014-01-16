@@ -9,18 +9,25 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.AbstractMapping;
 import st.gravel.support.compiler.ast.AbstractMapping.AbstractMapping_Factory;
+import st.gravel.support.compiler.ast.ClassDescriptionNode;
+import st.gravel.support.compiler.ast.Reference;
+import st.gravel.support.compiler.ast.SystemMapping;
 
-public class AbstractClassMapping extends AbstractMapping implements Cloneable {
+abstract public class AbstractClassMapping extends AbstractMapping implements Cloneable {
 
 	public static AbstractClassMapping_Factory factory = new AbstractClassMapping_Factory();
+
+	ClassDescriptionNode _classNode;
 
 	public static class AbstractClassMapping_Factory extends AbstractMapping_Factory {
 
 		public AbstractClassMapping basicNew() {
-			AbstractClassMapping newInstance = new AbstractClassMapping();
-			newInstance.initialize();
-			return newInstance;
+			throw new RuntimeException("AbstractClassMapping is an abstract class");
 		}
+	}
+
+	public ClassDescriptionNode classNode() {
+		return _classNode;
 	}
 
 	public AbstractClassMapping copy() {
@@ -35,5 +42,24 @@ public class AbstractClassMapping extends AbstractMapping implements Cloneable {
 
 	public AbstractClassMapping_Factory factory() {
 		return factory;
+	}
+
+	public abstract Class identityClass();
+
+	public Reference reference() {
+		return _classNode.reference();
+	}
+
+	public AbstractClassMapping superclassMappingIn_(final SystemMapping _aSystemMapping) {
+		final Reference _superclassReference;
+		_superclassReference = this.superclassReference();
+		if (_superclassReference == null) {
+			return null;
+		}
+		return _aSystemMapping.classMappingAtReference_(_superclassReference);
+	}
+
+	public Reference superclassReference() {
+		return _classNode.superclassReference();
 	}
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import st.gravel.core.Symbol;
 import st.gravel.support.compiler.ast.SelectorConverter;
+import st.gravel.support.jvm.ArrayExtensions;
 
 public class MethodTools {
 	private static final SelectorConverter selectorConverter = (SelectorConverter) SelectorConverter.factory
@@ -84,16 +85,17 @@ public class MethodTools {
 	//
 	public static java.lang.reflect.Method searchForMethod(Class type,
 			String name, Class[] parms, boolean isStatic) {
-		java.lang.reflect.Method[] methods = type.getMethods();
+		java.lang.reflect.Method[] methods = type.getDeclaredMethods();
 		Method best = null;
 		for (int i = 0; i < methods.length; i++) {
 			// Has to be named the same of course.
-			if (!(methods[i].getName().equals(name)))
+			Method method = methods[i];
+			if (!(method.getName().equals(name)))
 				continue;
-			if (!(Modifier.isStatic(methods[i].getModifiers()) == isStatic))
+			if (!(Modifier.isStatic(method.getModifiers()) == isStatic))
 				continue;
 
-			Class[] types = methods[i].getParameterTypes();
+			Class[] types = method.getParameterTypes();
 
 			// Does it have the same number of arguments that we're looking for.
 			if (types.length != parms.length)
@@ -102,15 +104,21 @@ public class MethodTools {
 			// Check for type compatibility
 			if (areTypesCompatible(types, parms))
 				if (best == null) {
-					best = methods[i];
+					best = method;
 
 				} else {
-					if (methods[i].getDeclaringClass() != best
+					if (method.getDeclaringClass() != best
 							.getDeclaringClass()) {
-						best = methods[i].getDeclaringClass().isAssignableFrom(
-								best.getDeclaringClass()) ? best : methods[i];
+						best = method.getDeclaringClass().isAssignableFrom(
+								best.getDeclaringClass()) ? best : method;
 					} else {
-						throw new RuntimeException("TODO: Multiple matches");
+						if ((ArrayExtensions.equals_(types,
+								best.getParameterTypes()))) {
+							if (isStatic)
+								throw new RuntimeException("Weird");
+						} else {
+							throw new RuntimeException("TODO: Multiple matches");
+						}
 					}
 				}
 		}

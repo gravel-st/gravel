@@ -36,10 +36,11 @@ import st.gravel.support.compiler.ast.SequenceNode;
 import st.gravel.support.compiler.ast.ReturnNode;
 import st.gravel.support.compiler.ast.VariableNode;
 import st.gravel.support.compiler.ast.PragmaNode;
-import st.gravel.support.compiler.ast.AbsoluteReference;
 import st.gravel.support.compiler.ast.InstanceCreationNode;
 import java.util.ArrayList;
 import st.gravel.support.compiler.ast.SharedDeclarationNode;
+import st.gravel.support.compiler.ast.AbsoluteReference;
+import st.gravel.support.compiler.ast.AbstractClassMapping;
 import st.gravel.support.compiler.ast.ClassPartMapping;
 import st.gravel.support.compiler.ast.MethodMapping;
 import st.gravel.support.compiler.ast.Node;
@@ -169,7 +170,7 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		if (_superclassReference == null) {
 			return SystemMappingUpdater.this;
 		}
-		_superMapping[0] = _systemMapping.classMappingAtReference_(_superclassReference);
+		_superMapping[0] = ((ClassMapping) _systemMapping.classMappingAtReference_(_superclassReference));
 		_allSelectors[0] = _superMapping[0].allSelectorsIn_(_systemMapping);
 		_sc = _superMapping[0].identityClass();
 		_compilerTools.methodNamesIn_do_(_sc, new st.gravel.support.jvm.Block2<Object, String, Integer>() {
@@ -216,7 +217,7 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		ClassMapping _cm;
 		final ClassDescriptionNode _ncn;
 		final MethodNode[] _methods;
-		_cm = _systemMapping.classMappingAtReference_(_aReference);
+		_cm = ((ClassMapping) _systemMapping.classMappingAtReference_(_aReference));
 		_cm = ((ClassMapping) st.gravel.support.jvm.ArrayExtensions.inject_into_(_anUpdateClassDescriptorDiff.updatedMethodNodes(), _cm, ((st.gravel.support.jvm.Block2<ClassMapping, ClassMapping, MethodNode>) (new st.gravel.support.jvm.Block2<ClassMapping, ClassMapping, MethodNode>() {
 
 			@Override
@@ -243,12 +244,7 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 	}
 
 	public MethodNode[] extraMethodsForMetaclassNode_(final MetaclassNode _aMetaclassNode) {
-		AbsoluteReference _javaClassReference;
-		_javaClassReference = _aMetaclassNode.classNode().javaClassReference();
-		if (_javaClassReference == null) {
-			_javaClassReference = _aMetaclassNode.reference().nonmeta();
-		}
-		return st.gravel.support.jvm.ArrayFactory.with_(UnaryMethodNode.factory.selector_body_returnType_pragmas_protocol_("basicNew", SequenceNode.factory.statement_(ReturnNode.factory.value_(InstanceCreationNode.factory.reference_(_javaClassReference))), null, new PragmaNode[] {}, "extra"));
+		return st.gravel.support.jvm.ArrayFactory.with_(UnaryMethodNode.factory.selector_body_returnType_pragmas_protocol_("basicNew", SequenceNode.factory.statement_(ReturnNode.factory.value_(InstanceCreationNode.factory.reference_(_aMetaclassNode.reference().nonmeta()))), null, new PragmaNode[] {}, "extra"));
 	}
 
 	public MethodNode[] extraMethodsFor_(final ClassDescriptionNode _aClassDescriptionNode) {
@@ -297,21 +293,17 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 	}
 
 	public SystemMappingUpdater link() {
-		_systemMapping.classMappingsDo_(new st.gravel.support.jvm.Block1<Object, ClassMapping>() {
+		_systemMapping.classMappingsDo_(new st.gravel.support.jvm.Block1<Object, AbstractClassMapping>() {
 
 			@Override
-			public Object value_(final ClassMapping _classMapping) {
-				final Class _identityClass;
-				if (_classMapping.classNode().isMeta()) {
-					SystemMappingUpdater.this.initializeClassShareds_(((MetaclassNode) _classMapping.classNode()));
-				}
-				_identityClass = _classMapping.identityClass();
-				if (_classMapping.classNode().isMeta()) {
-					return _systemMapping.singletonAtReference_ifAbsentPut_(_classMapping.reference().nonmeta(), new st.gravel.support.jvm.Block0<Object>() {
+			public Object value_(final AbstractClassMapping _acm) {
+				if (_acm.classNode().isMeta()) {
+					SystemMappingUpdater.this.initializeClassShareds_(((MetaclassNode) _acm.classNode()));
+					return _systemMapping.singletonAtReference_ifAbsentPut_(_acm.reference().nonmeta(), new st.gravel.support.jvm.Block0<Object>() {
 
 						@Override
 						public Object value() {
-							return _compilerTools.createSingletonForClass_(_identityClass);
+							return _compilerTools.createSingletonForClass_(_acm.identityClass());
 						}
 					});
 				}
@@ -327,7 +319,7 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 			}
 		});
 		for (final Reference _ref : _toInitialize) {
-			_compilerTools.initializeClass_systemMapping_(_systemMapping.classMappingAtReference_(_ref), _systemMapping);
+			_compilerTools.initializeClass_systemMapping_(((ClassMapping) _systemMapping.classMappingAtReference_(_ref)), _systemMapping);
 		}
 		_toInitialize = new java.util.ArrayList();
 		return this;

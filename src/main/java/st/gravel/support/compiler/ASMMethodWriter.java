@@ -34,6 +34,7 @@ import st.gravel.support.compiler.jvm.CastObjectToShort;
 import st.gravel.support.compiler.jvm.Dup;
 import st.gravel.support.compiler.jvm.DupX1;
 import st.gravel.support.compiler.jvm.DupX2;
+import st.gravel.support.compiler.jvm.DynamicCreateInstance;
 import st.gravel.support.compiler.jvm.DynamicFieldRead;
 import st.gravel.support.compiler.jvm.DynamicFieldWrite;
 import st.gravel.support.compiler.jvm.DynamicGlobalRead;
@@ -423,6 +424,13 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 		mv.visitInvokeDynamicInsn(node.name(), node.methodType()
 				.descriptorString(), BootstrapHandles.globalWriteBootstrap,
 				node.namespace());
+		return null;
+	}
+
+	@Override
+	public Void visitDynamicCreateInstance_(DynamicCreateInstance node) {
+		mv.visitInvokeDynamicInsn("new", node.methodType()
+				.descriptorString(), BootstrapHandles.constructorBootstrap, node.reference());
 		return null;
 	}
 

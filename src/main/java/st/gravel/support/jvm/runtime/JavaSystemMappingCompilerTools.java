@@ -273,6 +273,20 @@ public final class JavaSystemMappingCompilerTools extends
 	}
 
 	@Override
+	public AlmostFinalValue newSingletonHolder_initializer_(
+			final AbsoluteReference _reference, final Block0<Object> block) {
+		AlmostFinalValue almostFinalValue = new AlmostFinalValue() {
+
+			@Override
+			protected Object initialValue() {
+				return block.value();
+			}
+			
+		};
+		return almostFinalValue;
+	}
+
+	@Override
 	public String nextExtensionPostfix() {
 		return "Extension" + classCounter++;
 	}

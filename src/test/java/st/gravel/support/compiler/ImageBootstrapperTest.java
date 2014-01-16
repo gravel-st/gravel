@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import org.junit.Before;
 import org.junit.Test;
 
+import st.gravel.support.compiler.ast.AbstractClassMapping;
 import st.gravel.support.compiler.ast.ClassMapping;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.SystemMapping;
@@ -26,7 +27,7 @@ public class ImageBootstrapperTest {
 		ImageBootstrapper.bootstrap();
 		systemMapping = ImageBootstrapper.systemMapping;
 		Reference ref = Reference.factory.value_("st.gravel.lang.Message class");
-		ClassMapping meta = systemMapping.classMappingAtReference_(ref);
+		AbstractClassMapping meta = systemMapping.classMappingAtReference_(ref);
 		Object cl = systemMapping.singletonAtReference_(ref.nonmeta());
 		Method basicNew = cl.getClass().getMethod("basicNew");
 		Object instance = basicNew.invoke(cl);

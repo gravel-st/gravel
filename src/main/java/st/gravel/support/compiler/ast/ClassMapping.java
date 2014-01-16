@@ -20,14 +20,12 @@ import java.util.Set;
 import java.util.HashSet;
 import st.gravel.support.compiler.ast.AbstractMethodMapping;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
-import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.MethodNode;
+import st.gravel.support.compiler.ast.Reference;
 
 public class ClassMapping extends AbstractClassMapping implements Cloneable {
 
 	public static ClassMapping_Factory factory = new ClassMapping_Factory();
-
-	ClassDescriptionNode _classNode;
 
 	ExtensionClassPartMapping[] _extensions;
 
@@ -56,7 +54,7 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 		final BoundVariableDeclarationNode[] _arr;
 		final ClassMapping _scm;
 		_arr = this.boundInstVars();
-		_scm = this.superclassMappingIn_(_aSystemMapping);
+		_scm = ((ClassMapping) this.superclassMappingIn_(_aSystemMapping));
 		if (_scm != null) {
 			return st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_arr, _scm.allInstVarsIn_(_aSystemMapping));
 		}
@@ -68,7 +66,7 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 		final ClassMapping _scm;
 		_set = new java.util.HashSet();
 		_set.addAll(this.selectors());
-		_scm = this.superclassMappingIn_(_aSystemMapping);
+		_scm = ((ClassMapping) this.superclassMappingIn_(_aSystemMapping));
 		if (_scm != null) {
 			_set.addAll(_scm.allSelectorsIn_(_aSystemMapping));
 		}
@@ -77,10 +75,6 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 
 	public BoundVariableDeclarationNode[] boundInstVars() {
 		return _classNode.boundInstVars();
-	}
-
-	public ClassDescriptionNode classNode() {
-		return _classNode;
 	}
 
 	public ClassMapping copy() {
@@ -118,6 +112,7 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 		return factory;
 	}
 
+	@Override
 	public Class identityClass() {
 		return _identityMapping.javaClass();
 	}
@@ -168,10 +163,6 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 		return this;
 	}
 
-	public Reference reference() {
-		return _classNode.reference();
-	}
-
 	public java.util.Set<st.gravel.core.Symbol> selectors() {
 		final java.util.Set<st.gravel.core.Symbol>[] _set;
 		_set = new java.util.Set[1];
@@ -180,19 +171,6 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 			_set[0].add(st.gravel.core.Symbol.value(_each.selector()));
 		}
 		return _set[0];
-	}
-
-	public ClassMapping superclassMappingIn_(final SystemMapping _aSystemMapping) {
-		final Reference _superclassReference;
-		_superclassReference = this.superclassReference();
-		if (_superclassReference == null) {
-			return null;
-		}
-		return _aSystemMapping.classMappingAtReference_(_superclassReference);
-	}
-
-	public Reference superclassReference() {
-		return _classNode.superclassReference();
 	}
 
 	public Reference superclassReferenceForMethodLookup() {

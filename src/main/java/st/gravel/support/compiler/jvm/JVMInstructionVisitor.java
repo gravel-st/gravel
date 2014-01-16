@@ -40,6 +40,7 @@ import st.gravel.support.compiler.jvm.CastTo;
 import st.gravel.support.compiler.jvm.Dup;
 import st.gravel.support.compiler.jvm.DupX1;
 import st.gravel.support.compiler.jvm.DupX2;
+import st.gravel.support.compiler.jvm.DynamicCreateInstance;
 import st.gravel.support.compiler.jvm.DynamicFieldRead;
 import st.gravel.support.compiler.jvm.DynamicFieldWrite;
 import st.gravel.support.compiler.jvm.DynamicGlobalRead;
@@ -251,6 +252,10 @@ public class JVMInstructionVisitor<X> extends Object implements Cloneable {
 	}
 
 	public X visitDup_(final Dup _anObject) {
+		return this.visitJVMInstruction_(_anObject);
+	}
+
+	public X visitDynamicCreateInstance_(final DynamicCreateInstance _anObject) {
 		return this.visitJVMInstruction_(_anObject);
 	}
 

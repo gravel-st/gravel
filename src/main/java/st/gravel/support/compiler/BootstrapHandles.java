@@ -47,5 +47,9 @@ public class BootstrapHandles {
 			"globalWriteBootstrap", MethodType.methodType(CallSite.class,
 					MethodHandles.Lookup.class, String.class, MethodType.class,
 					String.class).toMethodDescriptorString());
+	public static final Handle constructorBootstrap = new Handle(
+			Opcodes.H_INVOKESTATIC, Type.getInternalName(MethodLinker.class),
+			"constructorBootstrap", MethodType.methodType(CallSite.class,
+					MethodHandles.Lookup.class, String.class, MethodType.class, String.class).toMethodDescriptorString());
 
 }
