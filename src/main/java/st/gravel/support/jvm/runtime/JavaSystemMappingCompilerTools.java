@@ -183,11 +183,6 @@ public final class JavaSystemMappingCompilerTools extends
 	}
 
 	@Override
-	public Class javaClassSuperclass() {
-		return ObjectClass.class;
-	}
-
-	@Override
 	public JVMClass jvmClassForType_ifAbsent_(
 			JVMDefinedObjectType _aJVMDefinedObjectType,
 			Block0<JVMClass> _aBlock) {
@@ -299,11 +294,6 @@ public final class JavaSystemMappingCompilerTools extends
 	public SystemMappingCompilerTools resetCallsites() {
 		BaseCallSite.resetAll();
 		return this;
-	}
-
-	@Override
-	public Class superclassOf_(Class _aClass) {
-		return _aClass.getSuperclass();
 	}
 
 	@Override

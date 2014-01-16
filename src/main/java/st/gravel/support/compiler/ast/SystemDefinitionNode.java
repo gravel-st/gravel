@@ -147,22 +147,6 @@ public class SystemDefinitionNode extends Node implements Cloneable {
 		})));
 	}
 
-	public PackageNode packageNodeAt_(final st.gravel.core.Symbol _aName) {
-		return st.gravel.support.jvm.ArrayExtensions.detect_ifNone_(_packageNodes, new st.gravel.support.jvm.Predicate1<PackageNode>() {
-
-			@Override
-			public boolean value_(final PackageNode _each) {
-				return st.gravel.support.jvm.ObjectExtensions.equals_(_each.name(), _aName);
-			}
-		}, ((st.gravel.support.jvm.Block0<PackageNode>) (new st.gravel.support.jvm.Block0<PackageNode>() {
-
-			@Override
-			public PackageNode value() {
-				throw new RuntimeException("not found");
-			}
-		})));
-	}
-
 	public PackageNode[] packageNodes() {
 		return _packageNodes;
 	}

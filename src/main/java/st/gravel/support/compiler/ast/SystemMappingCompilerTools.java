@@ -57,8 +57,6 @@ abstract public class SystemMappingCompilerTools extends Object implements Clone
 
 	public abstract boolean isAssignable_from_(final Class _aClass, final Class _bClass);
 
-	public abstract Class javaClassSuperclass();
-
 	public abstract JVMClass jvmClassForType_ifAbsent_(final JVMDefinedObjectType _aJVMDefinedObjectType, final st.gravel.support.jvm.Block0<JVMClass> _aBlock);
 
 	public abstract JVMType jvmTypeForClass_(final Class _aClass);
@@ -80,8 +78,6 @@ abstract public class SystemMappingCompilerTools extends Object implements Clone
 	public abstract String referenceAsClassName_(final Reference _aReference);
 
 	public abstract SystemMappingCompilerTools resetCallsites();
-
-	public abstract Class superclassOf_(final Class _aClass);
 
 	public abstract Object valueOfSingletonHolder_(final st.gravel.support.jvm.runtime.AlmostFinalValue _holder);
 

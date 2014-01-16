@@ -41,7 +41,6 @@ import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.Expression;
 import java.util.Date;
 import st.gravel.support.compiler.ast.AbstractMethodMapping;
-import st.gravel.support.compiler.ast.MethodMapping;
 import st.gravel.support.compiler.ast.NamespaceNode;
 import java.util.Map;
 import java.util.Map.*;
@@ -97,6 +96,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		final Class _identityClass;
 		_identityClass = _aClassMapping.identityClass();
 		if (_identityClass == null) {
+			st.gravel.support.jvm.ObjectExtensions.assert_(SystemMapping.this, _aClassMapping.classNode().isNilClass());
 			_nilClassMapping = _aClassMapping;
 		} else {
 			_classMappingsByJavaClass.put(_identityClass, _aClassMapping);
@@ -174,26 +174,6 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	public ClassMapping classMappingAtReference_ifAbsent_(final Reference _aReference, final st.gravel.support.jvm.Block0<ClassMapping> _absentBlock) {
 		return st.gravel.support.jvm.DictionaryExtensions.at_ifAbsent_(_classMappingsByReference, _aReference, _absentBlock);
-	}
-
-	public ClassMapping classMappingAt_(final String _aString) {
-		return this.classMappingAt_ifAbsent_(_aString, ((st.gravel.support.jvm.Block0<ClassMapping>) (new st.gravel.support.jvm.Block0<ClassMapping>() {
-
-			@Override
-			public ClassMapping value() {
-				throw new RuntimeException("Cannot find: " + _aString);
-			}
-		})));
-	}
-
-	public ClassMapping classMappingAt_ifAbsent_(final String _aString, final st.gravel.support.jvm.Block0<ClassMapping> _absentBlock) {
-		return this.classMappingAtReference_ifAbsent_(AbsoluteReference.factory.path_(st.gravel.support.jvm.ArrayExtensions.collect_(st.gravel.support.jvm.StringExtensions.tokensBasedOn_(_aString, '.'), ((st.gravel.support.jvm.Block1<st.gravel.core.Symbol, String>) (new st.gravel.support.jvm.Block1<st.gravel.core.Symbol, String>() {
-
-			@Override
-			public st.gravel.core.Symbol value_(final String _each) {
-				return (st.gravel.core.Symbol) st.gravel.core.Symbol.value(_each);
-			}
-		})))), _absentBlock);
 	}
 
 	public ClassMapping classMappingForJavaClass_(final Class _receiverClass) {
@@ -315,16 +295,6 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		}
 	}
 
-	public ClassDescriptionNode definitionClassNodeAt_(final Reference _reference) {
-		return this.definitionClassNodeAt_ifAbsent_(_reference, ((st.gravel.support.jvm.Block0<ClassDescriptionNode>) (new st.gravel.support.jvm.Block0<ClassDescriptionNode>() {
-
-			@Override
-			public ClassDescriptionNode value() {
-				throw new RuntimeException("Cannot find: " + _reference.toString());
-			}
-		})));
-	}
-
 	public ClassDescriptionNode definitionClassNodeAt_ifAbsent_(final Reference _reference, final st.gravel.support.jvm.Block0<ClassDescriptionNode> _aBlock) {
 		final Object _temp1 = new Object();
 		try {
@@ -443,22 +413,6 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			return null;
 		}
 		return _methodMapping.methodHandle();
-	}
-
-	public MethodMapping methodMappingForNil_(final String _methodName) {
-		final st.gravel.core.Symbol _sel;
-		final ClassMapping _classMapping;
-		_classMapping = this.nilClassMapping();
-		_sel = _selectorConverter.functionNameAsSelector_(_methodName);
-		return ((MethodMapping) this.methodMappingFrom_selector_(_classMapping, _sel));
-	}
-
-	public MethodMapping methodMappingFor_methodName_(final Class _receiverClass, final String _methodName) {
-		final st.gravel.core.Symbol _sel;
-		final ClassMapping _classMapping;
-		_classMapping = this.classMappingForJavaClass_(_receiverClass);
-		_sel = _selectorConverter.functionNameAsSelector_(_methodName);
-		return ((MethodMapping) this.methodMappingFrom_selector_(_classMapping, _sel));
 	}
 
 	public AbstractMethodMapping methodMappingFrom_selector_(final ClassMapping _classMapping, final st.gravel.core.Symbol _sel) {

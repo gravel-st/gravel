@@ -7,8 +7,8 @@ package st.gravel.support.compiler.ast;
 
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
-import st.gravel.support.compiler.ast.AbstractMapping;
-import st.gravel.support.compiler.ast.AbstractMapping.AbstractMapping_Factory;
+import st.gravel.support.compiler.ast.AbstractClassMapping;
+import st.gravel.support.compiler.ast.AbstractClassMapping.AbstractClassMapping_Factory;
 import st.gravel.support.compiler.ast.IdentityClassPartMapping;
 import st.gravel.support.compiler.ast.ExtensionClassPartMapping;
 import java.util.Map;
@@ -23,7 +23,7 @@ import st.gravel.support.compiler.ast.VariableDeclarationNode;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.MethodNode;
 
-public class ClassMapping extends AbstractMapping implements Cloneable {
+public class ClassMapping extends AbstractClassMapping implements Cloneable {
 
 	public static ClassMapping_Factory factory = new ClassMapping_Factory();
 
@@ -35,7 +35,7 @@ public class ClassMapping extends AbstractMapping implements Cloneable {
 
 	Map<String, InstVarMapping> _instVarMappings;
 
-	public static class ClassMapping_Factory extends AbstractMapping_Factory {
+	public static class ClassMapping_Factory extends AbstractClassMapping_Factory {
 
 		public ClassMapping basicNew() {
 			ClassMapping newInstance = new ClassMapping();
@@ -118,18 +118,6 @@ public class ClassMapping extends AbstractMapping implements Cloneable {
 		return factory;
 	}
 
-	public ClassMapping generatedJavaClassesDo_(final st.gravel.support.jvm.Block1<Object, Class> _aBlock) {
-		if (_identityMapping.isGenerated()) {
-			_aBlock.value_(_identityMapping.javaClass());
-		}
-		for (final ExtensionClassPartMapping _each : _extensions) {
-			if (_each.isGenerated()) {
-				_aBlock.value_(_each.javaClass());
-			}
-		}
-		return this;
-	}
-
 	public Class identityClass() {
 		return _identityMapping.javaClass();
 	}
@@ -153,14 +141,6 @@ public class ClassMapping extends AbstractMapping implements Cloneable {
 
 	public VariableDeclarationNode[] instVars() {
 		return _classNode.instVars();
-	}
-
-	public ClassMapping javaClassesDo_(final st.gravel.support.jvm.Block1<Object, Class> _aBlock) {
-		_aBlock.value_(_identityMapping.javaClass());
-		for (final ExtensionClassPartMapping _each : _extensions) {
-			_aBlock.value_(_each.javaClass());
-		}
-		return this;
 	}
 
 	public AbstractMethodMapping methodMappingAt_ifAbsent_(final st.gravel.core.Symbol _aSymbol, final st.gravel.support.jvm.Block0<AbstractMethodMapping> _aBlock) {

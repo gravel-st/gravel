@@ -14,19 +14,19 @@ import st.gravel.support.compiler.ast.SystemMappingCompilerTools;
 import st.gravel.support.compiler.ast.SelectorConverter;
 import java.util.List;
 import st.gravel.support.compiler.ast.Reference;
-import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
-import st.gravel.support.compiler.ast.ClassMapping;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.jvm.JVMClassCompiler;
 import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
 import st.gravel.support.compiler.jvm.JVMClass;
 import st.gravel.support.compiler.ast.IdentityClassPartMapping;
 import st.gravel.support.compiler.ast.MethodNode;
+import st.gravel.support.compiler.ast.ClassMapping;
 import st.gravel.support.compiler.ast.ExtensionClassPartMapping;
 import java.util.HashMap;
 import st.gravel.support.compiler.ast.InstVarMapping;
 import java.util.Set;
 import st.gravel.support.compiler.ast.AbstractMethodMapping;
+import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.SourceFile;
 import st.gravel.support.compiler.ast.UpdateClassDescriptorDiff;
 import st.gravel.support.compiler.ast.ClassNode;
@@ -89,24 +89,6 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 
 	static public SystemMappingUpdater _systemMapping_compilerTools_(Object receiver, final SystemMapping _aSystemMapping, final SystemMappingCompilerTools _aSystemMappingCompilerTools) {
 		return factory.systemMapping_compilerTools_(_aSystemMapping, _aSystemMappingCompilerTools);
-	}
-
-	public BoundVariableDeclarationNode[] allInstVarsForReference_(final Reference _aReference) {
-		if (_aReference == null) {
-			return new BoundVariableDeclarationNode[] {};
-		}
-		return _systemMapping.classMappingAtReference_(_aReference).allInstVarsIn_(_systemMapping);
-	}
-
-	public Class classForSuperOf_(final Reference _aReference) {
-		final ClassMapping _superMapping;
-		final Class _superclass;
-		_superMapping = _systemMapping.classMappingAtReference_(_aReference);
-		_superclass = _superMapping.identityClass();
-		if (_superclass.isInterface()) {
-			return SystemMappingUpdater.this.classForSuperOf_(_superMapping.superclassReference());
-		}
-		return _superclass;
 	}
 
 	public SystemMappingUpdater compileClassDescriptionNodeNonStatic_(final ClassDescriptionNode _aClassDescriptionNode) {
@@ -314,18 +296,6 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		return this;
 	}
 
-	public SystemMappingUpdater isStaticOverride_while_(final boolean _aBoolean, final st.gravel.support.jvm.Block0<SystemMappingUpdater> _aBlock) {
-		final boolean _old;
-		if (st.gravel.support.jvm.BooleanExtensions.equals_(_isStaticOverride, (_aBoolean || _isStaticOverride))) {
-			return _aBlock.value();
-		}
-		_old = _isStaticOverride;
-		_isStaticOverride = (_aBoolean || _isStaticOverride);
-		_aBlock.value();
-		_isStaticOverride = _old;
-		return this;
-	}
-
 	public SystemMappingUpdater link() {
 		_systemMapping.classMappingsDo_(new st.gravel.support.jvm.Block1<Object, ClassMapping>() {
 
@@ -412,31 +382,6 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		_holderized = NonLocalTempWritesToHolderConverter.factory.visit_(_nonLocal);
 		_fieldAccessed = VariableAccessToFieldAccessConverter.factory.instVarNames_owner_ownerReference_(_instVarNames, _owner, _ownerReference).visit_(_holderized);
 		return _fieldAccessed;
-	}
-
-	public MethodNode[] methodsToRecompile_in_(final MethodNode[] _allMethods, final Reference _superclassReference) {
-		final List<MethodNode>[] _methodsToRecompile;
-		final java.util.Set<String>[] _selectors;
-		_selectors = new java.util.Set[1];
-		_methodsToRecompile = new List[1];
-		_selectors[0] = new java.util.HashSet();
-		_methodsToRecompile[0] = new java.util.ArrayList();
-		for (final MethodNode _each : _allMethods) {
-			_selectors[0].add(_each.selector());
-		}
-		this.compiledMethodNodesIn_do_(_superclassReference, new st.gravel.support.jvm.Block1<Object, MethodNode>() {
-
-			@Override
-			public Object value_(final MethodNode _methodNode) {
-				MethodNode _clean;
-				if (!_selectors[0].contains(_methodNode.selector())) {
-					_clean = ((MethodNode) _methodNode.withoutSourcePointers());
-					return _methodsToRecompile[0].add(_clean);
-				}
-				return SystemMappingUpdater.this;
-			}
-		});
-		return _methodsToRecompile[0].toArray(new MethodNode[_methodsToRecompile[0].size()]);
 	}
 
 	public MethodNode[] methods_withExtraMethods_(final MethodNode[] _methods, final MethodNode[] _extraMethods) {

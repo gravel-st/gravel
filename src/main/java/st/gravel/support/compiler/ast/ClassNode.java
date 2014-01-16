@@ -386,10 +386,6 @@ public class ClassNode extends ClassDescriptionNode implements Cloneable {
 		return this.withMethods_classMethods_isExtension_(this.mergeMethods_with_(_methods, _aClassNode.methods()), this.mergeMethods_with_(this.classMethods(), _aClassNode.classMethods()), false);
 	}
 
-	public ClassNode mergedWithMethods_(final MethodNode[] _anArray) {
-		return this.withMethods_(this.mergeMethods_with_(_methods, _anArray));
-	}
-
 	public MethodNode[] mergeMethods_with_(final MethodNode[] _originalMethods, final MethodNode[] _extensionMethods) {
 		final java.util.Set<String>[] _s;
 		_s = new java.util.Set[1];
