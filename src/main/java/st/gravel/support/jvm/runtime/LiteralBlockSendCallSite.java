@@ -1,20 +1,17 @@
 package st.gravel.support.jvm.runtime;
 
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodType;
 import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.invoke.MethodType;
 
 import st.gravel.support.compiler.ast.BlockInliner;
-import st.gravel.support.compiler.ast.BlockInlinerNonOptimized;
 import st.gravel.support.compiler.ast.MethodMapping;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Reference;
-import st.gravel.support.compiler.ast.VariableNodeReplacer;
 import st.gravel.support.compiler.jvm.BlockSendArgument;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
-import st.gravel.support.jvm.ArrayExtensions;
 import st.gravel.support.jvm.Block1;
 
 public class LiteralBlockSendCallSite extends PolymorphicCallSite {

@@ -280,11 +280,12 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		return _jvmClassCompiler.withContainerAndExtraClasses_(_blockClass);
 	}
 
-	public Class compileInlinedMethod_selfType_(final MethodNode _aMethodNode, final JVMNonPrimitiveType _selfType) {
+	public Class compileInlinedMethod_selfType_allowBlockInlining_(final MethodNode _aMethodNode, final JVMNonPrimitiveType _selfType, final boolean _allowBlockInlining) {
 		final JVMClassCompiler _jvmClassCompiler;
 		final JVMClass _inlinedMethodClass;
 		final JVMClass[] _jvmClasses;
 		_jvmClassCompiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), true);
+		_jvmClassCompiler.allowBlockInlining_(_allowBlockInlining);
 		_jvmClassCompiler.selfType_(_selfType);
 		_jvmClassCompiler.superType_(JVMDefinedObjectType.factory.object());
 		_jvmClassCompiler.ownerType_(JVMDefinedObjectType.factory.dottedClassName_("InlinedMethod$" + _compilerTools.nextExtensionPostfix()));

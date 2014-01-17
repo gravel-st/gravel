@@ -11,6 +11,8 @@ import st.gravel.support.compiler.ast.VariableDeclarationNode;
 import st.gravel.support.compiler.ast.VariableDeclarationNode.VariableDeclarationNode_Factory;
 import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
+import st.gravel.support.compiler.ast.Expression;
+import st.gravel.support.compiler.ast.ReadHolderNode;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.SourcePrinter;
 import st.gravel.support.compiler.ast.SourcePosition;
@@ -67,6 +69,11 @@ public class HolderDeclarationNode extends VariableDeclarationNode implements Cl
 			}
 		});
 		return this;
+	}
+
+	@Override
+	public Expression asVariableNode() {
+		return ReadHolderNode.factory.varName_(_name);
 	}
 
 	public HolderDeclarationNode copy() {

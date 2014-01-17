@@ -51,6 +51,8 @@ public class JVMClassCompiler extends Object implements Cloneable {
 
 	public static JVMClassCompiler_Factory factory = new JVMClassCompiler_Factory();
 
+	boolean _allowBlockInlining;
+
 	List<BlockSendArgument> _astConstants;
 
 	ClassDescriptionNode _classDescriptionNode;
@@ -116,6 +118,15 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		_instructions.add(DynamicSuperSend.factory.functionName_numArgs_superReference_(_functionName, _numArgs, _superReference));
 		_instructions.add(AReturn.factory.basicNew());
 		_jvmMethods.add(JVMMethod.factory.name_locals_instructions_isStatic_signature_(_name, JVMLocalDeclaration.factory.localsForSignature_(_superSig.arguments()), _instructions.toArray(new JVMInstruction[_instructions.size()]), true, _superSig));
+		return this;
+	}
+
+	public boolean allowBlockInlining() {
+		return _allowBlockInlining;
+	}
+
+	public JVMClassCompiler allowBlockInlining_(final boolean _anObject) {
+		_allowBlockInlining = _anObject;
 		return this;
 	}
 
@@ -387,6 +398,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			_superclassReference = _classDescriptionNode.superclassReference();
 			_superType = ((JVMDefinedObjectType) (_superclassReference == null ? _classDescriptionNode.isMeta() ? JVMDefinedObjectType.factory.objectClass() : JVMDefinedObjectType.factory.object() : _systemMappingUpdater.compilerTools().jvmTypeForClass_(_systemMappingUpdater.systemMapping().classMappingAtReference_(_superclassReference).identityClass())));
 		}
+		_allowBlockInlining = true;
 		return this;
 	}
 

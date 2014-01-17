@@ -411,7 +411,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 
 	public JVMMethodCompiler produceMessageSend_(final MessageNode _messageNode) {
 		final st.gravel.core.Symbol _selector;
-		if (st.gravel.support.jvm.ArrayExtensions.anySatisfy_(_messageNode.arguments(), new st.gravel.support.jvm.Predicate1<Expression>() {
+		if (_parent.allowBlockInlining() && (st.gravel.support.jvm.ArrayExtensions.anySatisfy_(_messageNode.arguments(), new st.gravel.support.jvm.Predicate1<Expression>() {
 
 			@Override
 			public boolean value_(final Expression _e) {
@@ -429,7 +429,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 					}
 				})));
 			}
-		}))) {
+		})))) {
 			return JVMMethodCompiler.this.produceBlockInlineMessageSend_(_messageNode);
 		}
 		for (final Expression _arg : _messageNode.arguments()) {

@@ -11,6 +11,8 @@ import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Node.Node_Factory;
 import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
+import st.gravel.support.compiler.ast.Expression;
+import st.gravel.support.compiler.ast.LocalReadNode;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.SourcePrinter;
@@ -79,6 +81,10 @@ public class VariableDeclarationNode extends Node implements Cloneable {
 			}
 		});
 		return this;
+	}
+
+	public Expression asVariableNode() {
+		return LocalReadNode.factory.name_(_name);
 	}
 
 	public VariableDeclarationNode copy() {

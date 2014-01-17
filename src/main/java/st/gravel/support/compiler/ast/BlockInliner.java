@@ -19,8 +19,10 @@ import st.gravel.support.compiler.ast.VariableNodeReplacer;
 import st.gravel.support.compiler.ast.LiteralSendInliner;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
+import st.gravel.support.compiler.ast.Expression;
+import st.gravel.support.compiler.ast.SequenceNode;
 import st.gravel.support.compiler.ast.SelfNode;
+import java.util.HashMap;
 import st.gravel.support.compiler.ast.SystemMappingUpdater;
 import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.Node;
@@ -120,9 +122,41 @@ public class BlockInliner extends Object implements Cloneable {
 		return _arguments[0].toArray(new VariableDeclarationNode[_arguments[0].size()]);
 	}
 
+	public java.lang.invoke.MethodHandle buildNonOptimized() {
+		final MethodNode _node;
+		final VariableDeclarationNode[] _arguments;
+		final List<Expression>[] _sendArgs;
+		_sendArgs = new List[1];
+		for (final String _each : _copiedArgumentNames) {
+			final String _newTempName;
+			_newTempName = BlockInliner.this.newTempName_for_(_each, _methodNode);
+			_copiedArgRenames.put(_each, _newTempName);
+		}
+		_arguments = this.buildMethodNodeArguments_(_methodNode);
+		_sendArgs[0] = new java.util.ArrayList();
+		st.gravel.support.jvm.ArrayExtensions.with_do_(_astConstants, _methodNode.arguments(), new st.gravel.support.jvm.Block2<Object, BlockSendArgument, VariableDeclarationNode>() {
+
+			@Override
+			public Object value_value_(final BlockSendArgument _astConstant, final VariableDeclarationNode _arg) {
+				if (_astConstant == null) {
+					return _sendArgs[0].add(_arg.asVariableNode());
+				} else {
+					return _sendArgs[0].add(BlockInliner.this.renamedBlockNodeFor_(_astConstant));
+				}
+			}
+		});
+		_node = KeywordMethodNode.factory.selector_arguments_body_(_systemMapping.selectorConverter().selectorForNumArgs_(_arguments.length), _arguments, SequenceNode.factory.return_(SelfNode.factory.basicNew().send_withAll_(_methodNode.selector(), _sendArgs[0].toArray(new Expression[_sendArgs[0].size()]))));
+		this.log_text_("nonOptimized: ", _node.sourceString());
+		return this.compileMethodNode_allowBlockInlining_(this.link_(_node), false);
+	}
+
 	public java.lang.invoke.MethodHandle compileMethodNode_(final MethodNode _inlinedMethodNode) {
+		return this.compileMethodNode_allowBlockInlining_(_inlinedMethodNode, true);
+	}
+
+	public java.lang.invoke.MethodHandle compileMethodNode_allowBlockInlining_(final MethodNode _inlinedMethodNode, final boolean _allowBlockInlining) {
 		final Class _javaClass;
-		_javaClass = _systemMapping.compileInlinedMethod_selfType_(_inlinedMethodNode, _selfType);
+		_javaClass = _systemMapping.compileInlinedMethod_selfType_allowBlockInlining_(_inlinedMethodNode, _selfType, _allowBlockInlining);
 		return _systemMapping.compilerTools().methodHandleAt_numArgs_in_identityClass_isStatic_(_systemMapping.selectorConverter().selectorAsFunctionName_(st.gravel.core.Symbol.value(_inlinedMethodNode.selector())), _inlinedMethodNode.numArgs(), _javaClass, _javaClass, true);
 	}
 
@@ -167,6 +201,7 @@ public class BlockInliner extends Object implements Cloneable {
 	}
 
 	public BlockInliner log_text_(final String _label, final String _aString) {
+		System.out.println(_label + _aString);
 		return this;
 	}
 
