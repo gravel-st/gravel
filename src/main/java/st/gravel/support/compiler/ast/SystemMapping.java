@@ -282,11 +282,12 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		return st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _blockClass));
 	}
 
-	public Class compileInlinedMethod_(final MethodNode _aMethodNode) {
+	public Class compileInlinedMethod_selfType_(final MethodNode _aMethodNode, final JVMDefinedObjectType _selfType) {
 		final JVMClassCompiler _jvmClassCompiler;
 		final JVMClass _inlinedMethodClass;
 		final JVMClass[] _jvmClasses;
 		_jvmClassCompiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), true);
+		_jvmClassCompiler.selfType_(_selfType);
 		_jvmClassCompiler.ownerType_(JVMDefinedObjectType.factory.dottedClassName_("InlinedMethod$" + _compilerTools.nextExtensionPostfix()));
 		_inlinedMethodClass = _jvmClassCompiler.compileInlinedMethod_(_aMethodNode);
 		_jvmClasses = st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _inlinedMethodClass));

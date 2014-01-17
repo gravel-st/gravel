@@ -404,6 +404,9 @@ public class JVMClassCompiler extends Object implements Cloneable {
 	}
 
 	public Integer lineNumberOf_(final SourcePosition _aSourcePosition) {
+		if (_classDescriptionNode == null) {
+			return null;
+		}
 		if (_classDescriptionNode.findSourceFile() == null) {
 			return null;
 		}

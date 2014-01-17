@@ -14,6 +14,7 @@ import st.gravel.support.compiler.ast.SystemMappingCompilerTools;
 import st.gravel.support.compiler.ast.SelectorConverter;
 import java.util.List;
 import st.gravel.support.compiler.ast.Reference;
+import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.jvm.JVMClassCompiler;
 import st.gravel.support.compiler.jvm.JVMClass;
@@ -26,7 +27,6 @@ import java.util.HashMap;
 import st.gravel.support.compiler.ast.InstVarMapping;
 import java.util.Set;
 import st.gravel.support.compiler.ast.AbstractMethodMapping;
-import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.SourceFile;
 import st.gravel.support.compiler.ast.UpdateClassDescriptorDiff;
 import st.gravel.support.compiler.ast.ClassNode;
@@ -90,6 +90,13 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 
 	static public SystemMappingUpdater _systemMapping_compilerTools_(Object receiver, final SystemMapping _aSystemMapping, final SystemMappingCompilerTools _aSystemMappingCompilerTools) {
 		return factory.systemMapping_compilerTools_(_aSystemMapping, _aSystemMappingCompilerTools);
+	}
+
+	public BoundVariableDeclarationNode[] allInstVarsForReference_(final Reference _aReference) {
+		if (_aReference == null) {
+			return new BoundVariableDeclarationNode[] {};
+		}
+		return _systemMapping.classMappingAtReference_(_aReference).allInstVarsIn_(_systemMapping);
 	}
 
 	public SystemMappingUpdater compileClassDescriptionNodeNonStatic_(final ClassDescriptionNode _aClassDescriptionNode) {

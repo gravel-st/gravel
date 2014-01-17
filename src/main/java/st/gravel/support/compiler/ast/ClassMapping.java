@@ -50,6 +50,7 @@ public class ClassMapping extends AbstractClassMapping implements Cloneable {
 		return factory.identityMapping_extensions_instVarMappings_classNode_(_anIdentityClassPartMapping, _anArray, _aDictionary, _aClassNode);
 	}
 
+	@Override
 	public BoundVariableDeclarationNode[] allInstVarsIn_(final SystemMapping _aSystemMapping) {
 		final BoundVariableDeclarationNode[] _arr;
 		final ClassMapping _scm;

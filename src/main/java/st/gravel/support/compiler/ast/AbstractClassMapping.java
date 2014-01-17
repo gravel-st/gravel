@@ -10,8 +10,9 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.AbstractMapping;
 import st.gravel.support.compiler.ast.AbstractMapping.AbstractMapping_Factory;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
-import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.SystemMapping;
+import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
+import st.gravel.support.compiler.ast.Reference;
 
 abstract public class AbstractClassMapping extends AbstractMapping implements Cloneable {
 
@@ -25,6 +26,8 @@ abstract public class AbstractClassMapping extends AbstractMapping implements Cl
 			throw new RuntimeException("AbstractClassMapping is an abstract class");
 		}
 	}
+
+	public abstract BoundVariableDeclarationNode[] allInstVarsIn_(final SystemMapping _aSystemMapping);
 
 	public ClassDescriptionNode classNode() {
 		return _classNode;
