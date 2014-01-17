@@ -28,7 +28,6 @@ import st.gravel.support.compiler.ast.SequenceNode;
 import st.gravel.support.compiler.ast.NilLiteralNode;
 import st.gravel.support.compiler.ast.VariableRenamer;
 import st.gravel.support.compiler.ast.LocalWriteNode;
-import st.gravel.support.compiler.ast.BooleanLiteralNode;
 import st.gravel.support.compiler.ast.NonLocalReturnNode;
 import st.gravel.support.compiler.ast.ReturnNode;
 
@@ -109,13 +108,6 @@ public class LiteralSendInliner extends MessageSendRewriter implements Cloneable
 	@Override
 	public LiteralSendInliner initializeSpecialSelectors() {
 		_specialSelectors = new java.util.HashMap<st.gravel.core.Symbol, st.gravel.support.jvm.Block1<Statement, MessageNode>>();
-		_specialSelectors.put(st.gravel.core.Symbol.value("isNil"), new st.gravel.support.jvm.Block1<Statement, MessageNode>() {
-
-			@Override
-			public Statement value_(final MessageNode _node) {
-				return (Statement) LiteralSendInliner.this.produce$underscore$isNil_(_node.receiver());
-			}
-		});
 		_specialSelectors.put(st.gravel.core.Symbol.value("value"), new st.gravel.support.jvm.Block1<Statement, MessageNode>() {
 
 			@Override
@@ -179,13 +171,6 @@ public class LiteralSendInliner extends MessageSendRewriter implements Cloneable
 		_temp = this.newTempName_(_suggestion);
 		this.extraTemp_(_isHolder ? HolderDeclarationNode.factory.name_(_temp) : VariableDeclarationNode.factory.name_(_temp));
 		return VariableNode.factory.name_(_temp);
-	}
-
-	public Expression produce$underscore$isNil_(final Expression _receiver) {
-		if (_receiver.isBlockNode()) {
-			return BooleanLiteralNode.factory.r_false();
-		}
-		return _receiver.send_("isNil");
 	}
 
 	public Statement produce$underscore$value_(final Expression _receiver) {

@@ -398,7 +398,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			_superclassReference = _classDescriptionNode.superclassReference();
 			_superType = ((JVMDefinedObjectType) (_superclassReference == null ? _classDescriptionNode.isMeta() ? JVMDefinedObjectType.factory.objectClass() : JVMDefinedObjectType.factory.object() : _systemMappingUpdater.compilerTools().jvmTypeForClass_(_systemMappingUpdater.systemMapping().classMappingAtReference_(_superclassReference).identityClass())));
 		}
-		_allowBlockInlining = true;
+		_allowBlockInlining = false;
 		return this;
 	}
 

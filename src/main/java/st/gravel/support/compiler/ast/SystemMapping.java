@@ -131,7 +131,7 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			@Override
 			public Object value_(final ClassMapping _cm) {
 				if (_compilerTools.isAssignable_from_(_cm.identityClass(), _receiverClass)) {
-					if ((_best[0]) == null) {
+					if (_best[0] == null) {
 						return _best[0] = _cm;
 					} else {
 						if (_compilerTools.isAssignable_from_(_best[0].identityClass(), _cm.identityClass())) {

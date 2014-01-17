@@ -41,6 +41,10 @@ public class UnaryMethodNode extends MethodNode implements Cloneable {
 			return ((UnaryMethodNode) this.selector_body_returnType_pragmas_protocol_("value", SequenceNode.factory.statement_(ReturnNode.factory.value_(_expression)), null, new PragmaNode[] {}, "evaluating"));
 		}
 
+		public UnaryMethodNode selector_body_(final String _aString, final SequenceNode _aSequenceNode) {
+			return ((UnaryMethodNode) this.selector_body_returnType_pragmas_protocol_nlrMarker_(_aString, _aSequenceNode, null, new PragmaNode[] {}, null, null));
+		}
+
 		@Override
 		public UnaryMethodNode selector_body_returnType_pragmas_protocol_(final String _aString, final SequenceNode _aSequenceNode, final TypeNode _anUndefinedObject, final PragmaNode[] _anArray, final String _protocol) {
 			return ((UnaryMethodNode) this.selector_body_returnType_pragmas_protocol_nlrMarker_(_aString, _aSequenceNode, _anUndefinedObject, _anArray, _protocol, null));
@@ -54,6 +58,10 @@ public class UnaryMethodNode extends MethodNode implements Cloneable {
 
 	static public UnaryMethodNode _returnExpression_(Object receiver, final Expression _expression) {
 		return factory.returnExpression_(_expression);
+	}
+
+	static public UnaryMethodNode _selector_body_(Object receiver, final String _aString, final SequenceNode _aSequenceNode) {
+		return factory.selector_body_(_aString, _aSequenceNode);
 	}
 
 	static public UnaryMethodNode _selector_body_returnType_pragmas_protocol_(Object receiver, final String _aString, final SequenceNode _aSequenceNode, final TypeNode _anUndefinedObject, final PragmaNode[] _anArray, final String _protocol) {

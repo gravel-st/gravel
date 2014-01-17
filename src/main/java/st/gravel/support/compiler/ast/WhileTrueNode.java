@@ -136,6 +136,8 @@ public class WhileTrueNode extends WhileNode implements Cloneable {
 
 	@Override
 	public WhileTrueNode sourceOn_(final StringBuilder _aStream) {
+		_aStream.append(st.gravel.core.Symbol.value(this.getClass().getSimpleName()));
+		_aStream.append(' ');
 		this.innerSourceOn_(_aStream);
 		return this;
 	}

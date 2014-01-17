@@ -135,13 +135,9 @@ public class HolderDeclarationNode extends VariableDeclarationNode implements Cl
 
 	@Override
 	public HolderDeclarationNode sourceOn_(final StringBuilder _aStream) {
-		_aStream.append(_name);
-		if (_type != null) {
-			_aStream.append(' ');
-			_aStream.append("{");
-			_type.innerSourceOn_(_aStream);
-			_aStream.append('}');
-		}
+		_aStream.append('[');
+		super.sourceOn_(_aStream);
+		_aStream.append(']');
 		return this;
 	}
 

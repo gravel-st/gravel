@@ -83,7 +83,7 @@ public class SystemDefinitionNode extends Node implements Cloneable {
 					return (ClassNode) null;
 				}
 			})));
-			if ((_cn[0]) != null) {
+			if (_cn[0] != null) {
 				return _cn[0];
 			}
 		}

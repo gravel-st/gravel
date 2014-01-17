@@ -30,7 +30,6 @@ import st.gravel.support.compiler.ast.IntegerLiteralNode;
 import st.gravel.support.compiler.ast.WhileFalseNode;
 import st.gravel.support.compiler.ast.WhileTrueNode;
 import st.gravel.support.compiler.ast.ArraySizeNode;
-import st.gravel.support.compiler.ast.IsNilNode;
 
 public class IntermediateNodeRewriter extends MessageSendRewriter implements Cloneable {
 
@@ -181,13 +180,6 @@ public class IntermediateNodeRewriter extends MessageSendRewriter implements Clo
 				return (Statement) IntermediateNodeRewriter.this.produce_basicAt_put_(_node.receiver(), _node.arguments()[0], _node.arguments()[1]);
 			}
 		});
-		_specialSelectors.put(st.gravel.core.Symbol.value("isNil"), new st.gravel.support.jvm.Block1<Statement, MessageNode>() {
-
-			@Override
-			public Statement value_(final MessageNode _node) {
-				return (Statement) IntermediateNodeRewriter.this.produce$underscore$isNil_(_node.receiver());
-			}
-		});
 		return this;
 	}
 
@@ -197,10 +189,6 @@ public class IntermediateNodeRewriter extends MessageSendRewriter implements Clo
 
 	public ArraySizeNode produce$underscore$basicSize_(final Expression _expression) {
 		return ArraySizeNode.factory.receiver_(((Expression) this.visit_(_expression)));
-	}
-
-	public IsNilNode produce$underscore$isNil_(final Expression _expression) {
-		return IsNilNode.factory.receiver_(((Expression) this.visit_(_expression)));
 	}
 
 	public WhileFalseNode produce$underscore$whileFalse_(final Expression _testExpr) {

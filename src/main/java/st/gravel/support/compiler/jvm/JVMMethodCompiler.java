@@ -110,6 +110,7 @@ import st.gravel.support.compiler.ast.IdentityComparisonNode;
 import st.gravel.support.compiler.ast.BinaryMessageNode;
 import st.gravel.support.compiler.ast.IfTrueIfFalseNode;
 import st.gravel.support.compiler.jvm.IfThenElse;
+import st.gravel.support.compiler.ast.InlineExpressionCollection;
 import st.gravel.support.compiler.ast.InstanceCreationNode;
 import st.gravel.support.compiler.jvm.DynamicCreateInstance;
 import st.gravel.support.compiler.ast.IntegerLiteralNode;
@@ -575,6 +576,19 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 				})));
 			}
 		}));
+		return this;
+	}
+
+	public JVMMethodCompiler produceStatements_(final Statement[] _statements) {
+		boolean _temp1 = true;
+		for (final Statement _each : _statements) {
+			if (_temp1) {
+				_temp1 = false;
+			} else {
+				JVMMethodCompiler.this.emit_(Pop.factory.basicNew());
+			}
+			JVMMethodCompiler.this.visit_(_each);
+		}
 		return this;
 	}
 
@@ -1076,6 +1090,12 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	}
 
 	@Override
+	public JVMMethodCompiler visitInlineExpressionCollection_(final InlineExpressionCollection _aNode) {
+		this.produceStatements_(_aNode.expressions());
+		return this;
+	}
+
+	@Override
 	public JVMMethodCompiler visitInstanceCreationNode_(final InstanceCreationNode _node) {
 		this.emit_(DynamicCreateInstance.factory.reference_(_node.reference().toString()));
 		return this;
@@ -1231,15 +1251,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		for (final VariableDeclarationNode _each : _anObject.temporaries()) {
 			JVMMethodCompiler.this.visit_(_each);
 		}
-		boolean _temp1 = true;
-		for (final Statement _each : _anObject.statements()) {
-			if (_temp1) {
-				_temp1 = false;
-			} else {
-				JVMMethodCompiler.this.emit_(Pop.factory.basicNew());
-			}
-			JVMMethodCompiler.this.visit_(_each);
-		}
+		this.produceStatements_(_anObject.statements());
 		return this;
 	}
 

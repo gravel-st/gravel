@@ -113,6 +113,8 @@ abstract public class IntermediateNode extends Expression implements Cloneable {
 
 	@Override
 	public IntermediateNode sourceOn_(final StringBuilder _aStream) {
+		_aStream.append(st.gravel.core.Symbol.value(this.getClass().getSimpleName()));
+		_aStream.append(' ');
 		this.innerSourceOn_(_aStream);
 		return this;
 	}
