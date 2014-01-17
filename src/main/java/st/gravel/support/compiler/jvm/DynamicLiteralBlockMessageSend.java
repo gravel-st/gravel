@@ -11,8 +11,6 @@ import st.gravel.support.compiler.jvm.DynamicSend;
 import st.gravel.support.compiler.jvm.DynamicSend.DynamicSend_Factory;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
-import st.gravel.support.compiler.jvm.JVMStack;
-import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class DynamicLiteralBlockMessageSend extends DynamicSend implements Cloneable {
@@ -67,23 +65,6 @@ public class DynamicLiteralBlockMessageSend extends DynamicSend implements Clone
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@Override
-	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
-		final JVMType _aReceiverType;
-		final JVMType[] _anArray;
-		_anArray = st.gravel.support.jvm.ArrayExtensions.reverse(new st.gravel.core.Interval(1, _numArgs).collect_(new st.gravel.support.jvm.Block1<JVMType, Integer>() {
-
-			@Override
-			public JVMType value_(final Integer _i) {
-				return (JVMType) _aJVMStack.pop();
-			}
-		}));
-		_aReceiverType = _aJVMStack.pop();
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, _aReceiverType.isObjectType());
-		_aJVMStack.push_(this.type());
-		return this.withReceiverType_argumentTypes_(_aReceiverType, _anArray);
 	}
 
 	public DynamicLiteralBlockMessageSend_Factory factory() {

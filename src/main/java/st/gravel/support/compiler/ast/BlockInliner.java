@@ -10,7 +10,7 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.jvm.BlockSendArgument;
 import st.gravel.support.compiler.ast.SystemMapping;
-import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
 import st.gravel.support.compiler.ast.Reference;
 import java.util.Map;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
@@ -43,7 +43,7 @@ public class BlockInliner extends Object implements Cloneable {
 
 	Reference _receiverReference;
 
-	JVMDefinedObjectType _selfType;
+	JVMNonPrimitiveType _selfType;
 
 	SystemMapping _systemMapping;
 
@@ -55,12 +55,12 @@ public class BlockInliner extends Object implements Cloneable {
 			return newInstance;
 		}
 
-		public BlockInliner methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(final MethodNode _methodNode, final BlockSendArgument[] _astConstants, final SystemMapping _systemMapping, final String[] _copiedArgumentNames, final JVMDefinedObjectType _selfType, final Reference _receiverReference) {
+		public BlockInliner methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(final MethodNode _methodNode, final BlockSendArgument[] _astConstants, final SystemMapping _systemMapping, final String[] _copiedArgumentNames, final JVMNonPrimitiveType _selfType, final Reference _receiverReference) {
 			return this.basicNew().initializeMethodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(_methodNode, _astConstants, _systemMapping, _copiedArgumentNames, _selfType, _receiverReference);
 		}
 	}
 
-	static public BlockInliner _methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(Object receiver, final MethodNode _methodNode, final BlockSendArgument[] _astConstants, final SystemMapping _systemMapping, final String[] _copiedArgumentNames, final JVMDefinedObjectType _selfType, final Reference _receiverReference) {
+	static public BlockInliner _methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(Object receiver, final MethodNode _methodNode, final BlockSendArgument[] _astConstants, final SystemMapping _systemMapping, final String[] _copiedArgumentNames, final JVMNonPrimitiveType _selfType, final Reference _receiverReference) {
 		return factory.methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(_methodNode, _astConstants, _systemMapping, _copiedArgumentNames, _selfType, _receiverReference);
 	}
 
@@ -70,29 +70,33 @@ public class BlockInliner extends Object implements Cloneable {
 
 	public java.lang.invoke.MethodHandle build() {
 		final MethodNode[] _node;
-		final MethodNode _inlined;
+		MethodNode _inlined;
 		final VariableDeclarationNode[] _arguments;
 		_node = new MethodNode[1];
+		this.log_text_("methodNode: ", _methodNode.sourceString());
 		_node[0] = this.link_(_methodNode);
+		this.log_text_("linked methodNode: ", _node[0].sourceString());
 		for (final String _each : _copiedArgumentNames) {
 			final String _newTempName;
 			_newTempName = BlockInliner.this.newTempName_for_(_each, _node[0]);
 			_copiedArgRenames.put(_each, _newTempName);
-			_node[0] = ((MethodNode) BlockInliner.this.renameVariable_from_to_(_node[0], _each, _newTempName));
 		}
 		_arguments = this.buildMethodNodeArguments_(_node[0]);
-		_node[0] = KeywordMethodNode.factory.selector_arguments_body_(_systemMapping.selectorConverter().selectorForNumArgs_(_arguments.length), _arguments, _node[0].body());
+		_node[0] = KeywordMethodNode.factory.selector_arguments_body_(_systemMapping.selectorConverter().selectorForNumArgs_(_arguments.length), _arguments, _node[0].body()).withNlrMarker_(_node[0].nlrMarker());
 		st.gravel.support.jvm.ArrayExtensions.with_do_(_astConstants, _methodNode.arguments(), new st.gravel.support.jvm.Block2<Object, BlockSendArgument, VariableDeclarationNode>() {
 
 			@Override
 			public Object value_value_(final BlockSendArgument _astConstant, final VariableDeclarationNode _arg) {
 				if (_astConstant != null) {
+					BlockInliner.this.log_text_("block " + _arg.name() + ": ", _astConstant.blockNode().sourceString());
 					return _node[0] = ((MethodNode) VariableNodeReplacer.factory.in_replace_with_(_node[0], _arg.name(), BlockInliner.this.renamedBlockNodeFor_(_astConstant)));
 				}
 				return BlockInliner.this;
 			}
 		});
 		_inlined = LiteralSendInliner.factory.inline_(_node[0]);
+		_inlined = this.link_(_inlined);
+		this.log_text_("inlined: ", _inlined.sourceString());
 		return this.compileMethodNode_(_inlined);
 	}
 
@@ -141,7 +145,7 @@ public class BlockInliner extends Object implements Cloneable {
 		return this;
 	}
 
-	public BlockInliner initializeMethodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(final MethodNode _aMethodNode, final BlockSendArgument[] _anArray, final SystemMapping _anObject, final String[] _anObject1, final JVMDefinedObjectType _anObject2, final Reference _anObject3) {
+	public BlockInliner initializeMethodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(final MethodNode _aMethodNode, final BlockSendArgument[] _anArray, final SystemMapping _anObject, final String[] _anObject1, final JVMNonPrimitiveType _anObject2, final Reference _anObject3) {
 		_methodNode = _aMethodNode;
 		_astConstants = _anArray;
 		_systemMapping = _anObject;
@@ -160,6 +164,10 @@ public class BlockInliner extends Object implements Cloneable {
 		_updater = _systemMapping.newSystemMappingUpdater();
 		_instVars = _updater.allInstVarsForReference_(_receiverReference);
 		return ((MethodNode) _updater.localLink_instVars_ownerReference_owner_(_aMethodNode, _instVars, _receiverReference, _owner));
+	}
+
+	public BlockInliner log_text_(final String _label, final String _aString) {
+		return this;
 	}
 
 	public MethodNode methodNode() {
@@ -184,6 +192,7 @@ public class BlockInliner extends Object implements Cloneable {
 		for (final JVMVariable _cv : _astConstant.copiedVariables()) {
 			_blockNode[0] = ((BlockNode) BlockInliner.this.renameVariable_from_to_(_blockNode[0], _cv.varName(), _copiedArgRenames.get(_cv.varName())));
 		}
+		this.log_text_("renamedBlockNode: ", _blockNode[0].sourceString());
 		return _blockNode[0];
 	}
 

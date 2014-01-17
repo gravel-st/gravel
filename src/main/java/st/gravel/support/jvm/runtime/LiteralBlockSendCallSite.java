@@ -11,6 +11,7 @@ import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.VariableNodeReplacer;
 import st.gravel.support.compiler.jvm.BlockSendArgument;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
+import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
 
 public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 
@@ -37,23 +38,39 @@ public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 
 	@Override
 	protected MethodHandle findMethodForNil() {
-		MethodNode methodNode = ImageBootstrapper.systemMapping
-				.methodMappingForNil_(selector).methodNode();
+		MethodMapping methodMapping = ImageBootstrapper.systemMapping
+				.methodMappingForNil_(selector);
+		if (methodMapping == null) {
+			return createDNUHandleForNil();
+		}
+		MethodNode methodNode = methodMapping.methodNode();
 		return inlineBlocks(methodNode, ImageBootstrapper.systemMapping
 				.nilClassMapping().reference(), JVMDefinedObjectType.factory.object());
 	}
 
 	@Override
 	protected MethodHandle findMethod(Class receiverClass) {
-		MethodNode methodNode = ImageBootstrapper.systemMapping
-				.methodMappingFor_methodName_(receiverClass, selector)
+		MethodMapping methodMapping = ImageBootstrapper.systemMapping
+				.methodMappingFor_methodName_(receiverClass, selector);
+		if (methodMapping == null) {
+			return createDNUHandle(receiverClass).asType(type);
+		}
+		MethodNode methodNode = methodMapping
 				.methodNode();
 		return inlineBlocks(methodNode, ImageBootstrapper.systemMapping
-				.classMappingForJavaClass_(receiverClass).reference(), (JVMDefinedObjectType) ImageBootstrapper.systemMapping.compilerTools().jvmTypeForClass_(receiverClass));
+				.classMappingForJavaClass_(receiverClass).reference(), (JVMNonPrimitiveType) ImageBootstrapper.systemMapping.compilerTools().jvmTypeForClass_(receiverClass));
+	}
+
+	private MethodHandle createDNUHandleForNil() {
+		throw new RuntimeException("niy");
+	}
+
+	private MethodHandle createDNUHandle(Class receiverClass) {
+		throw new RuntimeException("niy");
 	}
 
 	private MethodHandle inlineBlocks(MethodNode methodNode,
-			Reference receiverReference, JVMDefinedObjectType selfType) {
+			Reference receiverReference, JVMNonPrimitiveType selfType) {
 		return BlockInliner.factory
 				.methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(
 						methodNode, astConstants,

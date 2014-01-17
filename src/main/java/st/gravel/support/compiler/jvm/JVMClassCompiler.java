@@ -454,11 +454,27 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		return this;
 	}
 
+	public JVMDefinedObjectType superType() {
+		return _superType;
+	}
+
+	public JVMClassCompiler superType_(final JVMDefinedObjectType _anObject) {
+		_superType = _anObject;
+		return this;
+	}
+
 	public SystemMappingUpdater systemMappingUpdater() {
 		return _systemMappingUpdater;
 	}
 
 	public SystemNode systemNode() {
 		return _systemNode;
+	}
+
+	public JVMClass[] withContainerAndExtraClasses_(final JVMClass _blockClass) {
+		if (!this.hasConstantsOrFieldsOrExtraClasses()) {
+			return st.gravel.support.jvm.ArrayFactory.with_(_blockClass);
+		}
+		return st.gravel.support.jvm.ArrayExtensions.copyWithAll_(this.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(this.createContainerClass(), _blockClass));
 	}
 }

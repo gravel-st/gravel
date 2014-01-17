@@ -11,9 +11,9 @@ import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.JVMInstruction.JVMInstruction_Factory;
 import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
+import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 import st.gravel.support.compiler.jvm.JVMStack;
 import st.gravel.support.compiler.jvm.JVMMethodType;
-import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 
 public class DynamicSend extends JVMInstruction implements Cloneable {
 
@@ -41,6 +41,19 @@ public class DynamicSend extends JVMInstruction implements Cloneable {
 		return _visitor.visitDynamicSend_(this);
 	}
 
+	public JVMType[] argumentTypes() {
+		if (_argumentTypes == null) {
+			return new st.gravel.core.Interval(1, _numArgs).collect_(new st.gravel.support.jvm.Block1<JVMType, Integer>() {
+
+				@Override
+				public JVMType value_(final Integer _i) {
+					return (JVMType) JVMDynamicObjectType.factory.basicNew();
+				}
+			});
+		}
+		return _argumentTypes;
+	}
+
 	public DynamicSend copy() {
 		try {
 			DynamicSend _temp1 = (DynamicSend) this.clone();
@@ -55,16 +68,13 @@ public class DynamicSend extends JVMInstruction implements Cloneable {
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
 		final JVMType _aReceiverType;
 		final JVMType[] _anArray;
-		_anArray = new st.gravel.core.Interval(1, _numArgs).collect_(new st.gravel.support.jvm.Block1<JVMType, Integer>() {
+		_anArray = st.gravel.support.jvm.ArrayExtensions.reverse(new st.gravel.core.Interval(1, _numArgs).collect_(new st.gravel.support.jvm.Block1<JVMType, Integer>() {
 
 			@Override
 			public JVMType value_(final Integer _i) {
-				final JVMType _elemType;
-				_elemType = _aJVMStack.pop();
-				st.gravel.support.jvm.ObjectExtensions.assert_(DynamicSend.this, _elemType.isObjectType());
-				return (JVMType) _elemType;
+				return (JVMType) _aJVMStack.pop();
 			}
-		});
+		}));
 		_aReceiverType = _aJVMStack.pop();
 		st.gravel.support.jvm.ObjectExtensions.assert_(this, _aReceiverType.isObjectType());
 		_aJVMStack.push_(this.type());
@@ -105,8 +115,15 @@ public class DynamicSend extends JVMInstruction implements Cloneable {
 		return this;
 	}
 
+	public JVMType receiverType() {
+		if (_receiverType == null) {
+			return JVMDynamicObjectType.factory.basicNew();
+		}
+		return _receiverType;
+	}
+
 	public JVMMethodType signature() {
-		return JVMMethodType.factory.returnType_arguments_(this.type(), st.gravel.support.jvm.ArrayExtensions.copyWithFirst_(_argumentTypes, _receiverType));
+		return JVMMethodType.factory.returnType_arguments_(this.type(), st.gravel.support.jvm.ArrayExtensions.copyWithFirst_(this.argumentTypes(), this.receiverType()));
 	}
 
 	@Override

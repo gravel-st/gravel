@@ -38,6 +38,7 @@ import st.gravel.support.compiler.ast.NilLiteralNode;
 import st.gravel.support.compiler.jvm.JVMVariable;
 import st.gravel.support.compiler.ast.Parser;
 import st.gravel.support.compiler.ast.MethodNode;
+import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.Expression;
@@ -276,21 +277,19 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 		_jvmClassCompiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), false);
 		_jvmClassCompiler.ownerType_(JVMDefinedObjectType.factory.dottedClassName_("ExpressionContainer$" + _compilerTools.nextExtensionPostfix()));
 		_blockClass = _jvmClassCompiler.compileBlockNoAdd_(_aBlockInnerClass);
-		if (!_jvmClassCompiler.hasConstantsOrFieldsOrExtraClasses()) {
-			return st.gravel.support.jvm.ArrayFactory.with_(_blockClass);
-		}
-		return st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _blockClass));
+		return _jvmClassCompiler.withContainerAndExtraClasses_(_blockClass);
 	}
 
-	public Class compileInlinedMethod_selfType_(final MethodNode _aMethodNode, final JVMDefinedObjectType _selfType) {
+	public Class compileInlinedMethod_selfType_(final MethodNode _aMethodNode, final JVMNonPrimitiveType _selfType) {
 		final JVMClassCompiler _jvmClassCompiler;
 		final JVMClass _inlinedMethodClass;
 		final JVMClass[] _jvmClasses;
 		_jvmClassCompiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), true);
 		_jvmClassCompiler.selfType_(_selfType);
+		_jvmClassCompiler.superType_(JVMDefinedObjectType.factory.object());
 		_jvmClassCompiler.ownerType_(JVMDefinedObjectType.factory.dottedClassName_("InlinedMethod$" + _compilerTools.nextExtensionPostfix()));
 		_inlinedMethodClass = _jvmClassCompiler.compileInlinedMethod_(_aMethodNode);
-		_jvmClasses = st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _inlinedMethodClass));
+		_jvmClasses = st.gravel.support.jvm.ArrayExtensions.copyWith_(_jvmClassCompiler.extraClasses(), _inlinedMethodClass);
 		return this.compileJVMClasses_(_jvmClasses);
 	}
 

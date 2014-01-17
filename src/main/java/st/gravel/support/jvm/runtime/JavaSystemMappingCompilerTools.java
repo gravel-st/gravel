@@ -224,13 +224,8 @@ public final class JavaSystemMappingCompilerTools extends
 			String methodName, int baseNumArgs, Class javaClass,
 			Class _identityClass, boolean isStatic) {
 		int numArgs = baseNumArgs + (isStatic ? 1 : 0);
-		Class[] params = new Class[numArgs];
-		for (int i = 0; i < numArgs; i++) {
-
-			params[i] = i == 0 && isStatic ? _identityClass : Object.class;
-		}
 		Method method = MethodTools.searchForMethod(javaClass, methodName,
-				params, isStatic);
+				numArgs, isStatic);
 		if (method == null) {
 			throw new RuntimeException("Method not found: " + methodName
 					+ " in: " + javaClass);

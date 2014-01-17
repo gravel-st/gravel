@@ -440,16 +440,28 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 	@Override
 	public Void visitDynamicLiteralBlockMessageSend_(
 			DynamicLiteralBlockMessageSend node) {
-		String astConstantsString = ArrayExtensions.join_with_(node.blockSendConstants(), new Block1<String, String>() {
-					
+		String astConstantsString = ArrayExtensions.join_(
+				node.blockSendConstants(), new Block1<String, String>() {
+
 					@Override
 					public String value_(String arg1) {
-						return arg1 == null ? "" : arg1;
+						return (arg1 == null ? "" : arg1) + ';';
 					}
-				} , ",");
-		String copiedArgumentsString = ArrayExtensions.joinWith_(node.copiedArguments(), ",");
+				});
+
+		String copiedArgumentsString = ArrayExtensions.join_(
+				node.copiedArguments(), new Block1<String, String>() {
+
+					@Override
+					public String value_(String arg1) {
+						return arg1 + ';';
+					}
+				});
 		mv.visitInvokeDynamicInsn(node.functionName(), node.signature()
-				.descriptorString(), BootstrapHandles.literalBlockSendBootstrap, node.constantOwner().dottedClassName(), astConstantsString, copiedArgumentsString);
+				.descriptorString(),
+				BootstrapHandles.literalBlockSendBootstrap, node
+						.constantOwner().dottedClassName(), astConstantsString,
+				copiedArgumentsString);
 		return null;
 	}
 

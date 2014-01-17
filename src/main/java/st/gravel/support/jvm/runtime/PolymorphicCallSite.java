@@ -124,10 +124,10 @@ public abstract class PolymorphicCallSite extends BaseCallSite {
 
 	private void addCacheEntry(final Class receiverClass,
 			MethodHandle castHandle) {
-		if (cache.length == 0 && receiverClass != null) {
-			cache = ArrayExtensions.copyWith_(cache, new CacheEntry(null,
-					findMethodForNil()));
-		}
+//		if (cache.length == 0 && receiverClass != null) {
+//			cache = ArrayExtensions.copyWith_(cache, new CacheEntry(null,
+//					findMethodForNil()));
+//		}
 		cache = ArrayExtensions.copyWith_(cache, new CacheEntry(receiverClass,
 				castHandle));
 	}

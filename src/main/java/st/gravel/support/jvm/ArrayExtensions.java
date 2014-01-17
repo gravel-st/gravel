@@ -9,7 +9,7 @@ import st.gravel.support.compiler.ast.SimpleTraitUsageNode;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class ArrayExtensions {
-	
+
 	public static <E> boolean allSatisfy_(E[] receiver, Predicate1<E> predicate) {
 		for (E element : receiver) {
 			if (!predicate.value_(element))
@@ -187,6 +187,10 @@ public class ArrayExtensions {
 		return true;
 	}
 
+	public static <E> String join_(E[] receiver, Block1<String, E> block) {
+		return join_with_(receiver, block, "");
+	}
+
 	public static <E> String join_with_(E[] receiver, Block1<String, E> block,
 			String sepString) {
 		StringBuilder str = new StringBuilder();
@@ -248,11 +252,11 @@ public class ArrayExtensions {
 	}
 
 	public static <E> E[] reverse(E[] receiver) {
-		
+
 		E[] result = receiver.clone();
 		int length = receiver.length;
 		for (int i = 0; i < length; i++) {
-			result[i] = receiver[(length-i)-1];
+			result[i] = receiver[(length - i) - 1];
 		}
 		return result;
 	}

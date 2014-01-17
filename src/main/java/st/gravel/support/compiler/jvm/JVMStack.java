@@ -8,6 +8,8 @@ package st.gravel.support.compiler.jvm;
 import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMType;
+import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
+import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 
 public class JVMStack extends Object implements Cloneable {
 
@@ -80,7 +82,7 @@ public class JVMStack extends Object implements Cloneable {
 	public JVMStack popType_(final JVMType _aJVMType) {
 		final JVMType _last;
 		_last = _aJVMType.isWide() ? this.popWide() : this.pop();
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.ObjectExtensions.equals_(_last, _aJVMType));
+		st.gravel.support.jvm.ObjectExtensions.assert_(this, st.gravel.support.jvm.ObjectExtensions.equals_(_last, _aJVMType) || (st.gravel.support.jvm.ObjectExtensions.equals_(_last, JVMDynamicObjectType.factory.basicNew()) && st.gravel.support.jvm.ObjectExtensions.equals_(_aJVMType, JVMDefinedObjectType.factory.object())));
 		return this;
 	}
 

@@ -10,6 +10,7 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.DynamicSend;
 import st.gravel.support.compiler.jvm.DynamicSend.DynamicSend_Factory;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
+import st.gravel.support.compiler.jvm.JVMMethodType;
 import st.gravel.support.compiler.jvm.JVMType;
 
 public class DynamicSuperSend extends DynamicSend implements Cloneable {
@@ -84,6 +85,11 @@ public class DynamicSuperSend extends DynamicSend implements Cloneable {
 	public DynamicSuperSend pvtSetReceiverType_(final JVMType _aJVMObjectType) {
 		_receiverType = _aJVMObjectType;
 		return this;
+	}
+
+	@Override
+	public JVMMethodType signature() {
+		return JVMMethodType.factory.dynamic_((_numArgs + 1));
 	}
 
 	@Override

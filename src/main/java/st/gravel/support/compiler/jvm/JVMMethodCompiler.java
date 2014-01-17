@@ -417,7 +417,19 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 			public boolean value_(final Expression _e) {
 				return _e.isBlockNode();
 			}
-		})) {
+		}) && (!st.gravel.support.jvm.ArrayExtensions.anySatisfy_(_messageNode.arguments(), new st.gravel.support.jvm.Predicate1<Expression>() {
+
+			@Override
+			public boolean value_(final Expression _e) {
+				return _e.isBlockNode() && _e.allNodesContains_(((st.gravel.support.jvm.Block1<Boolean, Node>) (new st.gravel.support.jvm.Block1<Boolean, Node>() {
+
+					@Override
+					public Boolean value_(final Node _n) {
+						return (boolean) _n.isSuperNode();
+					}
+				})));
+			}
+		}))) {
 			return JVMMethodCompiler.this.produceBlockInlineMessageSend_(_messageNode);
 		}
 		for (final Expression _arg : _messageNode.arguments()) {
@@ -1124,16 +1136,32 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	@Override
 	public JVMMethodCompiler visitMethodNode_(final MethodNode _aMethodNode) {
 		final String[] _prim;
+		final JVMType[] _argumentTypes;
 		this.reset();
 		_methodName = _parent.selectorConverter().selectorAsFunctionName_(st.gravel.core.Symbol.value(_aMethodNode.selector()));
-		_signature = JVMMethodType.factory.dynamic_(_aMethodNode.numArgs());
+		_argumentTypes = st.gravel.support.jvm.ArrayExtensions.collect_(_aMethodNode.arguments(), new st.gravel.support.jvm.Block1<JVMType, VariableDeclarationNode>() {
+
+			@Override
+			public JVMType value_(final VariableDeclarationNode _arg) {
+				if (_arg.isHolderDeclarationNode()) {
+					return JVMArrayType.factory.elementType_(JVMDynamicObjectType.factory.basicNew());
+				} else {
+					return JVMDynamicObjectType.factory.basicNew();
+				}
+			}
+		});
+		_signature = JVMMethodType.factory.returnType_arguments_(JVMDynamicObjectType.factory.basicNew(), _argumentTypes);
 		if (_isStatic) {
 			_signature = _signature.copyWithFirst_(JVMDynamicObjectType.factory.basicNew());
 		}
 		this.pushLocal_("self");
-		for (final VariableDeclarationNode _each : _aMethodNode.arguments()) {
-			JVMMethodCompiler.this.pushLocal_(_each.name());
-		}
+		st.gravel.support.jvm.ArrayExtensions.with_do_(_aMethodNode.arguments(), _argumentTypes, new st.gravel.support.jvm.Block2<Object, VariableDeclarationNode, JVMType>() {
+
+			@Override
+			public Object value_value_(final VariableDeclarationNode _each, final JVMType _type) {
+				return JVMMethodCompiler.this.pushLocal_type_(_each.name(), _type);
+			}
+		});
 		_prim = _aMethodNode.primitiveIn_(_parent.selfType().dottedClassName());
 		if (_prim != null) {
 			return JVMMethodCompiler.this.producePrimitive_def_(_aMethodNode, _prim);
@@ -1160,7 +1188,6 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 
 	@Override
 	public JVMMethodCompiler visitNonLocalReturnNode_(final NonLocalReturnNode _returnNode) {
-		st.gravel.support.jvm.ObjectExtensions.assert_(this, _isBlock);
 		this.emit_(NewInstance.factory.type_(JVMDefinedObjectType.factory.nonLocalReturn()));
 		this.emit_(Dup.factory.basicNew());
 		this.visit_(_returnNode.value());
