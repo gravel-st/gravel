@@ -4,6 +4,10 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.MethodHandles.Lookup;
 
+import st.gravel.support.compiler.ast.BlockInliner;
+import st.gravel.support.compiler.ast.MethodMapping;
+import st.gravel.support.compiler.ast.MethodNode;
+import st.gravel.support.compiler.ast.VariableNodeReplacer;
 import st.gravel.support.compiler.jvm.BlockSendArgument;
 
 public class LiteralBlockSendCallSite extends PolymorphicCallSite {
@@ -27,12 +31,20 @@ public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 
 	@Override
 	protected MethodHandle findMethodForNil() {
-		throw new RuntimeException("niy");
+		MethodNode methodNode = ImageBootstrapper.systemMapping
+				.methodMappingForNil_(selector).methodNode();
+		return inlineBlocks(methodNode);
 	}
 
 	@Override
 	protected MethodHandle findMethod(Class receiverClass) {
-		throw new RuntimeException("niy");
+		MethodNode methodNode = ImageBootstrapper.systemMapping
+				.methodMappingFor_methodName_(receiverClass, selector).methodNode();
+		return inlineBlocks(methodNode);
+	}
+
+	private MethodHandle inlineBlocks(MethodNode methodNode) {
+		return BlockInliner.factory.methodNode_astConstants_(methodNode, astConstants).build();
 	}
 
 }

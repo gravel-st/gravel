@@ -42,6 +42,7 @@ import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.Expression;
 import java.util.Date;
 import st.gravel.support.compiler.ast.AbstractMethodMapping;
+import st.gravel.support.compiler.ast.MethodMapping;
 import st.gravel.support.compiler.ast.NamespaceNode;
 import java.util.Map;
 import java.util.Map.*;
@@ -429,6 +430,22 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			return null;
 		}
 		return _methodMapping.methodHandle();
+	}
+
+	public MethodMapping methodMappingForNil_(final String _methodName) {
+		final st.gravel.core.Symbol _sel;
+		final ClassMapping _classMapping;
+		_classMapping = this.nilClassMapping();
+		_sel = _selectorConverter.functionNameAsSelector_(_methodName);
+		return ((MethodMapping) this.methodMappingFrom_selector_(_classMapping, _sel));
+	}
+
+	public MethodMapping methodMappingFor_methodName_(final Class _receiverClass, final String _methodName) {
+		final st.gravel.core.Symbol _sel;
+		final ClassMapping _classMapping;
+		_classMapping = this.classMappingForJavaClass_(_receiverClass);
+		_sel = _selectorConverter.functionNameAsSelector_(_methodName);
+		return ((MethodMapping) this.methodMappingFrom_selector_(_classMapping, _sel));
 	}
 
 	public AbstractMethodMapping methodMappingFrom_selector_(final ClassMapping _classMapping, final st.gravel.core.Symbol _sel) {
