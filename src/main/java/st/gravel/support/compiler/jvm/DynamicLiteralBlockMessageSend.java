@@ -23,6 +23,8 @@ public class DynamicLiteralBlockMessageSend extends DynamicSend implements Clone
 
 	JVMDefinedObjectType _constantOwner;
 
+	String[] _copiedArguments;
+
 	public static class DynamicLiteralBlockMessageSend_Factory extends DynamicSend_Factory {
 
 		public DynamicLiteralBlockMessageSend basicNew() {
@@ -31,13 +33,13 @@ public class DynamicLiteralBlockMessageSend extends DynamicSend implements Clone
 			return newInstance;
 		}
 
-		public DynamicLiteralBlockMessageSend functionName_numArgs_blockSendConstants_constantOwner_(final String _aString, final int _anInteger, final String[] _anArray, final JVMDefinedObjectType _aJVMDefinedObjectType) {
-			return this.basicNew().initializeFunctionName_numArgs_blockSendConstants_constantOwner_(_aString, _anInteger, _anArray, _aJVMDefinedObjectType);
+		public DynamicLiteralBlockMessageSend functionName_numArgs_blockSendConstants_constantOwner_copiedArguments_(final String _aString, final int _anInteger, final String[] _anArray, final JVMDefinedObjectType _aJVMDefinedObjectType, final String[] _anObject) {
+			return this.basicNew().initializeFunctionName_numArgs_blockSendConstants_constantOwner_copiedArguments_(_aString, _anInteger, _anArray, _aJVMDefinedObjectType, _anObject);
 		}
 	}
 
-	static public DynamicLiteralBlockMessageSend _functionName_numArgs_blockSendConstants_constantOwner_(Object receiver, final String _aString, final int _anInteger, final String[] _anArray, final JVMDefinedObjectType _aJVMDefinedObjectType) {
-		return factory.functionName_numArgs_blockSendConstants_constantOwner_(_aString, _anInteger, _anArray, _aJVMDefinedObjectType);
+	static public DynamicLiteralBlockMessageSend _functionName_numArgs_blockSendConstants_constantOwner_copiedArguments_(Object receiver, final String _aString, final int _anInteger, final String[] _anArray, final JVMDefinedObjectType _aJVMDefinedObjectType, final String[] _anObject) {
+		return factory.functionName_numArgs_blockSendConstants_constantOwner_copiedArguments_(_aString, _anInteger, _anArray, _aJVMDefinedObjectType, _anObject);
 	}
 
 	@Override
@@ -51,6 +53,10 @@ public class DynamicLiteralBlockMessageSend extends DynamicSend implements Clone
 
 	public JVMDefinedObjectType constantOwner() {
 		return _constantOwner;
+	}
+
+	public String[] copiedArguments() {
+		return _copiedArguments;
 	}
 
 	public DynamicLiteralBlockMessageSend copy() {
@@ -84,11 +90,12 @@ public class DynamicLiteralBlockMessageSend extends DynamicSend implements Clone
 		return factory;
 	}
 
-	public DynamicLiteralBlockMessageSend initializeFunctionName_numArgs_blockSendConstants_constantOwner_(final String _aString, final int _anInteger, final String[] _anArray, final JVMDefinedObjectType _aJVMDefinedObjectType) {
+	public DynamicLiteralBlockMessageSend initializeFunctionName_numArgs_blockSendConstants_constantOwner_copiedArguments_(final String _aString, final int _anInteger, final String[] _anArray, final JVMDefinedObjectType _aJVMDefinedObjectType, final String[] _anObject) {
 		_functionName = _aString;
 		_numArgs = _anInteger;
 		_blockSendConstants = _anArray;
 		_constantOwner = _aJVMDefinedObjectType;
+		_copiedArguments = _anObject;
 		this.initialize();
 		return this;
 	}

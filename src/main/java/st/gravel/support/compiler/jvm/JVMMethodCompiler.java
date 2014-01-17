@@ -353,12 +353,15 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 
 	public JVMMethodCompiler produceBlockInlineMessageSend_(final MessageNode _messageNode) {
 		final st.gravel.core.Symbol _selector;
-		final int[] _numArgs;
 		final String[][] _blockSendConstants;
-		_numArgs = new int[1];
+		final int[] _passedNumArgs;
+		final JVMVariable[][] _argumentsToCopy;
+		_argumentsToCopy = new JVMVariable[1][];
 		_blockSendConstants = new String[1][];
-		_numArgs[0] = 0;
+		_passedNumArgs = new int[1];
 		_blockSendConstants[0] = new String[] {};
+		_argumentsToCopy[0] = new JVMVariable[] {};
+		_passedNumArgs[0] = 0;
 		for (final Node _arg : _messageNode.arguments()) {
 			if (_arg.isBlockNode()) {
 				final BlockNode _blockNode;
@@ -366,20 +369,30 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 				_blockNode = ((BlockNode) _arg);
 				_nCopiedVariables = JVMMethodCompiler.this.copiedVariablesForBlockNode_(_blockNode);
 				for (final JVMVariable _each : _nCopiedVariables) {
-					_numArgs[0] = ((_numArgs[0]) + 1);
-					JVMMethodCompiler.this.produceVarRead_(_each.varName());
-					JVMMethodCompiler.this.ensureCast_(_each.type());
+					if (!st.gravel.support.jvm.ArrayExtensions.includes_(_argumentsToCopy[0], _each)) {
+						_argumentsToCopy[0] = st.gravel.support.jvm.ArrayExtensions.copyWith_(_argumentsToCopy[0], _each);
+					}
 				}
 				_blockSendConstants[0] = st.gravel.support.jvm.ArrayExtensions.copyWith_(_blockSendConstants[0], JVMMethodCompiler.this.addASTConstant_(BlockSendArgument.factory.blockNode_copiedVariables_(_blockNode, _nCopiedVariables)));
 			} else {
-				_numArgs[0] = ((_numArgs[0]) + 1);
+				_passedNumArgs[0] = ((_passedNumArgs[0]) + 1);
 				JVMMethodCompiler.this.visit_(_arg);
 				JVMMethodCompiler.this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
 				_blockSendConstants[0] = st.gravel.support.jvm.ArrayExtensions.copyWith_(_blockSendConstants[0], null);
 			}
 		}
+		for (final JVMVariable _each : _argumentsToCopy[0]) {
+			JVMMethodCompiler.this.produceVarRead_(_each.varName());
+			JVMMethodCompiler.this.ensureCast_(_each.type());
+		}
 		_selector = st.gravel.core.Symbol.value(_messageNode.selector());
-		this.emit_(DynamicLiteralBlockMessageSend.factory.functionName_numArgs_blockSendConstants_constantOwner_(_parent.selectorConverter().selectorAsFunctionName_(_selector), _numArgs[0], _blockSendConstants[0], _parent.ownerType()));
+		this.emit_(DynamicLiteralBlockMessageSend.factory.functionName_numArgs_blockSendConstants_constantOwner_copiedArguments_(_parent.selectorConverter().selectorAsFunctionName_(_selector), ((_passedNumArgs[0]) + _argumentsToCopy[0].length), _blockSendConstants[0], _parent.ownerType(), st.gravel.support.jvm.ArrayExtensions.collect_(_argumentsToCopy[0], ((st.gravel.support.jvm.Block1<String, JVMVariable>) (new st.gravel.support.jvm.Block1<String, JVMVariable>() {
+
+			@Override
+			public String value_(final JVMVariable _each) {
+				return (String) _each.varName();
+			}
+		})))));
 		return this;
 	}
 

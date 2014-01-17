@@ -27,10 +27,10 @@ public class MethodLinker {
 	}
 	
 	public static CallSite literalBlockSendBootstrap(final Lookup lookup, String selector,
-			MethodType type, String ownerType, String astConstantNames) throws Throwable {
+			MethodType type, String ownerType, String astConstantString, String copiedArgumentsString) throws Throwable {
 		
 		final Class<?> ownerClass = ImageBootstrapper.systemMapping.compilerTools().classForName_(ownerType);
-		BlockSendArgument[] astConstants = ArrayExtensions.collect_(StringExtensions.tokensBasedOn_(astConstantNames, ','), new Block1<BlockSendArgument, String>() {
+		BlockSendArgument[] astConstants = ArrayExtensions.collect_(StringExtensions.tokensBasedOn_(astConstantString, ','), new Block1<BlockSendArgument, String>() {
 			
 			@Override
 			public BlockSendArgument value_(String constantName)  {
@@ -42,8 +42,8 @@ public class MethodLinker {
 				}
 			}
 		});
-		
-		BaseCallSite site = LiteralBlockSendCallSite.newInstance(lookup, type, selector, astConstants);
+		String[] copiedArgumentNames = StringExtensions.tokensBasedOn_(copiedArgumentsString, ',');
+		BaseCallSite site = LiteralBlockSendCallSite.newInstance(lookup, type, selector, astConstants, copiedArgumentNames);
 		return site;
 	}
 

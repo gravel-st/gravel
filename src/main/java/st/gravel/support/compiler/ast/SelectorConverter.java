@@ -223,4 +223,17 @@ public class SelectorConverter extends Object implements Cloneable {
 		}
 		return ((String) _temp1);
 	}
+
+	public String selectorForNumArgs_(final int _numArgs) {
+		if (st.gravel.support.jvm.IntegerExtensions.equals_(_numArgs, 0)) {
+			return "value";
+		}
+		return new st.gravel.core.Interval(1, _numArgs).join_(((st.gravel.support.jvm.Block1<String, Integer>) (new st.gravel.support.jvm.Block1<String, Integer>() {
+
+			@Override
+			public String value_(final Integer _i) {
+				return (String) "value:";
+			}
+		})));
+	}
 }

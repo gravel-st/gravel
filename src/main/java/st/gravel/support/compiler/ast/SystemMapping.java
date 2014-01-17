@@ -37,6 +37,7 @@ import st.gravel.support.compiler.ast.VariableAccessToFieldAccessConverter;
 import st.gravel.support.compiler.ast.NilLiteralNode;
 import st.gravel.support.compiler.jvm.JVMVariable;
 import st.gravel.support.compiler.ast.Parser;
+import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.ClassDescriptionNode;
 import st.gravel.support.compiler.ast.ClassNode;
 import st.gravel.support.compiler.ast.Expression;
@@ -48,7 +49,6 @@ import java.util.Map;
 import java.util.Map.*;
 import st.gravel.support.compiler.ast.AnonymousMethodMapping;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
-import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.EmptyTraitUsageNode;
 import st.gravel.support.compiler.ast.IdentityClassPartMapping;
 import st.gravel.support.compiler.ast.ExtensionClassPartMapping;
@@ -252,17 +252,8 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 
 	public Class compileAndWriteExpression_reference_(final Node _anExpression, final Reference _aReference) {
 		final JVMClass[] _jvmClasses;
-		final Class[] _last;
-		_last = new Class[1];
 		_jvmClasses = this.compileExpression_reference_(_anExpression, _aReference);
-		_last[0] = null;
-		for (final JVMClass _jvmClass : _jvmClasses) {
-			_last[0] = _compilerTools.writeClass_(_jvmClass);
-		}
-		for (final JVMClass _jvmClass : _jvmClasses) {
-			_compilerTools.runAstInit_(_jvmClass);
-		}
-		return _last[0];
+		return this.compileJVMClasses_(_jvmClasses);
 	}
 
 	public JVMClass[] compileExpressionSource_(final String _source) {
@@ -289,6 +280,30 @@ public class SystemMapping extends AbstractMapping implements Cloneable {
 			return st.gravel.support.jvm.ArrayFactory.with_(_blockClass);
 		}
 		return st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _blockClass));
+	}
+
+	public Class compileInlinedMethod_(final MethodNode _aMethodNode) {
+		final JVMClassCompiler _jvmClassCompiler;
+		final JVMClass _inlinedMethodClass;
+		final JVMClass[] _jvmClasses;
+		_jvmClassCompiler = JVMClassCompiler.factory.classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(null, _systemNode, this.newSystemMappingUpdater(), true);
+		_jvmClassCompiler.ownerType_(JVMDefinedObjectType.factory.dottedClassName_("InlinedMethod$" + _compilerTools.nextExtensionPostfix()));
+		_inlinedMethodClass = _jvmClassCompiler.compileInlinedMethod_(_aMethodNode);
+		_jvmClasses = st.gravel.support.jvm.ArrayExtensions.copyWithAll_(_jvmClassCompiler.extraClasses(), st.gravel.support.jvm.ArrayFactory.with_with_(_jvmClassCompiler.createContainerClass(), _inlinedMethodClass));
+		return this.compileJVMClasses_(_jvmClasses);
+	}
+
+	public Class compileJVMClasses_(final JVMClass[] _jvmClasses) {
+		final Class[] _last;
+		_last = new Class[1];
+		_last[0] = null;
+		for (final JVMClass _jvmClass : _jvmClasses) {
+			_last[0] = _compilerTools.writeClass_(_jvmClass);
+		}
+		for (final JVMClass _jvmClass : _jvmClasses) {
+			_compilerTools.runAstInit_(_jvmClass);
+		}
+		return _last[0];
 	}
 
 	public SystemMappingCompilerTools compilerTools() {

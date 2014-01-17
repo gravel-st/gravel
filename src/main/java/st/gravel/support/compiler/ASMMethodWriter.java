@@ -447,8 +447,9 @@ public class ASMMethodWriter extends JVMInstructionVisitor<Void> implements
 						return arg1 == null ? "" : arg1;
 					}
 				} , ",");
+		String copiedArgumentsString = ArrayExtensions.joinWith_(node.copiedArguments(), ",");
 		mv.visitInvokeDynamicInsn(node.functionName(), node.signature()
-				.descriptorString(), BootstrapHandles.literalBlockSendBootstrap, node.constantOwner().dottedClassName(), astConstantsString);
+				.descriptorString(), BootstrapHandles.literalBlockSendBootstrap, node.constantOwner().dottedClassName(), astConstantsString, copiedArgumentsString);
 		return null;
 	}
 

@@ -13,20 +13,22 @@ import st.gravel.support.compiler.jvm.BlockSendArgument;
 public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 
 	private final BlockSendArgument[] astConstants;
+	private final String[] copiedArgumentNames;
 
 	public static BaseCallSite newInstance(Lookup lookup, MethodType type,
-			String selector, BlockSendArgument[] astConstants) {
+			String selector, BlockSendArgument[] astConstants, String[] copiedArgumentNames) {
 		BaseCallSite callsite = new LiteralBlockSendCallSite(lookup, type,
-				selector, astConstants);
+				selector, astConstants, copiedArgumentNames);
 		BaseCallSite.register(callsite);
 
 		return callsite;
 	}
 
 	private LiteralBlockSendCallSite(Lookup lookup, MethodType type,
-			String selector, BlockSendArgument[] astConstants) {
+			String selector, BlockSendArgument[] astConstants, String[] copiedArgumentNames) {
 		super(lookup, type, selector);
 		this.astConstants = astConstants;
+		this.copiedArgumentNames = copiedArgumentNames;
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 	}
 
 	private MethodHandle inlineBlocks(MethodNode methodNode) {
-		return BlockInliner.factory.methodNode_astConstants_(methodNode, astConstants).build();
+		return BlockInliner.factory.methodNode_astConstants_systemMapping_copiedArgumentNames_(methodNode, astConstants, ImageBootstrapper.systemMapping, copiedArgumentNames).build();
 	}
 
 }

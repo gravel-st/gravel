@@ -276,6 +276,15 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		return this;
 	}
 
+	public JVMClass compileInlinedMethod_(final MethodNode _aMethodNode) {
+		if (_ownerType == null) {
+			_ownerType = ((JVMDefinedObjectType) _selfType);
+		}
+		this.compileMethod_(_aMethodNode);
+		this.compileBlocks();
+		return this.createContainerClass();
+	}
+
 	public JVMClassCompiler compileMethod_(final MethodNode _aMethodNode) {
 		JVMMethodCompiler _temp1 = JVMMethodCompiler.factory.parent_(this);
 		_temp1.visit_(_aMethodNode);
