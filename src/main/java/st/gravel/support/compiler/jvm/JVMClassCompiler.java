@@ -87,6 +87,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 
 	public static class JVMClassCompiler_Factory extends st.gravel.support.jvm.SmalltalkFactory {
 
+		public boolean allowBlockInliningDefault() {
+			return false;
+		}
+
 		public JVMClassCompiler basicNew() {
 			JVMClassCompiler newInstance = new JVMClassCompiler();
 			newInstance.initialize();
@@ -96,6 +100,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 		public JVMClassCompiler classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(final ClassDescriptionNode _aClassDescriptionNode, final SystemNode _aSystemNode, final SystemMappingUpdater _aSystemMappingUpdater, final boolean _anObject) {
 			return this.basicNew().initializeClassDescriptionNode_systemNode_systemMappingUpdater_isStatic_(_aClassDescriptionNode, _aSystemNode, _aSystemMappingUpdater, _anObject);
 		}
+	}
+
+	static public boolean _allowBlockInliningDefault(Object receiver) {
+		return factory.allowBlockInliningDefault();
 	}
 
 	static public JVMClassCompiler _classDescriptionNode_systemNode_systemMappingUpdater_isStatic_(Object receiver, final ClassDescriptionNode _aClassDescriptionNode, final SystemNode _aSystemNode, final SystemMappingUpdater _aSystemMappingUpdater, final boolean _anObject) {
@@ -398,7 +406,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			_superclassReference = _classDescriptionNode.superclassReference();
 			_superType = ((JVMDefinedObjectType) (_superclassReference == null ? _classDescriptionNode.isMeta() ? JVMDefinedObjectType.factory.objectClass() : JVMDefinedObjectType.factory.object() : _systemMappingUpdater.compilerTools().jvmTypeForClass_(_systemMappingUpdater.systemMapping().classMappingAtReference_(_superclassReference).identityClass())));
 		}
-		_allowBlockInlining = false;
+		_allowBlockInlining = this.factory().allowBlockInliningDefault();
 		return this;
 	}
 

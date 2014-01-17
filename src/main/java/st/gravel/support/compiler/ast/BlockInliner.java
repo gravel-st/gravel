@@ -226,7 +226,6 @@ public class BlockInliner extends Object implements Cloneable {
 	}
 
 	public BlockInliner log_text_(final String _label, final String _aString) {
-		System.out.println(_label + _aString);
 		return this;
 	}
 
