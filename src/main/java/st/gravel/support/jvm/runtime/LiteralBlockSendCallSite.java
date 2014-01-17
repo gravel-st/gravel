@@ -5,13 +5,17 @@ import java.lang.invoke.MethodType;
 import java.lang.invoke.MethodHandles.Lookup;
 
 import st.gravel.support.compiler.ast.BlockInliner;
+import st.gravel.support.compiler.ast.BlockInlinerNonOptimized;
 import st.gravel.support.compiler.ast.MethodMapping;
 import st.gravel.support.compiler.ast.MethodNode;
+import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.VariableNodeReplacer;
 import st.gravel.support.compiler.jvm.BlockSendArgument;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.jvm.JVMNonPrimitiveType;
+import st.gravel.support.jvm.ArrayExtensions;
+import st.gravel.support.jvm.Block1;
 
 public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 
@@ -71,11 +75,26 @@ public class LiteralBlockSendCallSite extends PolymorphicCallSite {
 
 	private MethodHandle inlineBlocks(MethodNode methodNode,
 			Reference receiverReference, JVMNonPrimitiveType selfType) {
-		return BlockInliner.factory
+		BlockInliner blockInliner = BlockInliner.factory
 				.methodNode_astConstants_systemMapping_copiedArgumentNames_selfType_receiverReference_(
 						methodNode, astConstants,
 						ImageBootstrapper.systemMapping, copiedArgumentNames,
-						selfType , receiverReference).build();
+						selfType , receiverReference);
+		if (!isOptimizable(methodNode)) {
+			return blockInliner.buildNonOptimized();
+		}
+		return blockInliner.build();
+	}
+
+	private boolean isOptimizable(MethodNode methodNode) {
+		Block1<Boolean, Node> _aBlock = new Block1<Boolean, Node>() {
+			
+			@Override
+			public Boolean value_(Node arg1) {
+				return arg1.isSuperNode();
+			}
+		};
+		return !(methodNode.allNodesContains_(_aBlock ));
 	}
 
 }
