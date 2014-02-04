@@ -173,6 +173,10 @@ abstract public class JVMType extends JVMNode implements Cloneable {
 		return false;
 	}
 
+	public boolean isPrimitiveType() {
+		return false;
+	}
+
 	public boolean isVoidType() {
 		return false;
 	}

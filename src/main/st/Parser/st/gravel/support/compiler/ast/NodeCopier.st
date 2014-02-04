@@ -179,7 +179,10 @@ visitExpression: anObject {Expression} {^Expression}
 (reader addMethod: 'visiting')
 !
 visitFieldReadNode: anObject {FieldReadNode} {^Expression}
-	^FieldReadNode owner: (self visit: anObject owner) field: anObject field
+	^FieldReadNode
+		owner: (self visit: anObject owner)
+		field: anObject field
+		type: (self visit: anObject type)
 !
 (reader addMethod: 'visiting')
 !
@@ -187,6 +190,7 @@ visitFieldWriteNode: anObject {FieldWriteNode} {^FieldWriteNode}
 	^FieldWriteNode
 		owner: (self visit: anObject owner)
 		field: anObject field
+		type: (self visit: anObject type)
 		value: (self visit: anObject value)
 !
 (reader addMethod: 'visiting')

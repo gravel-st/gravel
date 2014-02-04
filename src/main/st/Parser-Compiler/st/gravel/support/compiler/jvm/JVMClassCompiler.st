@@ -169,9 +169,7 @@ compileClassNode {^JVMClass}
 			fields add: (JVMField
 						ownerType: ownerType
 						varName: each name
-						type: (each type isNil
-								ifTrue: [JVMDynamicObjectType new]
-								ifFalse: [TypeNodeToJVMTypeConverter visit: each type])
+						type: (TypeNodeToJVMTypeConverter visit: each type)
 						isStatic: false)].
 	self compileBlocks.
 	^self createContainerClass

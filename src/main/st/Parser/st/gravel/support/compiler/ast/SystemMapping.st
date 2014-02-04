@@ -132,7 +132,7 @@ compileExpression: anExpression {Node} reference: aReference {Reference} {^Arr[J
 	intermediate := IntermediateNodeRewriter visit: (BlockNode expression: anExpression).
 	holderized := NonLocalTempWritesToHolderConverter visit: intermediate.
 	fieldAccessed := (VariableAccessToFieldAccessConverter
-				instVarNames: #()
+				instVars: #()
 				owner: NilLiteralNode new
 				ownerReference: aReference) visit: holderized.
 	ownerType := JVMDefinedObjectType

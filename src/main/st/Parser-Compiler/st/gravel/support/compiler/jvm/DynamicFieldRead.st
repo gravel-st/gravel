@@ -2,6 +2,8 @@
 !
 (reader addInstVar: 'name' type: 'String')
 !
+(reader addInstVar: 'type' type: 'JVMType')
+!
 (reader addMethod: 'visitor')
 !
 accept: visitor {JVMInstructionVisitor[X def]} {^X}
@@ -16,27 +18,28 @@ effectStack: aJVMStack {JVMStack} {^JVMInstruction}
 !
 (reader addMethod: 'initialize-release')
 !
-initializeName: aString {Str} {^Self}
+initializeName: aString {Str} type: aJVMDynamicObjectType {JVMType} {^Self}
 	name := aString.
+	type := aJVMDynamicObjectType.
 	self initialize
 !
 (reader addMethod: 'As yet unclassified')
 !
 methodType {^JVMMethodType}
-	^JVMMethodType returnType: self type dynamic: 1
+	^JVMMethodType returnType: type arguments: (Array with: JVMDynamicObjectType new)
 !
 (reader addMethod: 'accessing')
 !
 name {^Str}
 	^name
 !
-(reader addMethod: 'As yet unclassified')
+(reader addMethod: 'accessing')
 !
 type {^JVMType}
-	^JVMDynamicObjectType new
+	^type
 !
 (reader addClassMethod: 'instance creation')
 !
-name: aString {Str} {^DynamicFieldRead}
-	^self new initializeName: aString
+name: aString {Str} type: aJVMDynamicObjectType {JVMType} {^DynamicFieldRead}
+	^self new initializeName: aString type: aJVMDynamicObjectType
 !

@@ -56,7 +56,10 @@ renameDefinition: aString {Str} {^Str}
 (reader addMethod: 'visiting')
 !
 visitFieldReadNode: anObject {FieldReadNode} {^FieldReadNode}
-	^FieldReadNode owner: (self visit: anObject owner) field: (self rename: anObject field)
+	^FieldReadNode
+		owner: (self visit: anObject owner)
+		field: (self rename: anObject field)
+		type: (self visit: anObject type)
 !
 (reader addMethod: 'visiting')
 !
@@ -64,6 +67,7 @@ visitFieldWriteNode: anObject {FieldWriteNode} {^FieldWriteNode}
 	^FieldWriteNode
 		owner: (self visit: anObject owner)
 		field: (self rename: anObject field)
+		type: (self visit: anObject type)
 		value: (self visit: anObject value)
 !
 (reader addMethod: 'visiting')

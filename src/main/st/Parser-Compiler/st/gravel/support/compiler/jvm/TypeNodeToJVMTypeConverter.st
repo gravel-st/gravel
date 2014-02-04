@@ -2,7 +2,7 @@
 !
 (reader addMethod: 'visiting')
 !
-visitTypeNode: anObject {TypeVariableNode} {^JVMType}
+visitTypeNode: anObject {TypeNode} {^JVMType}
 	^JVMDynamicObjectType new
 !
 (reader addMethod: 'visiting')
@@ -21,4 +21,10 @@ supertype
 !
 typeParameters
 	^#()
+!
+(reader addClassMethod: 'As yet unclassified')
+!
+visit: anObject {Node} {^JVMType}
+	anObject isNil ifTrue: [^JVMDynamicObjectType new].
+	^self new visit: anObject
 !

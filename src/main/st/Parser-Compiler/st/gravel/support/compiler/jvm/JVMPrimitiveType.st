@@ -10,3 +10,8 @@ accept: visitor {JVMNodeVisitor[X def]} {^X}
 descriptorOn: aStream {WStream[Char]} {^Self}
 	self sourceOn: aStream
 !
+(reader addMethod: 'As yet unclassified')
+!
+isPrimitiveType {^Bool}
+	^true
+!

@@ -6,6 +6,8 @@
 !
 (reader addInstVar: 'value' type: 'Expression')
 !
+(reader addInstVar: 'type' type: 'TypeNode')
+!
 (reader addMethod: 'visitor')
 !
 accept: visitor {NodeVisitor[X def]} {^X}
@@ -18,9 +20,10 @@ field {^Str}
 !
 (reader addMethod: 'initialize-release')
 !
-initializeOwner: anExpression {Expression} field: aString {Str} value: aVariableNode {Expression} {^Self}
+initializeOwner: anExpression {Expression} field: aString {Str} type: anObject {TypeNode} value: aVariableNode {Expression} {^Self}
 	owner := anExpression.
 	field := aString.
+	type := anObject.
 	value := aVariableNode.
 	self initialize
 !
@@ -57,6 +60,11 @@ owner {^Expression}
 referencesVariable: aString {Str} {^Bool}
 	^field = aString
 !
+(reader addMethod: 'accessing')
+!
+type {^TypeNode}
+	^type
+!
 (reader addMethod: 'As yet unclassified')
 !
 unoptimized {^Expression}
@@ -69,6 +77,10 @@ value {^Expression}
 !
 (reader addClassMethod: 'instance creation')
 !
-owner: anExpression {Expression} field: aString {Str} value: aVariableNode {Expression} {^FieldWriteNode}
-	^self new initializeOwner: anExpression field: aString value: aVariableNode
+owner: owner {Expression} field: field {Str} type: type {TypeNode} value: value {Expression} {^FieldWriteNode}
+	^self new
+		initializeOwner: owner
+		field: field
+		type: type
+		value: value
 !

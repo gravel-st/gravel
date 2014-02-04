@@ -264,14 +264,13 @@ linkMethods: methods {Array[MethodNode]} in: javaClass {JavaClass} identityClass
 (reader addMethod: 'As yet unclassified')
 !
 localLink: node {Node} instVars: instVars {Arr[BoundVariableDeclarationNode]} ownerReference: ownerReference {Reference} owner: owner {Expression} {^Node}
-	| intermediate {Node} nonLocal {Node} holderized {Node} fieldAccessed {Node} instVarNames {Arr[Str]} |
-	instVarNames := instVars collect: [:each {BoundVariableDeclarationNode} | each name].
+	| intermediate {Node} nonLocal {Node} holderized {Node} fieldAccessed {Node} |
 	intermediate := IntermediateNodeRewriter visit: node.
 	nonLocal := (NonLocalReturnRewriter nlrMarker: compilerTools nextNlrMarker)
 				visit: intermediate.
 	holderized := NonLocalTempWritesToHolderConverter visit: nonLocal.
 	fieldAccessed := (VariableAccessToFieldAccessConverter
-				instVarNames: instVarNames
+				instVars: instVars
 				owner: owner
 				ownerReference: ownerReference) visit: holderized.
 	^fieldAccessed

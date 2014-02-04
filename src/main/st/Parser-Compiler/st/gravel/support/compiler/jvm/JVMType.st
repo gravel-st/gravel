@@ -155,6 +155,11 @@ isObjectType {^Bool}
 !
 (reader addMethod: 'As yet unclassified')
 !
+isPrimitiveType {^Bool}
+	^false
+!
+(reader addMethod: 'As yet unclassified')
+!
 isVoidType {^Bool}
 	^false
 !

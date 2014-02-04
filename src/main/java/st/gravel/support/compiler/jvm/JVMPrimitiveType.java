@@ -48,6 +48,11 @@ abstract public class JVMPrimitiveType extends JVMType implements Cloneable {
 	}
 
 	@Override
+	public boolean isPrimitiveType() {
+		return true;
+	}
+
+	@Override
 	public JVMPrimitiveType printOn_(final StringBuilder _aStream) {
 		this.sourceOn_(_aStream);
 		return this;
