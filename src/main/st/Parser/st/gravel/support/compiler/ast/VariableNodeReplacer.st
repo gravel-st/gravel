@@ -1,8 +1,8 @@
 (reader defineClass: 'VariableNodeReplacer' superclass: 'st.gravel.support.compiler.ast.NodeCopierWithLocals')
 !
-(reader addInstVar: 'varName')
+(reader addInstVar: 'varName' type: 'String')
 !
-(reader addInstVar: 'replacementBlock')
+(reader addInstVar: 'replacementBlock' type: '[Set[String], ^Expression]')
 !
 (reader addMethod: 'visiting')
 !
@@ -78,11 +78,6 @@ in: aNode {Node} replace: varName {Str} with: replacementNode {Expression} {^Nod
 	^(self varName: varName
 		replacementBlock: [:localNames {Set[Str]} | self for: aNode renameAll: localNames in: replacementNode])
 			visit: aNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, [Set[Str], ^Expression]]}
-	^#('varName' 'replacementBlock')
 !
 (reader addClassMethod: 'instance creation')
 !

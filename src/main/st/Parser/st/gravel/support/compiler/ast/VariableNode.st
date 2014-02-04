@@ -1,6 +1,6 @@
 (reader defineClass: 'VariableNode' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
 (reader addMethod: 'comparing')
 !
@@ -82,11 +82,6 @@ precedence {^Int}
 !
 referencesVariable: aString {Str} {^Bool}
 	^name = aString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String]}
-	^#('name')
 !
 (reader addClassMethod: 'instance creation')
 !

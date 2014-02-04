@@ -214,6 +214,11 @@ select: aBlock
 !
 (reader addMethod: 'accessing')
 !
+size
+	^tally
+!
+(reader addMethod: 'accessing')
+!
 values
 	| aCollection i |
 	aCollection := Array new: self size.

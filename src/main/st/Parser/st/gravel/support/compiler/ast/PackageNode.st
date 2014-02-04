@@ -1,10 +1,10 @@
 (reader defineClass: 'PackageNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'classes')
+(reader addInstVar: 'classes' type: 'Array[ClassNode]')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'Symbol')
 !
-(reader addInstVar: 'namespaces')
+(reader addInstVar: 'namespaces' type: 'Array[NamespaceNode]')
 !
 (reader addMethod: 'comparing')
 !
@@ -116,11 +116,6 @@ withPackage: aPackageNode {PackageNode} {^PackageNode}
 !
 empty {^PackageNode}
 	^self name: nil classes: #() namespaces: #()
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[ClassNode], Sym, Arr[NamespaceNode]]}
-	^#('classes' 'name' 'namespaces')
 !
 (reader addClassMethod: 'instance creation')
 !

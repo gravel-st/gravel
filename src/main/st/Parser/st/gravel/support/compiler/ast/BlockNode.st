@@ -1,10 +1,10 @@
 (reader defineClass: 'BlockNode' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'arguments')
+(reader addInstVar: 'arguments' type: 'Array[VariableDeclarationNode]')
 !
-(reader addInstVar: 'body')
+(reader addInstVar: 'body' type: 'SequenceNode')
 !
-(reader addInstVar: 'returnType')
+(reader addInstVar: 'returnType' type: 'TypeNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -145,9 +145,4 @@ expression: aNode {Node} returnType: returnType {TypeNode} {^BlockNode}
 		arguments: #()
 		body: (SequenceNode statement: aNode)
 		returnType: returnType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[VariableDeclarationNode], SequenceNode, TypeNode]}
-	^#('arguments' 'body' 'returnType')
 !

@@ -1,6 +1,6 @@
 (reader defineClass: 'TypeVariableNode' superclass: 'st.gravel.support.compiler.ast.TypeNode')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
 (reader addMethod: 'comparing')
 !
@@ -87,11 +87,6 @@ boolean {^TypeVariableNode}
 !
 error {^TypeVariableNode}
 	^self name: 'Error'
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String]}
-	^#('name')
 !
 (reader addClassMethod: 'instance creation')
 !

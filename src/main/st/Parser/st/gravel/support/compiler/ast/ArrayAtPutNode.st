@@ -1,8 +1,8 @@
 (reader defineClass: 'ArrayAtPutNode' superclass: 'st.gravel.support.compiler.ast.ArrayAccessNode')
 !
-(reader addInstVar: 'index')
+(reader addInstVar: 'index' type: 'Expression')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -52,11 +52,6 @@ unoptimized {^Expression}
 !
 value {^Expression}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, Expression]}
-	^#('index' 'value')
 !
 (reader addClassMethod: 'instance creation')
 !

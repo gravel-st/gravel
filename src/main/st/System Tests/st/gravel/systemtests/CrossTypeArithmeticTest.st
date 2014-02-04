@@ -2525,10 +2525,7 @@ generate
 generateTest: an value: anInteger op: aSymbol arg: bn value: anInteger2
 	| value delta |
 	value := [anInteger perform: aSymbol with: anInteger2] on: Core.Error do: [:ex | ^self].
-	delta := ((Smalltalk.Compiler evaluate: value printString) - value) abs asFloat * 3.
-	delta isZero ifTrue: [delta := value / 100].
-	(an = #big and: [(bn = #double or: [bn = #float]) and: [aSymbol = #\\]])
-		ifTrue: [delta := anInteger / 100].
+	delta := ((Smalltalk.Compiler evaluate: value printString) - value) abs asFloat * 2.
 	self
 		formatAndCompile: 'test_' , an , '_'
 				, ((SP.SelectorConverter selectorAsFunctionName: aSymbol) reject: [:e | e = $$]) , '_'

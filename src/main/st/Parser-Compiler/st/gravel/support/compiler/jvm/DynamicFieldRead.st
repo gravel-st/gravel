@@ -1,6 +1,6 @@
 (reader defineClass: 'DynamicFieldRead' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
@@ -34,11 +34,6 @@ name {^Str}
 !
 type {^JVMType}
 	^JVMDynamicObjectType new
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str]}
-	^#('name')
 !
 (reader addClassMethod: 'instance creation')
 !

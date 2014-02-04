@@ -42,16 +42,12 @@ testBlockInliningMultiExpressionAndTemps
 t , ''fromage''
 ]'.
 	body := method body.
-	body := VariableNodeReplacer
-				in: body
-				replace: 'self'
-				with: (VariableNode name: 'receiver').
 	res := LiteralSendInliner
 				inline: (VariableNodeReplacer in: body replace: 'aBlock' with: block).
 	self assert: res sourceString
 				= '| newCollection |
- newCollection := ((receiver species) new).
- receiver do: [:each || t_0 result |
+ newCollection := ((self species) new).
+ self do: [:each || t_0 result |
  t_0 := (each printString).
  result := (t_0 , ''fromage'').
  newCollection add: result].

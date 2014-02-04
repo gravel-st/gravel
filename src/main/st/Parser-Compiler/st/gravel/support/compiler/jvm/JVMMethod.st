@@ -1,14 +1,14 @@
 (reader defineClass: 'JVMMethod' superclass: 'st.gravel.support.compiler.jvm.JVMNode')
 !
-(reader addInstVar: 'locals')
+(reader addInstVar: 'locals' type: 'Array[JVMLocalDeclaration]')
 !
-(reader addInstVar: 'instructions')
+(reader addInstVar: 'instructions' type: 'Array[JVMInstruction]')
 !
-(reader addInstVar: 'isStatic')
+(reader addInstVar: 'isStatic' type: 'Boolean')
 !
-(reader addInstVar: 'signature')
+(reader addInstVar: 'signature' type: 'JVMMethodType')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
@@ -61,11 +61,6 @@ sourceOn: aStream {WStream[Char]} {^Self}
 	isStatic ifTrue: [aStream nextPutAll: 'static '].
 	aStream nextPutAll: name.
 	aStream nextPutAll: signature printString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[JVMLocalDeclaration], Arr[JVMInstruction], Bool, JVMMethodType, Str]}
-	^#('locals' 'instructions' 'isStatic' 'signature' 'name')
 !
 (reader addClassMethod: 'instance creation')
 !

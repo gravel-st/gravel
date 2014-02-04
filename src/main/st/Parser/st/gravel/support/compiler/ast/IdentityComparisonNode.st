@@ -1,8 +1,8 @@
 (reader defineClass: 'IdentityComparisonNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'left')
+(reader addInstVar: 'left' type: 'Expression')
 !
-(reader addInstVar: 'right')
+(reader addInstVar: 'right' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -45,11 +45,6 @@ right {^Expression}
 !
 unoptimized {^Expression}
 	^BinaryMessageNode receiver: left selector: '==' argument: right
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, Expression]}
-	^#('left' 'right')
 !
 (reader addClassMethod: 'instance creation')
 !

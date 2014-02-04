@@ -1,6 +1,6 @@
 (reader defineClass: 'NamespacedVariableNode' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'path')
+(reader addInstVar: 'path' type: 'Array[String]')
 !
 (reader addMethod: 'comparing')
 !
@@ -57,11 +57,6 @@ precedence {^Int}
 !
 reference {^AbsoluteReference}
 	^AbsoluteReference path: (path collect: [:each {Str} | each asSymbol])
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[String]]}
-	^#('path')
 !
 (reader addClassMethod: 'instance creation')
 !

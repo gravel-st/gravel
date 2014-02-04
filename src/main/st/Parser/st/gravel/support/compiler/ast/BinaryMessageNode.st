@@ -1,6 +1,6 @@
 (reader defineClass: 'BinaryMessageNode' superclass: 'st.gravel.support.compiler.ast.MessageNode')
 !
-(reader addInstVar: 'argument')
+(reader addInstVar: 'argument' type: 'Expression')
 !
 (reader addMethod: 'comparing')
 !
@@ -80,11 +80,6 @@ withArgument: anExpression {Expression} {^Self}
 withArguments: anArray {Arr[Expression]} {^Self}
 	self assert: anArray size = 1.
 	^self withArgument: anArray first
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, String, Expression]}
-	^#('receiver' 'selector' 'argument')
 !
 (reader addClassMethod: 'instance creation')
 !

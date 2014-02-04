@@ -1,8 +1,8 @@
 (reader defineClass: 'GenericTypeVariableNode' superclass: 'st.gravel.support.compiler.ast.TypeNode')
 !
-(reader addInstVar: 'root')
+(reader addInstVar: 'root' type: 'TypeNode')
 !
-(reader addInstVar: 'arguments')
+(reader addInstVar: 'arguments' type: 'Array[TypeNode]')
 !
 (reader addMethod: 'comparing')
 !
@@ -66,11 +66,6 @@ root {^TypeNode}
 typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 	root typeDefsDo: aBlock.
 	arguments do: [:each {TypeNode} | each typeDefsDo: aBlock]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[TypeNode, Array[TypeNode]]}
-	^#('root' 'arguments')
 !
 (reader addClassMethod: 'instance creation')
 !

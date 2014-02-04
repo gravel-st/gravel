@@ -1,6 +1,6 @@
 (reader defineClass: 'CastObjectToArray' superclass: 'st.gravel.support.compiler.jvm.CastTo')
 !
-(reader addInstVar: 'elementType')
+(reader addInstVar: 'elementType' type: 'JVMType')
 !
 (reader addMethod: 'visitor')
 !
@@ -34,9 +34,4 @@ type {^JVMType}
 !
 elementType: aJVMDynamicObjectType {JVMType} {^CastObjectToArray}
 	^self new initializeElementType: aJVMDynamicObjectType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMType]}
-	^#('elementType')
 !

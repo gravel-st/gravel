@@ -1,8 +1,8 @@
 (reader defineClass: 'SimpleTraitUsageNode' superclass: 'st.gravel.support.compiler.ast.TraitUsageNode')
 !
-(reader addInstVar: 'reference')
+(reader addInstVar: 'reference' type: 'Reference')
 !
-(reader addInstVar: 'methodOperations')
+(reader addInstVar: 'methodOperations' type: 'Array[TraitMethodOperation]')
 !
 (reader addMethod: 'visitor')
 !
@@ -86,11 +86,6 @@ withTrait: aTraitUsageNode {TraitUsageNode} {^TraitUsageNode}
 	| components {Arr[SimpleTraitUsageNode]} |
 	components := aTraitUsageNode components copyWith: self.
 	^CompositeTraitUsageNode components: components
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Reference, Arr[TraitMethodOperation]]}
-	^#('reference' 'methodOperations')
 !
 (reader addClassMethod: 'instance creation')
 !

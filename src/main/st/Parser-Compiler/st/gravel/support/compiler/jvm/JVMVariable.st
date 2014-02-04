@@ -1,8 +1,8 @@
 (reader defineClass: 'JVMVariable' superclass: 'st.gravel.support.compiler.jvm.JVMNode')
 !
-(reader addInstVar: 'varName')
+(reader addInstVar: 'varName' type: 'String')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMType')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -27,9 +27,4 @@ type {^JVMType}
 !
 varName {^Str}
 	^varName
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, JVMType]}
-	^#('varName' 'type')
 !

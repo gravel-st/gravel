@@ -1,14 +1,14 @@
 (reader defineClass: 'UpdateClassDiff' superclass: 'st.gravel.support.compiler.ast.ClassDiff')
 !
-(reader addInstVar: 'reference')
+(reader addInstVar: 'reference' type: 'AbsoluteReference')
 !
-(reader addInstVar: 'thisDiff')
+(reader addInstVar: 'thisDiff' type: 'UpdateClassDescriptorDiff')
 !
-(reader addInstVar: 'metaDiff')
+(reader addInstVar: 'metaDiff' type: 'UpdateClassDescriptorDiff')
 !
-(reader addInstVar: 'superclassReference')
+(reader addInstVar: 'superclassReference' type: 'AbsoluteReference')
 !
-(reader addInstVar: 'isStatic')
+(reader addInstVar: 'isStatic' type: 'Boolean')
 !
 (reader addMethod: 'visitor')
 !
@@ -64,11 +64,6 @@ superclassReference {^Reference | Nil}
 !
 thisDiff {^UpdateClassDescriptorDiff}
 	^thisDiff
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[AbsoluteReference, UpdateClassDescriptorDiff, UpdateClassDescriptorDiff, AbsoluteReference, Bool]}
-	^#('reference' 'thisDiff' 'metaDiff' 'superclassReference' 'isStatic')
 !
 (reader addClassMethod: 'instance creation')
 !

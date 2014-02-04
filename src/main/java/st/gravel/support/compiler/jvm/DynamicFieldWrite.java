@@ -9,17 +9,20 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.JVMInstruction.JVMInstruction_Factory;
+import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
 import st.gravel.support.compiler.jvm.JVMStack;
 import st.gravel.support.compiler.jvm.JVMMethodType;
-import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMVoidType;
+import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 
 public class DynamicFieldWrite extends JVMInstruction implements Cloneable {
 
 	public static DynamicFieldWrite_Factory factory = new DynamicFieldWrite_Factory();
 
 	String _name;
+
+	JVMType _type;
 
 	public static class DynamicFieldWrite_Factory extends JVMInstruction_Factory {
 
@@ -29,13 +32,13 @@ public class DynamicFieldWrite extends JVMInstruction implements Cloneable {
 			return newInstance;
 		}
 
-		public DynamicFieldWrite name_(final String _aString) {
-			return this.basicNew().initializeName_(_aString);
+		public DynamicFieldWrite name_type_(final String _aString, final JVMType _aJVMDynamicObjectType) {
+			return this.basicNew().initializeName_type_(_aString, _aJVMDynamicObjectType);
 		}
 	}
 
-	static public DynamicFieldWrite _name_(Object receiver, final String _aString) {
-		return factory.name_(_aString);
+	static public DynamicFieldWrite _name_type_(Object receiver, final String _aString, final JVMType _aJVMDynamicObjectType) {
+		return factory.name_type_(_aString, _aJVMDynamicObjectType);
 	}
 
 	@Override
@@ -55,7 +58,7 @@ public class DynamicFieldWrite extends JVMInstruction implements Cloneable {
 
 	@Override
 	public JVMInstruction effectStack_(final JVMStack _aJVMStack) {
-		_aJVMStack.pop();
+		_aJVMStack.popType_(this.type());
 		_aJVMStack.pop();
 		return this;
 	}
@@ -64,14 +67,15 @@ public class DynamicFieldWrite extends JVMInstruction implements Cloneable {
 		return factory;
 	}
 
-	public DynamicFieldWrite initializeName_(final String _aString) {
+	public DynamicFieldWrite initializeName_type_(final String _aString, final JVMType _aJVMDynamicObjectType) {
 		_name = _aString;
+		_type = _aJVMDynamicObjectType;
 		this.initialize();
 		return this;
 	}
 
 	public JVMMethodType methodType() {
-		return JVMMethodType.factory.voidDynamic_(2);
+		return JVMMethodType.factory.returnType_arguments_(JVMVoidType.factory.basicNew(), st.gravel.support.jvm.ArrayFactory.with_with_(JVMDynamicObjectType.factory.basicNew(), _type));
 	}
 
 	public String name() {
@@ -97,7 +101,7 @@ public class DynamicFieldWrite extends JVMInstruction implements Cloneable {
 
 	@Override
 	public JVMType type() {
-		return JVMVoidType.factory.basicNew();
+		return _type;
 	}
 
 	@Override

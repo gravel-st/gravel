@@ -1,6 +1,6 @@
 (reader defineClass: 'LocalReadNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
@@ -45,11 +45,6 @@ nodesDo: aBlock {[Node, ^Object]} {^Self}
 !
 referencesVariable: aString {Str} {^Bool}
 	^name = aString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str]}
-	^#('name')
 !
 (reader addClassMethod: 'instance creation')
 !

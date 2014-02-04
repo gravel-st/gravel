@@ -1,19 +1,26 @@
 (reader defineClass: 'JVMClass' superclass: 'st.gravel.support.compiler.jvm.JVMNode')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'fields')
+(reader addInstVar: 'fields' type: 'Array[JVMField]')
 !
-(reader addInstVar: 'methods')
+(reader addInstVar: 'methods' type: 'Array[JVMMethod]')
 !
-(reader addInstVar: 'superType')
+(reader addInstVar: 'superType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'source')
+(reader addInstVar: 'source' type: 'String')
+!
+(reader addInstVar: 'astConstants' type: 'Array[BlockSendArgument]')
 !
 (reader addMethod: 'visitor')
 !
 accept: visitor {JVMNodeVisitor[X def]} {^X}
 	^visitor visitJVMClass: self
+!
+(reader addMethod: 'accessing')
+!
+astConstants {^Arr[BlockSendArgument]}
+	^astConstants
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -27,11 +34,12 @@ fields {^Arr[JVMField]}
 !
 (reader addMethod: 'initialize-release')
 !
-initializeType: aJVMDefinedObjectType {JVMDefinedObjectType} superType: aJVMDefinedObjectType2 {JVMDefinedObjectType} fields: anArray {Arr[JVMField]} methods: anArray2 {Arr[JVMMethod]} {^Self}
+initializeType: aJVMDefinedObjectType {JVMDefinedObjectType} superType: aJVMDefinedObjectType2 {JVMDefinedObjectType} fields: anArray {Arr[JVMField]} methods: anArray2 {Arr[JVMMethod]} astConstants: anObject {Arr[BlockSendArgument]} {^Self}
 	type := aJVMDefinedObjectType.
 	superType := aJVMDefinedObjectType2.
 	fields := anArray.
 	methods := anArray2.
+	astConstants := anObject.
 	self initialize
 !
 (reader addMethod: 'As yet unclassified')
@@ -77,20 +85,6 @@ superType {^JVMDefinedObjectType}
 type {^JVMDefinedObjectType}
 	^type
 !
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType, Arr[JVMField], Arr[JVMMethod], JVMDefinedObjectType, Str]}
-	^#('type' 'fields' 'methods' 'superType' 'source')
-!
-(reader addClassMethod: 'instance creation')
-!
-type: aJVMDefinedObjectType {JVMDefinedObjectType} {^JVMClass}
-	^self
-		type: aJVMDefinedObjectType
-		superType: JVMDefinedObjectType object
-		fields: #()
-		methods: #()
-!
 (reader addClassMethod: 'instance creation')
 !
 type: aJVMDefinedObjectType {JVMDefinedObjectType} methods: methods {Arr[JVMMethod]} {^JVMClass}
@@ -99,13 +93,15 @@ type: aJVMDefinedObjectType {JVMDefinedObjectType} methods: methods {Arr[JVMMeth
 		superType: JVMDefinedObjectType object
 		fields: #()
 		methods: methods
+		astConstants: #()
 !
 (reader addClassMethod: 'instance creation')
 !
-type: aJVMDefinedObjectType {JVMDefinedObjectType} superType: aJVMDefinedObjectType2 {JVMDefinedObjectType} fields: anArray {Arr[JVMField]} methods: anArray2 {Arr[JVMMethod]} {^JVMClass}
+type: aJVMDefinedObjectType {JVMDefinedObjectType} superType: aJVMDefinedObjectType2 {JVMDefinedObjectType} fields: anArray {Arr[JVMField]} methods: anArray2 {Arr[JVMMethod]} astConstants: astConstants {Arr[BlockSendArgument]} {^JVMClass}
 	^self new
 		initializeType: aJVMDefinedObjectType
 		superType: aJVMDefinedObjectType2
 		fields: anArray
 		methods: anArray2
+		astConstants: astConstants
 !

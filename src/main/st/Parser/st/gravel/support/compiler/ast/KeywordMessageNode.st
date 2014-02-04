@@ -1,6 +1,6 @@
 (reader defineClass: 'KeywordMessageNode' superclass: 'st.gravel.support.compiler.ast.MessageNode')
 !
-(reader addInstVar: 'arguments')
+(reader addInstVar: 'arguments' type: 'Array[Expression]')
 !
 (reader addMethod: 'comparing')
 !
@@ -100,11 +100,6 @@ withArguments: anArray {Arr[Expression]} {^Self}
 !
 withSelector: aString {Str} {^Self}
 	^self copy pvtSetSelector: aString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, String, Array[Expression]]}
-	^#('receiver' 'selector' 'arguments')
 !
 (reader addClassMethod: 'instance creation')
 !

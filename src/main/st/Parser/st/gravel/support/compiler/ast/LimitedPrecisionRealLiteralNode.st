@@ -1,6 +1,6 @@
 (reader defineClass: 'LimitedPrecisionRealLiteralNode' superclass: 'st.gravel.support.compiler.ast.NumberLiteralNode')
 !
-(reader addInstVar: 'valueString')
+(reader addInstVar: 'valueString' type: 'String')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -27,11 +27,6 @@ exponentCharacter {^Char | Nil}
 !
 exponentCharacterIsMandatory {^Bool}
 	^self subclassResponsibility
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str]}
-	^#('valueString')
 !
 (reader addClassMethod: 'instance creation')
 !

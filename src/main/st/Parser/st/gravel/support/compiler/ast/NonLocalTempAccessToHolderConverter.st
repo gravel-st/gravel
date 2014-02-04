@@ -1,8 +1,8 @@
 (reader defineClass: 'NonLocalTempAccessToHolderConverter' superclass: 'st.gravel.support.compiler.ast.NodeCopier')
 !
-(reader addInstVar: 'temps')
+(reader addInstVar: 'temps' type: 'Dictionary[String, VariableScopeAnalyzerState]')
 !
-(reader addInstVar: 'parent')
+(reader addInstVar: 'parent' type: 'Nil | NonLocalTempAccessToHolderConverter')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -105,11 +105,6 @@ visitSequenceNode: anObject {SequenceNode} {^SequenceNode}
 visitVariableNode: anObject {VariableNode} {^Expression}
 	self addVariableRead: anObject name.
 	^VariableNode name: anObject name
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[String, VariableScopeAnalyzerState], NonLocalTempAccessToHolderConverter | Nil]}
-	^#('temps' 'parent')
 !
 (reader addClassMethod: 'instance creation')
 !

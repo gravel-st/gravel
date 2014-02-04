@@ -1,14 +1,14 @@
 (reader defineClass: 'LiteralSendInliner' superclass: 'st.gravel.support.compiler.ast.MessageSendRewriter')
 !
-(reader addInstVar: 'extraEmits')
+(reader addInstVar: 'extraEmits' type: 'OrderedCollection[Statement]')
 !
-(reader addInstVar: 'extraTemps')
+(reader addInstVar: 'extraTemps' type: 'OrderedCollection[VariableDeclarationNode]')
 !
-(reader addInstVar: 'nodesToCheck')
+(reader addInstVar: 'nodesToCheck' type: 'OrderedCollection[Node]')
 !
-(reader addInstVar: 'generatedTemps')
+(reader addInstVar: 'generatedTemps' type: 'Set[String]')
 !
-(reader addInstVar: 'localNlrMarker')
+(reader addInstVar: 'localNlrMarker' type: 'Nil | String')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -50,7 +50,6 @@ initializeRoot: aNode {Node} {^Self}
 !
 initializeSpecialSelectors {^Self}
 	specialSelectors := Dictionary new.
-	specialSelectors at: #isNil put: [:node {MessageNode} | self produce_isNil: node receiver].
 	specialSelectors at: #value put: [:node {MessageNode} | self produce_value: node receiver].
 	specialSelectors at: #value:
 		put: [:node {MessageNode} | self produce: node receiver value: node argument]
@@ -143,12 +142,6 @@ produceNlrMarkerDefinition: aString {Str} for: aMethodNode {MethodNode} {^Str}
 !
 (reader addMethod: 'As yet unclassified')
 !
-produce_isNil: receiver {Expression} {^Expression}
-	receiver isBlockNode ifTrue: [^BooleanLiteralNode false].
-	^receiver send: 'isNil'
-!
-(reader addMethod: 'As yet unclassified')
-!
 produce_value: receiver {Expression} {^Statement}
 	receiver isBlockNode ifTrue: [^self produceBlock: receiver arguments: #()].
 	^receiver send: 'value'
@@ -209,9 +202,4 @@ visitSequenceNode: anObject {SequenceNode} {^SequenceNode}
 !
 inline: aMethodNode {MethodNode} {^MethodNode}
 	^self new inline: aMethodNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[OrderedCollection[Statement], OrderedCollection[VariableDeclarationNode], OrdColl[Node], Set[Str], Str | Nil]}
-	^#('extraEmits' 'extraTemps' 'nodesToCheck' 'generatedTemps' 'localNlrMarker')
 !

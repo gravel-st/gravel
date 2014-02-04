@@ -1,34 +1,46 @@
 (reader defineClass: 'JVMClassCompiler' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'innerclasses')
+(reader addInstVar: 'innerclasses' type: 'OrderedCollection[BlockInnerClass]')
 !
-(reader addInstVar: 'constants')
+(reader addInstVar: 'constants' type: 'OrderedCollection[JVMMethodConstant]')
 !
-(reader addInstVar: 'selectorConverter')
+(reader addInstVar: 'selectorConverter' type: 'SelectorConverter')
 !
-(reader addInstVar: 'classDescriptionNode')
+(reader addInstVar: 'classDescriptionNode' type: 'ClassDescriptionNode')
 !
-(reader addInstVar: 'systemNode')
+(reader addInstVar: 'systemNode' type: 'SystemNode')
 !
-(reader addInstVar: 'systemMappingUpdater')
+(reader addInstVar: 'systemMappingUpdater' type: 'SystemMappingUpdater')
 !
-(reader addInstVar: 'jvmMethods')
+(reader addInstVar: 'jvmMethods' type: 'OrderedCollection[JVMMethod]')
 !
-(reader addInstVar: 'fields')
+(reader addInstVar: 'fields' type: 'OrderedCollection[JVMField]')
 !
-(reader addInstVar: 'extraClasses')
+(reader addInstVar: 'extraClasses' type: 'OrderedCollection[JVMClass]')
 !
-(reader addInstVar: 'selfType')
+(reader addInstVar: 'selfType' type: 'JVMNonPrimitiveType')
 !
-(reader addInstVar: 'isStatic')
+(reader addInstVar: 'isStatic' type: 'Boolean')
 !
-(reader addInstVar: 'superType')
+(reader addInstVar: 'superType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'constantCount')
+(reader addInstVar: 'constantCount' type: 'Integer')
 !
-(reader addInstVar: 'positionsCache')
+(reader addInstVar: 'positionsCache' type: 'Array[Integer]')
+!
+(reader addInstVar: 'astConstants' type: 'OrderedCollection[BlockSendArgument]')
+!
+(reader addInstVar: 'allowBlockInlining' type: 'Boolean')
+!
+(reader addMethod: 'As yet unclassified')
+!
+addASTConstant: aBlockSendArgument {BlockSendArgument} {^Str}
+	| bsa {BlockSendArgument} |
+	bsa := aBlockSendArgument withName: self newConstantName.
+	astConstants add: bsa.
+	^bsa name
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -49,6 +61,16 @@ addInvokeSuper: name {Str} functionName: functionName {Str} numArgs: numArgs {In
 				isStatic: true
 				signature: superSig)
 !
+(reader addMethod: 'accessing')
+!
+allowBlockInlining {^Bool}
+	^allowBlockInlining
+!
+(reader addMethod: 'accessing')
+!
+allowBlockInlining: anObject {Bool} {^Self}
+	allowBlockInlining := anObject
+!
 (reader addMethod: 'As yet unclassified')
 !
 buildPositionsCache {^Self}
@@ -68,6 +90,35 @@ buildPositionsCache {^Self}
 !
 classDescriptionNode {^ClassDescriptionNode}
 	^classDescriptionNode
+!
+(reader addMethod: 'As yet unclassified')
+!
+compileAstInit {^Self}
+	| instructions {OrdColl[JVMInstruction]} i {Int} |
+	instructions := OrderedCollection new.
+	i := 0.
+	astConstants do: 
+			[:each {BlockSendArgument} |
+			| type {JVMType} |
+			type := JVMDynamicObjectType new.
+			instructions add: (ALoad index: i type: type).
+			instructions add: (PutStatic
+						ownerType: ownerType
+						name: each name
+						type: type).
+			i := i + 1.
+			fields add: (JVMField
+						ownerType: ownerType
+						varName: each name
+						type: type
+						isStatic: true)].
+	instructions add: Return new.
+	jvmMethods add: (JVMMethod
+				name: '_astinit'
+				locals: #()
+				instructions: instructions asArray
+				isStatic: true
+				signature: (JVMMethodType voidDynamic: astConstants size))
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -118,7 +169,9 @@ compileClassNode {^JVMClass}
 			fields add: (JVMField
 						ownerType: ownerType
 						varName: each name
-						type: JVMDynamicObjectType new
+						type: (each type isNil
+								ifTrue: [JVMDynamicObjectType new]
+								ifFalse: [TypeNodeToJVMTypeConverter visit: each type])
 						isStatic: false)].
 	self compileBlocks.
 	^self createContainerClass
@@ -175,6 +228,14 @@ compileInit {^Self}
 !
 (reader addMethod: 'As yet unclassified')
 !
+compileInlinedMethod: aMethodNode {MethodNode} {^JVMClass}
+	ownerType isNil ifTrue: [ownerType := selfType].
+	self compileMethod: aMethodNode.
+	self compileBlocks.
+	^self createContainerClass
+!
+(reader addMethod: 'As yet unclassified')
+!
 compileMethod: aMethodNode {MethodNode} {^Self}
 	jvmMethods add: ((JVMMethodCompiler parent: self)
 				visit: aMethodNode;
@@ -209,11 +270,13 @@ createContainerClass {^JVMClass}
 	self compileClinit.
 	self compileInit.
 	self compileClone.
+	self compileAstInit.
 	aClass := JVMClass
 				type: ownerType
 				superType: superType
 				fields: fields asArray
-				methods: jvmMethods asArray.
+				methods: jvmMethods asArray
+				astConstants: astConstants asArray.
 	(classDescriptionNode isNil or: [classDescriptionNode findSourceFile isNil])
 		ifFalse: [aClass source: classDescriptionNode findSourceFile name].
 	jvmMethods := nil.
@@ -255,6 +318,7 @@ initialize {^Self}
 	innerclasses := OrderedCollection new.
 	constantCount := 0.
 	constants := OrderedCollection new.
+	astConstants := OrderedCollection new.
 	selectorConverter := SelectorConverter new.
 	jvmMethods := OrderedCollection new.
 	fields := OrderedCollection new.
@@ -273,7 +337,8 @@ initialize {^Self}
 						ifFalse: 
 							[systemMappingUpdater compilerTools
 								jvmTypeForClass: (systemMappingUpdater systemMapping
-										classMappingAtReference: superclassReference) identityClass]]
+										classMappingAtReference: superclassReference) identityClass]].
+	allowBlockInlining := self class allowBlockInliningDefault
 !
 (reader addMethod: 'initialize-release')
 !
@@ -292,6 +357,7 @@ isStatic {^Bool}
 (reader addMethod: 'As yet unclassified')
 !
 lineNumberOf: aSourcePosition {SourcePosition} {^Int | Nil}
+	classDescriptionNode isNil ifTrue: [^nil].
 	classDescriptionNode findSourceFile isNil ifTrue: [^nil].
 	classDescriptionNode findSourceFile = aSourcePosition sourceFile ifFalse: [^nil].
 	positionsCache isNil ifTrue: [self buildPositionsCache].
@@ -336,6 +402,16 @@ selfType: anObject {JVMNonPrimitiveType} {^Self}
 !
 (reader addMethod: 'accessing')
 !
+superType {^JVMDefinedObjectType}
+	^superType
+!
+(reader addMethod: 'accessing')
+!
+superType: anObject {JVMDefinedObjectType} {^Self}
+	superType := anObject
+!
+(reader addMethod: 'accessing')
+!
 systemMappingUpdater {^SystemMappingUpdater}
 	^systemMappingUpdater
 !
@@ -343,6 +419,17 @@ systemMappingUpdater {^SystemMappingUpdater}
 !
 systemNode {^SystemNode}
 	^systemNode
+!
+(reader addMethod: 'As yet unclassified')
+!
+withContainerAndExtraClasses: blockClass {JVMClass} {^Arr[JVMClass]}
+	self hasConstantsOrFieldsOrExtraClasses ifFalse: [^Array with: blockClass].
+	^self extraClasses copyWithAll: (Array with: self createContainerClass with: blockClass)
+!
+(reader addClassMethod: 'constants')
+!
+allowBlockInliningDefault {^Bool}
+	^false
 !
 (reader addClassMethod: 'instance creation')
 !
@@ -352,9 +439,4 @@ classDescriptionNode: aClassDescriptionNode {ClassDescriptionNode} systemNode: a
 		systemNode: aSystemNode
 		systemMappingUpdater: aSystemMappingUpdater
 		isStatic: anObject
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType, OrdColl[BlockInnerClass], OrdColl[JVMMethodConstant], SelectorConverter, ClassDescriptionNode, SystemNode, SystemMappingUpdater, OrdColl[JVMMethod], OrdColl[JVMField], OrdColl[JVMClass], JVMNonPrimitiveType, Bool, JVMDefinedObjectType, Int, Arr[Int]]}
-	^#('ownerType' 'innerclasses' 'constants' 'selectorConverter' 'classDescriptionNode' 'systemNode' 'systemMappingUpdater' 'jvmMethods' 'fields' 'extraClasses' 'selfType' 'isStatic' 'superType' 'constantCount' 'positionsCache')
 !

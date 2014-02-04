@@ -1,10 +1,10 @@
 (reader defineClass: 'GetStatic' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMType')
 !
 (reader addMethod: 'visitor')
 !
@@ -39,11 +39,6 @@ ownerType {^JVMDefinedObjectType}
 !
 type {^JVMType}
 	^type
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType, Str, JVMType]}
-	^#('ownerType' 'name' 'type')
 !
 (reader addClassMethod: 'instance creation')
 !

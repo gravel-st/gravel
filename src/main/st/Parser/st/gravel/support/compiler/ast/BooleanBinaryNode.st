@@ -1,8 +1,8 @@
 (reader defineClass: 'BooleanBinaryNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'left')
+(reader addInstVar: 'left' type: 'Expression')
 !
-(reader addInstVar: 'right')
+(reader addInstVar: 'right' type: 'SequenceNode')
 !
 (reader addMethod: 'visitor')
 !
@@ -31,11 +31,6 @@ nodesDo: aBlock {[Node, ^Object]}
 !
 right {^SequenceNode}
 	^right
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, SequenceNode]}
-	^#('left' 'right')
 !
 (reader addClassMethod: 'instance creation')
 !

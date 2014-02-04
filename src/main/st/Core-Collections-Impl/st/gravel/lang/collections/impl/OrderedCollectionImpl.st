@@ -6,9 +6,9 @@
 !
 (reader addInstVar: 'array')
 !
-(reader addInstVar: 'firstIndex')
+(reader addInstVar: 'firstIndex' type: 'Integer')
 !
-(reader addInstVar: 'lastIndex')
+(reader addInstVar: 'lastIndex' type: 'Integer')
 !
 (reader addMethod: 'adding')
 !

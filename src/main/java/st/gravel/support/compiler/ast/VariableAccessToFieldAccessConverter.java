@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.NodeCopierWithLocals;
 import st.gravel.support.compiler.ast.NodeCopierWithLocals.NodeCopierWithLocals_Factory;
+import st.gravel.support.compiler.ast.VariableDeclarationNode;
 import st.gravel.support.compiler.ast.Expression;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.AbsoluteReference;
@@ -28,7 +29,7 @@ public class VariableAccessToFieldAccessConverter extends NodeCopierWithLocals i
 
 	public static VariableAccessToFieldAccessConverter_Factory factory = new VariableAccessToFieldAccessConverter_Factory();
 
-	String[] _instVarNames;
+	VariableDeclarationNode[] _instVars;
 
 	AbsoluteReference _namespace;
 
@@ -44,21 +45,21 @@ public class VariableAccessToFieldAccessConverter extends NodeCopierWithLocals i
 			return newInstance;
 		}
 
-		public VariableAccessToFieldAccessConverter instVarNames_owner_ownerReference_(final String[] _instVarNames, final Expression _owner, final Reference _ownerReference) {
-			return ((VariableAccessToFieldAccessConverter) this.instVarNames_owner_ownerReference_namespace_(_instVarNames, _owner, _ownerReference, _ownerReference.nonmeta()));
+		public VariableAccessToFieldAccessConverter instVars_owner_ownerReference_(final VariableDeclarationNode[] _instVars, final Expression _owner, final Reference _ownerReference) {
+			return ((VariableAccessToFieldAccessConverter) this.instVars_owner_ownerReference_namespace_(_instVars, _owner, _ownerReference, _ownerReference.nonmeta()));
 		}
 
-		public VariableAccessToFieldAccessConverter instVarNames_owner_ownerReference_namespace_(final String[] _anArray, final Expression _anExpression, final Reference _anObject1, final AbsoluteReference _anObject) {
-			return ((VariableAccessToFieldAccessConverter) this.basicNew().initializeInstVarNames_owner_ownerReference_namespace_(_anArray, _anExpression, _anObject1, _anObject));
+		public VariableAccessToFieldAccessConverter instVars_owner_ownerReference_namespace_(final VariableDeclarationNode[] _anArray, final Expression _anExpression, final Reference _anObject1, final AbsoluteReference _anObject) {
+			return ((VariableAccessToFieldAccessConverter) this.basicNew().initializeInstVars_owner_ownerReference_namespace_(_anArray, _anExpression, _anObject1, _anObject));
 		}
 	}
 
-	static public VariableAccessToFieldAccessConverter _instVarNames_owner_ownerReference_(Object receiver, final String[] _instVarNames, final Expression _owner, final Reference _ownerReference) {
-		return factory.instVarNames_owner_ownerReference_(_instVarNames, _owner, _ownerReference);
+	static public VariableAccessToFieldAccessConverter _instVars_owner_ownerReference_(Object receiver, final VariableDeclarationNode[] _instVars, final Expression _owner, final Reference _ownerReference) {
+		return factory.instVars_owner_ownerReference_(_instVars, _owner, _ownerReference);
 	}
 
-	static public VariableAccessToFieldAccessConverter _instVarNames_owner_ownerReference_namespace_(Object receiver, final String[] _anArray, final Expression _anExpression, final Reference _anObject1, final AbsoluteReference _anObject) {
-		return factory.instVarNames_owner_ownerReference_namespace_(_anArray, _anExpression, _anObject1, _anObject);
+	static public VariableAccessToFieldAccessConverter _instVars_owner_ownerReference_namespace_(Object receiver, final VariableDeclarationNode[] _anArray, final Expression _anExpression, final Reference _anObject1, final AbsoluteReference _anObject) {
+		return factory.instVars_owner_ownerReference_namespace_(_anArray, _anExpression, _anObject1, _anObject);
 	}
 
 	@Override
@@ -88,8 +89,8 @@ public class VariableAccessToFieldAccessConverter extends NodeCopierWithLocals i
 		return this;
 	}
 
-	public VariableAccessToFieldAccessConverter initializeInstVarNames_owner_ownerReference_namespace_(final String[] _anArray, final Expression _anExpression, final Reference _anObject2, final AbsoluteReference _anObject) {
-		_instVarNames = _anArray;
+	public VariableAccessToFieldAccessConverter initializeInstVars_owner_ownerReference_namespace_(final VariableDeclarationNode[] _anArray, final Expression _anExpression, final Reference _anObject2, final AbsoluteReference _anObject) {
+		_instVars = _anArray;
 		_owner = _anExpression;
 		_namespace = _anObject;
 		_ownerReference = _anObject2;
@@ -97,8 +98,24 @@ public class VariableAccessToFieldAccessConverter extends NodeCopierWithLocals i
 		return this;
 	}
 
-	public String[] instVarNames() {
-		return _instVarNames;
+	public VariableDeclarationNode instVarAt_(final String _varName) {
+		return ((VariableDeclarationNode) st.gravel.support.jvm.ArrayExtensions.detect_ifNone_(_instVars, new st.gravel.support.jvm.Predicate1<VariableDeclarationNode>() {
+
+			@Override
+			public boolean value_(final VariableDeclarationNode _node) {
+				return st.gravel.support.jvm.StringExtensions.equals_(_node.name(), _varName);
+			}
+		}, ((st.gravel.support.jvm.Block0<VariableDeclarationNode>) (new st.gravel.support.jvm.Block0<VariableDeclarationNode>() {
+
+			@Override
+			public VariableDeclarationNode value() {
+				return (VariableDeclarationNode) null;
+			}
+		}))));
+	}
+
+	public VariableDeclarationNode[] instVars() {
+		return _instVars;
 	}
 
 	public Expression owner() {
@@ -123,17 +140,20 @@ public class VariableAccessToFieldAccessConverter extends NodeCopierWithLocals i
 
 	@Override
 	public Expression visitAssignmentNode_(final AssignmentNode _anObject) {
+		final VariableDeclarationNode _instVar;
 		if (this.includesLocalName_(_anObject.variable().name())) {
 			return LocalWriteNode.factory.name_value_(_anObject.variable().name(), ((Expression) VariableAccessToFieldAccessConverter.this.visit_(_anObject.value())));
 		}
-		if (st.gravel.support.jvm.ArrayExtensions.includes_(_instVarNames, _anObject.variable().name())) {
-			return FieldWriteNode.factory.owner_field_value_(_owner, _anObject.variable().name(), ((Expression) VariableAccessToFieldAccessConverter.this.visit_(_anObject.value())));
+		_instVar = this.instVarAt_(_anObject.variable().name());
+		if (_instVar != null) {
+			return FieldWriteNode.factory.owner_field_type_value_(_owner, _instVar.name(), _instVar.type(), ((Expression) VariableAccessToFieldAccessConverter.this.visit_(_anObject.value())));
 		}
 		return GlobalWriteNode.factory.namespace_name_value_(_namespace, _anObject.variable().name(), ((Expression) this.visit_(_anObject.value())));
 	}
 
 	@Override
 	public Expression visitVariableNode_(final VariableNode _anObject) {
+		final VariableDeclarationNode _instVar;
 		if (st.gravel.support.jvm.StringExtensions.equals_(_anObject.name(), "self")) {
 			return SelfNode.factory.basicNew();
 		}
@@ -143,8 +163,9 @@ public class VariableAccessToFieldAccessConverter extends NodeCopierWithLocals i
 		if (this.includesLocalName_(_anObject.name())) {
 			return LocalReadNode.factory.name_(_anObject.name());
 		}
-		if (st.gravel.support.jvm.ArrayExtensions.includes_(_instVarNames, _anObject.name())) {
-			return FieldReadNode.factory.owner_field_(_owner, _anObject.name());
+		_instVar = this.instVarAt_(_anObject.name());
+		if (_instVar != null) {
+			return FieldReadNode.factory.owner_field_type_(_owner, _instVar.name(), _instVar.type());
 		}
 		return GlobalReadNode.factory.namespace_name_(_namespace, _anObject.name());
 	}

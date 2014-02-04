@@ -1,8 +1,8 @@
 (reader defineClass: 'SystemNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'classDescriptionNodes')
+(reader addInstVar: 'classDescriptionNodes' type: 'Dictionary[Reference, ClassDescriptionNode]')
 !
-(reader addInstVar: 'namespaceNodes')
+(reader addInstVar: 'namespaceNodes' type: 'Dictionary[Reference, NamespaceNode]')
 !
 (reader addMethod: 'visitor')
 !
@@ -156,9 +156,4 @@ classDescriptionNodes: aDictionary {Dict[Reference, ClassDescriptionNode]} names
 !
 empty {^SystemNode}
 	^self classDescriptionNodes: Dictionary new namespaceNodes: Dictionary new
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[Reference, ClassDescriptionNode], Dict[Reference, NamespaceNode]]}
-	^#('classDescriptionNodes' 'namespaceNodes')
 !

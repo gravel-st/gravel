@@ -1,10 +1,10 @@
 (reader defineClass: 'GlobalWriteNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
-(reader addInstVar: 'namespace')
+(reader addInstVar: 'namespace' type: 'AbsoluteReference')
 !
 (reader addMethod: 'visitor')
 !
@@ -68,11 +68,6 @@ unoptimized {^Expression}
 !
 value {^Expression}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Expression, AbsoluteReference]}
-	^#('name' 'value' 'namespace')
 !
 (reader addClassMethod: 'instance creation')
 !

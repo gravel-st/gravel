@@ -1,8 +1,8 @@
 (reader defineClass: 'IncrementLocal' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'local')
+(reader addInstVar: 'local' type: 'JVMLocalDeclaration')
 !
-(reader addInstVar: 'increment')
+(reader addInstVar: 'increment' type: 'Integer')
 !
 (reader addMethod: 'visitor')
 !
@@ -35,11 +35,6 @@ initializeLocal: aJVMLocalDeclaration {JVMLocalDeclaration} increment: anInteger
 !
 local {^JVMLocalDeclaration}
 	^local
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMLocalDeclaration, Int]}
-	^#('local' 'increment')
 !
 (reader addClassMethod: 'instance creation')
 !

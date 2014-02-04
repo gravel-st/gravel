@@ -1,6 +1,6 @@
 (reader defineClass: 'InlineExpressionCollection' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'expressions')
+(reader addInstVar: 'expressions' type: 'Array[Expression]')
 !
 (reader addMethod: 'visitor')
 !
@@ -40,9 +40,4 @@ unoptimized {^Expression}
 !
 expressions: anArray {Arr[Expression]} {^Instance}
 	^self new initializeExpressions: anArray
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[Expression]]}
-	^#('expressions')
 !

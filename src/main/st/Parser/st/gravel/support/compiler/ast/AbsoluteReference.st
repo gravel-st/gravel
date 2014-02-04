@@ -1,6 +1,6 @@
 (reader defineClass: 'AbsoluteReference' superclass: 'st.gravel.support.compiler.ast.Reference')
 !
-(reader addInstVar: 'path')
+(reader addInstVar: 'path' type: 'Array[Symbol]')
 !
 (reader addMethod: 'comparing')
 !
@@ -67,11 +67,6 @@ path {^Arr[Sym]}
 printOn: aStream {WStream[Char]} {^Self}
 	path do: [:elem {Sym} | aStream nextPutAll: elem asString]
 		separatedBy: [aStream nextPut: $.]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[Sym]]}
-	^#('path')
 !
 (reader addClassMethod: 'As yet unclassified')
 !

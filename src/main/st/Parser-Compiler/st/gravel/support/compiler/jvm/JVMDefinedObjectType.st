@@ -1,6 +1,6 @@
 (reader defineClass: 'JVMDefinedObjectType' superclass: 'st.gravel.support.compiler.jvm.JVMNonPrimitiveType')
 !
-(reader addInstVar: 'path')
+(reader addInstVar: 'path' type: 'Array[String]')
 !
 (reader addMethod: 'comparing')
 !
@@ -152,11 +152,6 @@ float {^JVMDefinedObjectType}
 !
 hashMap {^JVMDefinedObjectType}
 	^self className: 'java/util/HashMap'
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Arr[Str]]}
-	^#('className' 'path')
 !
 (reader addClassMethod: 'As yet unclassified')
 !

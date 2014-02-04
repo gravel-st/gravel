@@ -1,6 +1,6 @@
 (reader defineClass: 'JVMLocalDeclaration' superclass: 'st.gravel.support.compiler.jvm.JVMVariable')
 !
-(reader addInstVar: 'index')
+(reader addInstVar: 'index' type: 'Integer')
 !
 (reader addMethod: 'visitor')
 !
@@ -42,11 +42,6 @@ blockSelf {^JVMLocalDeclaration}
 		varName: '__block'
 		type: JVMDynamicObjectType new
 		index: 0
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Int]}
-	^#('index')
 !
 (reader addClassMethod: 'As yet unclassified')
 !

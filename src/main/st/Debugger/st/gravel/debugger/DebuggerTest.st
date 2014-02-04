@@ -1,6 +1,6 @@
 (reader defineClass: 'DebuggerTest' superclass: 'st.gravel.sunit.TestCase')
 !
-(reader addInstVar: 'systemMapping')
+(reader addInstVar: 'systemMapping' type: 'SystemMapping')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -60,9 +60,4 @@ testRunSelf
 	answer := self evaluate: '(st.gravel.debugger.DebuggerTest selector: #testLoop) run'.
 	self
 		assert: (answer primitiveValue collect: [:each | each primitiveValue]) = #(#a #b #g #z)
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SystemMapping]}
-	^#('systemMapping')
 !

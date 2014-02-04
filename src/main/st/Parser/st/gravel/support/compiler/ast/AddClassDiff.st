@@ -1,6 +1,6 @@
 (reader defineClass: 'AddClassDiff' superclass: 'st.gravel.support.compiler.ast.NewClassDiff')
 !
-(reader addInstVar: 'isStatic')
+(reader addInstVar: 'isStatic' type: 'Boolean')
 !
 (reader addMethod: 'visitor')
 !
@@ -27,9 +27,4 @@ isStatic {^Bool}
 !
 isStaticDefault {^Bool}
 	^classNode isNil not and: [classNode isNilClass]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Bool]}
-	^#('isStatic')
 !

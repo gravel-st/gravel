@@ -1,8 +1,8 @@
 (reader defineClass: 'JVMField' superclass: 'st.gravel.support.compiler.jvm.JVMVariable')
 !
-(reader addInstVar: 'isStatic')
+(reader addInstVar: 'isStatic' type: 'Boolean')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'JVMDefinedObjectType')
 !
 (reader addMethod: 'visitor')
 !
@@ -39,11 +39,6 @@ isStatic {^Bool}
 !
 ownerType {^JVMDefinedObjectType}
 	^ownerType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Bool, JVMDefinedObjectType, JVMType]}
-	^#('isStatic' 'ownerType' 'type')
 !
 (reader addClassMethod: 'instance creation')
 !

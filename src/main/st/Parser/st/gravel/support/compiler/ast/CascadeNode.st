@@ -1,6 +1,6 @@
 (reader defineClass: 'CascadeNode' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'messages')
+(reader addInstVar: 'messages' type: 'Array[MessageNode]')
 !
 (reader addMethod: 'comparing')
 !
@@ -52,11 +52,6 @@ precedence {^Int}
 !
 receiver {^Expression}
 	^messages first receiver
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[MessageNode]]}
-	^#('messages')
 !
 (reader addClassMethod: 'instance creation')
 !

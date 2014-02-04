@@ -1,6 +1,6 @@
 (reader defineClass: 'BooleanLiteralNode' superclass: 'st.gravel.support.compiler.ast.LiteralNode')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Boolean')
 !
 (reader addMethod: 'comparing')
 !
@@ -42,11 +42,6 @@ value {^Boolean}
 !
 false {^BooleanLiteralNode}
 	^self value: false
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Boolean]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

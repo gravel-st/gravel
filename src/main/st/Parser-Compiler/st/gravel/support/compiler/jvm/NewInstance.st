@@ -1,6 +1,6 @@
 (reader defineClass: 'NewInstance' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMDefinedObjectType')
 !
 (reader addMethod: 'visitor')
 !
@@ -28,11 +28,6 @@ type {^JVMDefinedObjectType}
 !
 className: aString {Str} {^NewInstance}
 	^self type: (JVMDefinedObjectType className: aString)
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType]}
-	^#('type')
 !
 (reader addClassMethod: 'instance creation')
 !

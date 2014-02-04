@@ -1,16 +1,16 @@
 (reader defineClass: 'MethodNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'selector')
+(reader addInstVar: 'selector' type: 'String')
 !
-(reader addInstVar: 'returnType')
+(reader addInstVar: 'returnType' type: 'TypeNode')
 !
-(reader addInstVar: 'body')
+(reader addInstVar: 'body' type: 'SequenceNode')
 !
-(reader addInstVar: 'pragmas')
+(reader addInstVar: 'pragmas' type: 'Array[PragmaNode]')
 !
-(reader addInstVar: 'protocol')
+(reader addInstVar: 'protocol' type: 'String')
 !
-(reader addInstVar: 'nlrMarker')
+(reader addInstVar: 'nlrMarker' type: 'String')
 !
 (reader addMethod: 'comparing')
 !
@@ -250,11 +250,6 @@ withPropertyAt: aKey {Sym} put: aValue {Expression} {^Self}
 !
 withProtocol: aString {Str} {^Self}
 	^self copy pvtSetProtocol: aString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String, TypeNode, SequenceNode, Array[PragmaNode], Str, Str]}
-	^#('selector' 'returnType' 'body' 'pragmas' 'protocol' 'nlrMarker')
 !
 (reader addClassMethod: 'instance creation')
 !

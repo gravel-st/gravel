@@ -1,8 +1,8 @@
 (reader defineClass: 'AssignmentNode' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'variable')
+(reader addInstVar: 'variable' type: 'VariableNode')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'comparing')
 !
@@ -63,11 +63,6 @@ variable {^VariableNode}
 !
 varName {^String}
 	^variable name
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[VariableNode, Expression]}
-	^#('variable' 'value')
 !
 (reader addClassMethod: 'instance creation')
 !

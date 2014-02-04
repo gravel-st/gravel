@@ -1,6 +1,6 @@
 (reader defineClass: 'PushString' superclass: 'st.gravel.support.compiler.jvm.PushConstant')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
@@ -22,11 +22,6 @@ type {^JVMType}
 !
 value {^Str}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

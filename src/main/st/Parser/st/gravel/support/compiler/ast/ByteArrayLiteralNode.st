@@ -1,6 +1,6 @@
 (reader defineClass: 'ByteArrayLiteralNode' superclass: 'st.gravel.support.compiler.ast.LiteralNode')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'ByteArray')
 !
 (reader addMethod: 'comparing')
 !
@@ -39,11 +39,6 @@ isByteArrayLiteralNode {^Bool}
 !
 value {^ByteArray}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[ByteArray]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

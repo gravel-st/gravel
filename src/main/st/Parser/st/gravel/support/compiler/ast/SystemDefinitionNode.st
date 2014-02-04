@@ -1,6 +1,6 @@
 (reader defineClass: 'SystemDefinitionNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'packageNodes')
+(reader addInstVar: 'packageNodes' type: 'Array[PackageNode]')
 !
 (reader addMethod: 'visitor')
 !
@@ -43,11 +43,6 @@ packageNames {^Arr[Sym]}
 !
 (reader addMethod: 'accessing')
 !
-packageNodeAt: aName {Sym} {^PackageNode}
-	^packageNodes detect: [:each {PackageNode} | each name = aName]
-!
-(reader addMethod: 'accessing')
-!
 packageNodes {^Arr[PackageNode]}
 	^packageNodes
 !
@@ -73,11 +68,6 @@ withPackageNamed: packageName {Sym} classNode: aClassNode {ClassNode} {^Self}
 !
 withPackageNode: aPackageNode {PackageNode} {^Self}
 	^self copy pvtSetPackageNodes: (packageNodes copyWith: aPackageNode)
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[PackageNode]]}
-	^#('packageNodes')
 !
 (reader addClassMethod: 'instance creation')
 !

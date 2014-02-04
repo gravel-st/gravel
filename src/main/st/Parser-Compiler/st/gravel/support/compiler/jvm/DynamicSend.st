@@ -1,28 +1,30 @@
 (reader defineClass: 'DynamicSend' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'receiverType')
+(reader addInstVar: 'receiverType' type: 'JVMType')
 !
-(reader addInstVar: 'argumentTypes')
+(reader addInstVar: 'argumentTypes' type: 'Array[JVMType]')
 !
-(reader addInstVar: 'numArgs')
+(reader addInstVar: 'numArgs' type: 'Integer')
 !
-(reader addInstVar: 'functionName')
+(reader addInstVar: 'functionName' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
 accept: visitor {JVMInstructionVisitor[X def]} {^X}
 	^visitor visitDynamicSend: self
 !
+(reader addMethod: 'accessing')
+!
+argumentTypes {^Arr[JVMType]}
+	argumentTypes isNil
+		ifTrue: [^(1 to: numArgs) collect: [:i {Int} | JVMDynamicObjectType new]].
+	^argumentTypes
+!
 (reader addMethod: 'As yet unclassified')
 !
 effectStack: aJVMStack {JVMStack} {^JVMInstruction}
 	| aReceiverType {JVMType} anArray {Arr[JVMType]} |
-	anArray := (1 to: numArgs) collect: 
-					[:i {Int} |
-					| elemType {JVMType} |
-					elemType := aJVMStack pop.
-					self assert: elemType isObjectType.
-					elemType].
+	anArray := ((1 to: numArgs) collect: [:i {Int} | aJVMStack pop]) reverse.
 	aReceiverType := aJVMStack pop.
 	self assert: aReceiverType isObjectType.
 	aJVMStack push: self type.
@@ -48,6 +50,18 @@ pvtSetArgumentTypes: anArray {Arr[JVMType]} {^Self}
 pvtSetReceiverType: aJVMObjectType {JVMType} {^Self}
 	receiverType := aJVMObjectType
 !
+(reader addMethod: 'accessing')
+!
+receiverType {^JVMType}
+	receiverType isNil ifTrue: [^JVMDynamicObjectType new].
+	^receiverType
+!
+(reader addMethod: 'As yet unclassified')
+!
+signature {^JVMMethodType}
+	^JVMMethodType returnType: self type
+		arguments: (self argumentTypes copyWithFirst: self receiverType)
+!
 (reader addMethod: 'printing')
 !
 sourceOn: aStream {WStream[Char]} {^Self}
@@ -60,13 +74,8 @@ type {^JVMType}
 !
 (reader addMethod: 'As yet unclassified')
 !
-withReceiverType: aJVMObjectType {JVMType} argumentTypes: anArray {Arr[JVMType]} {^DynamicSend}
+withReceiverType: aJVMObjectType {JVMType} argumentTypes: anArray {Arr[JVMType]} {^Self}
 	^(self copy)
 		pvtSetReceiverType: aJVMObjectType;
 		pvtSetArgumentTypes: anArray
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMType, Arr[JVMType], Int, Str]}
-	^#('receiverType' 'argumentTypes' 'numArgs' 'functionName')
 !

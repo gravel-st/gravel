@@ -65,7 +65,7 @@ public class MethodLinker {
 
 	public static CallSite fieldReadBootstrap(Lookup lookup, String selector,
 			MethodType type) throws Throwable {
-		FieldReadCallSite site = FieldReadCallSite.newInstance(lookup, type,
+		FieldAccessCallSite site = FieldReadCallSite.newInstance(lookup, type,
 				selector);
 		return site;
 	}
@@ -73,7 +73,7 @@ public class MethodLinker {
 	public static CallSite fieldWriteBootstrap(Lookup lookup, String selector,
 			MethodType type) throws Throwable {
 		FieldWriteCallSite site = FieldWriteCallSite.newInstance(lookup, type,
-				selector);
+				selector, null);
 		return site;
 	}
 

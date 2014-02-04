@@ -1,6 +1,6 @@
 (reader defineClass: 'VariableToHolderRewriter' superclass: 'st.gravel.support.compiler.ast.NodeCopier')
 !
-(reader addInstVar: 'varName')
+(reader addInstVar: 'varName' type: 'String')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -47,11 +47,6 @@ visitSequenceNode: anObject {SequenceNode} {^SequenceNode}
 visitVariableNode: anObject {VariableNode} {^Expression}
 	anObject name = varName ifTrue: [^ReadHolderNode varName: varName].
 	^VariableNode name: anObject name
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String]}
-	^#('varName')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,10 +1,10 @@
 (reader defineClass: 'SourceFile' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'directory')
+(reader addInstVar: 'directory' type: 'String')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'packageName')
+(reader addInstVar: 'packageName' type: 'Symbol')
 !
 (reader addMethod: 'comparing')
 !
@@ -50,9 +50,4 @@ packageName {^Sym}
 !
 directory: directory {Str} name: aName {Str} packageName: packageName {Sym} {^SourceFile}
 	^self new initializeDirectory: directory name: aName packageName: packageName
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Str, Sym]}
-	^#('directory' 'name' 'packageName')
 !

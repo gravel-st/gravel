@@ -1,6 +1,6 @@
 (reader defineClass: 'NewArray' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'elementType')
+(reader addInstVar: 'elementType' type: 'JVMType')
 !
 (reader addMethod: 'visitor')
 !
@@ -34,9 +34,4 @@ type {^JVMType}
 !
 elementType: aJVMObjectType {JVMType} {^NewArray}
 	^self new initializeElementType: aJVMObjectType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMType]}
-	^#('elementType')
 !

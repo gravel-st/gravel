@@ -1,8 +1,8 @@
 (reader defineClass: 'Load' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'index')
+(reader addInstVar: 'index' type: 'Integer')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMType')
 !
 (reader addMethod: 'visitor')
 !
@@ -40,11 +40,6 @@ index: anInteger {Int} type: aJVMType {JVMType} {^Load}
 	aJVMType isIntType ifTrue: [^ILoad new initializeIndex: anInteger type: aJVMType].
 	self halt.
 	^Load new initializeIndex: anInteger type: aJVMType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMLocalDeclaration, Int, JVMType]}
-	^#('local' 'index' 'type')
 !
 (reader addClassMethod: 'instance creation')
 !

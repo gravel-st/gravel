@@ -1,6 +1,6 @@
 (reader defineClass: 'RewriteVariableToHolderRequest' superclass: 'st.gravel.lang.Error')
 !
-(reader addInstVar: 'varName')
+(reader addInstVar: 'varName' type: 'String')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -12,11 +12,6 @@ initializeVarName: aString {Str} {^Self}
 !
 varName {^Str}
 	^varName
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String]}
-	^#('varName')
 !
 (reader addClassMethod: 'instance creation')
 !

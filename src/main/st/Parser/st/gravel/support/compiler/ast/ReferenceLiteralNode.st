@@ -1,6 +1,6 @@
 (reader defineClass: 'ReferenceLiteralNode' superclass: 'st.gravel.support.compiler.ast.LiteralNode')
 !
-(reader addInstVar: 'path')
+(reader addInstVar: 'path' type: 'Array[String]')
 !
 (reader addMethod: 'visitor')
 !
@@ -29,11 +29,6 @@ path {^Arr[Str]}
 !
 value {^Object}
 	^path
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[Str]]}
-	^#('path')
 !
 (reader addClassMethod: 'instance creation')
 !

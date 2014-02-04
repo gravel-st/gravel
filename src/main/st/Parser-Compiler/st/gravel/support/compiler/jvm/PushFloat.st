@@ -1,6 +1,6 @@
 (reader defineClass: 'PushFloat' superclass: 'st.gravel.support.compiler.jvm.PushConstant')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Float')
 !
 (reader addMethod: 'visitor')
 !
@@ -22,11 +22,6 @@ type {^JVMType}
 !
 value {^Float}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Float]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

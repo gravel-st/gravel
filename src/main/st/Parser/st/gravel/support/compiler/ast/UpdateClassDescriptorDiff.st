@@ -1,10 +1,10 @@
 (reader defineClass: 'UpdateClassDescriptorDiff' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'methodNodes')
+(reader addInstVar: 'methodNodes' type: 'Array[MethodNode]')
 !
-(reader addInstVar: 'updatedMethodNodes')
+(reader addInstVar: 'updatedMethodNodes' type: 'Array[MethodNode]')
 !
-(reader addInstVar: 'deletedSelectors')
+(reader addInstVar: 'deletedSelectors' type: 'Array[String]')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -79,11 +79,6 @@ withUpdateMethodNode: aMethodNode {MethodNode} {^Self}
 !
 empty {^UpdateClassDescriptorDiff}
 	^self methodNodes: #() updatedMethodNodes: #() deletedSelectors: #()
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[MethodNode], Arr[MethodNode], Arr[Str]]}
-	^#('methodNodes' 'updatedMethodNodes' 'deletedSelectors')
 !
 (reader addClassMethod: 'instance creation')
 !

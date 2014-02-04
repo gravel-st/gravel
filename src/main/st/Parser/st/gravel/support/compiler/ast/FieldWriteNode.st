@@ -1,10 +1,10 @@
 (reader defineClass: 'FieldWriteNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'owner')
+(reader addInstVar: 'owner' type: 'Expression')
 !
-(reader addInstVar: 'field')
+(reader addInstVar: 'field' type: 'String')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -66,11 +66,6 @@ unoptimized {^Expression}
 !
 value {^Expression}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, Str, Expression]}
-	^#('owner' 'field' 'value')
 !
 (reader addClassMethod: 'instance creation')
 !

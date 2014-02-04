@@ -2,6 +2,11 @@
 !
 (reader addMethod: 'As yet unclassified')
 !
+classForName: aString {Str} {^JavaClass}
+	^self subclassResponsibility
+!
+(reader addMethod: 'As yet unclassified')
+!
 createInvokeInstruction: type {JVMDefinedObjectType} name: name {Str} numArgs: numArgs {Int} {^Invoke}
 	^self subclassResponsibility
 !
@@ -32,11 +37,6 @@ isAssignable: aClass {JavaClass} from: bClass {JavaClass} {^Bool}
 !
 (reader addMethod: 'As yet unclassified')
 !
-javaClassSuperclass {^JavaClass}
-	^self subclassResponsibility
-!
-(reader addMethod: 'As yet unclassified')
-!
 jvmClassForType: aJVMDefinedObjectType {JVMDefinedObjectType} ifAbsent: aBlock {[^JVMClass]} {^JVMClass}
 	^self subclassResponsibility
 !
@@ -53,6 +53,11 @@ methodHandleAt: aString {Str} numArgs: numArgs {Int} in: aJavaClass {JavaClass} 
 (reader addMethod: 'As yet unclassified')
 !
 methodNamesIn: receiverClass {JavaClass} do: aBlock {[Str, Int, ^Object]} {^Self}
+	^self subclassResponsibility
+!
+(reader addMethod: 'As yet unclassified')
+!
+newSingletonHolder: reference {AbsoluteReference} initializer: block {[^Obj]} {^AlmostFinalValue}
 	^self subclassResponsibility
 !
 (reader addMethod: 'As yet unclassified')
@@ -82,7 +87,7 @@ resetCallsites {^Self}
 !
 (reader addMethod: 'As yet unclassified')
 !
-superclassOf: aClass {JavaClass} {^JavaClass}
+runAstInit: aJVMClass {JVMClass} {^Self}
 	^self subclassResponsibility
 !
 (reader addMethod: 'As yet unclassified')

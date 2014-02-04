@@ -1,8 +1,8 @@
 (reader defineClass: 'NonLocalVariableFinder' superclass: 'st.gravel.support.compiler.ast.NodeCopier')
 !
-(reader addInstVar: 'locals')
+(reader addInstVar: 'locals' type: 'Set[String]')
 !
-(reader addInstVar: 'nonLocals')
+(reader addInstVar: 'nonLocals' type: 'OrderedCollection[String]')
 !
 (reader addMethod: 'visiting')
 !
@@ -99,9 +99,4 @@ analyze: aNode {Node} {^Arr[Str]}
 	^(self new)
 		visit: aNode;
 		nonLocals
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Set[Str], OrderedCollection[Str]]}
-	^#('locals' 'nonLocals')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'Frame' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'instructions')
+(reader addInstVar: 'instructions' type: 'Array[JVMInstruction]')
 !
-(reader addInstVar: 'endStack')
+(reader addInstVar: 'endStack' type: 'JVMStack')
 !
 (reader addMethod: 'visitor')
 !
@@ -85,9 +85,4 @@ instructions: anArray {Arr[JVMInstruction]} endStack: aJVMStack {JVMStack} {^Fra
 !
 instructions: anArray type: aJVMBottomType
 	^self new initializeInstructions: anArray type: aJVMBottomType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[JVMInstruction], JVMStack]}
-	^#('instructions' 'endStack')
 !

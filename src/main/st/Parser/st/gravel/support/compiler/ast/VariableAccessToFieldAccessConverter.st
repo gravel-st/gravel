@@ -1,12 +1,12 @@
 (reader defineClass: 'VariableAccessToFieldAccessConverter' superclass: 'st.gravel.support.compiler.ast.NodeCopierWithLocals')
 !
-(reader addInstVar: 'instVarNames')
+(reader addInstVar: 'instVarNames' type: 'Array[String]')
 !
-(reader addInstVar: 'owner')
+(reader addInstVar: 'owner' type: 'Expression')
 !
-(reader addInstVar: 'namespace')
+(reader addInstVar: 'namespace' type: 'AbsoluteReference')
 !
-(reader addInstVar: 'ownerReference')
+(reader addInstVar: 'ownerReference' type: 'Reference')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -75,9 +75,4 @@ instVarNames: anArray {Arr[Str]} owner: anExpression {Expression} ownerReference
 		owner: anExpression
 		ownerReference: anObject1
 		namespace: anObject
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[Str], Expression, Set[Str], AbsoluteReference, Reference]}
-	^#('instVarNames' 'owner' 'localNames' 'namespace' 'ownerReference')
 !

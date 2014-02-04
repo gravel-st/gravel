@@ -1,6 +1,6 @@
 (reader defineClass: 'TypeDefNode' superclass: 'st.gravel.support.compiler.ast.TypeNode')
 !
-(reader addInstVar: 'node')
+(reader addInstVar: 'node' type: 'TypeNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -43,11 +43,6 @@ node {^TypeNode}
 !
 typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 	aBlock value: node
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[TypeNode]}
-	^#('node')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'Store' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'index')
+(reader addInstVar: 'index' type: 'Integer')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMType')
 !
 (reader addMethod: 'visitor')
 !
@@ -41,11 +41,6 @@ type {^JVMType}
 !
 index: anInteger {Int} type: aJVMDynamicObjectType {JVMType} {^Instance}
 	^self new initializeIndex: anInteger type: aJVMDynamicObjectType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMLocalDeclaration, Int, JVMType]}
-	^#('local' 'index' 'type')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,6 +1,6 @@
 (reader defineClass: 'NamespacedTypeVariableNode' superclass: 'st.gravel.support.compiler.ast.TypeNode')
 !
-(reader addInstVar: 'path')
+(reader addInstVar: 'path' type: 'Array[String]')
 !
 (reader addMethod: 'comparing')
 !
@@ -37,11 +37,6 @@ path {^Array[String]}
 !
 typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 	
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[String]]}
-	^#('path')
 !
 (reader addClassMethod: 'instance creation')
 !

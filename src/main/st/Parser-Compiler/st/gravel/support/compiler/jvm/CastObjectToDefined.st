@@ -1,6 +1,6 @@
 (reader defineClass: 'CastObjectToDefined' superclass: 'st.gravel.support.compiler.jvm.CastTo')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMDefinedObjectType')
 !
 (reader addMethod: 'visitor')
 !
@@ -24,11 +24,6 @@ initializeType: aJVMDefinedObjectType {JVMDefinedObjectType} {^Self}
 !
 type {^JVMDefinedObjectType}
 	^type
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType]}
-	^#('type')
 !
 (reader addClassMethod: 'instance creation')
 !

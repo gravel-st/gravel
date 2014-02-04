@@ -1,8 +1,8 @@
 (reader defineClass: 'JVMBlockCompiler' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'parent')
+(reader addInstVar: 'parent' type: 'JVMClassCompiler')
 !
-(reader addInstVar: 'block')
+(reader addInstVar: 'block' type: 'BlockInnerClass')
 !
 (reader addMethod: 'accessing')
 !
@@ -30,7 +30,8 @@ compileBlock {^JVMClass}
 				type: block ownerType
 				superType: self superType
 				fields: fields
-				methods: (Array with: m with: self createInit).
+				methods: (Array with: m with: self createInit)
+				astConstants: #().
 	block blockNode sourcePosition isNil
 		ifFalse: [jvmClass source: block blockNode sourcePosition sourceFile name].
 	^jvmClass
@@ -78,11 +79,6 @@ parent {^JVMClassCompiler}
 !
 superType {^JVMDefinedObjectType}
 	^self blockSuperType: block blockNode numArgs
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMClassCompiler, BlockInnerClass]}
-	^#('parent' 'block')
 !
 (reader addClassMethod: 'instance creation')
 !

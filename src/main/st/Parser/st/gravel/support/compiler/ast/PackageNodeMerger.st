@@ -1,6 +1,6 @@
 (reader defineClass: 'PackageNodeMerger' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'systemDefinitionNode')
+(reader addInstVar: 'systemDefinitionNode' type: 'SystemDefinitionNode')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -70,11 +70,6 @@ packageNamespaceNodesDo: aBlock {[NamespaceNode, ^Object]} {^Self}
 !
 systemDefinitionNode {^SystemDefinitionNode}
 	^systemDefinitionNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SystemDefinitionNode]}
-	^#('systemDefinitionNode')
 !
 (reader addClassMethod: 'instance creation')
 !

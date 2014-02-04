@@ -39,6 +39,7 @@ import st.gravel.support.compiler.ast.MethodNode;
 import st.gravel.support.compiler.ast.Reference;
 import st.gravel.support.compiler.ast.BoundVariableDeclarationNode;
 import st.gravel.support.compiler.ast.VariableDeclarationNode;
+import st.gravel.support.compiler.jvm.TypeNodeToJVMTypeConverter;
 import st.gravel.support.compiler.jvm.InvokeSpecial;
 import st.gravel.support.compiler.jvm.JVMMethodCompiler;
 import st.gravel.support.compiler.ast.Expression;
@@ -256,7 +257,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			JVMClassCompiler.this.compileMethod_(_each);
 		}
 		for (final VariableDeclarationNode _each : _classDescriptionNode.instVars()) {
-			_fields.add(JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _each.name(), JVMDynamicObjectType.factory.basicNew(), false));
+			_fields.add(JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _each.name(), TypeNodeToJVMTypeConverter.factory.visit_(_each.type()), false));
 		}
 		this.compileBlocks();
 		return this.createContainerClass();

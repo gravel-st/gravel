@@ -1,8 +1,8 @@
 (reader defineClass: 'LocalWriteNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -55,11 +55,6 @@ unoptimized {^Expression}
 !
 value {^Expression}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Expression]}
-	^#('name' 'value')
 !
 (reader addClassMethod: 'instance creation')
 !

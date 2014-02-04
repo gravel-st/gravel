@@ -56,3 +56,14 @@ returnExpression: expression {Expression} {^Instance}
 		pragmas: #()
 		protocol: 'evaluating'
 !
+(reader addClassMethod: 'instance creation')
+!
+selector: aString {String} body: aSequenceNode {SequenceNode} {^Instance}
+	^self
+		selector: aString
+		body: aSequenceNode
+		returnType: nil
+		pragmas: #()
+		protocol: nil
+		nlrMarker: nil
+!

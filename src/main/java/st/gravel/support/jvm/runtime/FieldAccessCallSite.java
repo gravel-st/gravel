@@ -4,6 +4,8 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
 
+import st.gravel.support.compiler.ast.InstVarMapping;
+
 public abstract class FieldAccessCallSite extends BaseCallSite {
 
 	protected FieldAccessCallSite(Lookup lookup, MethodType type,
@@ -53,4 +55,9 @@ public abstract class FieldAccessCallSite extends BaseCallSite {
 	}
 
 	protected abstract MethodHandle findAccess(Class receiverClass) throws NoSuchFieldException, IllegalAccessException;
+
+	protected Class<?> getFieldType(Class receiverClass) throws NoSuchFieldException {
+		return receiverClass
+				.getField(selector).getType();
+	}
 }

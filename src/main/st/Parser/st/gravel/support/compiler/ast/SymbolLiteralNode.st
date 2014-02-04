@@ -1,6 +1,6 @@
 (reader defineClass: 'SymbolLiteralNode' superclass: 'st.gravel.support.compiler.ast.LiteralNode')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Symbol')
 !
 (reader addMethod: 'comparing')
 !
@@ -37,11 +37,6 @@ isSymbolLiteralNode {^Bool}
 !
 value {^Symbol}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Symbol]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

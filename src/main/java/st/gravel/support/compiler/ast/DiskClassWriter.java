@@ -143,10 +143,18 @@ public class DiskClassWriter extends Object implements Cloneable {
 			DiskClassWriter.this.writeDirective_on_(_each, _str[0]);
 		}
 		for (final VariableDeclarationNode _each : _aClassNode.instVars()) {
-			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str[0]);
+			if (_each.type() == null) {
+				DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str[0]);
+			} else {
+				DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_with_("addInstVar:type:", DiskClassWriter.this.asLiteralNode_(_each.name()), DiskClassWriter.this.asLiteralNode_(_each.type().sourceString())), _str[0]);
+			}
 		}
 		for (final VariableDeclarationNode _each : _aClassNode.metaclassNode().instVars()) {
-			DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addClassInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str[0]);
+			if (_each.type() == null) {
+				DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_("addClassInstVar:", DiskClassWriter.this.asLiteralNode_(_each.name())), _str[0]);
+			} else {
+				DiskClassWriter.this.writeDirective_on_(_reader[0].send_with_with_("addClassInstVar:type:", DiskClassWriter.this.asLiteralNode_(_each.name()), DiskClassWriter.this.asLiteralNode_(_each.type().sourceString())), _str[0]);
+			}
 		}
 		for (final Map.Entry<String, String> _temp1 : _aClassNode.properties().entrySet()) {
 			String _k = _temp1.getKey();

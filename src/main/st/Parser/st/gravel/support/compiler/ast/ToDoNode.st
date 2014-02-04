@@ -1,14 +1,14 @@
 (reader defineClass: 'ToDoNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'start')
+(reader addInstVar: 'start' type: 'Expression')
 !
-(reader addInstVar: 'stop')
+(reader addInstVar: 'stop' type: 'Expression')
 !
-(reader addInstVar: 'doSequence')
+(reader addInstVar: 'doSequence' type: 'SequenceNode')
 !
-(reader addInstVar: 'counterName')
+(reader addInstVar: 'counterName' type: 'String')
 !
-(reader addInstVar: 'step')
+(reader addInstVar: 'step' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -88,11 +88,6 @@ stop {^Expression}
 !
 unoptimized {^Expression}
 	^nil
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, Expression, SequenceNode, Str, Expression]}
-	^#('start' 'stop' 'doSequence' 'counterName' 'step')
 !
 (reader addClassMethod: 'instance creation')
 !

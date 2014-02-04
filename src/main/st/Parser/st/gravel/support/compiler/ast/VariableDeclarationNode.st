@@ -1,8 +1,8 @@
 (reader defineClass: 'VariableDeclarationNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'TypeNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -13,6 +13,11 @@
 !
 accept: visitor {NodeVisitor[X def]} {^X}
 	^visitor visitVariableDeclarationNode: self
+!
+(reader addMethod: 'As yet unclassified')
+!
+asVariableNode {^Expression}
+	^LocalReadNode name: name
 !
 (reader addMethod: 'comparing')
 !
@@ -72,11 +77,6 @@ typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 !
 withOwnerType: aReference {Reference} {^BoundVariableDeclarationNode}
 	^BoundVariableDeclarationNode name: name type: type ownerType: aReference
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String, TypeNode]}
-	^#('name' 'type')
 !
 (reader addClassMethod: 'instance creation')
 !

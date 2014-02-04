@@ -1,6 +1,6 @@
 (reader defineClass: 'RemoveClassDiff' superclass: 'st.gravel.support.compiler.ast.ClassDiff')
 !
-(reader addInstVar: 'classNode')
+(reader addInstVar: 'classNode' type: 'ClassNode')
 !
 (reader addMethod: 'visitor')
 !
@@ -37,9 +37,4 @@ superclassReference {^Reference | Nil}
 !
 classNode: aClassNode {ClassNode} {^Instance}
 	^self new initializeClassNode: aClassNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[ClassNode]}
-	^#('classNode')
 !

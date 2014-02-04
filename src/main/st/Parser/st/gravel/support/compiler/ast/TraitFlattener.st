@@ -1,12 +1,12 @@
 (reader defineClass: 'TraitFlattener' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'start')
+(reader addInstVar: 'start' type: 'SystemNode')
 !
-(reader addInstVar: 'intermediate')
+(reader addInstVar: 'intermediate' type: 'SystemNode')
 !
-(reader addInstVar: 'done')
+(reader addInstVar: 'done' type: 'Set[Reference]')
 !
-(reader addInstVar: 'todo')
+(reader addInstVar: 'todo' type: 'Set[Reference]')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -61,11 +61,6 @@ validate {^Self}
 	unflattenable isEmpty
 		ifFalse: [self error: 'Unflattenable traits found: ' , unflattenable asArray printString].
 	^self
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SystemNode, SystemNode, Set[Reference], Set[Reference], Set[Reference]]}
-	^#('start' 'intermediate' 'done' 'todo' 'unflattenable')
 !
 (reader addClassMethod: 'instance creation')
 !

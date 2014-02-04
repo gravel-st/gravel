@@ -61,8 +61,7 @@ initializeSpecialSelectors {^Self}
 			self
 				produce: node receiver
 				basicAt: node arguments first
-				put: node arguments second].
-	specialSelectors at: #isNil put: [:node {MessageNode} | self produce_isNil: node receiver]
+				put: node arguments second]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -186,11 +185,6 @@ produce: testExpr {Expression} whileTrue: loopExpr {Expression} {^WhileTrueNode}
 !
 produce_basicSize: expression {Expression} {^ArraySizeNode}
 	^ArraySizeNode receiver: (self visit: expression)
-!
-(reader addMethod: 'As yet unclassified')
-!
-produce_isNil: expression {Expression} {^IsNilNode}
-	^IsNilNode receiver: (self visit: expression)
 !
 (reader addMethod: 'As yet unclassified')
 !

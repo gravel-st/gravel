@@ -1,6 +1,6 @@
 (reader defineClass: 'ReturnNode' superclass: 'st.gravel.support.compiler.ast.Statement')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'comparing')
 !
@@ -63,11 +63,6 @@ sourceOn: aStream {WStream[Char]} {^Self}
 !
 value {^Expression}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

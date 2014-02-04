@@ -1,15 +1,21 @@
 (reader defineClass: 'DiskClassReader' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'root')
+(reader addInstVar: 'root' type: 'Filename')
 !
-(reader addInstVar: 'producer')
+(reader addInstVar: 'producer' type: 'Producer')
 !
-(reader addInstVar: 'directives')
+(reader addInstVar: 'directives' type: 'Dictionary[String, [ClassNode, MessageNode, Parser, ^ClassNode]]')
 !
 (reader addMethod: 'directives')
 !
 addClassInstVar: aString {Str} for: aClassNode {ClassNode} {^ClassNode}
 	^aClassNode withClassInstVar: (VariableDeclarationNode name: aString)
+!
+(reader addMethod: 'directives')
+!
+addClassInstVar: aString {Str} type: typeString {Str} for: aClassNode {ClassNode} {^ClassNode}
+	^aClassNode withClassInstVar: (VariableDeclarationNode name: aString
+				type: (Parser parseTypeNode: typeString))
 !
 (reader addMethod: 'directives')
 !
@@ -26,6 +32,12 @@ addClassMethod: aParser {Parser} protocol: aString {Str} for: aClassNode {ClassN
 !
 addInstVar: aString {Str} for: aClassNode {ClassNode} {^ClassNode}
 	^aClassNode withInstVar: (VariableDeclarationNode name: aString)
+!
+(reader addMethod: 'directives')
+!
+addInstVar: aString {Str} type: typeString {Str} for: aClassNode {ClassNode} {^ClassNode}
+	^aClassNode withInstVar: (VariableDeclarationNode name: aString
+				type: (Parser parseTypeNode: typeString))
 !
 (reader addMethod: 'directives')
 !
@@ -116,8 +128,22 @@ initialize {^Self}
 		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self addSimpleClassTrait: (self evaluate: expr arguments first) for: classNode].
 	directives at: 'addInstVar:'
 		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self addInstVar: (self evaluate: expr arguments first) for: classNode].
+	directives at: 'addInstVar:type:'
+		put: 
+			[:classNode {ClassNode} :expr {MessageNode} :parser {Parser} |
+			self
+				addInstVar: (self evaluate: expr arguments first)
+				type: (self evaluate: expr arguments second)
+				for: classNode].
 	directives at: 'addClassInstVar:'
 		put: [:classNode {ClassNode} :expr {MessageNode} :parser {Parser} | self addClassInstVar: (self evaluate: expr arguments first) for: classNode].
+	directives at: 'addClassInstVar:type:'
+		put: 
+			[:classNode {ClassNode} :expr {MessageNode} :parser {Parser} |
+			self
+				addClassInstVar: (self evaluate: expr arguments first)
+				type: (self evaluate: expr arguments second)
+				for: classNode].
 	directives at: 'propertyAt:put:'
 		put: 
 			[:classNode {ClassNode} :expr {MessageNode} :parser {Parser} |
@@ -279,11 +305,6 @@ readPropertiesFile: aFilename {Filename} {^Dict[Str, Object]}
 !
 root {^Filename}
 	^root
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Filename, Producer, Dict[Str, [ClassNode, MessageNode, Parser, ^ClassNode]]]}
-	^#('root' 'producer' 'directives')
 !
 (reader addClassMethod: 'instance creation')
 !

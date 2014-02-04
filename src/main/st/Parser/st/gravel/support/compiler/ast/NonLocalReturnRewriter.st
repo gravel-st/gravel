@@ -1,10 +1,10 @@
 (reader defineClass: 'NonLocalReturnRewriter' superclass: 'st.gravel.support.compiler.ast.NodeCopier')
 !
-(reader addInstVar: 'nlrMarker')
+(reader addInstVar: 'nlrMarker' type: 'String')
 !
-(reader addInstVar: 'isInBlockNode')
+(reader addInstVar: 'isInBlockNode' type: 'Boolean')
 !
-(reader addInstVar: 'oldNlrMarker')
+(reader addInstVar: 'oldNlrMarker' type: 'Nil | String')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -54,11 +54,6 @@ visitReturnNode: aReturnNode {ReturnNode} {^Statement}
 	isInBlockNode
 		ifTrue: [^NonLocalReturnNode marker: nlrMarker value: (self visit: aReturnNode value)].
 	^super visitReturnNode: aReturnNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String, Bool, Str | Nil]}
-	^#('nlrMarker' 'isInBlockNode' 'oldNlrMarker')
 !
 (reader addClassMethod: 'instance creation')
 !

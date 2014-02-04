@@ -1,8 +1,8 @@
 (reader defineClass: 'TypeCast' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'TypeNode')
 !
-(reader addInstVar: 'expression')
+(reader addInstVar: 'expression' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -45,11 +45,6 @@ precedence {^Int}
 !
 type {^TypeNode}
 	^type
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[TypeNode, Expression]}
-	^#('type' 'expression')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,6 +1,6 @@
 (reader defineClass: 'IsNilNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'receiver')
+(reader addInstVar: 'receiver' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -34,11 +34,6 @@ receiver {^Expression}
 !
 unoptimized {^Expression}
 	^receiver send: 'isNil'
-!
-(reader addClassMethod: 'instance creation')
-!
-instVarTypes {^[Expression]}
-	^#('receiver')
 !
 (reader addClassMethod: 'instance creation')
 !

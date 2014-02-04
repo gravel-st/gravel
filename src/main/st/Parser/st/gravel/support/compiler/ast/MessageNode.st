@@ -1,8 +1,8 @@
 (reader defineClass: 'MessageNode' superclass: 'st.gravel.support.compiler.ast.Expression')
 !
-(reader addInstVar: 'receiver')
+(reader addInstVar: 'receiver' type: 'Expression')
 !
-(reader addInstVar: 'selector')
+(reader addInstVar: 'selector' type: 'String')
 !
 (reader addMethod: 'comparing')
 !
@@ -76,11 +76,6 @@ sourceSendOn: aStream {WStream[Char]} {^Self}
 !
 withArguments: anArray {Arr[Expression]} {^Self}
 	^self subclassResponsibility
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, String]}
-	^#('receiver' 'selector')
 !
 (reader addClassMethod: 'instance creation')
 !

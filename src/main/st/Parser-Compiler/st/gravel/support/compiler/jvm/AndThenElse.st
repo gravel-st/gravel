@@ -1,8 +1,8 @@
 (reader defineClass: 'AndThenElse' superclass: 'st.gravel.support.compiler.jvm.Fork')
 !
-(reader addInstVar: 'left')
+(reader addInstVar: 'left' type: 'Frame')
 !
-(reader addInstVar: 'right')
+(reader addInstVar: 'right' type: 'Frame')
 !
 (reader addMethod: 'visitor')
 !
@@ -30,11 +30,6 @@ left {^Frame}
 !
 right {^Frame}
 	^right
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Frame, Frame]}
-	^#('left' 'right')
 !
 (reader addClassMethod: 'instance creation')
 !

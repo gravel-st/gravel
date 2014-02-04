@@ -1,8 +1,8 @@
 (reader defineClass: 'AbstractVariableRenamer' superclass: 'st.gravel.support.compiler.ast.NodeCopierWithLocals')
 !
-(reader addInstVar: 'oldName')
+(reader addInstVar: 'oldName' type: 'String')
 !
-(reader addInstVar: 'newName')
+(reader addInstVar: 'newName' type: 'String')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -128,11 +128,6 @@ visitWriteHolderNode: anObject {WriteHolderNode} {^WriteHolderNode}
 in: aNode {Node} rename: oldName {String} to: newName {String} {^Node}
 	oldName = newName ifTrue: [^aNode].
 	^(self oldName: oldName newName: newName) visit: aNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Str]}
-	^#('oldName' 'newName')
 !
 (reader addClassMethod: 'instance creation')
 !

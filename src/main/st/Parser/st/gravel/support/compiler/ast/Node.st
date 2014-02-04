@@ -1,6 +1,6 @@
 (reader defineClass: 'Node' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'sourcePosition')
+(reader addInstVar: 'sourcePosition' type: 'SourcePosition')
 !
 (reader addMethod: 'comparing')
 !
@@ -200,11 +200,6 @@ isSequenceNode {^Bool}
 !
 (reader addMethod: 'testing')
 !
-isSPNode
-	^true
-!
-(reader addMethod: 'testing')
-!
 isStringLiteralNode {^Bool}
 	^false
 !
@@ -344,11 +339,6 @@ withoutSourcePointers {^Node}
 withSourcePosition: aSourcePosition {SourcePosition} {^Self}
 	sourcePosition == aSourcePosition ifTrue: [^self].
 	^self copy pvtSetSourcePosition: aSourcePosition
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SourcePosition]}
-	^#('sourcePosition')
 !
 (reader addClassMethod: 'accessing')
 !

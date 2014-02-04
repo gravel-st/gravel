@@ -1,8 +1,8 @@
 (reader defineClass: 'WhileNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'testSequence')
+(reader addInstVar: 'testSequence' type: 'SequenceNode')
 !
-(reader addInstVar: 'doSequence')
+(reader addInstVar: 'doSequence' type: 'Nil | SequenceNode')
 !
 (reader addMethod: 'visitor')
 !
@@ -36,11 +36,6 @@ testSequence {^SequenceNode}
 !
 unoptimized {^Expression}
 	^nil
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SequenceNode, SequenceNode | Nil]}
-	^#('testSequence' 'doSequence')
 !
 (reader addClassMethod: 'instance creation')
 !

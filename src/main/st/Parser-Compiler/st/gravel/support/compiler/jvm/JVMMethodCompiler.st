@@ -1,26 +1,31 @@
 (reader defineClass: 'JVMMethodCompiler' superclass: 'st.gravel.support.compiler.ast.NodeVisitor')
 !
-(reader addInstVar: 'locals')
+(reader addInstVar: 'locals' type: 'Dictionary[String, JVMLocalDeclaration]')
 !
-(reader addInstVar: 'stack')
+(reader addInstVar: 'stack' type: 'JVMStack')
 !
-(reader addInstVar: 'instructions')
+(reader addInstVar: 'instructions' type: 'OrderedCollection[JVMInstruction]')
 !
-(reader addInstVar: 'isBlock')
+(reader addInstVar: 'isBlock' type: 'Boolean')
 !
-(reader addInstVar: 'parent')
+(reader addInstVar: 'parent' type: 'JVMClassCompiler')
 !
-(reader addInstVar: 'temp')
+(reader addInstVar: 'temp' type: 'Integer')
 !
-(reader addInstVar: 'signature')
+(reader addInstVar: 'signature' type: 'JVMMethodType')
 !
-(reader addInstVar: 'methodName')
+(reader addInstVar: 'methodName' type: 'String')
 !
-(reader addInstVar: 'copiedVariables')
+(reader addInstVar: 'copiedVariables' type: 'Dictionary[String, JVMField]')
 !
-(reader addInstVar: 'copiedVariablesOwner')
+(reader addInstVar: 'copiedVariablesOwner' type: 'String')
 !
-(reader addInstVar: 'isStatic')
+(reader addInstVar: 'isStatic' type: 'Boolean')
+!
+(reader addMethod: 'As yet unclassified')
+!
+addASTConstant: aBlockSendArgument {BlockSendArgument} {^Str}
+	^parent addASTConstant: aBlockSendArgument
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -48,6 +53,12 @@ buildMethod {^JVMMethod}
 		instructions: instructions asArray
 		isStatic: isStatic
 		signature: signature
+!
+(reader addMethod: 'visiting')
+!
+copiedVariablesForBlockNode: blockNode {BlockNode} {^Arr[JVMVariable]}
+	^(NonLocalVariableFinder analyze: blockNode) asSortedArray
+		collect: [:each {Str} | self localOrCopiedAt: each]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -168,6 +179,43 @@ produceBlockBody: body {SequenceNode} {^Self}
 !
 (reader addMethod: 'producing')
 !
+produceBlockInlineMessageSend: messageNode {MessageNode} {^Self}
+	| selector {Sym} blockSendConstants {Arr[Str]} passedNumArgs {Int} argumentsToCopy {Arr[JVMVariable]} |
+	blockSendConstants := #().
+	argumentsToCopy := #().
+	passedNumArgs := 0.
+	messageNode arguments do: 
+			[:arg {Node} |
+			arg isBlockNode
+				ifTrue: 
+					[| blockNode {BlockNode} nCopiedVariables {Arr[JVMVariable]} |
+					blockNode := arg.
+					nCopiedVariables := self copiedVariablesForBlockNode: blockNode.
+					nCopiedVariables do: 
+							[:each {JVMVariable} |
+							(argumentsToCopy includes: each)
+								ifFalse: [argumentsToCopy := argumentsToCopy copyWith: each]].
+					blockSendConstants := blockSendConstants copyWith: (self
+										addASTConstant: (BlockSendArgument blockNode: blockNode copiedVariables: nCopiedVariables))]
+				ifFalse: 
+					[passedNumArgs := passedNumArgs + 1.
+					self visit: arg.
+					self ensureCast: JVMDynamicObjectType new.
+					blockSendConstants := blockSendConstants copyWith: nil]].
+	argumentsToCopy do: 
+			[:each {JVMVariable} |
+			self produceVarRead: each varName.
+			self ensureCast: each type].
+	selector := messageNode selector asSymbol.
+	self emit: (DynamicLiteralBlockMessageSend
+				functionName: (parent selectorConverter selectorAsFunctionName: selector)
+				numArgs: passedNumArgs + argumentsToCopy size
+				blockSendConstants: blockSendConstants
+				constantOwner: parent ownerType
+				copiedArguments: (argumentsToCopy collect: [:each {JVMVariable} | each varName]))
+!
+(reader addMethod: 'producing')
+!
 produceConstant: anExpression {Expression} ifAbsentPut: aBlock {[^Obj]} {^Self}
 	| const {JVMMethodConstant} |
 	const := parent constantAt: anExpression
@@ -183,8 +231,13 @@ produceConstant: anExpression {Expression} ifAbsentPut: aBlock {[^Obj]} {^Self}
 !
 produceMessageSend: messageNode {MessageNode} {^Self}
 	| selector {Sym} |
+	(parent allowBlockInlining and: 
+			[(messageNode arguments anySatisfy: [:e {Expression} | e isBlockNode]) and: 
+					[messageNode arguments
+						noneSatisfy: [:e {Expression} | e isBlockNode and: [e allNodesContains: [:n {Node} | n isSuperNode]]]]])
+		ifTrue: [^self produceBlockInlineMessageSend: messageNode].
 	messageNode arguments do: 
-			[:arg {Node} |
+			[:arg {Expression} |
 			self visit: arg.
 			self ensureCast: JVMDynamicObjectType new].
 	selector := messageNode selector asSymbol.
@@ -300,6 +353,11 @@ produceSafe: start {Str} to: stop {Str} counterName: counterName {Str} step: ste
 														functionName: (parent selectorConverter selectorAsFunctionName: #+)
 														numArgs: 1).
 											self localStore: counterName]))])
+!
+(reader addMethod: 'visiting')
+!
+produceStatements: statements {Arr[Statement]} {^Self}
+	statements do: [:each {Statement} | self visit: each] separatedBy: [self emit: Pop new]
 !
 (reader addMethod: 'producing')
 !
@@ -576,8 +634,7 @@ visitArraySizeNode: node {ArraySizeNode} {^Self}
 !
 visitBlockNode: blockNode {BlockNode} {^Self}
 	| nCopiedVariables {Arr[JVMVariable]} innerClassDefinition {BlockInnerClass} |
-	nCopiedVariables := (NonLocalVariableFinder analyze: blockNode) asSortedArray
-				collect: [:each {Str} | self localOrCopiedAt: each].
+	nCopiedVariables := self copiedVariablesForBlockNode: blockNode.
 	innerClassDefinition := self createBlockInnerClass: blockNode
 				copiedVariables: nCopiedVariables.
 	nCopiedVariables isEmpty
@@ -730,12 +787,13 @@ visitIfTrueIfFalseNode: aNode {IfTrueIfFalseNode} {^Self}
 !
 (reader addMethod: 'visiting')
 !
+visitInlineExpressionCollection: aNode {InlineExpressionCollection} {^Self}
+	self produceStatements: aNode expressions
+!
+(reader addMethod: 'visiting')
+!
 visitInstanceCreationNode: node {InstanceCreationNode} {^Self}
-	| type {JVMDefinedObjectType} |
-	type := JVMDefinedObjectType dottedClassName: node reference printString.
-	self emit: (NewInstance type: type).
-	self emit: Dup new.
-	self emit: (InvokeSpecial init: type voidArguments: #())
+	self emit: (DynamicCreateInstance reference: node reference printString)
 !
 (reader addMethod: 'visiting')
 !
@@ -776,14 +834,20 @@ visitMessageNode: messageNode {MessageNode} {^Self}
 (reader addMethod: 'visiting')
 !
 visitMethodNode: aMethodNode {MethodNode} {^Self}
-	| prim {Arr[Str]} |
+	| prim {Arr[Str]} argumentTypes {Arr[JVMType]} |
 	self reset.
 	methodName := parent selectorConverter
 				selectorAsFunctionName: aMethodNode selector asSymbol.
-	signature := JVMMethodType dynamic: aMethodNode numArgs.
+	argumentTypes := aMethodNode arguments collect: 
+					[:arg {VariableDeclarationNode} |
+					arg isHolderDeclarationNode
+						ifTrue: [JVMArrayType elementType: JVMDynamicObjectType new]
+						ifFalse: [JVMDynamicObjectType new]].
+	signature := JVMMethodType returnType: JVMDynamicObjectType new arguments: argumentTypes.
 	isStatic ifTrue: [signature := signature copyWithFirst: JVMDynamicObjectType new].
 	self pushLocal: 'self'.
-	aMethodNode arguments do: [:each {VariableDeclarationNode} | self pushLocal: each name].
+	aMethodNode arguments with: argumentTypes
+		do: [:each {VariableDeclarationNode} :type {JVMType} | self pushLocal: each name type: type].
 	prim := aMethodNode primitiveIn: parent selfType dottedClassName.
 	prim isNil ifFalse: [^self producePrimitive: aMethodNode def: prim].
 	aMethodNode nlrMarker isNil
@@ -803,7 +867,6 @@ visitNilLiteralNode: literalNode {NilLiteralNode} {^Self}
 (reader addMethod: 'visiting')
 !
 visitNonLocalReturnNode: returnNode {NonLocalReturnNode} {^Self}
-	self assert: isBlock.
 	self emit: (NewInstance type: JVMDefinedObjectType nonLocalReturn).
 	self emit: Dup new.
 	self visit: returnNode value.
@@ -841,8 +904,7 @@ visitSelfNode: anObject {SelfNode} {^Self}
 !
 visitSequenceNode: anObject {SequenceNode} {^Self}
 	anObject temporaries do: [:each {VariableDeclarationNode} | self visit: each].
-	anObject statements do: [:each {Statement} | self visit: each]
-		separatedBy: [self emit: Pop new]
+	self produceStatements: anObject statements
 !
 (reader addMethod: 'visiting')
 !
@@ -913,11 +975,6 @@ visitWriteHolderNode: writeHolderNode {WriteHolderNode} {^Self}
 	self ensureCast: JVMDynamicObjectType new.
 	self emit: DupX2 new.
 	self emit: ObjectArrayStore new
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[Str, JVMLocalDeclaration], JVMStack, OrdColl[JVMInstruction], Bool, JVMClassCompiler, Int, JVMMethodType, Str, Dictionary[Str, JVMField], Str, Bool]}
-	^#('locals' 'stack' 'instructions' 'isBlock' 'parent' 'temp' 'signature' 'methodName' 'copiedVariables' 'copiedVariablesOwner' 'isStatic')
 !
 (reader addClassMethod: 'instance creation')
 !

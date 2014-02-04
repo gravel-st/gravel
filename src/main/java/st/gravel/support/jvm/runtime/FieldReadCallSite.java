@@ -10,17 +10,18 @@ public class FieldReadCallSite extends FieldAccessCallSite {
 		super(lookup, type, selector);
 	}
 
-	public static FieldReadCallSite newInstance(Lookup lookup, MethodType type,
+	public static FieldAccessCallSite newInstance(Lookup lookup, MethodType type,
 			String selector) {
-		FieldReadCallSite callsite = new FieldReadCallSite(lookup, type,
+		FieldAccessCallSite callsite = new FieldReadCallSite(lookup, type,
 				selector);
 		BaseCallSite.register(callsite);
 		return callsite;
 	}
-	
+
 	@Override
 	protected MethodHandle findAccess(Class receiverClass)
 			throws NoSuchFieldException, IllegalAccessException {
-		return lookup.findGetter(receiverClass, selector, Object.class);
+
+		return lookup.findGetter(receiverClass, selector, getFieldType(receiverClass));
 	}
 }

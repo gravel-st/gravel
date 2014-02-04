@@ -1,10 +1,10 @@
 (reader defineClass: 'ClassDescriptionNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'methods')
+(reader addInstVar: 'methods' type: 'Array[MethodNode]')
 !
-(reader addInstVar: 'instVars')
+(reader addInstVar: 'instVars' type: 'Array[VariableDeclarationNode]')
 !
-(reader addInstVar: 'traitUsage')
+(reader addInstVar: 'traitUsage' type: 'TraitUsageNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -242,11 +242,6 @@ withMethods: anArray {Arr[MethodNode]} {^Self}
 !
 withTrait: aTraitUsageNode {TraitUsageNode} {^Self}
 	^self copy pvtSetTraitUsage: (traitUsage withTrait: aTraitUsageNode)
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[MethodNode], Arr[VariableDeclarationNode], TraitUsageNode]}
-	^#('methods' 'instVars' 'traitUsage')
 !
 (reader addClassMethod: 'As yet unclassified')
 !

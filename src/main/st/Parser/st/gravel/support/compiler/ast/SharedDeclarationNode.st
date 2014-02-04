@@ -1,8 +1,8 @@
 (reader defineClass: 'SharedDeclarationNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'initializer')
+(reader addInstVar: 'initializer' type: 'Nil | Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -35,11 +35,6 @@ nodesDo: aBlock {[Node, ^Object]}
 !
 sourceOn: aStream {WStream[Char]} {^Self}
 	aStream nextPutAll: name
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Expression | Nil]}
-	^#('name' 'initializer')
 !
 (reader addClassMethod: 'instance creation')
 !

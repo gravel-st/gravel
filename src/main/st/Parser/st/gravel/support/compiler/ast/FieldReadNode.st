@@ -1,8 +1,8 @@
 (reader defineClass: 'FieldReadNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'owner')
+(reader addInstVar: 'owner' type: 'Expression')
 !
-(reader addInstVar: 'field')
+(reader addInstVar: 'field' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
@@ -50,11 +50,6 @@ owner {^Expression}
 !
 referencesVariable: aString {Str} {^Bool}
 	^field = aString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, Str]}
-	^#('owner' 'field')
 !
 (reader addClassMethod: 'instance creation')
 !

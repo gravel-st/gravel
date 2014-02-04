@@ -1,6 +1,6 @@
 (reader defineClass: 'IntegerLiteralNode' superclass: 'st.gravel.support.compiler.ast.NumberLiteralNode')
 !
-(reader addInstVar: 'integer')
+(reader addInstVar: 'integer' type: 'LargeInteger')
 !
 (reader addMethod: 'comparing')
 !
@@ -47,11 +47,6 @@ negated {^IntegerLiteralNode}
 !
 value {^Object}
 	^integer compressed
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[LargeInteger]}
-	^#('integer')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,6 +1,6 @@
 (reader defineClass: 'JVMArrayType' superclass: 'st.gravel.support.compiler.jvm.JVMNonPrimitiveType')
 !
-(reader addInstVar: 'elementType')
+(reader addInstVar: 'elementType' type: 'JVMType')
 !
 (reader addMethod: 'visitor')
 !
@@ -64,9 +64,4 @@ sourceOn: aStream {WStream[Char]} {^Self}
 !
 elementType: aJVMObjectType {JVMType} {^JVMArrayType}
 	^self new initializeElementType: aJVMObjectType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMType]}
-	^#('elementType')
 !

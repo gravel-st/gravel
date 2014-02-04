@@ -1,14 +1,14 @@
 (reader defineClass: 'SystemMappingUpdater' superclass: 'st.gravel.support.compiler.ast.DiffVisitor')
 !
-(reader addInstVar: 'systemMapping')
+(reader addInstVar: 'systemMapping' type: 'SystemMapping')
 !
-(reader addInstVar: 'compilerTools')
+(reader addInstVar: 'compilerTools' type: 'SystemMappingCompilerTools')
 !
-(reader addInstVar: 'selectorConverter')
+(reader addInstVar: 'selectorConverter' type: 'SelectorConverter')
 !
-(reader addInstVar: 'toInitialize')
+(reader addInstVar: 'toInitialize' type: 'OrderedCollection[Reference]')
 !
-(reader addInstVar: 'isStaticOverride')
+(reader addInstVar: 'isStaticOverride' type: 'Boolean')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -18,17 +18,8 @@ allInstVarsForReference: aReference {Reference | Nil} {^Arr[BoundVariableDeclara
 !
 (reader addMethod: 'As yet unclassified')
 !
-classForSuperOf: aReference {Reference} {^JavaClass}
-	| superMapping {ClassMapping} superclass {JavaClass} |
-	superMapping := systemMapping classMappingAtReference: aReference.
-	superclass := superMapping identityClass.
-	superclass isInterface ifTrue: [^self classForSuperOf: superMapping superclassReference].
-	^superclass
-!
-(reader addMethod: 'As yet unclassified')
-!
 compileClass: aClassDescriptionNode {ClassDescriptionNode} extensionPostfix: extensionPostfix {Str} isStatic: isStatic {Boolean} identityClass: identityClass {JavaClass} {^JavaClass}
-	| compiler {JVMClassCompiler} extensionClass {JavaClass} |
+	| compiler {JVMClassCompiler} extensionClass {JavaClass} jvmClass {JVMClass} |
 	compiler := JVMClassCompiler
 				classDescriptionNode: aClassDescriptionNode
 				systemNode: systemMapping systemNode
@@ -37,8 +28,11 @@ compileClass: aClassDescriptionNode {ClassDescriptionNode} extensionPostfix: ext
 	extensionPostfix isNil ifFalse: [compiler extensionPostfix: extensionPostfix].
 	identityClass isNil
 		ifFalse: [compiler selfType: (compilerTools jvmTypeForClass: identityClass)].
-	extensionClass := compilerTools writeClass: compiler compileClassNode.
+	jvmClass := compiler compileClassNode.
+	extensionClass := compilerTools writeClass: jvmClass.
 	compiler extraClassesDo: [:each {JVMClass} | compilerTools writeClass: each].
+	compilerTools runAstInit: jvmClass.
+	compiler extraClassesDo: [:each {JVMClass} | compilerTools runAstInit: each].
 	^extensionClass
 !
 (reader addMethod: 'As yet unclassified')
@@ -187,13 +181,10 @@ extraMethodsForClassNode: aClassNode {ClassNode} {^Arr[MethodNode]}
 (reader addMethod: 'As yet unclassified')
 !
 extraMethodsForMetaclassNode: aMetaclassNode {MetaclassNode} {^Arr[MethodNode]}
-	| javaClassReference {AbsoluteReference} |
-	javaClassReference := aMetaclassNode classNode javaClassReference.
-	javaClassReference isNil ifTrue: [javaClassReference := aMetaclassNode reference nonmeta].
 	^Array with: (UnaryMethodNode
 				selector: 'basicNew'
-				body: (SequenceNode
-						statement: (ReturnNode value: (InstanceCreationNode reference: javaClassReference)))
+				body: (SequenceNode statement: (ReturnNode
+								value: (InstanceCreationNode reference: aMetaclassNode reference nonmeta)))
 				returnType: nil
 				pragmas: #()
 				protocol: 'extra')
@@ -228,29 +219,16 @@ initializeSystemMapping: aSystemMapping {SystemMapping} compilerTools: aSystemMa
 	compilerTools := aSystemMappingCompilerTools.
 	self initialize
 !
-(reader addMethod: 'As yet unclassified')
-!
-isStaticOverride: aBoolean {Bool} while: aBlock {[^Self]} {^Self}
-	| old {Bool} |
-	isStaticOverride = (aBoolean | isStaticOverride) ifTrue: [^aBlock value].
-	old := isStaticOverride.
-	isStaticOverride := aBoolean | isStaticOverride.
-	aBlock value.
-	isStaticOverride := old
-!
 (reader addMethod: 'accessing')
 !
 link {^Self}
 	systemMapping classMappingsDo: 
-			[:classMapping {ClassMapping} |
-			| identityClass {JavaClass} |
-			classMapping classNode isMeta
-				ifTrue: [self initializeClassShareds: classMapping classNode].
-			identityClass := classMapping identityClass.
-			classMapping classNode isMeta
+			[:acm {AbstractClassMapping} |
+			acm classNode isMeta
 				ifTrue: 
-					[systemMapping singletonAtReference: classMapping reference nonmeta
-						ifAbsentPut: [compilerTools createSingletonForClass: identityClass]]].
+					[self initializeClassShareds: acm classNode.
+					systemMapping singletonAtReference: acm reference nonmeta
+						ifAbsentPut: [compilerTools createSingletonForClass: acm identityClass]]].
 	compilerTools resetCallsites.
 	systemMapping namespaceGlobalsAndInitializersDo: 
 			[:reference {AbsoluteReference} :sharedVariable {SharedDeclarationNode} |
@@ -335,23 +313,6 @@ methods: methods {Arr[MethodNode]} withExtraMethods: extraMethods {Arr[MethodNod
 !
 (reader addMethod: 'As yet unclassified')
 !
-methodsToRecompile: allMethods {Arr[MethodNode]} in: superclassReference {Reference} {^Arr[MethodNode]}
-	| methodsToRecompile {OrdColl[MethodNode]} selectors {Set[Str]} |
-	selectors := Set new.
-	methodsToRecompile := OrderedCollection new.
-	allMethods do: [:each {MethodNode} | selectors add: each selector].
-	self compiledMethodNodesIn: superclassReference
-		do: 
-			[:methodNode {MethodNode} |
-			| clean {MethodNode} |
-			(selectors includes: methodNode selector)
-				ifFalse: 
-					[clean := methodNode withoutSourcePointers.
-					methodsToRecompile add: clean]].
-	^methodsToRecompile asArray
-!
-(reader addMethod: 'As yet unclassified')
-!
 setNamespaceNodes: aDictionary {Dict[Reference, NamespaceNode]} {^Self}
 	systemMapping setNamespaceNodes: aDictionary
 !
@@ -405,11 +366,6 @@ visitWrapJavaclassDiff: aWrapJavaclassDiff {WrapJavaclassDiff} {^Self}
 				classNode: aWrapJavaclassDiff classNode).
 	self compileClassDescriptionNode: aWrapJavaclassDiff classNode metaclassNode.
 	toInitialize add: aWrapJavaclassDiff classNode metaclassNode reference
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SystemMapping, SystemMappingCompilerTools, SelectorConverter, OrderedCollection[Reference], Bool]}
-	^#('systemMapping' 'compilerTools' 'selectorConverter' 'toInitialize' 'isStaticOverride')
 !
 (reader addClassMethod: 'instance creation')
 !

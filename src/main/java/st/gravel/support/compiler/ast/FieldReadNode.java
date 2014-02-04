@@ -10,6 +10,7 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.StateAccessNode;
 import st.gravel.support.compiler.ast.StateAccessNode.StateAccessNode_Factory;
 import st.gravel.support.compiler.ast.Expression;
+import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.SourcePrinter;
@@ -23,6 +24,8 @@ public class FieldReadNode extends StateAccessNode implements Cloneable {
 
 	Expression _owner;
 
+	TypeNode _type;
+
 	public static class FieldReadNode_Factory extends StateAccessNode_Factory {
 
 		public FieldReadNode basicNew() {
@@ -31,13 +34,13 @@ public class FieldReadNode extends StateAccessNode implements Cloneable {
 			return newInstance;
 		}
 
-		public FieldReadNode owner_field_(final Expression _anExpression, final String _aString) {
-			return this.basicNew().initializeOwner_field_(_anExpression, _aString);
+		public FieldReadNode owner_field_type_(final Expression _anExpression, final String _aString, final TypeNode _aTypeNode) {
+			return this.basicNew().initializeOwner_field_type_(_anExpression, _aString, _aTypeNode);
 		}
 	}
 
-	static public FieldReadNode _owner_field_(Object receiver, final Expression _anExpression, final String _aString) {
-		return factory.owner_field_(_anExpression, _aString);
+	static public FieldReadNode _owner_field_type_(Object receiver, final Expression _anExpression, final String _aString, final TypeNode _aTypeNode) {
+		return factory.owner_field_type_(_anExpression, _aString, _aTypeNode);
 	}
 
 	@Override
@@ -90,9 +93,10 @@ public class FieldReadNode extends StateAccessNode implements Cloneable {
 		return _field;
 	}
 
-	public FieldReadNode initializeOwner_field_(final Expression _anExpression, final String _aString) {
+	public FieldReadNode initializeOwner_field_type_(final Expression _anExpression, final String _aString, final TypeNode _aTypeNode) {
 		_owner = _anExpression;
 		_field = _aString;
+		_type = _aTypeNode;
 		this.initialize();
 		return this;
 	}
@@ -162,6 +166,10 @@ public class FieldReadNode extends StateAccessNode implements Cloneable {
 		_aStream.append(' ');
 		this.innerSourceOn_(_aStream);
 		return this;
+	}
+
+	public TypeNode type() {
+		return _type;
 	}
 
 	@Override

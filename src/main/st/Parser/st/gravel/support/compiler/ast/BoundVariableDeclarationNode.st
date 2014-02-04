@@ -1,6 +1,6 @@
 (reader defineClass: 'BoundVariableDeclarationNode' superclass: 'st.gravel.support.compiler.ast.VariableDeclarationNode')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'Reference')
 !
 (reader addMethod: 'visitor')
 !
@@ -29,11 +29,6 @@ ownerType {^Reference}
 !
 type {^TypeNode}
 	^type
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Reference]}
-	^#('ownerType')
 !
 (reader addClassMethod: 'instance creation')
 !

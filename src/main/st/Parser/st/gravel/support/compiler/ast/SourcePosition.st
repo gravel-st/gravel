@@ -1,10 +1,10 @@
 (reader defineClass: 'SourcePosition' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'sourceFile')
+(reader addInstVar: 'sourceFile' type: 'SourceFile')
 !
-(reader addInstVar: 'start')
+(reader addInstVar: 'start' type: 'Integer')
 !
-(reader addInstVar: 'stop')
+(reader addInstVar: 'stop' type: 'Integer')
 !
 (reader addMethod: 'comparing')
 !
@@ -41,11 +41,6 @@ start {^Int}
 !
 stop {^Int}
 	^stop
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SourceFile, Int, Int]}
-	^#('sourceFile' 'start' 'stop')
 !
 (reader addClassMethod: 'instance creation')
 !

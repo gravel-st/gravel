@@ -1,6 +1,6 @@
 (reader defineClass: 'ClassReference' superclass: 'st.gravel.support.compiler.ast.Reference')
 !
-(reader addInstVar: 'reference')
+(reader addInstVar: 'reference' type: 'AbsoluteReference')
 !
 (reader addMethod: 'comparing')
 !
@@ -57,11 +57,6 @@ printOn: aStream {WStream[Char]} {^Self}
 !
 reference {^AbsoluteReference}
 	^reference
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[AbsoluteReference]}
-	^#('reference')
 !
 (reader addClassMethod: 'instance creation')
 !

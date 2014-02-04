@@ -1,6 +1,6 @@
 (reader defineClass: 'NodeCopierWithLocals' superclass: 'st.gravel.support.compiler.ast.NodeCopier')
 !
-(reader addInstVar: 'localNames')
+(reader addInstVar: 'localNames' type: 'Set[String]')
 !
 (reader addMethod: 'visiting')
 !
@@ -83,9 +83,4 @@ visitToDoNode: anObject {ToDoNode} {^ToDoNode}
 visitVariableDeclarationNode: anObject {VariableDeclarationNode} {^VariableDeclarationNode}
 	self addLocalName: anObject name.
 	^self produceVariableDeclarationNode: anObject
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Set[Str]]}
-	^#('localNames')
 !

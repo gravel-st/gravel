@@ -1,6 +1,6 @@
 (reader defineClass: 'PragmaNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'expression')
+(reader addInstVar: 'expression' type: 'MessageNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -71,9 +71,4 @@ withExpression: aMessageNode {MessageNode} {^Self}
 !
 expression: aMessageNode {MessageNode} {^Instance}
 	^self new initializeExpression: aMessageNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[MessageNode]}
-	^#('expression')
 !

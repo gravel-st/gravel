@@ -1,8 +1,8 @@
 (reader defineClass: 'BlockTypeNode' superclass: 'st.gravel.support.compiler.ast.TypeNode')
 !
-(reader addInstVar: 'arguments')
+(reader addInstVar: 'arguments' type: 'Array[TypeNode]')
 !
-(reader addInstVar: 'returnType')
+(reader addInstVar: 'returnType' type: 'Nil | TypeNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -81,9 +81,4 @@ withReturnType: aTypeNode {TypeNode} {^BlockTypeNode}
 !
 arguments: anArray {Array[TypeNode]} returnType: anUndefinedObject {TypeNode | Nil} {^Instance}
 	^self new initializeArguments: anArray returnType: anUndefinedObject
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[TypeNode], TypeNode | Nil]}
-	^#('arguments' 'returnType')
 !

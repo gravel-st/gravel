@@ -1,8 +1,8 @@
 (reader defineClass: 'SystemDiff' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'namespaces')
+(reader addInstVar: 'namespaces' type: 'Dictionary[Reference, NamespaceNode]')
 !
-(reader addInstVar: 'classDiffs')
+(reader addInstVar: 'classDiffs' type: 'Array[ClassDiff]')
 !
 (reader addMethod: 'visitor')
 !
@@ -30,9 +30,4 @@ namespaces {^Dict[Reference, NamespaceNode]}
 !
 classDiffs: anArray {Arr[ClassDiff]} namespaces: aDictionary {Dict[Reference, NamespaceNode]} {^SystemDiff}
 	^self new initializeClassDiffs: anArray namespaces: aDictionary
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[Reference, NamespaceNode], Arr[ClassDiff]]}
-	^#('namespaces' 'classDiffs')
 !

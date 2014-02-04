@@ -1,6 +1,6 @@
 (reader defineClass: 'BinaryMethodNode' superclass: 'st.gravel.support.compiler.ast.MethodNode')
 !
-(reader addInstVar: 'argument')
+(reader addInstVar: 'argument' type: 'VariableDeclarationNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -79,11 +79,6 @@ sourceOn: aStream {WStream[Char]} {^Self}
 typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 	argument typeDefsDo: aBlock.
 	returnType isNil ifFalse: [returnType typeDefsDo: aBlock]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[VariableDeclarationNode]}
-	^#('argument')
 !
 (reader addClassMethod: 'instance creation')
 !

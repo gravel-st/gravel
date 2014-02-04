@@ -1,6 +1,6 @@
 (reader defineClass: 'SuperNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'reference')
+(reader addInstVar: 'reference' type: 'Reference')
 !
 (reader addMethod: 'visitor')
 !
@@ -50,11 +50,6 @@ reference {^Reference}
 !
 referencesVariable: aString {Str} {^Bool}
 	^aString = 'super'
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Reference]}
-	^#('reference')
 !
 (reader addClassMethod: 'instance creation')
 !

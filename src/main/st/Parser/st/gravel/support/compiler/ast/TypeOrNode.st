@@ -1,8 +1,8 @@
 (reader defineClass: 'TypeOrNode' superclass: 'st.gravel.support.compiler.ast.TypeNode')
 !
-(reader addInstVar: 'left')
+(reader addInstVar: 'left' type: 'TypeNode')
 !
-(reader addInstVar: 'right')
+(reader addInstVar: 'right' type: 'TypeNode')
 !
 (reader addMethod: 'comparing')
 !
@@ -74,11 +74,6 @@ typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 	left = aTypeNode ifTrue: [^self].
 	right = aTypeNode ifTrue: [^self].
 	^super | aTypeNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[TypeNode, TypeNode]}
-	^#('left' 'right')
 !
 (reader addClassMethod: 'instance creation')
 !

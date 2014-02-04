@@ -1,6 +1,6 @@
 (reader defineClass: 'LabelLineNumber' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'line')
+(reader addInstVar: 'line' type: 'Integer')
 !
 (reader addMethod: 'visitor')
 !
@@ -22,11 +22,6 @@ initializeLine: anInteger {Int} {^Self}
 !
 line {^Int}
 	^line
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Int]}
-	^#('line')
 !
 (reader addClassMethod: 'instance creation')
 !

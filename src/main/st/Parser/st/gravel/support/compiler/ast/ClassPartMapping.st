@@ -1,10 +1,10 @@
 (reader defineClass: 'ClassPartMapping' superclass: 'st.gravel.support.compiler.ast.AbstractMapping')
 !
-(reader addInstVar: 'methodMappings')
+(reader addInstVar: 'methodMappings' type: 'Dictionary[Symbol, AbstractMethodMapping]')
 !
-(reader addInstVar: 'javaClass')
+(reader addInstVar: 'javaClass' type: 'JavaClass')
 !
-(reader addInstVar: 'isGenerated')
+(reader addInstVar: 'isGenerated' type: 'Boolean')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -54,11 +54,6 @@ withMethodMappings: aDictionary {Dict[Sym, AbstractMethodMapping]} {^Self}
 !
 withoutMethodMapping: aSelector {Str} {^Self}
 	^self withMethodMappings: (methodMappings copyRemoveKey: aSelector asSymbol ifAbsent: [])
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[Sym, AbstractMethodMapping], JavaClass, Bool]}
-	^#('methodMappings' 'javaClass' 'isGenerated')
 !
 (reader addClassMethod: 'instance creation')
 !

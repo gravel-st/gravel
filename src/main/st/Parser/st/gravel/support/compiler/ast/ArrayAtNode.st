@@ -1,6 +1,6 @@
 (reader defineClass: 'ArrayAtNode' superclass: 'st.gravel.support.compiler.ast.ArrayAccessNode')
 !
-(reader addInstVar: 'index')
+(reader addInstVar: 'index' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -43,11 +43,6 @@ receiver {^Expression}
 !
 unoptimized {^Expression}
 	^receiver send: 'at:' with: index
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression]}
-	^#('index')
 !
 (reader addClassMethod: 'instance creation')
 !

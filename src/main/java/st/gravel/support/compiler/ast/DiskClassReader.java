@@ -60,6 +60,10 @@ public class DiskClassReader extends Object implements Cloneable {
 		return _aClassNode.withClassInstVar_(VariableDeclarationNode.factory.name_(_aString));
 	}
 
+	public ClassNode addClassInstVar_type_for_(final String _aString, final String _typeString, final ClassNode _aClassNode) {
+		return _aClassNode.withClassInstVar_(VariableDeclarationNode.factory.name_type_(_aString, Parser.factory.parseTypeNode_(_typeString)));
+	}
+
 	public ClassNode addClassMethod_for_(final Parser _aParser, final ClassNode _aClassNode) {
 		return this.addClassMethod_protocol_for_(_aParser, "gravel", _aClassNode);
 	}
@@ -71,6 +75,10 @@ public class DiskClassReader extends Object implements Cloneable {
 
 	public ClassNode addInstVar_for_(final String _aString, final ClassNode _aClassNode) {
 		return _aClassNode.withInstVar_(VariableDeclarationNode.factory.name_(_aString));
+	}
+
+	public ClassNode addInstVar_type_for_(final String _aString, final String _typeString, final ClassNode _aClassNode) {
+		return _aClassNode.withInstVar_(VariableDeclarationNode.factory.name_type_(_aString, Parser.factory.parseTypeNode_(_typeString)));
 	}
 
 	public ClassNode addMethod_for_(final Parser _aParser, final ClassNode _aClassNode) {
@@ -189,11 +197,25 @@ public class DiskClassReader extends Object implements Cloneable {
 				return (ClassNode) DiskClassReader.this.addInstVar_for_(DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[0]))), _classNode);
 			}
 		});
+		_directives.put("addInstVar:type:", new st.gravel.support.jvm.Block3<ClassNode, ClassNode, MessageNode, Parser>() {
+
+			@Override
+			public ClassNode value_value_value_(final ClassNode _classNode, final MessageNode _expr, final Parser _parser) {
+				return (ClassNode) DiskClassReader.this.addInstVar_type_for_(DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[0]))), DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[1]))), _classNode);
+			}
+		});
 		_directives.put("addClassInstVar:", new st.gravel.support.jvm.Block3<ClassNode, ClassNode, MessageNode, Parser>() {
 
 			@Override
 			public ClassNode value_value_value_(final ClassNode _classNode, final MessageNode _expr, final Parser _parser) {
 				return (ClassNode) DiskClassReader.this.addClassInstVar_for_(DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[0]))), _classNode);
+			}
+		});
+		_directives.put("addClassInstVar:type:", new st.gravel.support.jvm.Block3<ClassNode, ClassNode, MessageNode, Parser>() {
+
+			@Override
+			public ClassNode value_value_value_(final ClassNode _classNode, final MessageNode _expr, final Parser _parser) {
+				return (ClassNode) DiskClassReader.this.addClassInstVar_type_for_(DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[0]))), DiskClassReader.this.evaluate_(((LiteralNode) (_expr.arguments()[1]))), _classNode);
 			}
 		});
 		_directives.put("propertyAt:put:", new st.gravel.support.jvm.Block3<ClassNode, ClassNode, MessageNode, Parser>() {

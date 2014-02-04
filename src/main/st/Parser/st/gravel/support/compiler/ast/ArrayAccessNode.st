@@ -1,6 +1,6 @@
 (reader defineClass: 'ArrayAccessNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'receiver')
+(reader addInstVar: 'receiver' type: 'Expression')
 !
 (reader addMethod: 'visitor')
 !
@@ -17,11 +17,6 @@ initializeReceiver: anExpression {Expression} {^Self}
 !
 receiver {^Expression}
 	^receiver
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression]}
-	^#('receiver')
 !
 (reader addClassMethod: 'instance creation')
 !

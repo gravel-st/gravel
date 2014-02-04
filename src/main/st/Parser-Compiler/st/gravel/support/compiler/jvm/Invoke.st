@@ -1,10 +1,10 @@
 (reader defineClass: 'Invoke' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'signature')
+(reader addInstVar: 'signature' type: 'JVMMethodType')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -52,11 +52,6 @@ sourceOn: aStream {WStream[Char]} {^Self}
 !
 staticSignature {^JVMMethodType}
 	^signature copyWithFirst: ownerType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType, Str, JVMMethodType]}
-	^#('ownerType' 'name' 'signature')
 !
 (reader addClassMethod: 'instance creation')
 !

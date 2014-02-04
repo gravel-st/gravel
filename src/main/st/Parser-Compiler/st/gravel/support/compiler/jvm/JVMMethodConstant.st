@@ -1,14 +1,14 @@
 (reader defineClass: 'JVMMethodConstant' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'frame')
+(reader addInstVar: 'frame' type: 'Frame')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'type')
+(reader addInstVar: 'type' type: 'JVMType')
 !
-(reader addInstVar: 'expression')
+(reader addInstVar: 'expression' type: 'Expression')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -87,9 +87,4 @@ expression: anExpression {Expression} name: aString {Str} frame: aFrame {Frame} 
 		frame: aFrame
 		ownerType: ownerType
 		type: type
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Frame, JVMDefinedObjectType, JVMType, Expression]}
-	^#('name' 'frame' 'ownerType' 'type' 'expression')
 !

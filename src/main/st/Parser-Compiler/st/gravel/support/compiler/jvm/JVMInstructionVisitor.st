@@ -162,6 +162,11 @@ visitDupX2: anObject {DupX2} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitDynamicCreateInstance: anObject {DynamicCreateInstance} {^X}
+	^self visitJVMInstruction: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitDynamicFieldRead: anObject {DynamicFieldRead} {^X}
 	^self visitJVMInstruction: anObject
 !
@@ -178,6 +183,11 @@ visitDynamicGlobalRead: anObject {DynamicGlobalRead} {^X}
 (reader addMethod: 'visiting')
 !
 visitDynamicGlobalWrite: anObject {DynamicGlobalWrite} {^X}
+	^self visitJVMInstruction: anObject
+!
+(reader addMethod: 'visiting')
+!
+visitDynamicLiteralBlockMessageSend: anObject {DynamicLiteralBlockMessageSend} {^X}
 	^self visitJVMInstruction: anObject
 !
 (reader addMethod: 'visiting')

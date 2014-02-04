@@ -1,10 +1,10 @@
 (reader defineClass: 'BlockInnerClass' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'ownerType')
+(reader addInstVar: 'ownerType' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'blockNode')
+(reader addInstVar: 'blockNode' type: 'BlockNode')
 !
-(reader addInstVar: 'copiedVariables')
+(reader addInstVar: 'copiedVariables' type: 'Array[JVMVariable]')
 !
 (reader addMethod: 'accessing')
 !
@@ -34,11 +34,6 @@ initSignature {^JVMMethodType}
 !
 ownerType {^JVMDefinedObjectType}
 	^ownerType
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMDefinedObjectType, BlockNode, Arr[JVMVariable]]}
-	^#('ownerType' 'blockNode' 'copiedVariables')
 !
 (reader addClassMethod: 'instance creation')
 !

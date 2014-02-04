@@ -1,34 +1,37 @@
 (reader defineClass: 'SystemMapping' superclass: 'st.gravel.support.compiler.ast.AbstractMapping')
 !
-(reader addInstVar: 'systemNode')
+(reader addInstVar: 'systemNode' type: 'SystemNode')
 !
-(reader addInstVar: 'compilerTools')
+(reader addInstVar: 'compilerTools' type: 'SystemMappingCompilerTools')
 !
-(reader addInstVar: 'classMappingsByJavaClass')
+(reader addInstVar: 'classMappingsByJavaClass' type: 'Dictionary[JavaClass, ClassMapping]')
 !
-(reader addInstVar: 'classMappingsByReference')
+(reader addInstVar: 'classMappingsByReference' type: 'Dictionary[Reference, AbstractClassMapping]')
 !
-(reader addInstVar: 'singletonHolders')
+(reader addInstVar: 'singletonHolders' type: 'Dictionary[AbsoluteReference, AlmostFinalValue]')
 !
-(reader addInstVar: 'selectorConverter')
+(reader addInstVar: 'selectorConverter' type: 'SelectorConverter')
 !
-(reader addInstVar: 'nilClassMapping')
+(reader addInstVar: 'nilClassMapping' type: 'ClassMapping')
 !
-(reader addInstVar: 'systemDefinitionNode')
+(reader addInstVar: 'systemDefinitionNode' type: 'SystemDefinitionNode')
 !
-(reader addInstVar: 'subclassMappingsCache')
+(reader addInstVar: 'subclassMappingsCache' type: 'Dictionary[Reference, Set[AbstractClassMapping]]')
 !
 (reader addMethod: 'As yet unclassified')
 !
-addClassMapping: aClassMapping {ClassMapping} {^Self}
+addClassMapping: aClassMapping {ClassMapping} {^ClassMapping}
 	| identityClass {JavaClass} |
 	identityClass := aClassMapping identityClass.
 	identityClass isNil
-		ifTrue: [nilClassMapping := aClassMapping]
+		ifTrue: 
+			[self assert: aClassMapping classNode isNilClass.
+			nilClassMapping := aClassMapping]
 		ifFalse: [classMappingsByJavaClass at: identityClass put: aClassMapping].
 	classMappingsByReference at: aClassMapping classNode reference put: aClassMapping.
 	systemNode := systemNode withClassDescriptionNode: aClassMapping classNode.
-	self resetCache
+	self resetCache.
+	^aClassMapping
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -44,7 +47,7 @@ applyDiff: aSystemDiff {SystemDiff} {^Self}
 bestClassMappingFor: receiverClass {JavaClass} {^ClassMapping}
 	| best {ClassMapping | Nil} |
 	best := nil.
-	classMappingsByReference do: 
+	self concreteClassMappingsDo: 
 			[:cm {ClassMapping} |
 			(compilerTools isAssignable: cm identityClass from: receiverClass)
 				ifTrue: 
@@ -60,22 +63,10 @@ bestClassMappingFor: receiverClass {JavaClass} {^ClassMapping}
 buildSubclassMappingsCache {^Self}
 	subclassMappingsCache := Dictionary new.
 	classMappingsByReference do: 
-			[:each {ClassMapping} |
+			[:each {AbstractClassMapping} |
 			| scr {Reference} |
 			scr := each superclassReference.
 			scr isNil ifFalse: [(subclassMappingsCache at: scr ifAbsentPut: [Set new]) add: each]]
-!
-(reader addMethod: 'As yet unclassified')
-!
-classMappingAt: aString {Str} {^ClassMapping}
-	^self classMappingAt: aString ifAbsent: [self error: 'Cannot find: ' , aString]
-!
-(reader addMethod: 'As yet unclassified')
-!
-classMappingAt: aString {Str} ifAbsent: absentBlock {[^ClassMapping]} {^ClassMapping}
-	^self classMappingAtReference: (AbsoluteReference
-				path: ((aString tokensBasedOn: $.) collect: [:each {Str} | each asSymbol]))
-		ifAbsent: absentBlock
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -85,13 +76,13 @@ classMappingAtJavaClass: aClass {JavaClass} ifAbsent: absentBlock {[^ClassMappin
 !
 (reader addMethod: 'As yet unclassified')
 !
-classMappingAtReference: aReference {Reference} {^ClassMapping}
+classMappingAtReference: aReference {Reference} {^AbstractClassMapping}
 	^self classMappingAtReference: aReference
 		ifAbsent: [self error: 'Cannot find: ' , aReference printString]
 !
 (reader addMethod: 'As yet unclassified')
 !
-classMappingAtReference: aReference {Reference} ifAbsent: absentBlock {[^ClassMapping]} {^ClassMapping}
+classMappingAtReference: aReference {Reference} ifAbsent: absentBlock {[^AbstractClassMapping]} {^AbstractClassMapping}
 	^classMappingsByReference at: aReference ifAbsent: absentBlock
 !
 (reader addMethod: 'As yet unclassified')
@@ -106,7 +97,7 @@ classMappingForJavaClass: receiverClass {JavaClass} {^ClassMapping}
 !
 (reader addMethod: 'As yet unclassified')
 !
-classMappingsDo: aBlock {[ClassMapping, ^Object]} {^Self}
+classMappingsDo: aBlock {[AbstractClassMapping, ^Object]} {^Self}
 	classMappingsByReference do: aBlock
 !
 (reader addMethod: 'accessing')
@@ -116,7 +107,7 @@ classSharedSingletonHolderAtReference: reference {AbsoluteReference} ifAbsent: a
 		ifAbsent: 
 			[singletonHolders at: reference namespace namespace / reference name
 				ifAbsent: 
-					[| cm {ClassMapping} superclassReference {AbsoluteReference} sharedVariable {SharedDeclarationNode} |
+					[| cm {AbstractClassMapping} superclassReference {AbsoluteReference} sharedVariable {SharedDeclarationNode} |
 					cm := classMappingsByReference at: reference namespace ifAbsent: [^aBlock value].
 					sharedVariable := cm classNode meta sharedVariableAt: reference name asString
 								ifAbsent: [nil].
@@ -130,11 +121,9 @@ classSharedSingletonHolderAtReference: reference {AbsoluteReference} ifAbsent: a
 (reader addMethod: 'As yet unclassified')
 !
 compileAndWriteExpression: anExpression {Node} reference: aReference {Reference} {^JavaClass}
-	| jvmClasses {Arr[JVMClass]} last {JavaClass | Nil} |
+	| jvmClasses {Arr[JVMClass]} |
 	jvmClasses := self compileExpression: anExpression reference: aReference.
-	last := nil.
-	jvmClasses do: [:jvmClass {JVMClass} | last := compilerTools writeClass: jvmClass].
-	^last
+	^self compileJVMClasses: jvmClasses
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -160,15 +149,41 @@ compileExpression: anExpression {Node} reference: aReference {Reference} {^Arr[J
 	jvmClassCompiler ownerType: (JVMDefinedObjectType
 				dottedClassName: 'ExpressionContainer$' , compilerTools nextExtensionPostfix).
 	blockClass := jvmClassCompiler compileBlockNoAdd: aBlockInnerClass.
-	jvmClassCompiler hasConstantsOrFieldsOrExtraClasses ifFalse: [^Array with: blockClass].
-	^jvmClassCompiler extraClasses
-		copyWithAll: (Array with: jvmClassCompiler createContainerClass with: blockClass)
+	^jvmClassCompiler withContainerAndExtraClasses: blockClass
 !
 (reader addMethod: 'As yet unclassified')
 !
 compileExpressionSource: source {Str} {^Arr[JVMClass]}
 	^self compileExpression: (Parser parseExpression: source)
 		reference: (Reference value: 'st.gravel.lang.UndefinedObject')
+!
+(reader addMethod: 'As yet unclassified')
+!
+compileInlinedMethod: aMethodNode {MethodNode} selfType: selfType {JVMNonPrimitiveType} allowBlockInlining: allowBlockInlining {Bool} {^JavaClass | Nil}
+	| jvmClassCompiler {JVMClassCompiler} inlinedMethodClass {JVMClass} jvmClasses {Arr[JVMClass]} |
+	jvmClassCompiler := JVMClassCompiler
+				classDescriptionNode: nil
+				systemNode: systemNode
+				systemMappingUpdater: self newSystemMappingUpdater
+				isStatic: true.
+	jvmClassCompiler
+		allowBlockInlining: allowBlockInlining;
+		selfType: selfType;
+		superType: JVMDefinedObjectType object.
+	jvmClassCompiler ownerType: (JVMDefinedObjectType
+				dottedClassName: 'InlinedMethod$' , compilerTools nextExtensionPostfix).
+	inlinedMethodClass := jvmClassCompiler compileInlinedMethod: aMethodNode.
+	jvmClasses := jvmClassCompiler extraClasses copyWith: inlinedMethodClass.
+	^self compileJVMClasses: jvmClasses
+!
+(reader addMethod: 'As yet unclassified')
+!
+compileJVMClasses: jvmClasses {Arr[JVMClass]} {^JavaClass | Nil}
+	| last {JavaClass | Nil} |
+	last := nil.
+	jvmClasses do: [:jvmClass {JVMClass} | last := compilerTools writeClass: jvmClass].
+	jvmClasses do: [:jvmClass {JVMClass} | compilerTools runAstInit: jvmClass].
+	^last
 !
 (reader addMethod: 'accessing')
 !
@@ -177,9 +192,9 @@ compilerTools {^SystemMappingCompilerTools}
 !
 (reader addMethod: 'As yet unclassified')
 !
-definitionClassNodeAt: reference {Reference} {^ClassDescriptionNode}
-	^self definitionClassNodeAt: reference
-		ifAbsent: [self error: 'Cannot find: ' , reference printString]
+concreteClassMappingsDo: aBlock {[ClassMapping, ^Object]} {^Self}
+	classMappingsByReference
+		do: [:acm {AbstractClassMapping} | aBlock value: ({ClassMapping} acm)]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -431,6 +446,12 @@ singletonAtReference: reference {AbsoluteReference} {^Object}
 !
 (reader addMethod: 'accessing')
 !
+singletonAtReference: reference {AbsoluteReference} ifAbsentInitialize: aBlock {[^Object]} {^AlmostFinalValue}
+	^singletonHolders at: reference
+		ifAbsentPut: [compilerTools newSingletonHolder: reference initializer: aBlock]
+!
+(reader addMethod: 'accessing')
+!
 singletonAtReference: reference {AbsoluteReference} ifAbsentPut: aBlock {[^Object]} {^AlmostFinalValue}
 	^singletonHolders at: reference
 		ifAbsentPut: [compilerTools newSingletonHolder: reference value: aBlock value]
@@ -451,8 +472,8 @@ singletonAtReferenceString: aString {Str} {^Object}
 !
 (reader addMethod: 'As yet unclassified')
 !
-subclassMappingsFor: aReference {Reference} do: aBlock {[ClassMapping, ^Object]} {^Self}
-	| c {Set[ClassMapping] | Nil} |
+subclassMappingsFor: aReference {Reference} do: aBlock {[AbstractClassMapping, ^Object]} {^Self}
+	| c {Set[AbstractClassMapping] | Nil} |
 	subclassMappingsCache isNil ifTrue: [self buildSubclassMappingsCache].
 	c := subclassMappingsCache at: aReference ifAbsent: [nil].
 	c isNil ifTrue: [^nil].
@@ -487,11 +508,6 @@ updateTo: newSystemDefinitionNode {SystemDefinitionNode} {^Self}
 	self log: 'Applying diff' while: [self applyDiff: diff].
 	systemDefinitionNode := newSystemDefinitionNode.
 	self resetCache
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[SystemNode, SystemMappingCompilerTools, Dict[JavaClass, ClassMapping], Dict[Reference, ClassMapping], Dict[AbsoluteReference, AlmostFinalValue], SelectorConverter, ClassMapping, SystemDefinitionNode, Dict[Reference, Set[ClassMapping]]]}
-	^#('systemNode' 'compilerTools' 'classMappingsByJavaClass' 'classMappingsByReference' 'singletonHolders' 'selectorConverter' 'nilClassMapping' 'systemDefinitionNode' 'subclassMappingsCache')
 !
 (reader addClassMethod: 'instance creation')
 !

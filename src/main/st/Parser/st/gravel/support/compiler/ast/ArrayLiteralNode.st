@@ -1,6 +1,6 @@
 (reader defineClass: 'ArrayLiteralNode' superclass: 'st.gravel.support.compiler.ast.LiteralNode')
 !
-(reader addInstVar: 'elements')
+(reader addInstVar: 'elements' type: 'Array[LiteralNode]')
 !
 (reader addMethod: 'comparing')
 !
@@ -54,11 +54,6 @@ value {^Arr[Object]}
 !
 elements: anArray {Array[LiteralNode]} {^Instance}
 	^self new initializeElements: anArray
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[LiteralNode]]}
-	^#('elements')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -13,6 +13,9 @@ precedence {^Int}
 (reader addMethod: 'As yet unclassified')
 !
 sourceOn: aStream {WStream[Char]} {^Self}
+	aStream
+		nextPutAll: self class name;
+		space.
 	self innerSourceOn: aStream
 !
 (reader addMethod: 'As yet unclassified')

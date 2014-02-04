@@ -1,6 +1,6 @@
 (reader defineClass: 'MethodMapping' superclass: 'st.gravel.support.compiler.ast.AbstractMethodMapping')
 !
-(reader addInstVar: 'methodNode')
+(reader addInstVar: 'methodNode' type: 'MethodNode')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -19,11 +19,6 @@ methodNode {^MethodNode}
 !
 selector {^Str}
 	^methodNode selector
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[MethodNode]}
-	^#('methodNode')
 !
 (reader addClassMethod: 'instance creation')
 !

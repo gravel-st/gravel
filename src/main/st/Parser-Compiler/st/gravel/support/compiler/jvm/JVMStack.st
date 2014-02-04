@@ -1,6 +1,6 @@
 (reader defineClass: 'JVMStack' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'elements')
+(reader addInstVar: 'elements' type: 'Array[JVMType]')
 !
 (reader addMethod: 'accessing')
 !
@@ -47,7 +47,8 @@ popLast {^JVMType}
 popType: aJVMType {JVMType} {^Self}
 	| last {JVMType} |
 	last := aJVMType isWide ifTrue: [self popWide] ifFalse: [self pop].
-	self assert: last = aJVMType
+	self assert: (last = aJVMType
+				or: [last = JVMDynamicObjectType new and: [aJVMType = JVMDefinedObjectType object]])
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -68,11 +69,6 @@ push: aType {JVMType} {^Self}
 !
 size {^Int}
 	^elements size
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[JVMType]]}
-	^#('elements')
 !
 (reader addClassMethod: 'instance creation')
 !

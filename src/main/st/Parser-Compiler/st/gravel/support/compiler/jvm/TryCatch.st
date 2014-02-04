@@ -1,12 +1,12 @@
 (reader defineClass: 'TryCatch' superclass: 'st.gravel.support.compiler.jvm.JVMControlFlowInstruction')
 !
-(reader addInstVar: 'tryFrame')
+(reader addInstVar: 'tryFrame' type: 'Frame')
 !
-(reader addInstVar: 'doFrame')
+(reader addInstVar: 'doFrame' type: 'Frame')
 !
-(reader addInstVar: 'exception')
+(reader addInstVar: 'exception' type: 'JVMDefinedObjectType')
 !
-(reader addInstVar: 'catchFrame')
+(reader addInstVar: 'catchFrame' type: 'Frame')
 !
 (reader addMethod: 'visitor')
 !
@@ -46,11 +46,6 @@ initializeTryFrame: aFrame {Frame} doFrame: aFrame2 {Frame} exception: aJVMDefin
 !
 tryFrame {^Frame}
 	^tryFrame
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Frame, Frame, JVMDefinedObjectType, Frame]}
-	^#('tryFrame' 'doFrame' 'exception' 'catchFrame')
 !
 (reader addClassMethod: 'instance creation')
 !

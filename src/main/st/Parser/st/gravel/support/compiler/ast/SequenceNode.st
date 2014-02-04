@@ -1,8 +1,8 @@
 (reader defineClass: 'SequenceNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'temporaries')
+(reader addInstVar: 'temporaries' type: 'Array[VariableDeclarationNode]')
 !
-(reader addInstVar: 'statements')
+(reader addInstVar: 'statements' type: 'Array[Statement]')
 !
 (reader addMethod: 'comparing')
 !
@@ -132,11 +132,6 @@ temporaries {^Array[VariableDeclarationNode]}
 !
 empty {^SequenceNode}
 	^self temporaries: #() statements: #()
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[VariableDeclarationNode], Array[Statement]]}
-	^#('temporaries' 'statements')
 !
 (reader addClassMethod: 'instance creation')
 !

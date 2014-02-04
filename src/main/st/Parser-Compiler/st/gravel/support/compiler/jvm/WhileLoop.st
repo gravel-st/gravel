@@ -1,8 +1,8 @@
 (reader defineClass: 'WhileLoop' superclass: 'st.gravel.support.compiler.jvm.Loop')
 !
-(reader addInstVar: 'testFrame')
+(reader addInstVar: 'testFrame' type: 'Frame')
 !
-(reader addInstVar: 'doFrame')
+(reader addInstVar: 'doFrame' type: 'Frame')
 !
 (reader addMethod: 'visitor')
 !
@@ -31,11 +31,6 @@ initializeTestFrame: aFrame {Frame} doFrame: aFrame2 {Frame} {^Self}
 !
 testFrame {^Frame}
 	^testFrame
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Frame, Frame]}
-	^#('testFrame' 'doFrame')
 !
 (reader addClassMethod: 'instance creation')
 !

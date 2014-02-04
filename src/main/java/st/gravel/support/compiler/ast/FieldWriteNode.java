@@ -10,6 +10,7 @@ import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.ast.StateAccessNode;
 import st.gravel.support.compiler.ast.StateAccessNode.StateAccessNode_Factory;
 import st.gravel.support.compiler.ast.Expression;
+import st.gravel.support.compiler.ast.TypeNode;
 import st.gravel.support.compiler.ast.NodeVisitor;
 import st.gravel.support.compiler.ast.Node;
 import st.gravel.support.compiler.ast.AssignmentNode;
@@ -25,6 +26,8 @@ public class FieldWriteNode extends StateAccessNode implements Cloneable {
 
 	Expression _owner;
 
+	TypeNode _type;
+
 	Expression _value;
 
 	public static class FieldWriteNode_Factory extends StateAccessNode_Factory {
@@ -35,13 +38,13 @@ public class FieldWriteNode extends StateAccessNode implements Cloneable {
 			return newInstance;
 		}
 
-		public FieldWriteNode owner_field_value_(final Expression _anExpression, final String _aString, final Expression _aVariableNode) {
-			return this.basicNew().initializeOwner_field_value_(_anExpression, _aString, _aVariableNode);
+		public FieldWriteNode owner_field_type_value_(final Expression _owner, final String _field, final TypeNode _type, final Expression _value) {
+			return this.basicNew().initializeOwner_field_type_value_(_owner, _field, _type, _value);
 		}
 	}
 
-	static public FieldWriteNode _owner_field_value_(Object receiver, final Expression _anExpression, final String _aString, final Expression _aVariableNode) {
-		return factory.owner_field_value_(_anExpression, _aString, _aVariableNode);
+	static public FieldWriteNode _owner_field_type_value_(Object receiver, final Expression _owner, final String _field, final TypeNode _type, final Expression _value) {
+		return factory.owner_field_type_value_(_owner, _field, _type, _value);
 	}
 
 	@Override
@@ -94,9 +97,10 @@ public class FieldWriteNode extends StateAccessNode implements Cloneable {
 		return _field;
 	}
 
-	public FieldWriteNode initializeOwner_field_value_(final Expression _anExpression, final String _aString, final Expression _aVariableNode) {
+	public FieldWriteNode initializeOwner_field_type_value_(final Expression _anExpression, final String _aString, final TypeNode _anObject, final Expression _aVariableNode) {
 		_owner = _anExpression;
 		_field = _aString;
+		_type = _anObject;
 		_value = _aVariableNode;
 		this.initialize();
 		return this;
@@ -170,6 +174,10 @@ public class FieldWriteNode extends StateAccessNode implements Cloneable {
 		_aStream.append(' ');
 		this.innerSourceOn_(_aStream);
 		return this;
+	}
+
+	public TypeNode type() {
+		return _type;
 	}
 
 	@Override

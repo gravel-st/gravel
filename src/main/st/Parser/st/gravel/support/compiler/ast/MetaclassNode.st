@@ -1,8 +1,8 @@
 (reader defineClass: 'MetaclassNode' superclass: 'st.gravel.support.compiler.ast.ClassDescriptionNode')
 !
-(reader addInstVar: 'classNode')
+(reader addInstVar: 'classNode' type: 'ClassNode')
 !
-(reader addInstVar: 'sharedVariables')
+(reader addInstVar: 'sharedVariables' type: 'Array[SharedDeclarationNode]')
 !
 (reader addMethod: 'visitor')
 !
@@ -154,9 +154,4 @@ classNode: aClassNode {ClassNode} methods: anOrderedCollection {Arr[MethodNode]}
 		instVars: anArray
 		sharedVariables: sharedVariables
 		traitUsage: traitUsage
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[ClassNode, Arr[SharedDeclarationNode]]}
-	^#('classNode' 'sharedVariables')
 !

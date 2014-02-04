@@ -1,12 +1,12 @@
 (reader defineClass: 'NamespaceNode' superclass: 'st.gravel.support.compiler.ast.Node')
 !
-(reader addInstVar: 'reference')
+(reader addInstVar: 'reference' type: 'AbsoluteReference')
 !
-(reader addInstVar: 'publicImports')
+(reader addInstVar: 'publicImports' type: 'Array[AbsoluteReference]')
 !
-(reader addInstVar: 'privateImports')
+(reader addInstVar: 'privateImports' type: 'Array[AbsoluteReference]')
 !
-(reader addInstVar: 'sharedVariables')
+(reader addInstVar: 'sharedVariables' type: 'Array[SharedDeclarationNode]')
 !
 (reader addMethod: 'comparing')
 !
@@ -174,11 +174,6 @@ for: aReference {Reference} {^NamespaceNode}
 		publicImports: #()
 		privateImports: (Array with: orgGravelLang)
 		sharedVariables: #()
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[AbsoluteReference, Arr[AbsoluteReference], Arr[AbsoluteReference], Arr[SharedDeclarationNode]]}
-	^#('reference' 'publicImports' 'privateImports' 'sharedVariables')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,6 +1,6 @@
 (reader defineClass: 'InstanceCreationNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'reference')
+(reader addInstVar: 'reference' type: 'AbsoluteReference')
 !
 (reader addMethod: 'visitor')
 !
@@ -35,11 +35,6 @@ reference {^AbsoluteReference}
 !
 unoptimized {^Expression}
 	^nil
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[AbsoluteReference]}
-	^#('reference')
 !
 (reader addClassMethod: 'instance creation')
 !

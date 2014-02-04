@@ -308,12 +308,12 @@ public class NodeCopier extends NodeVisitor<Node> implements Cloneable {
 
 	@Override
 	public Expression visitFieldReadNode_(final FieldReadNode _anObject) {
-		return FieldReadNode.factory.owner_field_(((Expression) this.visit_(_anObject.owner())), _anObject.field());
+		return FieldReadNode.factory.owner_field_type_(((Expression) this.visit_(_anObject.owner())), _anObject.field(), ((TypeNode) this.visit_(_anObject.type())));
 	}
 
 	@Override
 	public FieldWriteNode visitFieldWriteNode_(final FieldWriteNode _anObject) {
-		return FieldWriteNode.factory.owner_field_value_(((Expression) this.visit_(_anObject.owner())), _anObject.field(), ((Expression) this.visit_(_anObject.value())));
+		return FieldWriteNode.factory.owner_field_type_value_(((Expression) this.visit_(_anObject.owner())), _anObject.field(), ((TypeNode) this.visit_(_anObject.type())), ((Expression) this.visit_(_anObject.value())));
 	}
 
 	@Override

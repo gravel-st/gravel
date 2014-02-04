@@ -378,18 +378,10 @@ public class SystemMappingUpdater extends DiffVisitor implements Cloneable {
 		final Node _nonLocal;
 		final Node _holderized;
 		final Node _fieldAccessed;
-		final String[] _instVarNames;
-		_instVarNames = st.gravel.support.jvm.ArrayExtensions.collect_(_instVars, ((st.gravel.support.jvm.Block1<String, BoundVariableDeclarationNode>) (new st.gravel.support.jvm.Block1<String, BoundVariableDeclarationNode>() {
-
-			@Override
-			public String value_(final BoundVariableDeclarationNode _each) {
-				return (String) _each.name();
-			}
-		})));
 		_intermediate = IntermediateNodeRewriter.factory.visit_(_node);
 		_nonLocal = NonLocalReturnRewriter.factory.nlrMarker_(_compilerTools.nextNlrMarker()).visit_(_intermediate);
 		_holderized = NonLocalTempWritesToHolderConverter.factory.visit_(_nonLocal);
-		_fieldAccessed = VariableAccessToFieldAccessConverter.factory.instVarNames_owner_ownerReference_(_instVarNames, _owner, _ownerReference).visit_(_holderized);
+		_fieldAccessed = VariableAccessToFieldAccessConverter.factory.instVars_owner_ownerReference_(_instVars, _owner, _ownerReference).visit_(_holderized);
 		return _fieldAccessed;
 	}
 

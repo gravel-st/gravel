@@ -1,12 +1,12 @@
 (reader defineClass: 'IfTrueIfFalseNode' superclass: 'st.gravel.support.compiler.ast.IntermediateNode')
 !
-(reader addInstVar: 'test')
+(reader addInstVar: 'test' type: 'Expression')
 !
-(reader addInstVar: 'trueSequence')
+(reader addInstVar: 'trueSequence' type: 'SequenceNode')
 !
-(reader addInstVar: 'falseSequence')
+(reader addInstVar: 'falseSequence' type: 'SequenceNode')
 !
-(reader addInstVar: 'returnType')
+(reader addInstVar: 'returnType' type: 'TypeNode')
 !
 (reader addMethod: 'visitor')
 !
@@ -68,11 +68,6 @@ unoptimized {^Expression}
 		selector: 'ifTrue:ifFalse:'
 		arguments: (Array with: (BlockNode body: trueSequence)
 				with: (BlockNode body: falseSequence))
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Expression, SequenceNode, SequenceNode, TypeNode]}
-	^#('test' 'trueSequence' 'falseSequence' 'returnType')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'JavaTestcaseClassWriter' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'root')
+(reader addInstVar: 'root' type: 'Filename')
 !
-(reader addInstVar: 'systemNode')
+(reader addInstVar: 'systemNode' type: 'SystemNode')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -71,11 +71,6 @@ public class ';
 '].
 	wstr nextPutAll: '}'.
 	wstr contents writeToFile: dir / (className , '.java')
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Filename, SystemNode]}
-	^#('root' 'systemNode')
 !
 (reader addClassMethod: 'instance creation')
 !

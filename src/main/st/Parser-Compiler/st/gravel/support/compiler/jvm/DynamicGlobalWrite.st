@@ -1,8 +1,8 @@
 (reader defineClass: 'DynamicGlobalWrite' superclass: 'st.gravel.support.compiler.jvm.JVMInstruction')
 !
-(reader addInstVar: 'namespace')
+(reader addInstVar: 'namespace' type: 'String')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'String')
 !
 (reader addMethod: 'visitor')
 !
@@ -40,11 +40,6 @@ namespace {^Str}
 !
 type {^JVMType}
 	^JVMVoidType new
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Str]}
-	^#('namespace' 'name')
 !
 (reader addClassMethod: 'instance creation')
 !

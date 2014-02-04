@@ -1,6 +1,6 @@
 (reader defineClass: 'ReadHolderNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'varName')
+(reader addInstVar: 'varName' type: 'String')
 !
 (reader addMethod: 'comparing')
 !
@@ -60,11 +60,6 @@ referencesVariable: aString {Str} {^Bool}
 !
 varName {^String}
 	^varName
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String]}
-	^#('varName')
 !
 (reader addClassMethod: 'instance creation')
 !

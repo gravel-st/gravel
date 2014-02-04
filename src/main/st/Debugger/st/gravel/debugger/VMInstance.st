@@ -1,6 +1,6 @@
 (reader defineClass: 'VMInstance' superclass: 'st.gravel.debugger.VMAbstractInstance')
 !
-(reader addInstVar: 'primitiveValue')
+(reader addInstVar: 'primitiveValue' type: 'Object')
 !
 (reader addInstVar: 'instValues')
 !
@@ -102,11 +102,6 @@ printOn: aStream
 				nextPutAll: ' ';
 				print: subjectClass].
 	aStream nextPut: $]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Obj, Unknown]}
-	^#('primitiveValue' 'instValues')
 !
 (reader addClassMethod: 'instance creation')
 !

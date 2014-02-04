@@ -1,10 +1,10 @@
 (reader defineClass: 'FixedPointLiteralNode' superclass: 'st.gravel.support.compiler.ast.NumberLiteralNode')
 !
-(reader addInstVar: 'numerator')
+(reader addInstVar: 'numerator' type: 'LargeInteger')
 !
-(reader addInstVar: 'denominator')
+(reader addInstVar: 'denominator' type: 'LargeInteger')
 !
-(reader addInstVar: 'scale')
+(reader addInstVar: 'scale' type: 'Integer')
 !
 (reader addMethod: 'visitor')
 !
@@ -80,11 +80,6 @@ valueString {^Str}
 	aStream := WriteStream on: String new.
 	self innerSourceOn: aStream.
 	^aStream contents
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[LargeInteger, LargeInteger, Int]}
-	^#('numerator' 'denominator' 'scale')
 !
 (reader addClassMethod: 'instance creation')
 !

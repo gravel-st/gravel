@@ -1,6 +1,6 @@
 (reader defineClass: 'MessageSendRewriter' superclass: 'st.gravel.support.compiler.ast.NodeCopier')
 !
-(reader addInstVar: 'specialSelectors')
+(reader addInstVar: 'specialSelectors' type: 'Dictionary[Symbol, [MessageNode, ^Statement]]')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -60,9 +60,4 @@ visitUnaryMessageNode: anObject {UnaryMessageNode} {^Statement}
 			trans := res value: anObject.
 			trans isNil ifFalse: [^trans]].
 	^super visitUnaryMessageNode: anObject
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[Sym, [MessageNode, ^Statement]]]}
-	^#('specialSelectors')
 !

@@ -1,6 +1,6 @@
 (reader defineClass: 'CharacterLiteralNode' superclass: 'st.gravel.support.compiler.ast.LiteralNode')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Character')
 !
 (reader addMethod: 'comparing')
 !
@@ -39,11 +39,6 @@ isCharacterLiteralNode {^Bool}
 !
 value {^Character}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Character]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,12 +1,10 @@
-(reader defineClass: 'ClassMapping' superclass: 'st.gravel.support.compiler.ast.AbstractMapping')
+(reader defineClass: 'ClassMapping' superclass: 'st.gravel.support.compiler.ast.AbstractClassMapping')
 !
-(reader addInstVar: 'identityMapping')
+(reader addInstVar: 'identityMapping' type: 'IdentityClassPartMapping')
 !
-(reader addInstVar: 'extensions')
+(reader addInstVar: 'extensions' type: 'Array[ExtensionClassPartMapping]')
 !
-(reader addInstVar: 'instVarMappings')
-!
-(reader addInstVar: 'classNode')
+(reader addInstVar: 'instVarMappings' type: 'Dictionary[String, InstVarMapping]')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -32,11 +30,6 @@ allSelectorsIn: aSystemMapping {SystemMapping} {^Set[Sym]}
 boundInstVars {^Arr[BoundVariableDeclarationNode]}
 	^classNode boundInstVars
 !
-(reader addMethod: 'accessing')
-!
-classNode {^ClassDescriptionNode}
-	^classNode
-!
 (reader addMethod: 'As yet unclassified')
 !
 extensionMethodMappingAt: aSymbol {Sym} ifAbsent: aBlock {[^AbstractMethodMapping]} {^AbstractMethodMapping}
@@ -51,13 +44,6 @@ extensionMethodMappingAt: aSymbol {Sym} ifAbsent: aBlock {[^AbstractMethodMappin
 !
 extensions {^Arr[ExtensionClassPartMapping]}
 	^extensions
-!
-(reader addMethod: 'As yet unclassified')
-!
-generatedJavaClassesDo: aBlock {[JavaClass, ^Object]} {^Self}
-	identityMapping isGenerated ifTrue: [aBlock value: identityMapping javaClass].
-	extensions
-		do: [:each {ExtensionClassPartMapping} | each isGenerated ifTrue: [aBlock value: each javaClass]]
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -90,12 +76,6 @@ instVars {^Arr[VariableDeclarationNode]}
 !
 (reader addMethod: 'As yet unclassified')
 !
-javaClassesDo: aBlock {[JavaClass, ^Object]} {^Self}
-	aBlock value: identityMapping javaClass.
-	extensions do: [:each {ExtensionClassPartMapping} | aBlock value: each javaClass]
-!
-(reader addMethod: 'As yet unclassified')
-!
 methodMappingAt: aSymbol {Sym} ifAbsent: aBlock {[^AbstractMethodMapping]} {^AbstractMethodMapping}
 	^identityMapping methodMappingAt: aSymbol
 		ifAbsent: [self extensionMethodMappingAt: aSymbol ifAbsent: aBlock]
@@ -115,11 +95,6 @@ pvtSetExtensions: anArray {Arr[ExtensionClassPartMapping]} {^Self}
 pvtSetIdentityMapping: anObject {IdentityClassPartMapping} {^Self}
 	identityMapping := anObject
 !
-(reader addMethod: 'accessing')
-!
-reference {^Reference}
-	^classNode reference
-!
 (reader addMethod: 'As yet unclassified')
 !
 selectors {^Set[Sym]}
@@ -127,19 +102,6 @@ selectors {^Set[Sym]}
 	set := Set new.
 	classNode methods do: [:each {MethodNode} | set add: each selector asSymbol].
 	^set
-!
-(reader addMethod: 'As yet unclassified')
-!
-superclassMappingIn: aSystemMapping {SystemMapping} {^ClassMapping | Nil}
-	| superclassReference {Reference} |
-	superclassReference := self superclassReference.
-	superclassReference isNil ifTrue: [^nil].
-	^aSystemMapping classMappingAtReference: superclassReference
-!
-(reader addMethod: 'accessing')
-!
-superclassReference {^Reference}
-	^classNode superclassReference
 !
 (reader addMethod: 'accessing')
 !
@@ -177,9 +139,4 @@ identityMapping: anIdentityClassPartMapping {IdentityClassPartMapping} extension
 		extensions: anArray
 		instVarMappings: aDictionary
 		classNode: aClassNode
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[IdentityClassPartMapping, Arr[ExtensionClassPartMapping], Dict[Str, InstVarMapping], ClassDescriptionNode]}
-	^#('identityMapping' 'extensions' 'instVarMappings' 'classNode')
 !

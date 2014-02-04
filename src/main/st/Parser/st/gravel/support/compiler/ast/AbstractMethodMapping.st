@@ -1,8 +1,8 @@
 (reader defineClass: 'AbstractMethodMapping' superclass: 'st.gravel.support.compiler.ast.AbstractMapping')
 !
-(reader addInstVar: 'methodHandle')
+(reader addInstVar: 'methodHandle' type: 'JavaMethodHandle')
 !
-(reader addInstVar: 'definingClass')
+(reader addInstVar: 'definingClass' type: 'JavaClass')
 !
 (reader addMethod: 'accessing')
 !
@@ -18,9 +18,4 @@ methodHandle {^JavaMethodHandle}
 !
 methodNode {^MethodNode}
 	^nil
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JavaMethodHandle, JavaClass]}
-	^#('methodHandle' 'definingClass')
 !

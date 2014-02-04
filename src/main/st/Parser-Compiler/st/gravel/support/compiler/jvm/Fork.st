@@ -1,8 +1,8 @@
 (reader defineClass: 'Fork' superclass: 'st.gravel.support.compiler.jvm.JVMControlFlowInstruction')
 !
-(reader addInstVar: 'falseFrame')
+(reader addInstVar: 'falseFrame' type: 'Frame')
 !
-(reader addInstVar: 'trueFrame')
+(reader addInstVar: 'trueFrame' type: 'Frame')
 !
 (reader addMethod: 'visitor')
 !
@@ -50,11 +50,6 @@ type {^JVMType}
 !
 boolean {^Instance}
 	^self trueFrame: PushTrue new asFrame falseFrame: PushFalse new asFrame
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Frame, Frame]}
-	^#('falseFrame' 'trueFrame')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'WriteHolderNode' superclass: 'st.gravel.support.compiler.ast.StateAccessNode')
 !
-(reader addInstVar: 'varName')
+(reader addInstVar: 'varName' type: 'String')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'comparing')
 !
@@ -70,11 +70,6 @@ value {^Expression}
 !
 varName {^String}
 	^varName
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[String, Expression]}
-	^#('varName' 'value')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'NonLocalReturnNode' superclass: 'st.gravel.support.compiler.ast.IntermediateStatement')
 !
-(reader addInstVar: 'marker')
+(reader addInstVar: 'marker' type: 'String')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Expression')
 !
 (reader addMethod: 'comparing')
 !
@@ -85,11 +85,6 @@ unoptimized {^Statement}
 !
 value {^Expression}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Str, Expression]}
-	^#('marker' 'value')
 !
 (reader addClassMethod: 'instance creation')
 !

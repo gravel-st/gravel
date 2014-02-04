@@ -1,8 +1,8 @@
 (reader defineClass: 'JVMMethodType' superclass: 'st.gravel.support.compiler.jvm.JVMNode')
 !
-(reader addInstVar: 'returnType')
+(reader addInstVar: 'returnType' type: 'JVMType')
 !
-(reader addInstVar: 'arguments')
+(reader addInstVar: 'arguments' type: 'Array[JVMType]')
 !
 (reader addMethod: 'visitor')
 !
@@ -69,11 +69,6 @@ sourceOn: aStream {WStream[Char]} {^Self}
 !
 dynamic: numArgs {Int} {^Instance}
 	^self returnType: JVMDynamicObjectType new dynamic: numArgs
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[JVMType, Arr[JVMType]]}
-	^#('returnType' 'arguments')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,18 +1,18 @@
 (reader defineClass: 'ClassNode' superclass: 'st.gravel.support.compiler.ast.ClassDescriptionNode')
 !
-(reader addInstVar: 'name')
+(reader addInstVar: 'name' type: 'Symbol')
 !
-(reader addInstVar: 'namespace')
+(reader addInstVar: 'namespace' type: 'Array[Symbol]')
 !
-(reader addInstVar: 'superclassPath')
+(reader addInstVar: 'superclassPath' type: 'String')
 !
-(reader addInstVar: 'properties')
+(reader addInstVar: 'properties' type: 'Dictionary[String, String]')
 !
-(reader addInstVar: 'isExtension')
+(reader addInstVar: 'isExtension' type: 'Boolean')
 !
-(reader addInstVar: 'metaclassNode')
+(reader addInstVar: 'metaclassNode' type: 'MetaclassNode')
 !
-(reader addInstVar: 'isTrait')
+(reader addInstVar: 'isTrait' type: 'Boolean')
 !
 (reader addMethod: 'comparing')
 !
@@ -161,11 +161,6 @@ mergedWithExtension: aClassNode {ClassNode} {^ClassNode}
 		withMethods: (self mergeMethods: methods with: aClassNode methods)
 		classMethods: (self mergeMethods: self classMethods with: aClassNode classMethods)
 		isExtension: false
-!
-(reader addMethod: 'As yet unclassified')
-!
-mergedWithMethods: anArray {Arr[MethodNode]} {^ClassNode}
-	^self withMethods: (self mergeMethods: methods with: anArray)
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -323,11 +318,6 @@ withSharedVariable: aSharedDeclarationNode {SharedDeclarationNode} {^Self}
 !
 withSuperclassPath: aString {Str} {^Self}
 	^self copy pvtSetSuperclassPath: aString
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Sym, Arr[Sym], Str, Dict[Str, Str], Bool, MetaclassNode, Bool]}
-	^#('name' 'namespace' 'superclassPath' 'properties' 'isExtension' 'metaclassNode' 'isTrait')
 !
 (reader addClassMethod: 'instance creation')
 !

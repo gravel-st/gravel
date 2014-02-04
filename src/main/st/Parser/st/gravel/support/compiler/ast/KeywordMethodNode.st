@@ -1,6 +1,6 @@
 (reader defineClass: 'KeywordMethodNode' superclass: 'st.gravel.support.compiler.ast.MethodNode')
 !
-(reader addInstVar: 'arguments')
+(reader addInstVar: 'arguments' type: 'Array[VariableDeclarationNode]')
 !
 (reader addMethod: 'comparing')
 !
@@ -84,11 +84,6 @@ sourceOn: aStream {WStream[Char]} {^Self}
 typeDefsDo: aBlock {[TypeNode, ^Any]} {^Self}
 	arguments do: [:each {VariableDeclarationNode} | each typeDefsDo: aBlock].
 	returnType isNil ifFalse: [returnType typeDefsDo: aBlock]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Array[VariableDeclarationNode]]}
-	^#('arguments')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -91,6 +91,11 @@ scanFor: anObject
 			whileFalse.
 	self errorNoFreeSpace
 !
+(reader addMethod: 'accessing')
+!
+size
+	^tally
+!
 (reader addClassMethod: 'As yet unclassified')
 !
 defaultImplementation

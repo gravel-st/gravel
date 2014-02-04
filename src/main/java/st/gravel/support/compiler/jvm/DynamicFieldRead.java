@@ -9,10 +9,10 @@ import java.math.BigInteger;
 import st.gravel.support.jvm.NonLocalReturn;
 import st.gravel.support.compiler.jvm.JVMInstruction;
 import st.gravel.support.compiler.jvm.JVMInstruction.JVMInstruction_Factory;
+import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMInstructionVisitor;
 import st.gravel.support.compiler.jvm.JVMStack;
 import st.gravel.support.compiler.jvm.JVMMethodType;
-import st.gravel.support.compiler.jvm.JVMType;
 import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
 
 public class DynamicFieldRead extends JVMInstruction implements Cloneable {
@@ -20,6 +20,8 @@ public class DynamicFieldRead extends JVMInstruction implements Cloneable {
 	public static DynamicFieldRead_Factory factory = new DynamicFieldRead_Factory();
 
 	String _name;
+
+	JVMType _type;
 
 	public static class DynamicFieldRead_Factory extends JVMInstruction_Factory {
 
@@ -29,13 +31,13 @@ public class DynamicFieldRead extends JVMInstruction implements Cloneable {
 			return newInstance;
 		}
 
-		public DynamicFieldRead name_(final String _aString) {
-			return this.basicNew().initializeName_(_aString);
+		public DynamicFieldRead name_type_(final String _aString, final JVMType _aJVMDynamicObjectType) {
+			return this.basicNew().initializeName_type_(_aString, _aJVMDynamicObjectType);
 		}
 	}
 
-	static public DynamicFieldRead _name_(Object receiver, final String _aString) {
-		return factory.name_(_aString);
+	static public DynamicFieldRead _name_type_(Object receiver, final String _aString, final JVMType _aJVMDynamicObjectType) {
+		return factory.name_type_(_aString, _aJVMDynamicObjectType);
 	}
 
 	@Override
@@ -64,14 +66,15 @@ public class DynamicFieldRead extends JVMInstruction implements Cloneable {
 		return factory;
 	}
 
-	public DynamicFieldRead initializeName_(final String _aString) {
+	public DynamicFieldRead initializeName_type_(final String _aString, final JVMType _aJVMDynamicObjectType) {
 		_name = _aString;
+		_type = _aJVMDynamicObjectType;
 		this.initialize();
 		return this;
 	}
 
 	public JVMMethodType methodType() {
-		return JVMMethodType.factory.returnType_dynamic_(this.type(), 1);
+		return JVMMethodType.factory.returnType_arguments_(_type, st.gravel.support.jvm.ArrayFactory.with_(JVMDynamicObjectType.factory.basicNew()));
 	}
 
 	public String name() {
@@ -97,7 +100,7 @@ public class DynamicFieldRead extends JVMInstruction implements Cloneable {
 
 	@Override
 	public JVMType type() {
-		return JVMDynamicObjectType.factory.basicNew();
+		return _type;
 	}
 
 	@Override

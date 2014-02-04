@@ -96,6 +96,7 @@ import st.gravel.support.compiler.ast.CreateHolderNode;
 import st.gravel.support.compiler.ast.DoubleLiteralNode;
 import st.gravel.support.compiler.ast.FieldReadNode;
 import st.gravel.support.compiler.jvm.DynamicFieldRead;
+import st.gravel.support.compiler.jvm.TypeNodeToJVMTypeConverter;
 import st.gravel.support.compiler.ast.FieldWriteNode;
 import st.gravel.support.compiler.jvm.DupX1;
 import st.gravel.support.compiler.jvm.DynamicFieldWrite;
@@ -1011,17 +1012,19 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	@Override
 	public JVMMethodCompiler visitFieldReadNode_(final FieldReadNode _aNode) {
 		this.visit_(_aNode.owner());
-		this.emit_(DynamicFieldRead.factory.name_(_aNode.name()));
+		this.emit_(DynamicFieldRead.factory.name_type_(_aNode.name(), TypeNodeToJVMTypeConverter.factory.visit_(_aNode.type())));
 		return this;
 	}
 
 	@Override
 	public JVMMethodCompiler visitFieldWriteNode_(final FieldWriteNode _aNode) {
+		final JVMType _fieldType;
 		this.visit_(_aNode.owner());
 		this.visit_(_aNode.value());
+		_fieldType = TypeNodeToJVMTypeConverter.factory.visit_(_aNode.type());
+		this.ensureCast_(_fieldType);
 		this.emit_(DupX1.factory.basicNew());
-		this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
-		this.emit_(DynamicFieldWrite.factory.name_(_aNode.name()));
+		this.emit_(DynamicFieldWrite.factory.name_type_(_aNode.name(), _fieldType));
 		return this;
 	}
 

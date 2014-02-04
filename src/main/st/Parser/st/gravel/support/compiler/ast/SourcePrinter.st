@@ -1,12 +1,12 @@
 (reader defineClass: 'SourcePrinter' superclass: 'st.gravel.support.compiler.ast.NodeVisitor')
 !
-(reader addInstVar: 'stream')
+(reader addInstVar: 'stream' type: 'WriteStream[Character]')
 !
-(reader addInstVar: 'precedence')
+(reader addInstVar: 'precedence' type: 'Nil | Integer')
 !
-(reader addInstVar: 'indentation')
+(reader addInstVar: 'indentation' type: 'Integer')
 !
-(reader addInstVar: 'emphasis')
+(reader addInstVar: 'emphasis' type: 'Nil | Symbol')
 !
 (reader addMethod: 'visiting')
 !
@@ -545,11 +545,6 @@ when: aBoolean {Bool} parenthesize: aBlock {[^Object]} {^Self}
 			[stream nextPut: $(.
 			aBlock value.
 			stream nextPut: $)]
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[WStream[Char], Int | Nil, Int, Sym | Nil]}
-	^#('stream' 'precedence' 'indentation' 'emphasis')
 !
 (reader addClassMethod: 'instance creation')
 !

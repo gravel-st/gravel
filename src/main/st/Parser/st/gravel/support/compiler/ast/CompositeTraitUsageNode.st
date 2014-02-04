@@ -1,6 +1,6 @@
 (reader defineClass: 'CompositeTraitUsageNode' superclass: 'st.gravel.support.compiler.ast.TraitUsageNode')
 !
-(reader addInstVar: 'components')
+(reader addInstVar: 'components' type: 'Array[SimpleTraitUsageNode]')
 !
 (reader addMethod: 'visitor')
 !
@@ -107,9 +107,4 @@ withTrait: aTraitUsageNode {TraitUsageNode} {^TraitUsageNode}
 !
 components: anArray {Arr[SimpleTraitUsageNode]} {^CompositeTraitUsageNode}
 	^self new initializeComponents: anArray
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Arr[SimpleTraitUsageNode]]}
-	^#('components')
 !

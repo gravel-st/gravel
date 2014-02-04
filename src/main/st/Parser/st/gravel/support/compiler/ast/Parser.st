@@ -1,8 +1,8 @@
 (reader defineClass: 'Parser' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'stream')
+(reader addInstVar: 'stream' type: 'ReadStream[Character]')
 !
-(reader addInstVar: 'sourceFile')
+(reader addInstVar: 'sourceFile' type: 'SourceFile')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -902,11 +902,6 @@ setSourcePosition: start {Int} node: aNode {Node} {^Node}
 !
 stream {^RStream[Char]}
 	^stream
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[ReadStream[Character], SourceFile]}
-	^#('stream' 'sourceFile')
 !
 (reader addClassMethod: 'As yet unclassified')
 !

@@ -1,12 +1,12 @@
 (reader defineClass: 'SelectorConverter' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'map')
+(reader addInstVar: 'map' type: 'Dictionary[Symbol, String]')
 !
-(reader addInstVar: 'specialCharacters')
+(reader addInstVar: 'specialCharacters' type: 'Dictionary[Character, String]')
 !
-(reader addInstVar: 'reverseMap')
+(reader addInstVar: 'reverseMap' type: 'Dictionary[String, Symbol]')
 !
-(reader addInstVar: 'specialCharactersReverse')
+(reader addInstVar: 'specialCharactersReverse' type: 'Dictionary[String, Character]')
 !
 (reader addMethod: 'initialize-release')
 !
@@ -136,6 +136,12 @@ mapForStaticLinking {^Self}
 selectorAsFunctionName: aSymbol {Sym} {^Str}
 	^map at: aSymbol ifAbsent: [self encodeSelector: aSymbol]
 !
+(reader addMethod: 'As yet unclassified')
+!
+selectorForNumArgs: numArgs {Int} {^Str}
+	numArgs = 0 ifTrue: [^'value'].
+	^(1 to: numArgs) join: [:i {Int} | 'value:']
+!
 (reader addMethod: 'initialize-release')
 !
 specialCharacterAt: aChar
@@ -145,11 +151,6 @@ specialCharacterAt: aChar
 !
 forStaticLinking
 	^super new initializeForStaticLinking: true
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Dict[Sym, Str], Dict[Char, Str], Dict[Str, Sym], Dict[Str, Char]]}
-	^#('map' 'specialCharacters' 'reverseMap' 'specialCharactersReverse')
 !
 (reader addClassMethod: 'instance creation')
 !

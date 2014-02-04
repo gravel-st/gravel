@@ -1,6 +1,6 @@
 (reader defineClass: 'PushDouble' superclass: 'st.gravel.support.compiler.jvm.PushConstant')
 !
-(reader addInstVar: 'value')
+(reader addInstVar: 'value' type: 'Double')
 !
 (reader addMethod: 'visitor')
 !
@@ -22,11 +22,6 @@ type {^JVMType}
 !
 value {^Double}
 	^value
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Double]}
-	^#('value')
 !
 (reader addClassMethod: 'instance creation')
 !

@@ -1,8 +1,8 @@
 (reader defineClass: 'DiskClassWriter' superclass: 'st.gravel.lang.Object')
 !
-(reader addInstVar: 'root')
+(reader addInstVar: 'root' type: 'Filename')
 !
-(reader addInstVar: 'formatter')
+(reader addInstVar: 'formatter' type: 'Formatter')
 !
 (reader addMethod: 'As yet unclassified')
 !
@@ -85,13 +85,29 @@ writeClass: aClassNode {ClassNode} in: aFilename {Filename} {^Self}
 		do: [:each {Node} | self writeDirective: each on: str].
 	aClassNode instVars do: 
 			[:each {VariableDeclarationNode} |
-			self writeDirective: (reader send: 'addInstVar:' with: (self asLiteralNode: each name))
-				on: str].
+			each type isNil
+				ifTrue: 
+					[self writeDirective: (reader send: 'addInstVar:' with: (self asLiteralNode: each name))
+						on: str]
+				ifFalse: 
+					[self writeDirective: (reader
+								send: 'addInstVar:type:'
+								with: (self asLiteralNode: each name)
+								with: (self asLiteralNode: each type sourceString))
+						on: str]].
 	aClassNode metaclassNode instVars do: 
 			[:each {VariableDeclarationNode} |
-			self
-				writeDirective: (reader send: 'addClassInstVar:' with: (self asLiteralNode: each name))
-				on: str].
+			each type isNil
+				ifTrue: 
+					[self
+						writeDirective: (reader send: 'addClassInstVar:' with: (self asLiteralNode: each name))
+						on: str]
+				ifFalse: 
+					[self writeDirective: (reader
+								send: 'addClassInstVar:type:'
+								with: (self asLiteralNode: each name)
+								with: (self asLiteralNode: each type sourceString))
+						on: str]].
 	aClassNode properties keysAndValuesDo: 
 			[:k {Str} :v {Str} |
 			self writeDirective: (reader
@@ -156,11 +172,6 @@ writeNamespace: aNamespaceNode {NamespaceNode} in: aFilename {Filename} {^Self}
 	dict at: 'sharedVariables' put: sharedVariables.
 	json := dict asJSON.
 	json writeToFile: nsFn / 'properties.json'
-!
-(reader addClassMethod: 'pegon')
-!
-instVarTypes {^[Filename, Formatter]}
-	^#('root' 'formatter')
 !
 (reader addClassMethod: 'instance creation')
 !
