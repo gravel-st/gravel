@@ -2,7 +2,7 @@
 !
 (reader addInstVar: 'temps' type: 'Dictionary[String, VariableScopeAnalyzerState]')
 !
-(reader addInstVar: 'parent' type: 'Nil | NonLocalTempAccessToHolderConverter')
+(reader addInstVar: 'parent' type: 'NonLocalTempAccessToHolderConverter | Nil')
 !
 (reader addMethod: 'As yet unclassified')
 !

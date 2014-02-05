@@ -169,7 +169,7 @@ compileClassNode {^JVMClass}
 			fields add: (JVMField
 						ownerType: ownerType
 						varName: each name
-						type: (TypeNodeToJVMTypeConverter visit: each type)
+						type: ((TypeNodeToJVMTypeConverter namespace: self namespace) visit: each type)
 						isStatic: false)].
 	self compileBlocks.
 	^self createContainerClass
@@ -360,6 +360,11 @@ lineNumberOf: aSourcePosition {SourcePosition} {^Int | Nil}
 	classDescriptionNode findSourceFile = aSourcePosition sourceFile ifFalse: [^nil].
 	positionsCache isNil ifTrue: [self buildPositionsCache].
 	^positionsCache at: aSourcePosition start
+!
+(reader addMethod: 'As yet unclassified')
+!
+namespace {^Arr[Sym]}
+	^classDescriptionNode namespace
 !
 (reader addMethod: 'As yet unclassified')
 !

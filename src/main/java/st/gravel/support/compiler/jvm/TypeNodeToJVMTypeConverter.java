@@ -21,6 +21,8 @@ public class TypeNodeToJVMTypeConverter extends NodeVisitor<JVMType> implements 
 
 	public static TypeNodeToJVMTypeConverter_Factory factory = new TypeNodeToJVMTypeConverter_Factory();
 
+	st.gravel.core.Symbol[] _namespace;
+
 	public static class TypeNodeToJVMTypeConverter_Factory extends NodeVisitor_Factory<JVMType> {
 
 		public TypeNodeToJVMTypeConverter basicNew() {
@@ -29,16 +31,13 @@ public class TypeNodeToJVMTypeConverter extends NodeVisitor<JVMType> implements 
 			return newInstance;
 		}
 
-		public JVMType visit_(final Node _anObject) {
-			if (_anObject == null) {
-				return JVMDynamicObjectType.factory.basicNew();
-			}
-			return this.basicNew().visit_(_anObject);
+		public TypeNodeToJVMTypeConverter namespace_(final st.gravel.core.Symbol[] _anArray) {
+			return this.basicNew().initializeNamespace_(_anArray);
 		}
 	}
 
-	static public JVMType _visit_(Object receiver, final Node _anObject) {
-		return factory.visit_(_anObject);
+	static public TypeNodeToJVMTypeConverter _namespace_(Object receiver, final st.gravel.core.Symbol[] _anArray) {
+		return factory.namespace_(_anArray);
 	}
 
 	public TypeNodeToJVMTypeConverter copy() {
@@ -55,6 +54,16 @@ public class TypeNodeToJVMTypeConverter extends NodeVisitor<JVMType> implements 
 		return factory;
 	}
 
+	public TypeNodeToJVMTypeConverter initializeNamespace_(final st.gravel.core.Symbol[] _anArray) {
+		_namespace = _anArray;
+		this.initialize();
+		return this;
+	}
+
+	public st.gravel.core.Symbol[] namespace() {
+		return _namespace;
+	}
+
 	@Override
 	public JVMType visitTypeNode_(final TypeNode _anObject) {
 		return JVMDynamicObjectType.factory.basicNew();
@@ -69,5 +78,13 @@ public class TypeNodeToJVMTypeConverter extends NodeVisitor<JVMType> implements 
 			return JVMBooleanType.factory.basicNew();
 		}
 		return JVMDynamicObjectType.factory.basicNew();
+	}
+
+	@Override
+	public JVMType visit_(final Node _anObject) {
+		if (_anObject == null) {
+			return JVMDynamicObjectType.factory.basicNew();
+		}
+		return ((JVMType) _anObject.accept_(this));
 	}
 }

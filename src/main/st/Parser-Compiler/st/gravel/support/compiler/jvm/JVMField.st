@@ -7,7 +7,7 @@
 (reader addMethod: 'visitor')
 !
 accept: visitor {JVMNodeVisitor[X def]} {^X}
-	^visitor visitJVMFieldDeclaration: self
+	^visitor visitJVMField: self
 !
 (reader addMethod: 'As yet unclassified')
 !

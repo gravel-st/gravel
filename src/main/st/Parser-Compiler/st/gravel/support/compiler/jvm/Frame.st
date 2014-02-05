@@ -27,12 +27,6 @@ endStack {^JVMStack}
 !
 (reader addMethod: 'initialize-release')
 !
-initializeInstructions: anArray
-	instructions := anArray.
-	self initialize
-!
-(reader addMethod: 'initialize-release')
-!
 initializeInstructions: anArray {Arr[JVMInstruction]} endStack: aJVMStack {JVMStack} {^Self}
 	instructions := anArray.
 	endStack := aJVMStack.
@@ -73,16 +67,6 @@ empty {^Frame}
 !
 (reader addClassMethod: 'instance creation')
 !
-instructions: anArray
-	^self new initializeInstructions: anArray
-!
-(reader addClassMethod: 'instance creation')
-!
 instructions: anArray {Arr[JVMInstruction]} endStack: aJVMStack {JVMStack} {^Frame}
 	^self new initializeInstructions: anArray endStack: aJVMStack
-!
-(reader addClassMethod: 'instance creation')
-!
-instructions: anArray type: aJVMBottomType
-	^self new initializeInstructions: anArray type: aJVMBottomType
 !

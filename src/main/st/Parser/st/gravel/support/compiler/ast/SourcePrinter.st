@@ -2,7 +2,7 @@
 !
 (reader addInstVar: 'stream' type: 'WriteStream[Character]')
 !
-(reader addInstVar: 'precedence' type: 'Nil | Integer')
+(reader addInstVar: 'precedence' type: 'Integer | Nil')
 !
 (reader addInstVar: 'indentation' type: 'Integer')
 !

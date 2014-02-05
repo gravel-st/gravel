@@ -42,6 +42,11 @@ visitJVMDynamicObjectType: anObject {JVMDynamicObjectType} {^X}
 !
 (reader addMethod: 'visiting')
 !
+visitJVMField: anObject {JVMField} {^X}
+	^self visitJVMVariable: anObject
+!
+(reader addMethod: 'visiting')
+!
 visitJVMFloatType: anObject {JVMFloatType} {^X}
 	^self visitJVMPrimitiveType: anObject
 !
@@ -88,6 +93,11 @@ visitJVMShortType: anObject {JVMShortType} {^X}
 (reader addMethod: 'visiting')
 !
 visitJVMType: anObject {JVMType} {^X}
+	^self visitJVMNode: anObject
+!
+(reader addMethod: 'visiting')
+!
+visitJVMVariable: anObject {JVMVariable} {^X}
 	^self visitJVMNode: anObject
 !
 (reader addMethod: 'visiting')

@@ -718,7 +718,7 @@ visitDoubleLiteralNode: anObject {DoubleLiteralNode} {^Self}
 visitFieldReadNode: aNode {FieldReadNode} {^Self}
 	self visit: aNode owner.
 	self emit: (DynamicFieldRead name: aNode name
-				type: (TypeNodeToJVMTypeConverter visit: aNode type))
+				type: ((TypeNodeToJVMTypeConverter namespace: parent namespace) visit: aNode type))
 !
 (reader addMethod: 'visiting')
 !
@@ -726,7 +726,7 @@ visitFieldWriteNode: aNode {FieldWriteNode} {^Self}
 	| fieldType {JVMType} |
 	self visit: aNode owner.
 	self visit: aNode value.
-	fieldType := TypeNodeToJVMTypeConverter visit: aNode type.
+	fieldType := (TypeNodeToJVMTypeConverter namespace: parent namespace) visit: aNode type.
 	self ensureCast: fieldType.
 	self emit: DupX1 new.
 	self emit: (DynamicFieldWrite name: aNode name type: fieldType)

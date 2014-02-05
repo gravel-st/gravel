@@ -15,6 +15,7 @@ import st.gravel.support.compiler.jvm.JVMCharType;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.jvm.JVMDoubleType;
 import st.gravel.support.compiler.jvm.JVMDynamicObjectType;
+import st.gravel.support.compiler.jvm.JVMField;
 import st.gravel.support.compiler.jvm.JVMFloatType;
 import st.gravel.support.compiler.jvm.JVMIntType;
 import st.gravel.support.compiler.jvm.JVMLocalDeclaration;
@@ -25,6 +26,7 @@ import st.gravel.support.compiler.jvm.JVMNode;
 import st.gravel.support.compiler.jvm.JVMPrimitiveType;
 import st.gravel.support.compiler.jvm.JVMShortType;
 import st.gravel.support.compiler.jvm.JVMType;
+import st.gravel.support.compiler.jvm.JVMVariable;
 import st.gravel.support.compiler.jvm.JVMVoidType;
 
 public class JVMNodeVisitor<X> extends Object implements Cloneable {
@@ -94,6 +96,10 @@ public class JVMNodeVisitor<X> extends Object implements Cloneable {
 		return this.visitJVMType_(_anObject);
 	}
 
+	public X visitJVMField_(final JVMField _anObject) {
+		return this.visitJVMVariable_(_anObject);
+	}
+
 	public X visitJVMFloatType_(final JVMFloatType _anObject) {
 		return this.visitJVMPrimitiveType_(_anObject);
 	}
@@ -131,6 +137,10 @@ public class JVMNodeVisitor<X> extends Object implements Cloneable {
 	}
 
 	public X visitJVMType_(final JVMType _anObject) {
+		return this.visitJVMNode_(_anObject);
+	}
+
+	public X visitJVMVariable_(final JVMVariable _anObject) {
 		return this.visitJVMNode_(_anObject);
 	}
 

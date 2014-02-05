@@ -2,7 +2,7 @@
 !
 (reader addInstVar: 'name' type: 'String')
 !
-(reader addInstVar: 'initializer' type: 'Nil | Expression')
+(reader addInstVar: 'initializer' type: 'Expression | Nil')
 !
 (reader addMethod: 'visitor')
 !

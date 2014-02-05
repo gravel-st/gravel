@@ -361,7 +361,6 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		_argumentsToCopy = new JVMVariable[1][];
 		_blockSendConstants = new String[1][];
 		_passedNumArgs = new int[1];
-		this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
 		_blockSendConstants[0] = new String[] {};
 		_argumentsToCopy[0] = new JVMVariable[] {};
 		_passedNumArgs[0] = 0;
@@ -435,12 +434,11 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		})))) {
 			return JVMMethodCompiler.this.produceBlockInlineMessageSend_(_messageNode);
 		}
-		_selector = st.gravel.core.Symbol.value(_messageNode.selector());
-		this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
 		for (final Expression _arg : _messageNode.arguments()) {
 			JVMMethodCompiler.this.visit_(_arg);
 			JVMMethodCompiler.this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
 		}
+		_selector = st.gravel.core.Symbol.value(_messageNode.selector());
 		this.emit_(DynamicMessageSend.factory.functionName_numArgs_(_parent.selectorConverter().selectorAsFunctionName_(_selector), _selector.numArgs()));
 		return this;
 	}
@@ -1014,7 +1012,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 	@Override
 	public JVMMethodCompiler visitFieldReadNode_(final FieldReadNode _aNode) {
 		this.visit_(_aNode.owner());
-		this.emit_(DynamicFieldRead.factory.name_type_(_aNode.name(), TypeNodeToJVMTypeConverter.factory.visit_(_aNode.type())));
+		this.emit_(DynamicFieldRead.factory.name_type_(_aNode.name(), TypeNodeToJVMTypeConverter.factory.namespace_(_parent.namespace()).visit_(_aNode.type())));
 		return this;
 	}
 
@@ -1023,7 +1021,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 		final JVMType _fieldType;
 		this.visit_(_aNode.owner());
 		this.visit_(_aNode.value());
-		_fieldType = TypeNodeToJVMTypeConverter.factory.visit_(_aNode.type());
+		_fieldType = TypeNodeToJVMTypeConverter.factory.namespace_(_parent.namespace()).visit_(_aNode.type());
 		this.ensureCast_(_fieldType);
 		this.emit_(DupX1.factory.basicNew());
 		this.emit_(DynamicFieldWrite.factory.name_type_(_aNode.name(), _fieldType));
@@ -1153,6 +1151,7 @@ public class JVMMethodCompiler extends NodeVisitor<Object> implements Cloneable 
 			return JVMMethodCompiler.this.produceSuperSend_(_messageNode);
 		}
 		this.visit_(_messageNode.receiver());
+		this.ensureCast_(JVMDynamicObjectType.factory.basicNew());
 		this.produceMessageSend_(_messageNode);
 		return this;
 	}

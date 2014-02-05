@@ -11,6 +11,7 @@ import st.gravel.support.compiler.jvm.JVMVariable;
 import st.gravel.support.compiler.jvm.JVMVariable.JVMVariable_Factory;
 import st.gravel.support.compiler.jvm.JVMDefinedObjectType;
 import st.gravel.support.compiler.jvm.JVMType;
+import st.gravel.support.compiler.jvm.JVMNodeVisitor;
 import st.gravel.support.compiler.jvm.GetField;
 import st.gravel.support.compiler.jvm.GetStatic;
 
@@ -37,6 +38,11 @@ public class JVMField extends JVMVariable implements Cloneable {
 
 	static public JVMField _ownerType_varName_type_isStatic_(Object receiver, final JVMDefinedObjectType _ownerType, final String _aString, final JVMType _aJVMDynamicObjectType, final boolean _aBoolean) {
 		return factory.ownerType_varName_type_isStatic_(_ownerType, _aString, _aJVMDynamicObjectType, _aBoolean);
+	}
+
+	@Override
+	public <X> X accept_(final JVMNodeVisitor<X> _visitor) {
+		return _visitor.visitJVMField_(this);
 	}
 
 	public GetField asGetField() {

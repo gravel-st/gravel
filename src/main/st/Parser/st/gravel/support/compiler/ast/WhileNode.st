@@ -2,7 +2,7 @@
 !
 (reader addInstVar: 'testSequence' type: 'SequenceNode')
 !
-(reader addInstVar: 'doSequence' type: 'Nil | SequenceNode')
+(reader addInstVar: 'doSequence' type: 'SequenceNode | Nil')
 !
 (reader addMethod: 'visitor')
 !

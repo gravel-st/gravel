@@ -257,7 +257,7 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			JVMClassCompiler.this.compileMethod_(_each);
 		}
 		for (final VariableDeclarationNode _each : _classDescriptionNode.instVars()) {
-			_fields.add(JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _each.name(), TypeNodeToJVMTypeConverter.factory.visit_(_each.type()), false));
+			_fields.add(JVMField.factory.ownerType_varName_type_isStatic_(_ownerType, _each.name(), TypeNodeToJVMTypeConverter.factory.namespace_(JVMClassCompiler.this.namespace()).visit_(_each.type()), false));
 		}
 		this.compileBlocks();
 		return this.createContainerClass();
@@ -438,6 +438,10 @@ public class JVMClassCompiler extends Object implements Cloneable {
 			JVMClassCompiler.this.buildPositionsCache();
 		}
 		return _positionsCache[_aSourcePosition.start() - 1];
+	}
+
+	public st.gravel.core.Symbol[] namespace() {
+		return _classDescriptionNode.namespace();
 	}
 
 	public String newConstantName() {
