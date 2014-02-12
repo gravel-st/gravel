@@ -56,16 +56,16 @@ public class VMTargetStarter {
 		}
 	}
 
-	public VMTargetRemote createJVM() throws IOException, InterruptedException,
+	public VMRemoteTarget createJVM() throws IOException, InterruptedException,
 			IncompatibleThreadStateException {
-		Process process = startSecondJVM(VMTargetLocal.class);
+		Process process = startSecondJVM(VMLocalTarget.class);
 		sleep(90);
 		// connect
 		VirtualMachine vm = new VMAcquirer().connect(debugPort);
 
 		ClassPrepareRequest createClassPrepareRequest = vm
 				.eventRequestManager().createClassPrepareRequest();
-		createClassPrepareRequest.addClassFilter(VMTargetLocal.class.getName());
+		createClassPrepareRequest.addClassFilter(VMLocalTarget.class.getName());
 		createClassPrepareRequest.enable();
 		vm.resume();
 
@@ -83,7 +83,7 @@ public class VMTargetStarter {
 				}
 				if (event instanceof BreakpointEvent) {
 					ThreadReference thread = ((BreakpointEvent) event).thread();
-					return new VMTargetRemote(process, vm, thread, debugPort);
+					return new VMRemoteTarget(process, vm, thread, debugPort);
 				}
 			}
 			eventSet.resume();
@@ -92,7 +92,7 @@ public class VMTargetStarter {
 
 	private void installHaltPoint(VirtualMachine vm) {
 		List<ReferenceType> targetClasses = vm
-				.classesByName(VMTargetLocal.class.getName());
+				.classesByName(VMLocalTarget.class.getName());
 		ReferenceType classRef = targetClasses.get(0);
 		Method meth = classRef.methodsByName("haltPoint").get(0);
 		BreakpointRequest req = vm.eventRequestManager()
@@ -101,7 +101,7 @@ public class VMTargetStarter {
 		req.enable();
 	}
 
-	public static VMTargetRemote newRemote(int port) {
+	public static VMRemoteTarget newRemote(int port) {
 		try {
 			return new VMTargetStarter(port).createJVM();
 		} catch (IOException | InterruptedException
@@ -110,7 +110,7 @@ public class VMTargetStarter {
 		}
 	}
 
-	public static VMTargetRemote newRemote() {
+	public static VMRemoteTarget newRemote() {
 		return newRemote(nextPort++);
 	}
 
