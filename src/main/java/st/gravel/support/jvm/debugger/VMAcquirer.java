@@ -33,7 +33,6 @@ public class VMAcquirer {
 	        .virtualMachineManager();
 	    for (AttachingConnector connector : vmManager
 	        .attachingConnectors()) {
-	      System.out.println(connector.name());
 	      if ("com.sun.jdi.SocketAttach".equals(connector
 	          .name())) {
 	        return (AttachingConnector) connector;
