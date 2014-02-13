@@ -1,6 +1,8 @@
 package st.gravel.support.jvm.debugger;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import com.sun.jdi.IncompatibleThreadStateException;
@@ -37,6 +39,7 @@ public class VMTargetStarter {
 				"-Xrunjdwp:transport=dt_socket,address=" + debugPort
 						+ ",server=y,suspend=y", "-cp", classpath,
 				mainClassToStart.getCanonicalName());
+		processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		final Process process = processBuilder.start();
 		Thread closeChildThread = new Thread() {
 			public void run() {
@@ -48,7 +51,7 @@ public class VMTargetStarter {
 
 	}
 
-	private static void sleep(int millis) {
+	public static void sleep(int millis) {
 		try {
 			Thread.sleep(millis);
 		} catch (InterruptedException ex) {
@@ -67,7 +70,13 @@ public class VMTargetStarter {
 				.eventRequestManager().createClassPrepareRequest();
 		createClassPrepareRequest.addClassFilter(VMLocalTarget.class.getName());
 		createClassPrepareRequest.enable();
+		
 		vm.resume();
+
+		List<ThreadReference> allThreads = vm.allThreads();
+		for (ThreadReference threadReference : allThreads) {
+			System.out.println(threadReference+" isSuspended: "+threadReference.isSuspended()+" suspendCount: "+threadReference.suspendCount());
+		}
 
 		// process events
 		EventQueue eventQueue = vm.eventQueue();
@@ -75,6 +84,7 @@ public class VMTargetStarter {
 			EventSet eventSet = eventQueue.remove();
 			for (Event event : eventSet) {
 				if (event instanceof ClassPrepareEvent) {
+					event.request().disable();
 					installHaltPoint(vm);
 				}
 				if (event instanceof VMDeathEvent
@@ -82,6 +92,7 @@ public class VMTargetStarter {
 					return null;
 				}
 				if (event instanceof BreakpointEvent) {
+					event.request().disable();
 					ThreadReference thread = ((BreakpointEvent) event).thread();
 					return new VMRemoteTarget(process, vm, thread, debugPort);
 				}
@@ -97,7 +108,7 @@ public class VMTargetStarter {
 		Method meth = classRef.methodsByName("haltPoint").get(0);
 		BreakpointRequest req = vm.eventRequestManager()
 				.createBreakpointRequest(meth.location());
-		// req.setSuspendPolicy(BreakpointRequest.SUSPEND_EVENT_THREAD);
+		req.setSuspendPolicy(BreakpointRequest.SUSPEND_EVENT_THREAD);
 		req.enable();
 	}
 
